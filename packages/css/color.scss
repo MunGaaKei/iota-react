@@ -1,0 +1,120 @@
+$colors: (
+	'white': #fff,
+	'black': #000,
+	'red': #dc143c,
+	'blue': #1e90ff,
+	'green': #3cb371,
+	'yellow': #ffc549,
+	'grey': #d7d7d7,
+	'pink': #ff69b4,
+	'purple': #8a2be2,
+);
+
+:root {
+	--background: #fff;
+	--background-2: #efeef1;
+	--background-opacity: rgba(255, 255, 255, 0.81);
+
+	--color-main: #212121;
+	--color-main-1: #343434;
+	--color-main-2: #8a8a8a;
+	--color-main-slight: #ededed;
+	--color-main-reverse: #fff;
+
+	--color: #212121;
+	--color-1: #343434;
+	--color-2: #8a8a8a;
+	--color-slight: rgba(0, 0, 0, 0.1);
+
+	@each $name, $value in $colors {
+		--#{$name}: #{$value};
+		@if ($name == 'black') {
+			--#{$name}-1: #{lighten($value, 12%)};
+			--#{$name}-2: #{lighten($value, 16%)};
+			--#{$name}-slight: #{lighten($value, 70%)};
+		} @else if ($name == 'pink' or $name == 'grey') {
+			--#{$name}-1: #{darken($value, 4%)};
+			--#{$name}-2: #{darken($value, 8%)};
+			--#{$name}-slight: #{lighten($value, 24%)};
+		} @else if ($name == 'yellow' or $name == 'blue') {
+			--#{$name}-1: #{darken($value, 4%)};
+			--#{$name}-2: #{darken($value, 8%)};
+			--#{$name}-slight: #{lighten($value, 30%)};
+		} @else {
+			--#{$name}-1: #{darken($value, 4%)};
+			--#{$name}-2: #{darken($value, 8%)};
+			--#{$name}-slight: #{lighten($value, 40%)};
+		}
+	}
+}
+
+.bg-dim {
+	background-color: var(--color-2);
+}
+.bg-slight {
+	background-color: var(--color-slight);
+	color: var(--black);
+}
+.slight {
+	color: var(--color-slight);
+}
+.dim {
+	color: var(--color-2);
+}
+
+@each $name, $value in $colors {
+	.#{$name} {
+		--background-hover: var(--#{$name}-slight);
+		--color: var(--#{$name});
+		color: var(--color);
+	}
+	.#{$name}-1 {
+		--background-hover: var(--#{$name}-slight);
+		--color: var(--#{$name}-1);
+		color: var(--color-1);
+	}
+	.#{$name}-2 {
+		--background-hover: var(--#{$name}-slight);
+		--color: var(--#{$name}-2);
+		color: var(--color-2);
+	}
+	.#{$name}-slight {
+		--color: var(--#{$name}-slight);
+		color: var(--color-slight);
+	}
+
+	.bg-#{$name} {
+		--background: var(--#{$name});
+		background: var(--#{$name});
+	}
+	.bg-#{$name}-1 {
+		--background: var(--#{$name}-1);
+		background: var(--#{$name}-1);
+	}
+	.bg-#{$name}-2 {
+		--background: var(--#{$name}-2);
+		background: var(--#{$name}-2);
+	}
+	.bg-#{$name}-slight {
+		--background: var(--#{$name}-slight);
+		background: var(--#{$name}-slight);
+		color: var(--black);
+	}
+	.bg-#{$name},
+	.bg-#{$name}-1,
+	.bg-#{$name}-2 {
+		@if $name == 'white' or $name == 'grey' or $name == 'yellow' {
+			--color: var(--black);
+			color: var(--color);
+		} @else {
+			--color: var(--white);
+			color: var(--color);
+		}
+	}
+	.r-btn.bg-#{$name}:hover {
+		background: var(--#{$name}-1);
+	}
+	.r-btn.bg-#{$name}:active {
+		background: var(--#{$name}-2);
+	}
+}

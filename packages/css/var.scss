@@ -1,0 +1,19 @@
+$breakpoint-mobile: 880px;
+
+:root {
+	--font-size: 16px;
+	--font: normal 400 var(--font-size) / 1.6 -apple-system, Consolas,
+		'Helvetica Neue', sans-serif;
+	--transition: all 0.24s ease;
+
+	--radius: 2px;
+	--shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+	--blur: blur(8px);
+	--breakpoint: #{$breakpoint-mobile};
+}
+
+@media (max-width: #{$breakpoint-mobile}) {
+	:root {
+		--font-size: 14px;
+	}
+}

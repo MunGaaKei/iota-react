@@ -1,0 +1,29 @@
+.r-container {
+	position: absolute;
+	inset: 0;
+	overflow-x: hidden;
+}
+.r-content {
+	position: relative;
+	flex: 1;
+	width: 100%;
+	overflow-x: hidden;
+	transition: var(--transition);
+}
+.r-header,
+.r-footer {
+	z-index: 1;
+	display: flex;
+	align-items: center;
+}
+.r-footer {
+	top: unset;
+	bottom: 0;
+}
+.r-sider {
+	margin-left: auto;
+	max-width: 100%;
+	overflow-x: hidden;
+	transition: var(--transition);
+	flex-shrink: 0;
+}

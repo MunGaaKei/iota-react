@@ -1,0 +1,71 @@
+.r-btn {
+	--background: var(--color-main);
+	--background-hover: var(--color-main-1);
+	--color: var(--color-main-reverse);
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 0.8em;
+	line-height: 2;
+	border-radius: var(--radius);
+	border: 2px solid transparent;
+	transition: var(--transition);
+	user-select: none;
+	cursor: pointer;
+	align-self: center;
+	vertical-align: middle;
+	white-space: nowrap;
+	outline: none;
+	font-weight: 500;
+	background: var(--background);
+	color: var(--color);
+}
+.r-btn-block {
+	width: 100%;
+}
+.r-btn-thin {
+	padding: 0 0.4em;
+}
+.r-btn-large {
+	font-size: 1.2em;
+}
+.r-btn-small {
+	font-size: 0.8em;
+}
+.r-btn:hover {
+	--background: var(--background-hover);
+}
+.r-btn:active {
+	--background: var(--color-main);
+}
+.r-btn-flat {
+	--background-hover: var(--color-main-slight);
+	--color: var(--color-main);
+	&.r-btn {
+		--background: transparent;
+		border-color: var(--background);
+	}
+}
+.r-btn-outline {
+	--background-hover: var(--color-main-slight);
+	--color: var(--color-main);
+	&.r-btn {
+		--background: transparent;
+		border-color: var(--color);
+	}
+}
+.r-btn.r-btn-outline:hover,
+.r-btn.r-btn-flat:hover {
+	--background: var(--background-hover);
+}
+.r-btn-content {
+	align-self: center;
+}
+.r-btn-loading {
+	color: transparent !important;
+	> .r-loading-icon {
+		opacity: 1;
+		animation: loading 1s linear infinite;
+	}
+}
