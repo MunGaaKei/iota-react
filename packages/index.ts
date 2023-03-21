@@ -1,3 +1,3 @@
-export { default as RButton } from './components/button';
-export { default as RContainer } from './components/container';
-export { default as RIcon } from './components/icon';
+export { default as IButton } from "./components/button";
+export { default as IContainer } from "./components/container";
+export { default as IIcon } from "./components/icon";

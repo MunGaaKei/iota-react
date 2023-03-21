@@ -1,58 +1,72 @@
-import { ReactNode, HTMLAttributes } from 'react';
-import './button.scss';
+import { ReactNode, HTMLAttributes, createElement } from "react";
+import classnames from "classnames";
+import "./button.scss";
 
 export type TypeButton = {
-	tag?: 'button' | 'a';
-	to?: string;
-	href?: string;
-	outline?: boolean;
-	flat?: boolean;
-	loading?: boolean;
-	type?: 'submit' | 'reset' | 'button';
-	ripple?: boolean;
-	disabled?: boolean;
-	size?: 'small' | 'large' | 'normal' | 'thin';
-	block?: boolean;
-	round?: boolean;
-	children: ReactNode;
+    tag?: "button" | "a";
+    href?: string;
+    outline?: boolean;
+    flat?: boolean;
+    loading?: boolean;
+    ripple?: boolean;
+    disabled?: boolean;
+    size?: "small" | "large" | "normal" | "thin" | "extreme";
+    block?: boolean;
+    round?: boolean;
+    Link?: Function;
+    children: ReactNode;
 } & HTMLAttributes<HTMLElement>;
 
-const classNames = ({
-	outline,
-	flat,
-	loading,
-	disabled,
-	size = 'normal',
-	block,
-	round
-}: TypeButton): string => {
-	const names = ['r-btn'];
-	outline && names.push('r-btn-outline');
-	flat && names.push('r-btn-flat');
-	disabled && names.push('disabled');
-	block && names.push('r-btn-block');
-	loading && names.push('r-btn-loading');
-	round && names.push('round');
-	size !== 'normal' && names.push(`r-btn-${size}`);
-	return names.join(' ');
-};
+const formatClass = ({
+    outline,
+    flat,
+    loading,
+    disabled,
+    size = "normal",
+    block,
+    round,
+    className = "",
+}: TypeButton): string =>
+    classnames("i-btn", className, {
+        "i-btn-outline": outline,
+        "i-btn-flat": flat,
+        "i-btn-block": block,
+        "i-btn-loading": loading,
+        [`i-btn-${size}`]: size !== "normal",
+        round,
+        disabled,
+    });
 
 const Button = (props: TypeButton): JSX.Element => {
-	const { tag = 'a', children, loading, flat, size, href, ...rest } = props;
-	const Component = href ? 'a' : tag;
+    const {
+        tag = "a",
+        children,
+        className,
+        loading,
+        flat,
+        size,
+        href,
+        Link,
+        ...rest
+    } = props;
 
-	console.log(loading);
+    if (Link) {
+        return (
+            <Link to={href} className={formatClass(props)} {...rest}>
+                {loading && <span className="i-loading-icon"></span>}
+                <span className="i-btn-content">{children}</span>
+            </Link>
+        );
+    }
 
-	return (
-		<Component
-			className={classNames(props)}
-			{...rest}
-		>
-			{loading && <span className="r-loading-icon"></span>}
+    const Component = href ? "a" : tag;
 
-			<span className="r-btn-content">{children}</span>
-		</Component>
-	);
+    return (
+        <Component href={href} className={formatClass(props)} {...rest}>
+            {loading && <span className="i-loading-icon"></span>}
+            <span className="i-btn-content">{children}</span>
+        </Component>
+    );
 };
 
 export default Button;
