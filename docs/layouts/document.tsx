@@ -1,7 +1,7 @@
 import { lazy, memo, Suspense, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MenuFilled } from "@ricons/material";
-import { IContainer, IIcon, IButton } from "@p/index";
+import { Container, Icon, Button } from "@p/index";
 
 type DpProps = {
     name?: string;
@@ -20,37 +20,49 @@ const DynamicPage = memo(
     (pp: DpProps, np: DpProps) => pp.name === np.name
 );
 
-const Header = (): JSX.Element => {
+const Header = ({
+    onToggleSider,
+}: {
+    onToggleSider: Function;
+}): JSX.Element => {
     return (
         <div className="py-8 px-12 flex">
-            <IButton size="small" flat>
-                <IIcon size="2em">
+            <Button size="small" flat onClick={() => onToggleSider()}>
+                <Icon size="2em">
                     <MenuFilled></MenuFilled>
-                </IIcon>
-            </IButton>
+                </Icon>
+            </Button>
         </div>
     );
 };
 
 const Sider = (): JSX.Element => {
-    return <>sider</>;
+    return <>SIDER</>;
 };
 
 const Footer = (): JSX.Element => {
-    return <>footer</>;
+    return <>FOOTER</>;
 };
 
 export default function Document(): JSX.Element {
     const { name } = useParams<{ [key: string]: string }>();
+    const [collapsed, toggleCollapsed] = useState<boolean>(false);
 
     return (
-        <IContainer
+        <Container
             layout="menu"
-            header={<Header></Header>}
+            collapsed={collapsed}
+            header={
+                <Header
+                    onToggleSider={toggleCollapsed.bind(null, !collapsed)}
+                ></Header>
+            }
             sider={<Sider></Sider>}
             footer={<Footer></Footer>}
         >
-            <DynamicPage name={name}></DynamicPage>
-        </IContainer>
+            <div className="pd-12">
+                <DynamicPage name={name}></DynamicPage>
+            </div>
+        </Container>
     );
 }

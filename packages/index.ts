@@ -1,3 +1,6 @@
-export { default as IButton } from "./components/button";
-export { default as IContainer } from "./components/container";
-export { default as IIcon } from "./components/icon";
+import Button from "./components/button";
+import Container from "./components/container";
+import Icon from "./components/icon";
+import Input from "./components/input";
+
+export { Button, Container, Icon, Input };

@@ -43,6 +43,7 @@ html {
     height: 100%;
     font: var(--font);
     color: var(--color);
+    background: var(--background);
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -83,7 +84,8 @@ h3 {
 h4 {
     font-size: 1.2rem;
 }
-h5, h6 {
+h5,
+h6 {
     font-size: 1rem;
 }
 label {

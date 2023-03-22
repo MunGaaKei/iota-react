@@ -1,14 +1,21 @@
 import { Link } from "react-router-dom";
-import { IButton } from "@p/index";
+import { Input } from "@p/index";
 import { useState } from "react";
 
 export default function button(): JSX.Element {
-    const [loading, setLoading] = useState<number>(0);
+    const [count, setCount] = useState<number>(0);
 
     return (
         <>
-            <span onClick={() => setLoading(1 + loading)}>{loading}</span>
-            <div style={{ height: 2000 }}>Content</div>
+            <span onClick={() => setCount(1 + count)}>{count}</span>
+
+            <Input
+                label="中文标签"
+                type="password"
+                name="abcd"
+                readOnly
+                value="values"
+            ></Input>
         </>
     );
 }
