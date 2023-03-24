@@ -1,24 +1,21 @@
 import {
     ChangeEvent,
     forwardRef,
-    HTMLAttributes,
     useCallback,
     HTMLInputTypeAttribute,
 } from "react";
+import type { FormControlsAttrs } from "../@types/common";
 import "./input.scss";
 
 export type TypeInput = {
     label?: string;
-    type?: HTMLInputTypeAttribute;
     value?: string;
-    name?: string;
-    labelInline?: boolean;
-    readOnly?: boolean;
     onChange?: Function;
-} & Omit<HTMLAttributes<HTMLInputElement>, "onChange">;
+    labelInline?: boolean;
+} & Omit<FormControlsAttrs, "onChange">;
 
 const Input = forwardRef<HTMLInputElement, TypeInput>((props, ref) => {
-    const { label, name, value, readOnly, onChange, ...rest } = props;
+    const { label, value = "", onChange, spellCheck = false, ...rest } = props;
 
     const handleChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,11 +29,10 @@ const Input = forwardRef<HTMLInputElement, TypeInput>((props, ref) => {
             {label && <span className="i-form-label">{label}</span>}
             <input
                 ref={ref}
-                name={name}
                 value={value}
                 className="i-input"
-                readOnly={readOnly}
                 onChange={handleChange}
+                spellCheck={spellCheck}
                 {...rest}
             ></input>
         </label>

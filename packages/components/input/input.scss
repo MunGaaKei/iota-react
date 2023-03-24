@@ -1,19 +1,21 @@
 .i-input-item {
+    --background: var(--background-opacity-1);
     display: flex;
     align-items: baseline;
+    border: 2px solid transparent;
+    background: var(--background);
+    transition: var(--transition);
+    border-radius: var(--radius);
 }
 .i-input {
-    padding: 0.2em 0.8em;
+    padding: 0.275em 0.6em;
+    flex: 1;
     width: 100%;
-    border: 2px solid transparent;
-    border-radius: var(--radius);
-    background: var(--background-2);
     color: inherit;
     outline: none;
     transition: var(--transition);
-    &:hover {
-        background: var(--background-1);
-    }
+    background: transparent;
+    border-radius: inherit;
     &[type="number"]::-webkit-inner-spin-button,
     &[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
@@ -25,10 +27,17 @@
     &[readonly] {
         caret-color: transparent;
     }
+    &:focus {
+        box-shadow: 0 0 0 0.15em var(--color-main-slight);
+    }
 }
 textarea.i-input {
     display: block;
     transition: var(--transition), width 0s, height 0s;
     max-width: 100%;
     resize: none;
+}
+.i-form-label {
+    width: var(--label-width);
+    padding: 0.275em 0.6em;
 }

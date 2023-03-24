@@ -1,21 +1,23 @@
-import { Link } from "react-router-dom";
 import { Input } from "@p/index";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function button(): JSX.Element {
     const [count, setCount] = useState<number>(0);
+    const [text, setText] = useState<string>("value");
 
     return (
         <>
-            <span onClick={() => setCount(1 + count)}>{count}</span>
+            {/* <span onClick={() => setCount(1 + count)}>{count}</span> */}
 
-            <Input
-                label="中文标签"
-                type="password"
-                name="abcd"
-                readOnly
-                value="values"
-            ></Input>
+            <div style={{ width: 200 }}>
+                <Input
+                    label="中文标签"
+                    name="sdf"
+                    placeholder="placeholder"
+                    value={text}
+                    onChange={(value: string) => setText(value)}
+                ></Input>
+            </div>
         </>
     );
 }
