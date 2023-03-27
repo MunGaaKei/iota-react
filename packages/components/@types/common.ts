@@ -6,4 +6,5 @@ export type FormControlsAttrs = HTMLAttributes<HTMLInputElement> & {
     type?: string;
     name?: string;
     readOnly?: boolean;
+    disabled?: boolean;
 };

@@ -1,43 +1,73 @@
+.i-input-label {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+}
 .i-input-item {
     --background: var(--background-opacity-1);
     display: flex;
     align-items: baseline;
-    border: 2px solid transparent;
     background: var(--background);
     transition: var(--transition);
     border-radius: var(--radius);
+    .i-btn {
+        align-self: stretch;
+    }
+    > * {
+        &:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
 }
+
 .i-input {
-    padding: 0.275em 0.6em;
+    padding: 0 0.8em;
     flex: 1;
+    line-height: 2;
     width: 100%;
     color: inherit;
     outline: none;
+    border: 2px solid transparent;
     transition: var(--transition);
     background: transparent;
     border-radius: inherit;
+
+    &:focus,
+    &:hover {
+        background: var(--background-opacity);
+        border-color: var(--color-main-slight);
+    }
+
     &[type="number"]::-webkit-inner-spin-button,
     &[type="number"]::-webkit-outer-spin-button {
         -webkit-appearance: none;
     }
     &[type="number"] {
-        -moz-appearance: textfield;
         text-align: center;
     }
     &[readonly] {
         caret-color: transparent;
     }
-    &:focus {
-        box-shadow: 0 0 0 0.15em var(--color-main-slight);
+    &:disabled {
+        cursor: not-allowed;
     }
 }
+
 textarea.i-input {
     display: block;
     transition: var(--transition), width 0s, height 0s;
     max-width: 100%;
     resize: none;
 }
-.i-form-label {
+.i-input-label-text {
+    margin-right: 0.5em;
     width: var(--label-width);
-    padding: 0.275em 0.6em;
+    padding: 0.275em 0.2em;
+    border-radius: inherit;
+    text-align: var(--label-align);
 }

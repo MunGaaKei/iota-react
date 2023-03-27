@@ -57,7 +57,7 @@ export default function Document(): JSX.Element {
                     onToggleSider={toggleCollapsed.bind(null, !collapsed)}
                 ></Header>
             }
-            // sider={<Sider></Sider>}
+            sider={<Sider></Sider>}
             footer={<Footer></Footer>}
         >
             <div className="pd-12">

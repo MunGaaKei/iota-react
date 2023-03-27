@@ -1,21 +1,30 @@
-import { Input } from "@p/index";
+import { Input, Button, Icon, Checkbox } from "@p/index";
 import { useEffect, useRef, useState } from "react";
+import { AlternateEmailSharp, SendRound } from "@ricons/material";
 
 export default function button(): JSX.Element {
     const [count, setCount] = useState<number>(0);
-    const [text, setText] = useState<string>("value");
+    const [text, setText] = useState<string>("");
 
     return (
         <>
             {/* <span onClick={() => setCount(1 + count)}>{count}</span> */}
-
-            <div style={{ width: 200 }}>
+            {text}
+            <div style={{ width: 400 }}>
                 <Input
                     label="中文标签"
-                    name="sdf"
-                    placeholder="placeholder"
-                    value={text}
-                    onChange={(value: string) => setText(value)}
+                    prefix={
+                        <Icon classname="my-auto mx-8">
+                            <AlternateEmailSharp></AlternateEmailSharp>
+                        </Icon>
+                    }
+                    suffix={
+                        <Button>
+                            <Icon>
+                                <SendRound></SendRound>
+                            </Icon>
+                        </Button>
+                    }
                 ></Input>
             </div>
         </>
