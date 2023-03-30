@@ -1,38 +1,53 @@
 .i-input-label {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
+    width: 100%;
+    &.i-input-inline {
+        flex-wrap: nowrap;
+    }
 }
+
+.i-input-label-text {
+    margin-right: 0.5em;
+    width: var(--label-width);
+    padding: 0.275em 0.2em;
+    border-radius: inherit;
+    text-align: var(--label-align);
+}
+
 .i-input-item {
-    --background: var(--background-opacity-1);
+    width: 100%;
     display: flex;
     align-items: baseline;
-    background: var(--background);
+    background: var(--background-opacity-1);
     transition: var(--transition);
     border-radius: var(--radius);
     .i-btn {
         align-self: stretch;
     }
-    > * {
-        &:not(:last-child) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        &:not(:first-child) {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
+    &:hover,
+    &:focus-within {
+        box-shadow: 0 0 0 3px var(--background-opacity-1);
+    }
+    &.i-input-success {
+        box-shadow: 0 0 0 3px var(--green-slight);
+    }
+    &.i-input-warning {
+        box-shadow: 0 0 0 3px var(--yellow-slight);
+    }
+    &.i-input-error {
+        box-shadow: 0 0 0 3px var(--red-slight);
     }
 }
 
 .i-input {
-    padding: 0 0.8em;
+    padding: 0.5em 0.8em;
     flex: 1;
-    line-height: 2;
     width: 100%;
     color: inherit;
     outline: none;
-    border: 2px solid transparent;
     transition: var(--transition);
     background: transparent;
     border-radius: inherit;
@@ -40,7 +55,6 @@
     &:focus,
     &:hover {
         background: var(--background-opacity);
-        border-color: var(--color-main-slight);
     }
 
     &[type="number"]::-webkit-inner-spin-button,
@@ -58,16 +72,23 @@
     }
 }
 
+.i-input-message {
+    position: absolute;
+    z-index: 1;
+    padding: 0 0.5em;
+    font-size: 0.5em;
+    bottom: 0;
+    right: 6%;
+    transform: translate(0, 50%);
+    background: var(--background-opacity);
+    backdrop-filter: blur(4px);
+    border-radius: 0.5em;
+    pointer-events: none;
+}
+
 textarea.i-input {
     display: block;
     transition: var(--transition), width 0s, height 0s;
     max-width: 100%;
     resize: none;
-}
-.i-input-label-text {
-    margin-right: 0.5em;
-    width: var(--label-width);
-    padding: 0.275em 0.2em;
-    border-radius: inherit;
-    text-align: var(--label-align);
 }

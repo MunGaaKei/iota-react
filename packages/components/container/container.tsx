@@ -31,15 +31,15 @@ const SiderLayout = forwardRef<HTMLDivElement, TypeSider>((props, ref) => {
 });
 
 const HeaderLayout = ({ children }: { children: ReactNode }) => {
-    if (!children) return <></>;
-
-    return <header className="i-header sticky bg-blur">{children}</header>;
+    return children ? (
+        <header className="i-header sticky bg-blur">{children}</header>
+    ) : (
+        <></>
+    );
 };
 
 const FooterLayout = ({ children }: { children: ReactNode }) => {
-    if (!children) return <></>;
-
-    return <footer className="i-footer">{children}</footer>;
+    return children ? <footer className="i-footer">{children}</footer> : <></>;
 };
 
 const Container = ({

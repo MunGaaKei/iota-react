@@ -24,9 +24,7 @@ const format = (
 };
 
 const Icon = ({ children, ...res }: TypeIcon): JSX.Element => {
-    if (!children) return <></>;
-
-    return format(children, res);
+    return children ? format(children, res) : <></>;
 };
 
 export default Icon;

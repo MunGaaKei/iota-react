@@ -7,16 +7,21 @@ import {
     useState,
 } from "react";
 import type { FormControlsAttrs } from "../@types/common";
-import { ClearRound } from "@ricons/material";
+import classNames from "classnames";
 import "./input.scss";
 
+export type TypeInputStatus = "error" | "warning" | "normal" | "success";
 export type TypeInput = {
     type?: string;
-    label?: string;
+    label?: ReactNode | string;
     value?: string;
     labelInline?: boolean;
     prefix?: ReactNode | string;
     suffix?: ReactNode | string;
+    border?: boolean;
+    className?: string;
+    status?: TypeInputStatus;
+    message?: string;
     onChange?: Function;
     onEnter?: Function;
 } & Omit<FormControlsAttrs, "onChange" | "prefix">;
@@ -28,9 +33,13 @@ const Input = forwardRef<HTMLInputElement, TypeInput>((props, ref) => {
         value = "",
         prefix,
         suffix,
+        labelInline,
         onChange,
         onEnter,
         spellCheck = false,
+        className = "",
+        message,
+        status = "normal",
         ...rest
     } = props;
     const [val, setVal] = useState<string>(value);
@@ -51,9 +60,13 @@ const Input = forwardRef<HTMLInputElement, TypeInput>((props, ref) => {
     );
 
     return (
-        <label className="i-input-label">
+        <label className={classNames("i-input-label", className)}>
             {label && <span className="i-input-label-text">{label}</span>}
-            <div className="i-input-item">
+            <div
+                className={classNames("i-input-item", {
+                    [`i-input-${status}`]: status !== "normal",
+                })}
+            >
                 {prefix}
                 <input
                     type={type}
@@ -65,6 +78,9 @@ const Input = forwardRef<HTMLInputElement, TypeInput>((props, ref) => {
                     spellCheck={spellCheck}
                     {...rest}
                 ></input>
+
+                {message && <span className="i-input-message">{message}</span>}
+
                 {suffix}
             </div>
         </label>

@@ -1,18 +1,24 @@
 import { Input, Button, Icon, Checkbox } from "@p/index";
-import { useEffect, useRef, useState } from "react";
+import type { TypeInputStatus } from "@p/index";
+import { useCallback, useEffect, useRef, useState, ChangeEvent } from "react";
 import { AlternateEmailSharp, SendRound } from "@ricons/material";
 
 export default function button(): JSX.Element {
-    const [count, setCount] = useState<number>(0);
+    const [status, setStatus] = useState<TypeInputStatus>("normal");
     const [text, setText] = useState<string>("");
+
+    const handleChange = useCallback((val: string) => {
+        setStatus(val ? "normal" : "error");
+        setText(val);
+    }, []);
 
     return (
         <>
-            {/* <span onClick={() => setCount(1 + count)}>{count}</span> */}
-            {text}
             <div style={{ width: 400 }}>
                 <Input
-                    label="中文标签"
+                    type="email"
+                    message="错误信息"
+                    status="warning"
                     prefix={
                         <Icon classname="my-auto mx-8">
                             <AlternateEmailSharp></AlternateEmailSharp>
@@ -25,6 +31,22 @@ export default function button(): JSX.Element {
                             </Icon>
                         </Button>
                     }
+                ></Input>
+
+                <Input
+                    label="用户名"
+                    className="mt-12"
+                    message="错误信息"
+                    status="error"
+                ></Input>
+
+                <Input
+                    label="密码"
+                    type="password"
+                    className="mt-12"
+                    status={status}
+                    message={text}
+                    onChange={handleChange}
                 ></Input>
             </div>
         </>
