@@ -1,4 +1,5 @@
 import { ReactNode, HTMLAttributes } from "react";
+import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
 import "./button.scss";
 
@@ -8,11 +9,12 @@ export type TypeButton = {
     outline?: boolean;
     flat?: boolean;
     loading?: boolean;
-    ripple?: boolean;
+    ripple?: string;
     disabled?: boolean;
-    size?: "small" | "large" | "normal" | "thin" | "extreme";
+    size?: "small" | "large" | "normal" | "extreme";
     block?: boolean;
     round?: boolean;
+    square?: boolean;
     Link?: Function;
     children: ReactNode;
 } & HTMLAttributes<HTMLElement>;
@@ -25,6 +27,7 @@ const formatClass = ({
     size = "normal",
     block,
     round,
+    square,
     className = "",
 }: TypeButton): string =>
     classnames("i-btn", className, {
@@ -32,6 +35,7 @@ const formatClass = ({
         "i-btn-flat": flat,
         "i-btn-block": block,
         "i-btn-loading": loading,
+        "i-btn-square": square,
         [`i-btn-${size}`]: size !== "normal",
         round,
         disabled,
@@ -44,15 +48,24 @@ const Button = (props: TypeButton): JSX.Element => {
         className,
         loading,
         flat,
+        square,
+        ripple = true,
         size,
         href,
         Link,
         ...rest
     } = props;
 
+    ripple && useRipple();
+
     if (Link) {
         return (
-            <Link to={href} className={formatClass(props)} {...rest}>
+            <Link
+                to={href}
+                className={formatClass(props)}
+                ripple={ripple ? "on" : "off"}
+                {...rest}
+            >
                 {loading && <span className="i-loading-icon"></span>}
                 <span className="i-btn-content">{children}</span>
             </Link>
@@ -62,7 +75,12 @@ const Button = (props: TypeButton): JSX.Element => {
     const Component = href ? "a" : tag;
 
     return (
-        <Component href={href} className={formatClass(props)} {...rest}>
+        <Component
+            href={href}
+            className={formatClass(props)}
+            ripple={ripple ? "on" : "off"}
+            {...rest}
+        >
             {loading && <span className="i-loading-icon"></span>}
             <span className="i-btn-content">{children}</span>
         </Component>

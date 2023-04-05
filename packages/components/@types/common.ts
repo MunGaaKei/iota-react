@@ -8,3 +8,10 @@ export type FormControlsAttrs = HTMLAttributes<HTMLInputElement> & {
     readOnly?: boolean;
     disabled?: boolean;
 };
+
+declare module "react" {
+    interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+        // extends React's HTMLAttributes
+        ripple?: string;
+    }
+}

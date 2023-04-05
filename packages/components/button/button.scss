@@ -6,8 +6,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 0.8em;
-    line-height: 2;
+    padding: 0 1em;
+    height: 2.25em;
     border-radius: var(--radius);
     border: 2px solid transparent;
     transition: var(--transition);
@@ -19,22 +19,25 @@
     font-weight: 500;
     background: var(--background);
     color: var(--color);
-    font-size: 0.875em;
+    .i-ripple-container {
+        inset: -2px;
+    }
 }
 .i-btn-block {
     width: 100%;
 }
-.i-btn-thin {
-    padding: 0 0.4em;
+.i-btn-square {
+    padding: 0;
+    width: 2.25em;
 }
 .i-btn-large {
-    font-size: 1em;
-}
-.i-btn-extreme {
     font-size: 1.5em;
 }
+.i-btn-extreme {
+    font-size: 2em;
+}
 .i-btn-small {
-    font-size: 0.6em;
+    font-size: 0.8em;
     padding: 0 0.5em;
 }
 .i-btn:hover {
@@ -48,7 +51,6 @@
     --color: var(--color-main);
     &.i-btn {
         --background: transparent;
-        border-color: var(--background);
     }
 }
 .i-btn-outline {

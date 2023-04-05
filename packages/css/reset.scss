@@ -43,7 +43,6 @@ html {
     height: 100%;
     font: var(--font);
     color: var(--color);
-    background: var(--background);
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -88,17 +87,20 @@ h5,
 h6 {
     font-size: 1rem;
 }
+label {
+    cursor: pointer;
+}
 ::selection {
     background-color: #ffd832 !important;
     color: #212121 !important;
 }
 .os-windows ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-    border-radius: var(--radius);
+    width: 8px;
+    height: 8px;
     cursor: pointer;
 }
 .os-windows ::-webkit-scrollbar-thumb {
-    background-color: var(--color);
+    background-color: var(--grey-2);
     cursor: pointer;
+    border-radius: var(--radius);
 }

@@ -27,8 +27,8 @@ const Header = ({
 }): JSX.Element => {
     return (
         <div className="py-8 px-12 flex">
-            <Button size="small" flat onClick={() => onToggleSider()}>
-                <Icon size="2em">
+            <Button flat onClick={() => onToggleSider()} square>
+                <Icon>
                     <MenuFilled></MenuFilled>
                 </Icon>
             </Button>

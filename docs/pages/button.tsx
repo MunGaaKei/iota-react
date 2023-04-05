@@ -24,13 +24,7 @@ export default function button(): JSX.Element {
                             <AlternateEmailSharp></AlternateEmailSharp>
                         </Icon>
                     }
-                    suffix={
-                        <Button>
-                            <Icon>
-                                <SendRound></SendRound>
-                            </Icon>
-                        </Button>
-                    }
+                    suffix={<Button className="bg-blue">发送</Button>}
                 ></Input>
 
                 <Input

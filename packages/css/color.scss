@@ -12,10 +12,9 @@ $colors: (
 
 :root {
     --background: #fff;
-    --background-1: #efeef1;
-    --background-2: #e6e6e71;
+    --background-2: #efeef1;
     --background-opacity: rgba(255, 255, 255, 0.81);
-    --background-opacity-1: rgba(233, 233, 233, 0.81);
+    --background-opacity-1: rgba(233, 233, 233, 0.6);
 
     --color-main: #212121;
     --color-main-1: #343434;
@@ -32,9 +31,30 @@ $colors: (
         --#{$name}: #{$value};
 
         @if ($name == "black") {
-            --#{$name}-1: #{lighten($value, 12%)};
-            --#{$name}-2: #{lighten($value, 16%)};
+            --#{$name}-1: #{lighten($value, 10%)};
+            --#{$name}-2: #{lighten($value, 20%)};
+            --#{$name}-3: #{lighten($value, 30%)};
+            --#{$name}-4: #{lighten($value, 40%)};
+            --#{$name}-5: #{lighten($value, 50%)};
+            --#{$name}-6: #{lighten($value, 60%)};
+            --#{$name}-7: #{lighten($value, 70%)};
+            --#{$name}-8: #{lighten($value, 80%)};
+            --#{$name}-9: #{lighten($value, 90%)};
             --#{$name}-slight: #{lighten($value, 80%)};
+
+            @for $i from 1 to 10 {
+                .bg-#{$name}-#{$i} {
+                    @if ($i > 5) {
+                        color: var(--black);
+                    } @else {
+                        color: var(--white);
+                    }
+                    background: var(--#{$name}-#{$i});
+                }
+                .#{$name}-#{$i} {
+                    color: var(--#{$name}-#{$i});
+                }
+            }
         } @else if ($name == "red") {
             --#{$name}-1: #{darken($value, 4%)};
             --#{$name}-2: #{darken($value, 8%)};
@@ -68,6 +88,58 @@ $colors: (
             --#{$name}-2: #{darken($value, 8%)};
             --#{$name}-slight: #{lighten($value, 24%)};
         }
+
+        .#{$name} {
+            --background-hover: var(--#{$name}-slight);
+            --color: var(--#{$name});
+            color: var(--color);
+        }
+        .#{$name}-1 {
+            --background-hover: var(--#{$name}-slight);
+            --color: var(--#{$name}-1);
+            color: var(--color-1);
+        }
+        .#{$name}-2 {
+            --background-hover: var(--#{$name}-slight);
+            --color: var(--#{$name}-2);
+            color: var(--color-2);
+        }
+        .#{$name}-slight {
+            --color: var(--#{$name}-slight);
+            color: var(--color);
+        }
+
+        .bg-#{$name} {
+            --background: var(--#{$name});
+            background: var(--#{$name});
+        }
+        .bg-#{$name}-1 {
+            --background: var(--#{$name}-1);
+            background: var(--#{$name}-1);
+        }
+        .bg-#{$name}-2 {
+            --background: var(--#{$name}-2);
+            background: var(--#{$name}-2);
+        }
+        .bg-#{$name}-slight {
+            --background: var(--#{$name}-slight);
+            --color: var(--black);
+            background: var(--#{$name}-slight);
+        }
+        .bg-#{$name},
+        .bg-#{$name}-1,
+        .bg-#{$name}-2 {
+            @if $name == "white" or $name == "grey" or $name == "yellow" {
+                --color: var(--black);
+                color: var(--color);
+            } @else {
+                --color: var(--white);
+                color: var(--color);
+            }
+        }
+        .bg-#{$name}:hover {
+            --background: var(--#{$name}-1);
+        }
     }
 }
 
@@ -85,56 +157,61 @@ $colors: (
     color: var(--color-2);
 }
 
-@each $name, $value in $colors {
-    .#{$name} {
-        --background-hover: var(--#{$name}-slight);
-        --color: var(--#{$name});
-        color: var(--color);
-    }
-    .#{$name}-1 {
-        --background-hover: var(--#{$name}-slight);
-        --color: var(--#{$name}-1);
-        color: var(--color-1);
-    }
-    .#{$name}-2 {
-        --background-hover: var(--#{$name}-slight);
-        --color: var(--#{$name}-2);
-        color: var(--color-2);
-    }
-    .#{$name}-slight {
-        --color: var(--#{$name}-slight);
-        color: var(--color);
-    }
+@mixin themeDark() {
+    --background: #212121;
+    --background-2: #1a1a1a;
+    --background-opacity: rgba(33, 33, 33, 0.8);
+    --background-opacity-1: rgba(88, 88, 88, 0.4);
+    --blur: blur(24px);
 
-    .bg-#{$name} {
-        --background: var(--#{$name});
-        background: var(--#{$name});
-    }
-    .bg-#{$name}-1 {
-        --background: var(--#{$name}-1);
-        background: var(--#{$name}-1);
-    }
-    .bg-#{$name}-2 {
-        --background: var(--#{$name}-2);
-        background: var(--#{$name}-2);
-    }
-    .bg-#{$name}-slight {
-        --background: var(--#{$name}-slight);
-        background: var(--#{$name}-slight);
-        color: var(--black);
-    }
-    .bg-#{$name},
-    .bg-#{$name}-1,
-    .bg-#{$name}-2 {
-        @if $name == "white" or $name == "grey" or $name == "yellow" {
-            --color: var(--black);
-            color: var(--color);
+    --color-main: #1f8fff;
+    --color-main-1: #2d96ff;
+    --color-main-2: #1389ff;
+    --color-main-slight: #c1e0ff11;
+    --color-main-reverse: #fff;
+
+    --color: #fff;
+    --color-slight: rgba(255, 255, 255, 0.1);
+
+    background: var(--background);
+    color: var(--color);
+
+    @each $name, $value in $colors {
+        @if ($name == "black") {
+            --#{$name}-slight: rgba(0, 0, 0, 0.2);
+        } @else if ($name == "red") {
+            --#{$name}-slight: #{darken($value, 32%)};
+        } @else if ($name == "blue") {
+            --#{$name}-slight: #{darken($value, 36%)};
+        } @else if ($name == "green") {
+            --#{$name}-slight: #{darken($value, 30%)};
+        } @else if ($name == "yellow") {
+            --#{$name}-slight: #{darken($value, 44%)};
+        } @else if ($name == "grey") {
+            --#{$name}-slight: #{darken($value, 40%)};
+        } @else if ($name == "pink") {
+            --#{$name}-slight: #{darken($value, 56%)};
+        } @else if ($name == "purple") {
+            --#{$name}-slight: #{darken($value, 40%)};
         } @else {
+            --#{$name}-slight: rgba(255, 255, 255, 0.2);
+        }
+        .bg-#{$name}-slight {
             --color: var(--white);
-            color: var(--color);
         }
     }
-    .i-btn.bg-#{$name}:hover {
-        --background: var(--#{$name}-1);
+
+    .bg-slight {
+        color: var(--white);
+    }
+}
+
+.theme-dark {
+    @include themeDark();
+}
+
+@media (prefers-color-scheme: dark) {
+    .theme-auto {
+        @include themeDark();
     }
 }
