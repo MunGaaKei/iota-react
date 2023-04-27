@@ -1,9 +1,9 @@
 export default `import "./{{lowername}}.scss";
+import { Props{{name}} } from "./types";
 
-export type Type{{name}} = {};
-
-const {{name}} = (): JSX.Element => {
-    return <></>;
+const {{name}} = (props: Props{{name}}): JSX.Element => {
+	return <></>;
 };
 
-export default {{name}};`;
+export default {{name}};
+`;

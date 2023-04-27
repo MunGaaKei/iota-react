@@ -1,68 +1,74 @@
 import { lazy, memo, Suspense, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MenuFilled } from "@ricons/material";
-import { Container, Icon, Button } from "@p/index";
+import { Container, Icon, Button, Menu } from "@p/index";
+import menus from "@d/config/menu";
 
-type DpProps = {
-    name?: string;
-};
+interface DpProps {
+	name?: string;
+}
 
 const DynamicPage = memo(
-    ({ name }: DpProps) => {
-        const Page = lazy(() => import(`../pages/${name}`));
+	({ name }: DpProps) => {
+		const Page = lazy(() => import(`../pages/${name}`));
 
-        return (
-            <Suspense fallback={<>loading</>}>
-                <Page></Page>
-            </Suspense>
-        );
-    },
-    (pp: DpProps, np: DpProps) => pp.name === np.name
+		return (
+			<Suspense fallback={<>loading</>}>
+				<Page></Page>
+			</Suspense>
+		);
+	},
+	(pp: DpProps, np: DpProps) => pp.name === np.name
 );
 
 const Header = ({
-    onToggleSider,
+	onToggleSider,
 }: {
-    onToggleSider: Function;
+	onToggleSider: Function;
 }): JSX.Element => {
-    return (
-        <div className="py-8 px-12 flex">
-            <Button flat onClick={() => onToggleSider()} square>
-                <Icon>
-                    <MenuFilled></MenuFilled>
-                </Icon>
-            </Button>
-        </div>
-    );
+	return (
+		<div className='py-8 px-12 flex'>
+			<Button flat onClick={() => onToggleSider()} square>
+				<Icon>
+					<MenuFilled></MenuFilled>
+				</Icon>
+			</Button>
+		</div>
+	);
 };
 
 const Sider = (): JSX.Element => {
-    return <></>;
+	return (
+		<div className='px-4 py-12' style={{ minWidth: 300 }}>
+			<h1>IOTA R</h1>
+			<Menu items={menus}></Menu>
+		</div>
+	);
 };
 
 const Footer = (): JSX.Element => {
-    return <></>;
+	return <></>;
 };
 
 export default function Document(): JSX.Element {
-    const { name } = useParams<{ [key: string]: string }>();
-    const [collapsed, toggleCollapsed] = useState<boolean>(false);
+	const { name } = useParams<{ [key: string]: string }>();
+	const [collapsed, toggleCollapsed] = useState<boolean>(false);
 
-    return (
-        <Container
-            layout="menu"
-            collapsed={collapsed}
-            header={
-                <Header
-                    onToggleSider={toggleCollapsed.bind(null, !collapsed)}
-                ></Header>
-            }
-            sider={<Sider></Sider>}
-            footer={<Footer></Footer>}
-        >
-            <div className="pd-12">
-                <DynamicPage name={name}></DynamicPage>
-            </div>
-        </Container>
-    );
+	return (
+		<Container
+			layout='menu'
+			collapsed={collapsed}
+			header={
+				<Header
+					onToggleSider={toggleCollapsed.bind(null, !collapsed)}
+				></Header>
+			}
+			sider={<Sider></Sider>}
+			footer={<Footer></Footer>}
+		>
+			<div className='pd-12'>
+				<DynamicPage name={name}></DynamicPage>
+			</div>
+		</Container>
+	);
 }

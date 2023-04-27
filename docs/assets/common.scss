@@ -1,0 +1,11 @@
+@font-face {
+	font-family: "varela";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("./varela.woff2") format("woff2");
+}
+
+html body {
+	font-family: "varela";
+}
