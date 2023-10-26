@@ -32,7 +32,16 @@
 			background: var(--background-hover);
 		}
 	}
+	.link {
+		display: inline-flex;
+		position: relative;
+		white-space: nowrap;
+		color: var(--blue);
+	}
 
+	.relative {
+		position: relative;
+	}
 	.flex {
 		display: flex;
 	}
@@ -64,6 +73,14 @@
 	}
 	.text-center {
 		text-align: center;
+	}
+	.text-right {
+		text-align: right;
+	}
+	.ellipsis {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 	.justify-center {
 		justify-content: center;
@@ -207,6 +224,9 @@
 		}
 		.pb-#{$i} {
 			padding-bottom: #{$i}px;
+		}
+		.gap-#{$i} {
+			gap: #{$i}px;
 		}
 	}
 

@@ -1,8 +1,8 @@
-import { lazy, memo, Suspense, useState } from "react";
-import { useParams } from "react-router-dom";
-import { MenuFilled } from "@ricons/material";
-import { Container, Icon, Button, Menu } from "@p/index";
 import menus from "@d/config/menu";
+import { Button, Container, Icon, Menu } from "@p/index";
+import { MenuFilled } from "@ricons/material";
+import { Suspense, lazy, memo, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface DpProps {
 	name?: string;
@@ -28,10 +28,8 @@ const Header = ({
 }): JSX.Element => {
 	return (
 		<div className='py-8 px-12 flex'>
-			<Button flat onClick={() => onToggleSider()} square>
-				<Icon>
-					<MenuFilled></MenuFilled>
-				</Icon>
+			<Button flat square onClick={() => onToggleSider()}>
+				<Icon icon={MenuFilled}></Icon>
 			</Button>
 		</div>
 	);
@@ -39,7 +37,7 @@ const Header = ({
 
 const Sider = (): JSX.Element => {
 	return (
-		<div className='px-4 py-12' style={{ minWidth: 300 }}>
+		<div className='px-4 py-12'>
 			<h1>IOTA R</h1>
 			<Menu items={menus}></Menu>
 		</div>

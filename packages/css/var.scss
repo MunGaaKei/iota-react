@@ -1,20 +1,23 @@
 $breakpoint-mobile: 880px;
 
 :root {
-    --font-size: 16px;
-    --font: normal 400 var(--font-size) / 1.5 -apple-system, "Helvetica Neue",
-        sans-serif;
-    --transition: all 0.24s ease;
+	--font-size: 16px;
+	--font: normal 400 var(--font-size) / 1.5 -apple-system, "Helvetica Neue",
+		sans-serif;
+	--transition: all 0.24s ease;
 
-    --padding: 0.5em 0.825em;
-    --radius: 4px;
-    --shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
-    --blur: blur(24px);
-    --breakpoint: #{$breakpoint-mobile};
+	--padding: 0.5em 0.825em;
+	--radius: 4px;
+	--shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+	--blur: blur(24px);
+	--breakpoint: #{$breakpoint-mobile};
+
+	--label-width: auto;
+	--label-align: left;
 }
 
 @media (max-width: #{$breakpoint-mobile}) {
-    :root {
-        --font-size: 14px;
-    }
+	:root {
+		--font-size: 14px;
+	}
 }

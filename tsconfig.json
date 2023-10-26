@@ -19,6 +19,7 @@
 		"types": ["node"],
 		"paths": {
 			"@d/*": ["./docs/*"],
+			"@p": ["./packages"],
 			"@p/*": ["./packages/*"]
 		}
 	},

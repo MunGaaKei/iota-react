@@ -1,25 +1,18 @@
-import { ReactNode } from "react";
-import "./icon.scss";
+import classNames from "classnames";
+import "./index.scss";
+import { Props } from "./type";
 
-export interface PropsIcon {
-	size?: string;
-	classname?: string;
-	children?: ReactNode;
-}
+const Icon = (props: Props) => {
+	const { icon: IconSvg, size = "1.5em", className = "", ...rest } = props;
 
-const format = (
-	node: any,
-	{ size = "1.5em", classname = "" }: PropsIcon
-): JSX.Element => {
-	return node.type.render({
-		width: size,
-		height: size,
-		className: `i-icon ${classname}`,
-	});
-};
-
-const Icon = ({ children, ...res }: PropsIcon): JSX.Element => {
-	return children ? format(children, res) : <></>;
+	return (
+		<IconSvg
+			width={size}
+			height={size}
+			className={classNames("icon", className)}
+			{...rest}
+		></IconSvg>
+	);
 };
 
 export default Icon;

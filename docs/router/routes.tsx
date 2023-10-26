@@ -1,19 +1,19 @@
-import Page404 from '@d/pages/404';
-import Document from '@d/layouts/document';
-import Home from '@d/pages/home';
+import Document from "@d/layouts/document";
+import Page404 from "@d/pages/404";
+import Home from "@d/pages/home";
 
 export default [
 	{
-		path: '/',
-		element: <Home />
+		path: "/",
+		element: <Home />,
 	},
 	{
-		path: '/docs/:name',
+		path: "/docs/:name",
 		element: <Document />,
-		errorElement: <>error</>
+		errorElement: <>error</>,
 	},
 	{
-		path: '/*',
-		element: <Page404 />
-	}
+		path: "/*",
+		element: <Page404 />,
+	},
 ];

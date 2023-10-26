@@ -1,7 +1,7 @@
-import "./menu.scss";
-import { PropsMenu, TypeMenuItem } from "./types";
+import "./index.scss";
+import { Props } from "./type";
 
-const Menu = (props: PropsMenu): JSX.Element => {
+const Menu = (props: Props): JSX.Element => {
 	const { items } = props;
 
 	return <div className='i-menu'></div>;

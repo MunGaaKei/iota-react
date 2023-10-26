@@ -1,6 +1,9 @@
-import { Input, Button, Icon } from "@p/index";
-import { useCallback, useEffect, useRef, useState, ChangeEvent } from "react";
+import { Input } from "@p";
 
 export default function button(): JSX.Element {
-	return <></>;
+	return (
+		<>
+			<Input></Input>
+		</>
+	);
 }

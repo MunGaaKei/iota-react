@@ -1,23 +1,7 @@
-import { ReactNode, HTMLAttributes } from "react";
-import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
-import "./button.scss";
-
-export interface PropsButton extends HTMLAttributes<HTMLElement> {
-	tag?: "button" | "a";
-	href?: string;
-	outline?: boolean;
-	flat?: boolean;
-	loading?: boolean;
-	ripple?: string;
-	disabled?: boolean;
-	size?: "small" | "large" | "normal" | "extreme";
-	block?: boolean;
-	round?: boolean;
-	square?: boolean;
-	Link?: Function;
-	children: ReactNode;
-}
+import { createElement } from "react";
+import "./index.scss";
+import { Props } from "./type";
 
 const formatClass = ({
 	outline,
@@ -29,7 +13,7 @@ const formatClass = ({
 	round,
 	square,
 	className,
-}: PropsButton): string =>
+}: Props) =>
 	classnames("i-btn", className, {
 		"i-btn-outline": outline,
 		"i-btn-flat": flat,
@@ -41,49 +25,56 @@ const formatClass = ({
 		disabled,
 	});
 
-const Button = (props: PropsButton): JSX.Element => {
+const Button = (props: Props) => {
 	const {
 		tag = "a",
 		children,
 		className,
 		loading,
 		flat,
+		outline,
 		square,
-		ripple = true,
 		size,
 		href,
-		Link,
 		...rest
 	} = props;
 
-	ripple && useRipple();
+	const Tag = tag ? tag : href ? "a" : tag;
+	const isNormalTag = typeof Tag === "string";
 
-	if (Link) {
-		return (
-			<Link
-				to={href}
-				className={formatClass(props)}
-				ripple={ripple ? "on" : "off"}
-				{...rest}
-			>
-				{loading && <span className='i-loading-icon'></span>}
-				<span className='i-btn-content'>{children}</span>
-			</Link>
+	const childNodes = [
+		loading &&
+			createElement("span", {
+				key: "loading",
+				className: "i-loading-icon",
+			}),
+		createElement(
+			"span",
+			{ key: "content", className: "i-btn-content" },
+			children
+		),
+	];
+
+	if (isNormalTag) {
+		return createElement(
+			Tag,
+			{
+				href,
+				className: formatClass(props),
+				...rest,
+			},
+			childNodes
 		);
 	}
 
-	const Component = href ? "a" : tag;
-
-	return (
-		<Component
-			href={href}
-			className={formatClass(props)}
-			ripple={ripple ? "on" : "off"}
-			{...rest}
-		>
-			{loading && <span className='i-loading-icon'></span>}
-			<span className='i-btn-content'>{children}</span>
-		</Component>
+	return createElement(
+		Tag,
+		{
+			to: href || "",
+			className: formatClass(props),
+			...rest,
+		},
+		childNodes
 	);
 };
 

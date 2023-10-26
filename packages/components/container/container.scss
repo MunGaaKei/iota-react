@@ -1,29 +1,29 @@
 .i-container {
-    position: absolute;
-    inset: 0;
-    overflow-x: hidden;
+	position: relative;
+	inset: 0;
+	overflow-x: hidden;
 }
 .i-content {
-    position: relative;
-    flex: 1;
-    width: 100%;
-    overflow-x: hidden;
-    transition: var(--transition);
+	position: relative;
+	flex: 1;
+	width: 100%;
+	overflow-x: hidden;
+	transition: var(--transition);
 }
 .i-header,
 .i-footer {
-    z-index: 1;
-    display: flex;
-    align-items: center;
+	z-index: 1;
+	display: flex;
+	align-items: center;
 }
 .i-footer {
-    top: unset;
-    bottom: 0;
+	top: unset;
+	bottom: 0;
 }
 .i-sider {
-    margin-left: auto;
-    max-width: 100%;
-    overflow-x: hidden;
-    transition: var(--transition);
-    flex-shrink: 0;
+	margin-left: auto;
+	max-width: 100%;
+	overflow-x: hidden;
+	transition: var(--transition);
+	flex-shrink: 0;
 }

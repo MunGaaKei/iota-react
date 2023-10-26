@@ -7,7 +7,7 @@ export type TypeMenuItem = {
 	expanded?: boolean;
 };
 
-export interface PropsMenu {
+export interface Props {
 	items: TypeMenuItem[];
 	depth?: number;
 	selectable?: boolean;

@@ -1,82 +1,85 @@
+import "@p/css/input.scss";
+import { useMemoizedFn, useReactive } from "ahooks";
+import classNames from "classnames";
 import {
 	ChangeEvent,
-	forwardRef,
-	useCallback,
-	ReactNode,
 	KeyboardEvent,
+	forwardRef,
+	useEffect,
 	useState,
 } from "react";
-import type { FormControlsAttrs } from "../@types/common";
-import classNames from "classnames";
-import "./input.scss";
+import "./index.scss";
+import { Props } from "./type";
 
-export type InputStatus = "error" | "warning" | "normal" | "success";
-export interface PropsInput
-	extends Omit<FormControlsAttrs, "onChange" | "prefix"> {
-	type?: string;
-	label?: ReactNode | string;
-	value?: string;
-	labelInline?: boolean;
-	prefix?: ReactNode | string;
-	suffix?: ReactNode | string;
-	border?: boolean;
-	className?: string;
-	status?: InputStatus;
-	message?: string;
-	onChange?: Function;
-	onEnter?: Function;
-}
-
-const Input = forwardRef<HTMLInputElement, PropsInput>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	const {
 		type = "text",
 		label,
+		name,
 		value = "",
 		prefix,
 		suffix,
 		labelInline,
+		className = "",
+		form,
+		status: propStatus = {},
 		onChange,
 		onEnter,
-		spellCheck = false,
-		className = "",
-		message,
-		status = "normal",
 		...rest
 	} = props;
-	const [val, setVal] = useState<string>(value);
 
-	const handleChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
-			onChange?.(e.target.value, e);
-			setVal(e.target.value);
-		},
-		[onChange]
-	);
+	const [val, setVal] = useState(value);
+	const inputStatus = useReactive({
+		status: "normal",
+		message: "",
+	});
 
-	const handleKeydown = useCallback(
-		(e: KeyboardEvent<HTMLInputElement>) => {
-			e.code === "Enter" && onEnter?.();
-		},
-		[onEnter]
-	);
+	const handleChange = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
+		const v = e.target.value;
+		Object.assign(inputStatus, {
+			status: "normal",
+			message: "",
+		});
+
+		setVal(v);
+		onChange?.(v, e);
+	});
+
+	const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {
+		e.code === "Enter" && onEnter?.();
+	});
+
+	useEffect(() => {
+		Object.assign(inputStatus, propStatus);
+	}, [propStatus.status, propStatus.message]);
+
+	const { status, message } = inputStatus;
 
 	return (
-		<label className={classNames("i-input-label", className)}>
+		<label
+			className={classNames("i-input-label", className, {
+				"i-input-inline": labelInline,
+			})}
+		>
 			{label && <span className='i-input-label-text'>{label}</span>}
+
 			<div
 				className={classNames("i-input-item", {
 					[`i-input-${status}`]: status !== "normal",
 				})}
 			>
 				{prefix}
+
 				<input
 					type={type}
 					ref={ref}
+					name={name}
 					value={val}
-					className='i-input'
+					className={classNames("i-input", {
+						["i-input-filled"]: !!val,
+					})}
 					onChange={handleChange}
 					onKeyDown={handleKeydown}
-					spellCheck={spellCheck}
 					{...rest}
 				></input>
 

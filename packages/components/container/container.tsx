@@ -1,30 +1,6 @@
-import {
-	ReactNode,
-	useEffect,
-	useRef,
-	forwardRef,
-	useState,
-	CSSProperties,
-} from "react";
+import { CSSProperties, forwardRef, useEffect, useRef, useState } from "react";
 import "./container.scss";
-
-type PropsSider = {
-	children?: ReactNode;
-	collapsed?: boolean;
-};
-
-type PropsArea = {
-	children?: ReactNode;
-	name: string;
-};
-
-export interface PropsContainer extends PropsSider {
-	layout?: "default" | "menu";
-	breakpoint?: number;
-	sider?: ReactNode;
-	header?: ReactNode;
-	footer?: ReactNode;
-}
+import { Props, PropsArea, PropsSider } from "./type";
 
 const SiderLayout = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
 	const { children, collapsed = false } = props;
@@ -52,15 +28,17 @@ const Area = ({ children, name }: PropsArea) => {
 	);
 };
 
-const Container = ({
-	layout = "default",
-	collapsed = false,
-	breakpoint,
-	header: Header,
-	sider: Sider,
-	footer: Footer,
-	children,
-}: PropsContainer): JSX.Element => {
+const Container = (props: Props): JSX.Element => {
+	const {
+		layout = "default",
+		collapsed = false,
+		breakpoint,
+		header: Header,
+		sider: Sider,
+		footer: Footer,
+		children,
+	} = props;
+
 	const siderEl = useRef<HTMLDivElement>(null);
 	const [contentStyle, setContentStyle] = useState<CSSProperties>({});
 
