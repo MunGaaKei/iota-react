@@ -2,9 +2,9 @@
  * 运行 npm make ${ComponentName} 创建组件文件夹模板
  */
 
-import fs from "fs";
-import { resolve, join } from "path";
 import chalk from "chalk";
+import fs from "fs";
+import { join, resolve } from "path";
 import { tplComponent, tplExport, tplType } from "./templates.js";
 
 const __dirname = resolve();
@@ -26,8 +26,8 @@ if (!name) {
 
 		generate(targetDir, tplComponent, name, `${lowername}.tsx`);
 		generate(targetDir, tplExport, name, "index.tsx");
-		generate(targetDir, tplType, name, "types.ts");
-		generate(targetDir, "", name, `${lowername}.scss`);
+		generate(targetDir, tplType, name, "type.ts");
+		generate(targetDir, "", name, `index.scss`);
 	}
 }
 

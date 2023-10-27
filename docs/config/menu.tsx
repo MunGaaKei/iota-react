@@ -1,108 +1,113 @@
+import { Icon } from "@p";
 import { ApiRound, ColorLensTwotone, DashboardTwotone } from "@ricons/material";
+import { Link } from "react-router-dom";
 
 export default [
 	{
 		title: "USAGE",
-		type: "subtitle",
+		type: "title",
 	},
 	{
 		title: "Style & Colors",
-		icon: <ColorLensTwotone />,
+		icon: <Icon icon={ColorLensTwotone} />,
 		children: [
 			{
 				title: "Colors",
-				to: "/docs/colors",
+				href: "/docs/colors",
 			},
 			{
 				title: "Helper Class",
-				to: "/docs/helper",
+				href: "/docs/helper",
 			},
 		],
 	},
 	{
 		title: "Components",
-		icon: <DashboardTwotone />,
+		icon: <Icon icon={DashboardTwotone} />,
 		expanded: true,
 		children: [
 			{
 				title: "Button",
-				to: "/docs/button",
+				href: "/docs/button",
+				as: Link,
 			},
 			{
 				title: "Container",
-				to: "/docs/container",
+				href: "/docs/container",
 			},
 			{
 				title: "Dialog",
-				to: "/docs/dialog",
+				href: "/docs/dialog",
+				disabled: true,
 			},
 			{
 				title: "Dropdown",
-				to: "/docs/dropdown",
+				href: "/docs/dropdown",
 			},
 			{
 				title: "Form",
-				to: "/docs/form",
+				href: "/docs/form",
+				as: Link,
 				children: [
 					{
 						title: "Checkbox",
-						to: "/docs/checkbox",
+						href: "/docs/checkbox",
 					},
 					{
 						title: "Input",
-						to: "/docs/input",
+						href: "/docs/input",
 					},
 					{
 						title: "Radio",
-						to: "/docs/radio",
+						href: "/docs/radio",
 					},
 					{
 						title: "Select",
-						to: "/docs/select",
+						href: "/docs/select",
 					},
 				],
 			},
 			{
 				title: "Icon",
-				to: "/docs/icon",
+				href: "/docs/icon",
 			},
 			{
 				title: "List",
-				to: "/docs/list",
+				href: "/docs/list",
 			},
 			{
 				title: "Message",
-				to: "/docs/message",
+				href: "/docs/message",
 			},
 			{
 				title: "Page",
-				to: "/docs/page",
+				href: "/docs/page",
 			},
 			{
 				title: "Popup",
-				to: "/docs/popup",
+				href: "/docs/popup",
 			},
 			{
 				title: "Tab",
-				to: "/docs/tab",
+				href: "/docs/tab",
 			},
 			{
 				title: "Table",
-				to: "/docs/table",
+				href: "/docs/table",
 			},
 		],
 	},
 	{
 		title: "Directives",
-		icon: <ApiRound />,
+		icon: <Icon icon={ApiRound} />,
 		children: [
 			{
 				title: "Clickoutside",
-				to: "/docs/clickoutside",
+				href: "/docs/clickoutside",
 			},
 			{
 				title: "Ripple",
-				to: "/docs/ripple",
+				href: "/docs/ripple",
 			},
 		],
 	},

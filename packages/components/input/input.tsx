@@ -1,13 +1,13 @@
-import "@p/css/input.scss";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
 	ChangeEvent,
 	KeyboardEvent,
 	forwardRef,
+	useCallback,
 	useEffect,
-	useState,
 } from "react";
+import "../../css/input.scss";
 import "./index.scss";
 import { Props } from "./type";
 
@@ -22,38 +22,45 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		labelInline,
 		className = "",
 		form,
-		status: propStatus = {},
+		status,
+		message,
 		onChange,
 		onEnter,
 		...rest
 	} = props;
 
-	const [val, setVal] = useState(value);
-	const inputStatus = useReactive({
-		status: "normal",
-		message: "",
+	const state = useReactive({
+		value,
+		status,
+		message,
 	});
 
-	const handleChange = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
-		const v = e.target.value;
-		Object.assign(inputStatus, {
-			status: "normal",
-			message: "",
-		});
+	const handleChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			const v = e.target.value;
+			Object.assign(state, {
+				status: "normal",
+				message: "",
+			});
 
-		setVal(v);
-		onChange?.(v, e);
-	});
+			state.value = v;
+			onChange?.(v, e);
+		},
+		[onChange]
+	);
 
 	const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {
 		e.code === "Enter" && onEnter?.();
 	});
 
 	useEffect(() => {
-		Object.assign(inputStatus, propStatus);
-	}, [propStatus.status, propStatus.message]);
+		Object.assign(state, {
+			status,
+			message,
+		});
+	}, [status, message]);
 
-	const { status, message } = inputStatus;
+	const { status: sts, message: msg, value: v } = state;
 
 	return (
 		<label
@@ -65,7 +72,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
 			<div
 				className={classNames("i-input-item", {
-					[`i-input-${status}`]: status !== "normal",
+					[`i-input-${sts}`]: sts !== "normal",
 				})}
 			>
 				{prefix}
@@ -74,16 +81,14 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 					type={type}
 					ref={ref}
 					name={name}
-					value={val}
-					className={classNames("i-input", {
-						["i-input-filled"]: !!val,
-					})}
+					value={v}
+					className={classNames("i-input")}
 					onChange={handleChange}
 					onKeyDown={handleKeydown}
 					{...rest}
 				></input>
 
-				{message && <span className='i-input-message'>{message}</span>}
+				{msg && <span className='i-input-message'>{msg}</span>}
 
 				{suffix}
 			</div>

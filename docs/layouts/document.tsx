@@ -38,7 +38,7 @@ const Header = ({
 const Sider = (): JSX.Element => {
 	return (
 		<div className='px-4 py-12'>
-			<h1>IOTA R</h1>
+			<h1>R</h1>
 			<Menu items={menus}></Menu>
 		</div>
 	);

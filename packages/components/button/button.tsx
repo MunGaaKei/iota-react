@@ -27,7 +27,7 @@ const formatClass = ({
 
 const Button = (props: Props) => {
 	const {
-		tag = "a",
+		as = "a",
 		children,
 		className,
 		loading,
@@ -39,8 +39,7 @@ const Button = (props: Props) => {
 		...rest
 	} = props;
 
-	const Tag = tag ? tag : href ? "a" : tag;
-	const isNormalTag = typeof Tag === "string";
+	const As = as ?? "a";
 
 	const childNodes = [
 		loading &&
@@ -55,9 +54,9 @@ const Button = (props: Props) => {
 		),
 	];
 
-	if (isNormalTag) {
+	if (typeof As === "string") {
 		return createElement(
-			Tag,
+			As,
 			{
 				href,
 				className: formatClass(props),
@@ -68,7 +67,7 @@ const Button = (props: Props) => {
 	}
 
 	return createElement(
-		Tag,
+		As,
 		{
 			to: href || "",
 			className: formatClass(props),

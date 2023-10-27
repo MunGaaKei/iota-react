@@ -8,7 +8,7 @@ import {
 import { LinkProps } from "react-router-dom";
 
 interface BaseProps {
-	tag?:
+	as?:
 		| "a"
 		| "button"
 		| ForwardRefExoticComponent<
