@@ -36,5 +36,6 @@ export interface Props {
 	selectable?: boolean;
 	round?: boolean;
 	ripple?: boolean;
+	style?: CSSProperties;
 	onItemClick?: (item: TMenuItem, e: MouseEvent<HTMLElement>) => void;
 }

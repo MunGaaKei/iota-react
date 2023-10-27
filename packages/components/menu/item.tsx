@@ -34,21 +34,25 @@ const MenuHeader = (props: TMenuHeader) => {
 };
 
 export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
-	const { item, depth = 0, onItemClick } = props;
+	const { item, depth = 0, round, onItemClick } = props;
 	const { as, href, icon, title, children = [], expanded, disabled } = item;
 
 	const state = useReactive({
 		expanded,
 	});
 
-	const handleExpand = useMemoizedFn((e: MouseEvent<HTMLElement>) => {
-		e.preventDefault();
-		e.stopPropagation();
+	const handleExpand = useMemoizedFn(
+		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
+			if (fromToggle) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
 
-		if (disabled) return;
+			if (disabled) return;
 
-		state.expanded = !state.expanded;
-	});
+			state.expanded = !state.expanded;
+		}
+	);
 
 	const handleItemClick = useMemoizedFn((e: MouseEvent<HTMLElement>) => {
 		if (disabled) {
@@ -80,7 +84,7 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 					<Icon
 						icon={KeyboardArrowDownRound}
 						className='i-menu-toggle'
-						onClick={handleExpand}
+						onClick={(e) => handleExpand(e, true)}
 					></Icon>
 				)}
 			</MenuHeader>

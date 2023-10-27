@@ -39,7 +39,7 @@ const Sider = (): JSX.Element => {
 	return (
 		<div className='px-4 py-12'>
 			<h1>R</h1>
-			<Menu items={menus}></Menu>
+			<Menu items={menus} style={{ minWidth: 240 }}></Menu>
 		</div>
 	);
 };
