@@ -41,10 +41,17 @@
 		color: var(--color-main);
 	}
 }
+
+.i-menu-round {
+	.i-menu-item-header {
+		border-radius: 100px;
+	}
+}
+
 .i-menu-toggle {
 	margin-left: auto;
 	transition: var(--transition);
-	border-radius: var(--radius);
+	border-radius: inherit;
 	color: var(--color-6);
 	&:hover {
 		color: var(--color-3);

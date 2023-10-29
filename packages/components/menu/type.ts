@@ -8,6 +8,7 @@ import {
 import { LinkProps } from "react-router-dom";
 
 export type TMenuHeader = {
+	round?: boolean;
 	style?: CSSProperties;
 	children: ReactNode;
 	onClick?: (e: MouseEvent<HTMLElement>) => void;

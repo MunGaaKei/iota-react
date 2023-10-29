@@ -12,12 +12,16 @@
     "dependencies": {
         "@ricons/material": "^0.12.0",
         "ahooks": "^3.7.8",
+        "lodash": "^4.17.21",
+        "pubsub-js": "^1.9.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.9.0"
     },
     "devDependencies": {
+        "@types/lodash": "^4.14.200",
         "@types/node": "^18.15.3",
+        "@types/pubsub-js": "^1.8.5",
         "@types/react": "^18.0.28",
         "@types/react-dom": "^18.0.11",
         "@vitejs/plugin-react": "^4.1.0",

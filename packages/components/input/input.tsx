@@ -1,3 +1,4 @@
+import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -9,9 +10,9 @@ import {
 } from "react";
 import "../../css/input.scss";
 import "./index.scss";
-import { Props } from "./type";
+import { PropsInput } from "./type";
 
-const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, PropsInput>((props, ref) => {
 	const {
 		type = "text",
 		label,
@@ -24,6 +25,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		form,
 		status,
 		message,
+		required,
 		onChange,
 		onEnter,
 		...rest
@@ -35,6 +37,12 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		message,
 	});
 
+	const emitForm = useFormRegist({
+		form,
+		name,
+		state,
+	});
+
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement>) => {
 			const v = e.target.value;
@@ -43,6 +51,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 				message: "",
 			});
 
+			emitForm?.(v);
 			state.value = v;
 			onChange?.(v, e);
 		},

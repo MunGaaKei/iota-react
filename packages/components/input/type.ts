@@ -1,7 +1,7 @@
 import { TValue } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
-export type Props = {
+export type PropsInput = {
 	label?: ReactNode | string;
 	prefix?: ReactNode;
 	suffix?: ReactNode;
@@ -12,3 +12,5 @@ export type Props = {
 	onEnter?: () => void;
 	onChange?: (value: TValue, e: ChangeEvent<HTMLInputElement>) => void;
 } & InputHTMLAttributes<HTMLElement>;
+
+export type PropsTextarea = {};

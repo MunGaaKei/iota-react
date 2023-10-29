@@ -39,7 +39,7 @@ const Sider = (): JSX.Element => {
 	return (
 		<div className='px-4 py-12'>
 			<h1>R</h1>
-			<Menu items={menus} style={{ minWidth: 240 }}></Menu>
+			<Menu items={menus}></Menu>
 		</div>
 	);
 };
@@ -50,7 +50,7 @@ const Footer = (): JSX.Element => {
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
-	const [collapsed, toggleCollapsed] = useState<boolean>(false);
+	const [collapsed, toggleCollapsed] = useState<boolean>(true);
 
 	return (
 		<Container

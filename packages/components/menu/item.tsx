@@ -74,8 +74,8 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 			<MenuHeader
 				as={as}
 				href={href}
+				style={{ paddingLeft: `${depth * 2 + 0.5}em` }}
 				onClick={handleItemClick}
-				style={{ paddingLeft: `${depth * 2 + 0.25}em` }}
 			>
 				{icon && <span className='i-menu-item-icon'>{icon}</span>}
 				<span className='i-menu-item-title'>{title}</span>
