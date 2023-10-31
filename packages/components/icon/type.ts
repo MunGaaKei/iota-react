@@ -1,8 +1,7 @@
-import { MenuFilled } from "@ricons/material";
 import { MouseEvent } from "react";
 
 export interface Props {
-	icon: typeof MenuFilled;
+	icon: Element;
 	size?: string;
 	className?: string;
 	onClick?: (e: MouseEvent<HTMLElement>) => void;

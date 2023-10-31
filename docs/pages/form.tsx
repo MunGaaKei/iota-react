@@ -39,7 +39,18 @@ export default function Page() {
 		<>
 			<Form form={form} rules={rules} width={400} className='gap-12'>
 				<Input label='name' name='name' form={form.name}></Input>
-				<Input label='age' name='age' form={form.name} required></Input>
+				<Input
+					type='number'
+					label='age'
+					name='age'
+					form={form.name}
+				></Input>
+				<Input
+					type='textarea'
+					label='bio'
+					name='bio'
+					form={form.name}
+				></Input>
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>

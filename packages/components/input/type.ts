@@ -1,16 +1,25 @@
 import { TValue } from "@p/type";
-import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import {
+	ChangeEvent,
+	InputHTMLAttributes,
+	ReactNode,
+	TextareaHTMLAttributes,
+} from "react";
 
 export type PropsInput = {
-	label?: ReactNode | string;
+	label?: ReactNode;
 	prefix?: ReactNode;
 	suffix?: ReactNode;
 	labelInline?: boolean;
 	form?: string;
-	message?: string | ReactNode;
+	message?: ReactNode;
 	status?: "normal" | "error" | "warning" | "success";
 	onEnter?: () => void;
-	onChange?: (value: TValue, e: ChangeEvent<HTMLInputElement>) => void;
-} & InputHTMLAttributes<HTMLElement>;
+	onChange?: (
+		value: TValue,
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+} & InputHTMLAttributes<HTMLInputElement> &
+	TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export type PropsTextarea = {};

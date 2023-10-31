@@ -15,9 +15,3 @@ $breakpoint-mobile: 880px;
 	--label-width: auto;
 	--label-align: left;
 }
-
-@media (max-width: #{$breakpoint-mobile}) {
-	:root {
-		--font-size: 14px;
-	}
-}

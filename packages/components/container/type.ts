@@ -16,4 +16,5 @@ export interface Props extends PropsSider {
 	sider?: ReactNode;
 	header?: ReactNode;
 	footer?: ReactNode;
+	onToggle?: (collapsed: boolean) => void;
 }

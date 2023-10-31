@@ -1,9 +1,12 @@
 import classNames from "classnames";
+import { isValidElement } from "react";
 import "./index.scss";
 import { Props } from "./type";
 
 const Icon = (props: Props) => {
 	const { icon: IconSvg, size = "1.5em", className = "", ...rest } = props;
+
+	if (!isValidElement(IconSvg)) return <></>;
 
 	return (
 		<IconSvg

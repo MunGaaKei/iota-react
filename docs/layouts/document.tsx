@@ -56,13 +56,12 @@ export default function Document(): JSX.Element {
 		<Container
 			layout='menu'
 			collapsed={collapsed}
+			breakpoint={880}
 			header={
-				<Header
-					onToggleSider={toggleCollapsed.bind(null, !collapsed)}
-				></Header>
+				<Header onToggleSider={() => toggleCollapsed(!collapsed)} />
 			}
-			sider={<Sider></Sider>}
-			footer={<Footer></Footer>}
+			sider={<Sider />}
+			footer={<Footer />}
 		>
 			<div className='pd-12'>
 				<DynamicPage name={name}></DynamicPage>
