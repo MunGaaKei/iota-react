@@ -1,5 +1,11 @@
 import { Icon } from "@p";
-import { ApiRound, ColorLensTwotone, DashboardTwotone } from "@ricons/material";
+import {
+	ApiRound,
+	AssignmentOutlined,
+	CheckBoxOutlined,
+	ColorLensTwotone,
+	DashboardTwotone,
+} from "@ricons/material";
 import { Link } from "react-router-dom";
 
 export default [
@@ -9,7 +15,7 @@ export default [
 	},
 	{
 		title: "Style & Colors",
-		icon: <Icon icon={ColorLensTwotone} />,
+		icon: <Icon icon={<ColorLensTwotone />} />,
 		children: [
 			{
 				title: "Colors",
@@ -23,7 +29,7 @@ export default [
 	},
 	{
 		title: "Components",
-		icon: <Icon icon={DashboardTwotone} />,
+		icon: <Icon icon={<DashboardTwotone />} />,
 		expanded: true,
 		children: [
 			{
@@ -48,10 +54,12 @@ export default [
 				title: "Form",
 				href: "/docs/form",
 				as: Link,
+				icon: <Icon icon={<AssignmentOutlined />} />,
 				children: [
 					{
 						title: "Checkbox",
 						href: "/docs/checkbox",
+						icon: <Icon icon={<CheckBoxOutlined />} />,
 					},
 					{
 						title: "Input",
@@ -99,7 +107,7 @@ export default [
 	},
 	{
 		title: "Directives",
-		icon: <Icon icon={ApiRound} />,
+		icon: <Icon icon={<ApiRound />} />,
 		children: [
 			{
 				title: "Clickoutside",

@@ -29,7 +29,7 @@ const Header = ({
 	return (
 		<div className='py-8 px-12 flex'>
 			<Button flat square onClick={() => onToggleSider()}>
-				<Icon icon={MenuFilled}></Icon>
+				<Icon icon={<MenuFilled />}></Icon>
 			</Button>
 		</div>
 	);
@@ -37,7 +37,7 @@ const Header = ({
 
 const Sider = (): JSX.Element => {
 	return (
-		<div className='px-4 py-12'>
+		<div className='px-4 py-12' style={{ minWidth: 240 }}>
 			<h1>R</h1>
 			<Menu items={menus}></Menu>
 		</div>

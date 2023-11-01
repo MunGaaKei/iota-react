@@ -1,4 +1,6 @@
-import { Button, Form, Input } from "@p";
+import { Button, Form, Icon, Input, Popup } from "@p";
+import Checkbox from "@p/components/checkbox";
+import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
 
 const rules = {
@@ -38,13 +40,23 @@ export default function Page() {
 	return (
 		<>
 			<Form form={form} rules={rules} width={400} className='gap-12'>
-				<Input label='name' name='name' form={form.name}></Input>
 				<Input
-					type='number'
-					label='age'
-					name='age'
+					label='name'
+					name='name'
+					prepend={
+						<Icon
+							icon={<AccountCircleTwotone />}
+							className='my-auto ml-12'
+						/>
+					}
 					form={form.name}
 				></Input>
+				<Checkbox
+					label='兴趣'
+					options={[1, 2, 3]}
+					name='agree'
+					form={form.name}
+				/>
 				<Input
 					type='textarea'
 					label='bio'
@@ -60,9 +72,11 @@ export default function Page() {
 					<Button onClick={handleSetValues} className='bg-blue'>
 						填写表单
 					</Button>
-					<Button onClick={handleClear} className='bg-yellow'>
-						清空
-					</Button>
+					<Popup content={<span>123</span>}>
+						<Button onClick={handleClear} className='bg-yellow'>
+							清空
+						</Button>
+					</Popup>
 				</div>
 			</Form>
 		</>

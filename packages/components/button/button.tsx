@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import { createElement } from "react";
+import { createElement, forwardRef } from "react";
 import "./index.scss";
 import { Props } from "./type";
 
@@ -25,9 +25,9 @@ const formatClass = ({
 		disabled,
 	});
 
-const Button = (props: Props) => {
+const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 	const {
-		as = "a",
+		as: As = "a",
 		children,
 		className,
 		loading,
@@ -38,8 +38,6 @@ const Button = (props: Props) => {
 		href,
 		...rest
 	} = props;
-
-	const As = as ?? "a";
 
 	const childNodes = [
 		loading &&
@@ -58,6 +56,7 @@ const Button = (props: Props) => {
 		return createElement(
 			As,
 			{
+				ref,
 				href,
 				className: formatClass(props),
 				...rest,
@@ -75,6 +74,6 @@ const Button = (props: Props) => {
 		},
 		childNodes
 	);
-};
+});
 
 export default Button;

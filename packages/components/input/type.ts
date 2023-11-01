@@ -8,16 +8,16 @@ import {
 
 export type PropsInput = {
 	label?: ReactNode;
-	prefix?: ReactNode;
-	suffix?: ReactNode;
+	prepend?: ReactNode;
+	append?: ReactNode;
 	labelInline?: boolean;
 	form?: string;
 	message?: ReactNode;
 	status?: "normal" | "error" | "warning" | "success";
 	onEnter?: () => void;
 	onChange?: (
-		value: TValue,
-		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+		value?: TValue,
+		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => void;
 } & InputHTMLAttributes<HTMLInputElement> &
 	TextareaHTMLAttributes<HTMLTextAreaElement>;

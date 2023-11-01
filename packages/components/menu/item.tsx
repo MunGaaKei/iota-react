@@ -74,7 +74,7 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 			<MenuHeader
 				as={as}
 				href={href}
-				style={{ paddingLeft: `${depth * 2 + 0.5}em` }}
+				style={{ paddingLeft: `${depth * 1.5 + 0.5}em` }}
 				onClick={handleItemClick}
 			>
 				{icon && <span className='i-menu-item-icon'>{icon}</span>}
@@ -82,7 +82,7 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 
 				{children.length > 0 && (
 					<Icon
-						icon={KeyboardArrowDownRound}
+						icon={<KeyboardArrowDownRound />}
 						className='i-menu-toggle'
 						onClick={(e) => handleExpand(e, true)}
 					></Icon>

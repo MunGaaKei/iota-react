@@ -19,8 +19,8 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, PropsInput>(
 			label,
 			name,
 			value = "",
-			prefix,
-			suffix,
+			prepend,
+			append,
 			labelInline,
 			className = "",
 			form,
@@ -85,7 +85,7 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, PropsInput>(
 						[`i-input-${sts}`]: sts !== "normal",
 					})}
 				>
-					{prefix}
+					{prepend}
 
 					<InputElement
 						type={type}
@@ -100,7 +100,7 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, PropsInput>(
 
 					{msg && <span className='i-input-message'>{msg}</span>}
 
-					{suffix}
+					{append}
 				</div>
 			</label>
 		);

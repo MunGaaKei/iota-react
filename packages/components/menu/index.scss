@@ -24,8 +24,8 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 0.5em;
-	padding: 0.25em 0.25em 0.25em 0.5em;
+	gap: 0.25em;
+	padding: 0.32em 0.4em;
 	user-select: none;
 	border-radius: var(--radius);
 	overflow: hidden;
@@ -43,9 +43,11 @@
 }
 
 .i-menu-round {
-	.i-menu-item-header {
-		border-radius: 100px;
-	}
+	--radius: 100px;
+}
+
+.i-menu-item-icon {
+	display: flex;
 }
 
 .i-menu-toggle {

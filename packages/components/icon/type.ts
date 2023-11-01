@@ -1,7 +1,7 @@
-import { MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 export interface Props {
-	icon: Element;
+	icon: ReactNode;
 	size?: string;
 	className?: string;
 	onClick?: (e: MouseEvent<HTMLElement>) => void;

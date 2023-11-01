@@ -1,9 +1,12 @@
+import "./js/init";
+
 import Button from "./components/button";
+import Checkbox from "./components/checkbox";
 import Container from "./components/container";
 import Form from "./components/form";
 import Icon from "./components/icon";
 import Input from "./components/input";
 import Menu from "./components/menu";
-import "./js/init";
+import Popup from "./components/popup";
 
-export { Button, Container, Form, Icon, Input, Menu };
+export { Button, Checkbox, Container, Form, Icon, Input, Menu, Popup };

@@ -1,21 +1,23 @@
 import classNames from "classnames";
-import { isValidElement } from "react";
+import { cloneElement, isValidElement } from "react";
 import "./index.scss";
 import { Props } from "./type";
 
 const Icon = (props: Props) => {
-	const { icon: IconSvg, size = "1.5em", className = "", ...rest } = props;
+	const { icon, size = "1.425em", className = "", ...rest } = props;
 
-	if (!isValidElement(IconSvg)) return <></>;
+	if (!isValidElement(icon)) return icon;
 
-	return (
-		<IconSvg
-			width={size}
-			height={size}
-			className={classNames("icon", className)}
-			{...rest}
-		></IconSvg>
-	);
+	const elProps = {
+		style: {
+			width: size,
+			height: size,
+		},
+		className: classNames("i-icon", className),
+		...rest,
+	};
+
+	return cloneElement(icon, elProps);
 };
 
 export default Icon;
