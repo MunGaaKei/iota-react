@@ -1,6 +1,6 @@
 export type Position = "top" | "right" | "left" | "bottom";
 
-export type PositionOptions = {
+export type RelativeOptions = {
 	refWindow?: boolean;
 	gap?: number;
 	offset?: number;

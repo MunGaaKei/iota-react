@@ -2,7 +2,6 @@ import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ChangeEvent, useEffect } from "react";
-import "./index.scss";
 import { PropsItem } from "./type";
 
 export default function CheckboxItem(props: PropsItem) {

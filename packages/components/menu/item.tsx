@@ -34,7 +34,7 @@ const MenuHeader = (props: TMenuHeader) => {
 };
 
 export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
-	const { item, depth = 0, round, onItemClick } = props;
+	const { item, depth = 0, onItemClick } = props;
 	const { as, href, icon, title, children = [], expanded, disabled } = item;
 
 	const state = useReactive({

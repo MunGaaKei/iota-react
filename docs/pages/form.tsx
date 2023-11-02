@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input, Popup } from "@p";
+import { Button, Form, Icon, Input, List, Popup } from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
@@ -63,6 +63,9 @@ export default function Page() {
 					name='bio'
 					form={form.name}
 				></Input>
+
+				<List.Option>sdf</List.Option>
+				<List.Option>sdfsfd</List.Option>
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>

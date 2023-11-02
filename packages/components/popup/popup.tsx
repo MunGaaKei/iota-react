@@ -1,4 +1,5 @@
-import { useClickOutside, usePosition } from "@p/js/hooks";
+import { useClickOutside } from "@p/js/hooks";
+import { getPosition } from "@p/js/utils";
 import { useCreation, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -77,7 +78,7 @@ export default function Popup(props: Props) {
 		state.show = true;
 
 		state.toggling = setTimeout(() => {
-			const [left, top] = usePosition(
+			const [left, top] = getPosition(
 				triggerRef.current?.closest(".i-popup-trigger"),
 				contentRef.current,
 				{
