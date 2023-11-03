@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input, List, Popup } from "@p";
+import { Button, Form, Icon, Input, Popup, Radio } from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
@@ -53,8 +53,15 @@ export default function Page() {
 				></Input>
 				<Checkbox
 					label='兴趣'
-					options={[1, 2, 3]}
+					options={["足球", "篮球", "棒球"]}
 					name='agree'
+					form={form.name}
+					type='switch'
+				/>
+				<Radio
+					label='性别'
+					name='gender'
+					options={["男", "女"]}
 					form={form.name}
 				/>
 				<Input
@@ -63,9 +70,6 @@ export default function Page() {
 					name='bio'
 					form={form.name}
 				></Input>
-
-				<List.Option>sdf</List.Option>
-				<List.Option>sdfsfd</List.Option>
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>

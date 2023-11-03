@@ -4,8 +4,8 @@ import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { useEffect } from "react";
 import "../../css/input.scss";
-import CheckboxItem from "./checkbox-item";
 import "./index.scss";
+import CheckboxItem from "./item";
 import type { Props } from "./type";
 
 function Checkbox(props: Props) {

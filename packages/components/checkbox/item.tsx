@@ -33,7 +33,6 @@ export default function CheckboxItem(props: PropsItem) {
 
 	const handleChange = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
 		const checked = e.target.checked;
-		console.log(checked);
 
 		Object.assign(state, {
 			value: checked,

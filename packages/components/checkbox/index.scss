@@ -1,13 +1,15 @@
 .i-checkbox-item {
-	--radius: 2px;
 	display: inline-flex;
 	align-items: center;
-	gap: 0.5em;
+	gap: 0.4em;
 	border-radius: var(--radius);
 	align-self: flex-start;
 	&:hover {
 		.i-checkbox-input {
 			box-shadow: inset 0 0 0 3px var(--color-5);
+		}
+		.i-checkbox-switch {
+			box-shadow: inset 0 0 0 3px var(--color-8);
 		}
 	}
 	.i-checkbox-input {
@@ -35,23 +37,31 @@
 	position: relative;
 	display: flex;
 	cursor: inherit;
-	height: 1.2em;
-	width: 1.2em;
+	height: 1.125em;
+	width: 1.125em;
 	overflow: hidden;
 	appearance: none;
 	border-radius: inherit;
 	transition: var(--transition);
 	outline: 0;
 	align-self: center;
-	box-shadow: inset 0 0 0 3px var(--color-7);
 }
 .i-checkbox-switch {
-	height: 1.4em;
-	width: 2.6em;
+	height: 1.2em;
+	width: 2.4em;
 	overflow: unset;
+	border-radius: 100px;
+	box-shadow: inset 0 0 0 3px var(--color-8);
 	&:hover {
-		background: var(--color-main-slight);
+		&:after {
+			box-shadow: 0 0 0 3px var(--color-5);
+			background-color: var(--color-main-slight);
+		}
 	}
+}
+.i-checkbox-default {
+	border-radius: 2px;
+	box-shadow: inset 0 0 0 3px var(--color-7);
 }
 .i-checkbox-button {
 	display: none;
@@ -76,11 +86,11 @@
 .i-checkbox-switch:after {
 	left: 0;
 	top: 50%;
-	width: 1.2em;
-	height: 1.2em;
+	width: 1em;
+	height: 1em;
 	transform: translate(0, -50%);
-	box-shadow: 0 0 0 2px var(--grey);
-	border-radius: inherit;
+	box-shadow: 0 0 0 3px var(--color-7);
+	border-radius: 50%;
 	transition: var(--transition);
 	background: var(--color-main-reverse);
 }
@@ -104,9 +114,10 @@
 }
 .i-checkbox-button {
 	& + .i-checkbox-text {
-		padding: 0 0.8em;
-		border: 2px solid transparent;
-		line-height: 2;
+		padding: 0 0.6em;
+		height: 2em;
+		display: flex;
+		align-items: center;
 		white-space: nowrap;
 		background: var(--color-main-slight);
 	}

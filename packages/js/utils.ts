@@ -1,3 +1,4 @@
+import { TOption } from "@p/type";
 import type { RelativeOptions } from "./type";
 
 export function getPosition(
@@ -125,4 +126,12 @@ function computePosition({
 	}
 
 	return centerPoint - contentSize / 2;
+}
+
+export function formatOption(options: TOption[]) {
+	return options.map((option) =>
+		["string", "number"].includes(typeof option)
+			? { label: option, value: option }
+			: option
+	);
 }
