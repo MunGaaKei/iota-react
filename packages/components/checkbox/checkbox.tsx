@@ -1,8 +1,9 @@
 import { useFormRegist } from "@p/js/hooks";
-import { TOption, TStatus, TValue } from "@p/type";
+import { formatOption } from "@p/js/utils";
+import { TStatus, TValue } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import "../../css/input.scss";
 import "./index.scss";
 import CheckboxItem from "./item";
@@ -28,12 +29,10 @@ function Checkbox(props: Props) {
 
 	const state = useReactive<{
 		value: TValue[];
-		options: TOption[];
 		status?: TStatus;
 		message?: string;
 	}>({
 		value: [],
-		options: [],
 		status,
 		message,
 	});
@@ -43,6 +42,8 @@ function Checkbox(props: Props) {
 		form,
 		state,
 	});
+
+	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
 	const handleChange = useMemoizedFn((checked, opt, e) => {
 		Object.assign(state, {
@@ -64,19 +65,6 @@ function Checkbox(props: Props) {
 		onChange?.(group, opt, e);
 	});
 
-	useEffect(() => {
-		if (!options.length) return;
-
-		state.options = options.map((opt) =>
-			["string", "number"].includes(typeof opt)
-				? {
-						label: opt,
-						value: opt,
-				  }
-				: opt
-		) as TOption[];
-	}, [options]);
-
 	return (
 		<div
 			className={classNames(
@@ -93,7 +81,7 @@ function Checkbox(props: Props) {
 			)}
 
 			<div className='i-checkbox-options'>
-				{state.options.map((option) => {
+				{formattedOptions.map((option) => {
 					return (
 						<CheckboxItem
 							key={option.value as string}

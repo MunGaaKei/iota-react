@@ -1,0 +1,15 @@
+.loading-container {
+	position: relative;
+	text-align: center;
+	font-size: inherit;
+	> .i-loading-icon {
+		position: static;
+	}
+	> .loading-text {
+		display: block;
+		margin-top: 0.5em;
+		&:empty {
+			display: none;
+		}
+	}
+}

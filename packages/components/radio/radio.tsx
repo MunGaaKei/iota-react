@@ -1,8 +1,9 @@
 import { useFormRegist } from "@p/js/hooks";
-import { TOption, TStatus, TValue } from "@p/type";
+import { formatOption } from "@p/js/utils";
+import { TStatus, TValue } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import "./index.scss";
 import RadioItem from "./item";
 import { Props } from "./type";
@@ -29,12 +30,10 @@ function Radio(props: Props) {
 		value: TValue[];
 		status?: TStatus;
 		message?: string;
-		options: TOption[];
 	}>({
 		value: [],
 		status,
 		message,
-		options: [],
 	});
 
 	const formEmit = useFormRegist({
@@ -42,6 +41,8 @@ function Radio(props: Props) {
 		form,
 		state,
 	});
+
+	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
 	const handleChange = useMemoizedFn((value, e) => {
 		Object.assign(state, {
@@ -54,25 +55,12 @@ function Radio(props: Props) {
 		onChange?.(value, e);
 	});
 
-	useEffect(() => {
-		if (!options.length) return;
-
-		state.options = options.map((opt) =>
-			["string", "number"].includes(typeof opt)
-				? {
-						label: opt,
-						value: opt,
-				  }
-				: opt
-		) as TOption[];
-	}, [options]);
-
 	return (
 		<div className={classNames("i-radio", className)}>
 			{label && <span className='i-radio-label'>{label}</span>}
 
 			<div className='i-radio-options'>
-				{state.options.map((option) => (
+				{formattedOptions.map((option) => (
 					<RadioItem
 						key={option.value as string}
 						name={name}

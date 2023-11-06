@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input, Popup, Radio } from "@p";
+import { Button, Form, Icon, Input, Radio, Select } from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
@@ -25,7 +25,7 @@ export default function Page() {
 	});
 
 	const handleSetValues = useMemoizedFn(() => {
-		form.set({ name: "sdfkjsdlfj", agree: true });
+		form.set({ name: "sdfkjsdlfj", hobit: ["篮球"] });
 	});
 
 	const handleClear = useMemoizedFn(() => {
@@ -51,10 +51,22 @@ export default function Page() {
 					}
 					form={form.name}
 				></Input>
+				<Select
+					label='国家'
+					options={[
+						"中国",
+						"新加坡",
+						"俄罗斯",
+						"日本",
+						"泰国",
+						"美国",
+					]}
+					clear
+				/>
 				<Checkbox
 					label='兴趣'
 					options={["足球", "篮球", "棒球"]}
-					name='agree'
+					name='hobit'
 					form={form.name}
 					type='switch'
 				/>
@@ -79,11 +91,9 @@ export default function Page() {
 					<Button onClick={handleSetValues} className='bg-blue'>
 						填写表单
 					</Button>
-					<Popup content={<span>123</span>}>
-						<Button onClick={handleClear} className='bg-yellow'>
-							清空
-						</Button>
-					</Popup>
+					<Button onClick={handleClear} className='bg-yellow'>
+						清空
+					</Button>
 				</div>
 			</Form>
 		</>

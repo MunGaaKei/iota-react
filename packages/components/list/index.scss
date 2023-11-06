@@ -1,3 +1,11 @@
-.i-list-item-option {
-	padding: 4px;
+.i-list-option {
+	padding: 0.32em 0.4em;
+	cursor: pointer;
+	transition: var(--transition);
+	&:hover {
+		background: var(--background-opacity-1);
+	}
+	&.disabled {
+		order: 2;
+	}
 }

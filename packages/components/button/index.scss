@@ -7,7 +7,7 @@
 	align-items: center;
 	justify-content: center;
 	padding: 0 0.6em;
-	height: 2em;
+	height: 2.25em;
 	border-radius: var(--radius);
 	border: 2px solid transparent;
 	transition: var(--transition);
@@ -17,6 +17,7 @@
 	white-space: nowrap;
 	outline: none;
 	font-weight: 500;
+	font-size: 0.94em;
 	background: var(--background);
 	color: var(--color);
 	.i-ripple-container {
@@ -28,17 +29,19 @@
 }
 .i-btn-square {
 	padding: 0;
-	width: 2em;
+	width: 2.25em;
 }
 .i-btn-large {
-	font-size: 1.5em;
+	font-size: 1.25em;
 }
 .i-btn-extreme {
 	font-size: 2em;
+	height: 2em;
 }
 .i-btn-small {
+	height: 2em;
 	font-size: 0.86em;
-	padding: 0 0.5em;
+	padding: 0 0.4em;
 }
 .i-btn:hover {
 	--background: var(--background-hover);

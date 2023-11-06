@@ -9,3 +9,10 @@ export type TOption = {
 	value: TValue;
 	disabled?: boolean;
 };
+
+export type TOptions = TOption[] | (string | number)[];
+
+export type TValidate = {
+	status?: TStatus;
+	message?: string;
+};

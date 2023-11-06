@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode } from "react";
 export interface Props {
 	visible?: boolean;
 	content?: ReactNode;
-	trigger?: "hover" | "click" | "focus";
+	trigger?: "hover" | "click" | "focus" | "none";
 	gap?: number;
 	offset?: number;
 	fixed?: boolean;
@@ -16,5 +16,5 @@ export interface Props {
 	style?: CSSProperties;
 	children?: ReactNode;
 	getContainer?: () => HTMLElement;
-	onVisibleChange?: (visible?: boolean) => void;
+	onVisibleChange?: (visible: boolean) => void;
 }

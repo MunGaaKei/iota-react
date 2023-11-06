@@ -18,7 +18,7 @@ import { createPortal } from "react-dom";
 import "./index.scss";
 import { Props } from "./type";
 
-type Tsto = ReturnType<typeof setTimeout>;
+type TTimeout = ReturnType<typeof setTimeout>;
 
 type PropsContent = { style?: CSSProperties; children?: ReactNode } & Pick<
 	Props,
@@ -59,7 +59,7 @@ export default function Popup(props: Props) {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const state = useReactive<{
 		show: boolean;
-		toggling: Tsto | boolean;
+		toggling: TTimeout | boolean;
 		style: CSSProperties;
 	}>({
 		show: false,
@@ -70,7 +70,7 @@ export default function Popup(props: Props) {
 	useClickOutside(
 		contentRef.current,
 		() => handleToggle(false),
-		trigger !== "click"
+		!["click", "none"].includes(trigger)
 	);
 
 	const handleShow = useCallback(() => {
@@ -94,7 +94,7 @@ export default function Popup(props: Props) {
 				left,
 				top,
 			};
-			state.toggling && clearTimeout(state.toggling as Tsto);
+			state.toggling && clearTimeout(state.toggling as TTimeout);
 			onVisibleChange?.(true);
 		}, showDelay);
 	}, [state.show]);
@@ -109,7 +109,7 @@ export default function Popup(props: Props) {
 
 			setTimeout(() => {
 				state.show = false;
-				state.toggling && clearTimeout(state.toggling as Tsto);
+				state.toggling && clearTimeout(state.toggling as TTimeout);
 				onVisibleChange?.(false);
 			}, 160);
 		}, hideDelay);
@@ -117,7 +117,7 @@ export default function Popup(props: Props) {
 
 	const handleToggle = useCallback(
 		(action?: boolean) => {
-			state.toggling && clearTimeout(state.toggling as Tsto);
+			state.toggling && clearTimeout(state.toggling as TTimeout);
 
 			if (action !== undefined) {
 				action ? handleShow() : handleHide();
@@ -142,6 +142,7 @@ export default function Popup(props: Props) {
 				onFocus: () => handleToggle(true),
 				onBlur: () => handleToggle(false),
 			},
+			none: {},
 		}),
 		[]
 	);

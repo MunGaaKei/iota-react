@@ -51,7 +51,7 @@
 	width: 2.4em;
 	overflow: unset;
 	border-radius: 100px;
-	box-shadow: inset 0 0 0 3px var(--color-8);
+	box-shadow: inset 0 0 0 3px var(--color-9);
 	&:hover {
 		&:after {
 			box-shadow: 0 0 0 3px var(--color-5);
@@ -89,7 +89,7 @@
 	width: 1em;
 	height: 1em;
 	transform: translate(0, -50%);
-	box-shadow: 0 0 0 3px var(--color-7);
+	box-shadow: 0 0 0 3px var(--color-8);
 	border-radius: 50%;
 	transition: var(--transition);
 	background: var(--color-main-reverse);

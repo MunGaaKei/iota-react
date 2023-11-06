@@ -1,0 +1,23 @@
+.i-select-spin {
+	margin: auto 0.5em auto 0;
+	color: var(--color-7);
+	transition: var(--transition);
+	border-radius: inherit;
+	pointer-events: none;
+	&.i-select-clear {
+		pointer-events: unset;
+		font-size: 0.94em;
+	}
+	&:hover {
+		color: var(--color-3);
+		background: var(--background-opacity-1);
+	}
+}
+
+.i-select-options {
+	display: flex;
+	flex-direction: column;
+	max-height: 40vh;
+	gap: 2px;
+	overflow-x: hidden;
+}
