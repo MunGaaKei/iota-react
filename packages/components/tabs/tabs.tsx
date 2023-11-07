@@ -1,14 +1,8 @@
 import classNames from "classnames";
-import {
-	Children,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import { Children, useEffect, useMemo, useRef, useState } from "react";
 import "./index.scss";
-import { Props } from "./type";
+import TabItem from "./item";
+import { ITab, Props } from "./type";
 
 function Tabs(props: Props) {
 	const {
@@ -20,17 +14,21 @@ function Tabs(props: Props) {
 		vertical,
 		lazyload,
 		bar = true,
+		onTabChange,
 		...rest
 	} = props;
 
 	const [activeKey, setActiveKey] = useState(active);
-	const navRefs = useRef([]);
-	const barRef = useRef();
+	const navRefs = useRef<HTMLAnchorElement[]>([]);
+	const barRef = useRef<HTMLSpanElement>(null);
 	const [barStyle, setBarStyle] = useState({});
 
-	const tabs = useMemo(() => {
+	const tabs: ITab[] = useMemo(() => {
 		return Children.map(children, (node, i) => {
-			const { key, props: nodeProps } = node;
+			const { key, props: nodeProps } = node as {
+				key?: string | number;
+				props?: any;
+			};
 			const { title, children } = nodeProps;
 
 			return {
@@ -38,31 +36,40 @@ function Tabs(props: Props) {
 				title,
 				content: children,
 			};
-		});
+		}) as ITab[];
 	}, [children]);
 
-	const handleNavClick = useCallback(
-		(key) => {
-			if (key === activeKey) return;
+	const handleNavClick = (key?: string | number) => {
+		if (key === activeKey) return;
 
-			setActiveKey(key);
-		},
-		[activeKey]
-	);
+		setActiveKey((prev) => {
+			onTabChange?.(key, prev);
+			return key;
+		});
+	};
 
 	useEffect(() => {
 		const index = tabs.findIndex((tab) => tab.key === activeKey);
 		const nav = navRefs.current[index];
 
 		if (!nav) return;
+
 		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
+
 		setBarStyle({
-			top: vertical ? offsetTop : "1.6em",
-			height: vertical ? offsetHeight : "1.2em",
-			left: vertical ? "1.6em" : offsetLeft,
-			width: vertical ? "1.2em" : offsetWidth,
+			top: vertical ? offsetTop : ".8em",
+			height: vertical ? offsetHeight : "1em",
+			left: vertical ? ".8em" : offsetLeft,
+			width: vertical ? "1em" : offsetWidth,
 		});
 	}, [activeKey]);
+
+	useEffect(() => {
+		setActiveKey((prev) => {
+			onTabChange?.(active, prev);
+			return active;
+		});
+	}, [active]);
 
 	return (
 		<div className={classNames("i-tab", className)} {...rest}>
@@ -76,11 +83,14 @@ function Tabs(props: Props) {
 						return (
 							<a
 								key={key}
-								ref={(ref) => (navRefs.current[i] = ref)}
+								ref={(ref) =>
+									(navRefs.current[i] =
+										ref as HTMLAnchorElement)
+								}
 								className={classNames("i-tab-nav", {
 									"i-tab-active": activeKey === key,
 								})}
-								onClick={() => handleNavClick(key, i)}
+								onClick={() => handleNavClick(key)}
 							>
 								{title}
 							</a>
@@ -122,6 +132,6 @@ function Tabs(props: Props) {
 	);
 }
 
-Tabs.Item = () => <></>;
+Tabs.Item = TabItem;
 
 export default Tabs;
