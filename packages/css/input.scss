@@ -25,6 +25,7 @@
 	border-radius: var(--radius);
 	box-shadow: inset 0 0 0 3px var(--background-opacity-1);
 	max-width: 100%;
+	background: var(--background-opacity-1);
 	.i-btn {
 		align-self: stretch;
 	}
@@ -87,4 +88,5 @@ textarea.i-input {
 	display: block;
 	transition: var(--transition), width 0s, height 0s;
 	max-width: 100%;
+	min-height: 2.5em;
 }

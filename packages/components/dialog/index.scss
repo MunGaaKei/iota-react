@@ -1,0 +1,65 @@
+.i-backdrop {
+	position: fixed;
+	inset: 0;
+	padding: 12px;
+	z-index: 100;
+	pointer-events: none;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(8px);
+	transition: var(--transition);
+	opacity: 0;
+	display: flex;
+	&.i-active {
+		opacity: 1;
+		pointer-events: unset;
+	}
+}
+
+.i-dialog {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 100%;
+	max-height: 100%;
+	overflow-x: hidden;
+	box-shadow: var(--shadow);
+	border-radius: var(--radius);
+	transform: translate(0, 12px);
+	transition: var(--transition);
+	background: var(--background);
+	&.bounced {
+		animation: bounce 0.4s ease-in-out 0s;
+	}
+}
+.i-active > .i-dialog {
+	opacity: 1;
+	transform: none;
+	pointer-events: unset;
+}
+
+.i-dialog-header,
+.i-dialog-footer {
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	&:empty {
+		display: none;
+	}
+}
+
+.i-dialog-content {
+	max-height: 100%;
+	overflow-x: hidden;
+}
+
+.i-dialog-close {
+	display: flex;
+	padding: 2px;
+	border-radius: var(--radius);
+	opacity: 0.6;
+	align-self: flex-start;
+	&:hover {
+		opacity: 1;
+	}
+}

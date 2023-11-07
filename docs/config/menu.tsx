@@ -5,13 +5,14 @@ import {
 	CheckBoxOutlined,
 	ColorLensTwotone,
 	DashboardTwotone,
+	FeaturedPlayListTwotone,
 } from "@ricons/material";
 import { Link } from "react-router-dom";
 
 export default [
 	{
-		title: "USAGE",
-		type: "title",
+		title: "Install",
+		icon: <Icon icon={<FeaturedPlayListTwotone />} />,
 	},
 	{
 		title: "Style & Colors",

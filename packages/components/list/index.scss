@@ -1,7 +1,12 @@
 .i-list-option {
+	display: flex;
+	align-items: center;
+	gap: 0.4em;
 	padding: 0.32em 0.4em;
 	cursor: pointer;
 	transition: var(--transition);
+	user-select: none;
+	border-radius: var(--radius);
 	&:hover {
 		background: var(--background-opacity-1);
 	}

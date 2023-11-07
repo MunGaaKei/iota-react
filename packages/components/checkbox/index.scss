@@ -50,7 +50,7 @@
 	height: 1.2em;
 	width: 2.4em;
 	overflow: unset;
-	border-radius: 100px;
+	border-radius: var(--radius);
 	box-shadow: inset 0 0 0 3px var(--color-9);
 	&:hover {
 		&:after {
@@ -90,7 +90,7 @@
 	height: 1em;
 	transform: translate(0, -50%);
 	box-shadow: 0 0 0 3px var(--color-8);
-	border-radius: 50%;
+	border-radius: inherit;
 	transition: var(--transition);
 	background: var(--color-main-reverse);
 }
@@ -136,7 +136,7 @@
 	.i-checkbox-input {
 		box-shadow: inset 0 0 0 3px var(--green-slight);
 		&:checked {
-			background: var(--green-2);
+			background: var(--green-slight);
 		}
 	}
 	.i-checkbox-message {
@@ -147,7 +147,7 @@
 	.i-checkbox-input {
 		box-shadow: inset 0 0 0 3px var(--yellow-slight);
 		&:checked {
-			background: var(--yellow-2);
+			background: var(--yellow-slight);
 		}
 	}
 	.i-checkbox-message {
@@ -158,7 +158,7 @@
 	.i-checkbox-input {
 		box-shadow: inset 0 0 0 3px var(--red-slight);
 		&:checked {
-			background: var(--red-2);
+			background: var(--red-slight);
 		}
 	}
 	.i-checkbox-message {

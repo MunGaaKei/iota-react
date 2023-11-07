@@ -1,4 +1,4 @@
-import { Button, Form, Icon, Input, Radio, Select } from "@p";
+import { Button, Form, Icon, Input, Message, Radio, Select } from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
@@ -12,8 +12,13 @@ const rules = {
 		if (!value || value.length < 2) return "请至少选2个";
 		return false;
 	},
-	agree: (value: any) => {
+	gender: (value: any) => {
 		return value ? false : "请勾选";
+	},
+	country: (value: any) => {
+		if (!value) return "不能为空";
+
+		return false;
 	},
 };
 
@@ -34,7 +39,9 @@ export default function Page() {
 
 	const handleValidate = useMemoizedFn(async () => {
 		const data = await form.validate();
-		console.log(data);
+		// console.log(data);
+		// const data = await form.validate("hobit");
+		Message(data ? "校验成功" : "校验失败");
 	});
 
 	return (
@@ -53,15 +60,22 @@ export default function Page() {
 				></Input>
 				<Select
 					label='国家'
+					name='country'
 					options={[
 						"中国",
 						"新加坡",
 						"俄罗斯",
 						"日本",
 						"泰国",
-						"美国",
+						{
+							label: "美国",
+							value: "美国",
+							disabled: true,
+						},
 					]}
+					placeholder='国家'
 					clear
+					form={form.name}
 				/>
 				<Checkbox
 					label='兴趣'

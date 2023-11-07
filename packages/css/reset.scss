@@ -94,12 +94,12 @@ label {
 	color: #212121 !important;
 }
 .os-windows ::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
+	width: 6px;
+	height: 6px;
 	cursor: pointer;
 }
 .os-windows ::-webkit-scrollbar-thumb {
-	background-color: var(--grey-2);
+	background-color: var(--color-8);
 	cursor: pointer;
 	border-radius: var(--radius);
 }

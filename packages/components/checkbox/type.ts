@@ -1,18 +1,15 @@
-import type { TOption, TStatus, TValue } from "@p/type";
+import type { TOption, TValidate, TValue } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
-export interface Props {
+export interface Props
+	extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">,
+		TValidate {
 	label?: ReactNode;
-	name?: string;
 	options: TOption[] | (string | number)[];
-	value?: TValue[];
 	type?: "default" | "switch" | "button";
 	optionInline?: boolean;
 	labelInline?: boolean;
-	disabled?: boolean;
 	form?: string;
-	status?: TStatus;
-	message?: string;
 	className?: string;
 	onChange?: (
 		value?: TValue[],
@@ -22,11 +19,10 @@ export interface Props {
 }
 
 export interface PropsItem
-	extends Omit<InputHTMLAttributes<HTMLElement>, "value" | "onChange"> {
+	extends Omit<InputHTMLAttributes<HTMLElement>, "value" | "onChange">,
+		TValidate {
 	type?: "default" | "switch" | "button";
 	label?: ReactNode;
 	value?: boolean;
-	status?: TStatus;
-	message?: string;
 	onChange?: (value?: boolean, e?: ChangeEvent<HTMLInputElement>) => void;
 }

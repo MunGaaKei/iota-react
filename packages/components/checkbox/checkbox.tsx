@@ -76,10 +76,6 @@ function Checkbox(props: Props) {
 		>
 			{label && <span className='i-input-label-text'>{label}</span>}
 
-			{state.message && (
-				<span className='i-checkbox-message'>*{state.message}</span>
-			)}
-
 			<div className='i-checkbox-options'>
 				{formattedOptions.map((option) => {
 					return (
@@ -97,6 +93,10 @@ function Checkbox(props: Props) {
 					);
 				})}
 			</div>
+
+			{state.message && (
+				<span className='i-checkbox-message'>*{state.message}</span>
+			)}
 		</div>
 	);
 }

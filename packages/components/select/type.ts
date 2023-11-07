@@ -15,6 +15,8 @@ export interface Props
 	append?: ReactNode;
 	labelInline?: boolean;
 	clear?: boolean;
+	max?: number;
+	maxDisplay?: number;
 	onSelect?: (v?: TValue, option?: TOption) => void;
 	onChange?: (v: TValue) => void;
 }

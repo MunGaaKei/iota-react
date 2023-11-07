@@ -1,87 +1,14 @@
-import { Icon, List, Loading, Popup } from "@p";
+import { Popup } from "@p";
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TOption, TValidate, TValue } from "@p/type";
-import { ClearRound, UnfoldMoreRound } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
-import {
-	MouseEvent,
-	ReactNode,
-	forwardRef,
-	useCallback,
-	useMemo,
-	useState,
-} from "react";
+import { MouseEvent, forwardRef, useCallback, useMemo, useState } from "react";
 import "../../css/input.scss";
+import { DisplayIcon, DisplayValues, Options, activeLabels } from "./display";
 import "./index.scss";
 import { Props } from "./type";
-
-interface IOptions {
-	active?: TValue;
-	options: TOption[];
-	onSelect?: (v: TValue, option: TOption) => void;
-}
-
-interface IDisplayIcon {
-	loading?: boolean;
-	clearable?: boolean;
-	onClear?: (e: MouseEvent) => void;
-}
-
-const Options = (props: IOptions) => {
-	const { active, options, onSelect } = props;
-
-	return (
-		<div className='i-select-options'>
-			{options.map((option, i) => {
-				const { label, value } = option;
-
-				return (
-					<List.Option
-						key={(value as string) || i}
-						active={active === value}
-						onClick={() => onSelect?.(value, option)}
-					>
-						{label}
-					</List.Option>
-				);
-			})}
-		</div>
-	);
-};
-
-const DisplayIcon = (props: IDisplayIcon) => {
-	const { loading, clearable, onClear } = props;
-	const state: {
-		icon?: ReactNode;
-		className?: string;
-	} = {};
-
-	switch (true) {
-		case clearable:
-			state.icon = <ClearRound />;
-			state.className = "i-select-clear";
-			break;
-		case loading:
-			state.icon = <Loading />;
-			break;
-		default:
-			state.icon = <UnfoldMoreRound />;
-			break;
-	}
-
-	return (
-		<Icon
-			icon={state.icon}
-			className={classNames("i-select-spin", state.className)}
-			onClick={onClear}
-		/>
-	);
-};
-
-const renderOptions = (options: TOption[] = [], value: TValue[] = []) =>
-	options.filter((opt) => value.includes(opt.value)).map((opt) => opt.label);
 
 const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	const {
@@ -100,6 +27,7 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		message,
 		status = "normal",
 		clear,
+		maxDisplay,
 		onSelect,
 		onChange,
 		...rest
@@ -136,15 +64,30 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	}, [state.value, formattedOptions]);
 
 	const changeValue = (v: TValue) => {
-		state.value = v;
-		onChange?.(value);
-		emitForm?.(value);
+		Object.assign(state, {
+			value: v,
+			status: "normal",
+			message: "",
+		});
+
+		onChange?.(v);
+		emitForm?.(v);
 	};
 
 	const handleSelect = useCallback((value: TValue, option: TOption) => {
 		onSelect?.(value, option);
-		setActive(false);
 
+		if (multiple) {
+			const values = [...(state.value as TValue[])];
+			const i = values.findIndex((v) => v === value);
+
+			i > -1 ? values.splice(i, 1) : values.push(value);
+			changeValue(values as TValue);
+
+			return;
+		}
+
+		setActive(false);
 		changeValue(value);
 	}, []);
 
@@ -152,13 +95,14 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		setActive(true);
 	};
 
-	const handleClear = (e: MouseEvent) => {
+	const handleSpinClick = (e: MouseEvent) => {
 		e.stopPropagation();
 
 		changeValue(multiple ? [] : "");
 	};
 
 	const { value: val, message: msg, status: sts, loading } = state;
+	const hasValue = multiple ? (val as TValue[]).length > 0 : !!val;
 
 	return (
 		<label
@@ -177,7 +121,8 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 				content={
 					<Options
 						options={formattedOptions}
-						active={val}
+						value={val}
+						multiple={multiple}
 						onSelect={handleSelect}
 					/>
 				}
@@ -197,14 +142,19 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 						{...rest}
 					></input>
 
-					{!!val ? (
+					{hasValue ? (
 						<div className='i-input i-select'>
-							{multiple
-								? renderOptions(
+							{multiple ? (
+								<DisplayValues
+									values={activeLabels(
 										formattedOptions,
 										val as string[]
-								  )
-								: (activeOption as TOption)?.label}
+									)}
+									max={maxDisplay}
+								/>
+							) : (
+								(activeOption as TOption)?.label
+							)}
 						</div>
 					) : (
 						<input
@@ -217,8 +167,8 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
 					<DisplayIcon
 						loading={loading}
-						clearable={clear && !!val}
-						onClear={handleClear}
+						clearable={clear && active && hasValue}
+						onClick={handleSpinClick}
 					/>
 
 					{append}

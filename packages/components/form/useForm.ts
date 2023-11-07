@@ -45,9 +45,23 @@ export class FormStore {
 		PubSub.publish(`${this.name}:invalid:${name}`, inputStatus);
 	}
 
-	async validate() {
+	async validate(field?: string) {
 		const { name, rules, state } = this;
 		if (!rules) return state;
+
+		if (field) {
+			const invalidFn = rules[field];
+			const invalidMessage = invalidFn?.(state[field]);
+			if (invalidMessage) {
+				PubSub.publish(`${name}:invalid:${field}`, {
+					message: invalidMessage,
+					status: "error",
+				});
+				return false;
+			}
+
+			return true;
+		}
 
 		let isAllValid = true;
 

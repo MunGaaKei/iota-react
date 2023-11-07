@@ -50,6 +50,7 @@ export default function Popup(props: Props) {
 		hideDelay = 60,
 		touchable,
 		fitWidth,
+		style,
 		getContainer,
 		children,
 		onVisibleChange,
@@ -194,7 +195,7 @@ export default function Popup(props: Props) {
 			{state.show && (
 				<Content
 					ref={contentRef}
-					style={state.style}
+					style={{ ...style, ...state.style }}
 					{...contentTouch}
 					getContainer={getContainer}
 				>
