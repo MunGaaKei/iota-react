@@ -74,7 +74,8 @@ export default function Page() {
 						},
 					]}
 					placeholder='国家'
-					clear
+					multiple
+					maxDisplay={2}
 					form={form.name}
 				/>
 				<Checkbox
@@ -82,13 +83,14 @@ export default function Page() {
 					options={["足球", "篮球", "棒球"]}
 					name='hobit'
 					form={form.name}
-					type='switch'
+					type='button'
 				/>
 				<Radio
 					label='性别'
 					name='gender'
 					options={["男", "女"]}
 					form={form.name}
+					type='button'
 				/>
 				<Input
 					type='textarea'

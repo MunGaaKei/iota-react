@@ -2,10 +2,11 @@
 	position: absolute;
 	z-index: 100;
 	opacity: 0;
-	transition: opacity 0.16s;
-	border-radius: 2px;
+	transition: opacity 0.16s, transform 0.16s;
+	border-radius: var(--radius);
 	overflow-x: hidden;
 	background: var(--background-opacity);
 	backdrop-filter: var(--blur);
 	box-shadow: var(--shadow);
+	transform: translate(0, 4px);
 }

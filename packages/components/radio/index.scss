@@ -19,6 +19,7 @@
 	&:hover {
 		.i-radio-input {
 			box-shadow: inset 0 0 0 3px var(--color-5);
+			background-color: var(--color-main-slight);
 		}
 	}
 }
@@ -83,9 +84,9 @@
 .i-radio-button {
 	& + .i-radio-text {
 		margin-left: 0;
-		padding: 0 0.8em;
-		border: 2px solid transparent;
+		padding: 0 0.628em;
 		line-height: 2;
+		font-size: 0.94em;
 		white-space: nowrap;
 		background: var(--color-main-slight);
 	}

@@ -19,7 +19,7 @@ interface IDisplayIcon {
 
 interface IDisplayValues {
 	values?: ReactNode[];
-	max?: number;
+	max: number;
 }
 
 export const Options = (props: IOptions) => {
@@ -83,13 +83,21 @@ export const DisplayValues = (props: IDisplayValues) => {
 
 	if (!l) return <></>;
 
-	return values.map((v) => {
-		return (
-			<span key={v as string} className='i-select-value'>
-				{v}
-			</span>
-		);
-	});
+	const displays: ReactNode[] = [];
+
+	for (let i = 0; i < l; i++) {
+		if (i >= max) {
+			displays.push(`+${l - max}`);
+			break;
+		}
+		displays.push(values[i]);
+	}
+
+	return displays.map((v, i) => (
+		<span key={v as string} className='i-select-value'>
+			{v}
+		</span>
+	));
 };
 
 export const activeLabels = (options: TOption[] = [], value: TValue[] = []) =>

@@ -27,7 +27,8 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		message,
 		status = "normal",
 		clear,
-		maxDisplay,
+		maxDisplay = 9999,
+		filter,
 		onSelect,
 		onChange,
 		...rest

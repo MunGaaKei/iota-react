@@ -31,6 +31,7 @@
 	transition: var(--transition);
 	user-select: none;
 	border-radius: inherit;
+	color: var(--color-3);
 }
 
 .i-checkbox-input {
@@ -114,8 +115,9 @@
 }
 .i-checkbox-button {
 	& + .i-checkbox-text {
-		padding: 0 0.6em;
-		height: 2em;
+		padding: 0 0.628em;
+		line-height: 2;
+		font-size: 0.94em;
 		display: flex;
 		align-items: center;
 		white-space: nowrap;

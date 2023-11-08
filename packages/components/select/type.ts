@@ -17,6 +17,7 @@ export interface Props
 	clear?: boolean;
 	max?: number;
 	maxDisplay?: number;
+	filter?: boolean | (() => boolean);
 	onSelect?: (v?: TValue, option?: TOption) => void;
 	onChange?: (v: TValue) => void;
 }

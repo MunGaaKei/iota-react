@@ -92,6 +92,7 @@ export default function Popup(props: Props) {
 			state.style = {
 				...state.style,
 				opacity: 1,
+				transform: "none",
 				left,
 				top,
 			};
@@ -106,6 +107,7 @@ export default function Popup(props: Props) {
 			state.style = {
 				...state.style,
 				opacity: 0,
+				transform: "translate(0, 4px)",
 			};
 
 			setTimeout(() => {

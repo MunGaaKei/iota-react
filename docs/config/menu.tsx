@@ -45,7 +45,7 @@ export default [
 			{
 				title: "Dialog",
 				href: "/docs/dialog",
-				disabled: true,
+				as: Link,
 			},
 			{
 				title: "Dropdown",
@@ -97,8 +97,8 @@ export default [
 				href: "/docs/popup",
 			},
 			{
-				title: "Tab",
-				href: "/docs/tab",
+				title: "Tabs",
+				href: "/docs/tabs",
 			},
 			{
 				title: "Table",

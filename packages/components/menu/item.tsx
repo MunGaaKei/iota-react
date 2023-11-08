@@ -48,7 +48,7 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 				e.stopPropagation();
 			}
 
-			if (disabled) return;
+			if (disabled || !children.length) return;
 
 			state.expanded = !state.expanded;
 		}
