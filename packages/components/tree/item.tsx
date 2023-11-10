@@ -3,39 +3,43 @@ import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { MouseEvent } from "react";
 import Icon from "../icon";
-import Menu from "./menu";
-import { Props, TMenuHeader, TMenuItem } from "./type";
+import Tree from "./tree";
+import { Props, TTreeHeader, TTreeItem } from "./type";
 
-const MenuHeader = (props: TMenuHeader) => {
-	const { as, href, children, ...rest } = props;
+const Header = (props: TTreeHeader) => {
+	const { as, href, children, active, ...rest } = props;
 	const As = as || "a";
+	const className = classNames("i-tree-item-header", {
+		"i-tree-item-active": active,
+	});
 
 	if (typeof As === "string") {
 		return (
-			<As
-				href={href}
-				className={classNames("i-menu-item-header")}
-				{...rest}
-			>
+			<As href={href} className={className} {...rest}>
 				{children}
 			</As>
 		);
 	}
 
 	return (
-		<As
-			to={href || ""}
-			className={classNames("i-menu-item-header")}
-			{...rest}
-		>
+		<As to={href || ""} className={className} {...rest}>
 			{children}
 		</As>
 	);
 };
 
-export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
+export const TreeItem = (props: Omit<Props, "items"> & { item: TTreeItem }) => {
 	const { item, depth = 0, onItemClick } = props;
-	const { as, href, icon, title, children = [], expanded, disabled } = item;
+	const {
+		as,
+		href,
+		icon,
+		title,
+		children = [],
+		active,
+		expanded,
+		disabled,
+	} = item;
 
 	const state = useReactive({
 		expanded,
@@ -61,37 +65,39 @@ export const MenuItem = (props: Omit<Props, "items"> & { item: TMenuItem }) => {
 			return;
 		}
 
+		item.active = !item.active;
 		handleExpand(e);
 		onItemClick?.(item, e);
 	});
 
 	return (
 		<div
-			className={classNames("i-menu-item", {
-				"i-menu-expand": state.expanded,
+			className={classNames("i-tree-item", {
+				"i-tree-expand": state.expanded,
 			})}
 		>
-			<MenuHeader
+			<Header
 				as={as}
 				href={href}
 				style={{ paddingLeft: `${depth * 1.5 + 0.5}em` }}
+				active={active}
 				onClick={handleItemClick}
 			>
-				{icon && <span className='i-menu-item-icon'>{icon}</span>}
-				<span className='i-menu-item-title'>{title}</span>
+				{icon && <span className='i-tree-item-icon'>{icon}</span>}
+				<span className='i-tree-item-title'>{title}</span>
 
 				{children.length > 0 && (
 					<Icon
 						icon={<KeyboardArrowDownRound />}
-						className='i-menu-toggle'
+						className='i-tree-toggle'
 						onClick={(e) => handleExpand(e, true)}
 					></Icon>
 				)}
-			</MenuHeader>
+			</Header>
 
 			{children?.length > 0 && (
-				<div className='i-menu-item-content'>
-					<Menu items={children} depth={depth + 1} />
+				<div className='i-tree-item-content'>
+					<Tree items={children} depth={depth + 1} />
 				</div>
 			)}
 		</div>

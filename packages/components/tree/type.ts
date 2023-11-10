@@ -7,14 +7,14 @@ import {
 } from "react";
 import { LinkProps } from "react-router-dom";
 
-export type TMenuHeader = {
-	round?: boolean;
+export type TTreeHeader = {
+	active?: boolean;
 	style?: CSSProperties;
 	children: ReactNode;
 	onClick?: (e: MouseEvent<HTMLElement>) => void;
-} & Pick<TMenuItem, "as" | "href">;
+} & Pick<TTreeItem, "as" | "href">;
 
-export type TMenuItem = {
+export type TTreeItem = {
 	key?: string;
 	as?:
 		| "a"
@@ -26,17 +26,19 @@ export type TMenuItem = {
 	title: string | ReactNode;
 	icon?: ReactNode;
 	href?: string;
-	children?: TMenuItem[];
+	children?: TTreeItem[];
+	active?: boolean;
 	expanded?: boolean;
 	disabled?: boolean;
 };
 
 export interface Props {
-	items: TMenuItem[];
+	items: TTreeItem[];
 	depth?: number;
 	selectable?: boolean;
 	round?: boolean;
+	active?: string[];
 	ripple?: boolean;
 	style?: CSSProperties;
-	onItemClick?: (item: TMenuItem, e: MouseEvent<HTMLElement>) => void;
+	onItemClick?: (item: TTreeItem, e: MouseEvent<HTMLElement>) => void;
 }

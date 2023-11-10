@@ -1,15 +1,19 @@
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import "./index.scss";
-import { MenuItem } from "./item";
+import { TreeItem } from "./item";
 import { Props } from "./type";
 
-function Menu(props: Props): JSX.Element {
+function Tree(props: Props): JSX.Element {
 	const { items = [], depth = 0, round, onItemClick, ...rest } = props;
+	const state = useReactive({
+		active: [],
+	});
 
 	return (
 		<div
-			className={classNames("i-menu", {
-				"i-menu-round": round,
+			className={classNames("i-tree", {
+				"i-tree-round": round,
 			})}
 			{...rest}
 		>
@@ -19,14 +23,14 @@ function Menu(props: Props): JSX.Element {
 
 				if (type === "title") {
 					return (
-						<div key={index} className='i-menu-group-title'>
+						<div key={index} className='i-tree-group-title'>
 							{title}
 						</div>
 					);
 				}
 
 				return (
-					<MenuItem
+					<TreeItem
 						key={index}
 						item={item}
 						depth={depth}
@@ -38,4 +42,4 @@ function Menu(props: Props): JSX.Element {
 	);
 }
 
-export default Menu;
+export default Tree;

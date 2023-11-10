@@ -9,12 +9,13 @@ import Icon from "./components/icon";
 import Input from "./components/input";
 import List from "./components/list";
 import Loading from "./components/loading";
-import Menu from "./components/menu";
 import Message from "./components/message";
 import Popup from "./components/popup";
 import Radio from "./components/radio";
 import Select from "./components/select";
+import Table from "./components/table";
 import Tabs from "./components/tabs";
+import Tree from "./components/tree";
 
 export {
 	Button,
@@ -26,10 +27,11 @@ export {
 	Input,
 	List,
 	Loading,
-	Menu,
 	Message,
 	Popup,
 	Radio,
 	Select,
+	Table,
 	Tabs,
+	Tree,
 };

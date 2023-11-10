@@ -1,5 +1,5 @@
 import menus from "@d/config/menu";
-import { Button, Container, Icon, Menu } from "@p/index";
+import { Button, Container, Icon, Loading, Popup, Tree } from "@p";
 import { MenuFilled } from "@ricons/material";
 import { Suspense, lazy, memo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ const DynamicPage = memo(
 		const Page = lazy(() => import(`../pages/${name}`));
 
 		return (
-			<Suspense fallback={<>loading</>}>
+			<Suspense fallback={<Loading />}>
 				<Page></Page>
 			</Suspense>
 		);
@@ -38,8 +38,16 @@ const Header = ({
 const Sider = (): JSX.Element => {
 	return (
 		<div className='px-4 py-12' style={{ minWidth: 240 }}>
-			<h1>R</h1>
-			<Menu items={menus}></Menu>
+			<h1>
+				<Popup
+					position='right'
+					offset={8}
+					content={<div className='pd-12 bg-yellow'>IOTA REACT</div>}
+				>
+					<span>R</span>
+				</Popup>
+			</h1>
+			<Tree items={menus}></Tree>
 		</div>
 	);
 };

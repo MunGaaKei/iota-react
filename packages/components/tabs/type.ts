@@ -1,9 +1,9 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-type TabKey = string | number;
+export type TabKey = string | number;
 
 export interface ITab {
-	key?: string | number;
+	key?: TabKey;
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;

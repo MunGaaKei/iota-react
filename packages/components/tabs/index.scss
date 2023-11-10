@@ -20,7 +20,7 @@
 	display: none;
 }
 .i-tab-nav {
-	--color: var(--color-6);
+	--color: var(--color-7);
 	position: relative;
 	z-index: 1;
 	display: flex;
@@ -34,7 +34,7 @@
 	font-weight: 600;
 	font-size: 1.125em;
 	&:hover {
-		--color: var(--color-4);
+		--color: var(--color-3);
 	}
 	&.i-tab-active {
 		--color: var(--color-0);

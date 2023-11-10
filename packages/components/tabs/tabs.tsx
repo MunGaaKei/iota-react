@@ -1,8 +1,15 @@
 import classNames from "classnames";
-import { Children, useEffect, useMemo, useRef, useState } from "react";
+import {
+	Children,
+	WheelEvent,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import "./index.scss";
 import TabItem from "./item";
-import { ITab, Props } from "./type";
+import { ITab, Props, TabKey } from "./type";
 
 function Tabs(props: Props) {
 	const {
@@ -21,25 +28,26 @@ function Tabs(props: Props) {
 	const [activeKey, setActiveKey] = useState(active);
 	const navRefs = useRef<HTMLAnchorElement[]>([]);
 	const barRef = useRef<HTMLSpanElement>(null);
+	const navsRef = useRef<HTMLDivElement>(null);
 	const [barStyle, setBarStyle] = useState({});
 
 	const tabs: ITab[] = useMemo(() => {
 		return Children.map(children, (node, i) => {
 			const { key, props: nodeProps } = node as {
-				key?: string | number;
+				key?: TabKey;
 				props?: any;
 			};
-			const { title, children } = nodeProps;
+			const { title, children, content } = nodeProps;
 
 			return {
 				key: key || i,
 				title,
-				content: children,
+				content: children || content,
 			};
 		}) as ITab[];
 	}, [children]);
 
-	const handleNavClick = (key?: string | number) => {
+	const handleNavClick = (key?: TabKey) => {
 		if (key === activeKey) return;
 
 		setActiveKey((prev) => {
@@ -48,7 +56,17 @@ function Tabs(props: Props) {
 		});
 	};
 
+	const handleMouseWheel = (e: WheelEvent) => {
+		if (vertical) return;
+
+		navsRef.current?.scrollBy({
+			left: e.deltaY + e.deltaX,
+		});
+	};
+
 	useEffect(() => {
+		if (!bar) return;
+
 		const index = tabs.findIndex((tab) => tab.key === activeKey);
 		const nav = navRefs.current[index];
 
@@ -57,12 +75,11 @@ function Tabs(props: Props) {
 		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
 
 		setBarStyle({
-			top: vertical ? offsetTop : ".8em",
-			height: vertical ? offsetHeight : "1em",
-			left: vertical ? ".8em" : offsetLeft,
-			width: vertical ? "1em" : offsetWidth,
+			height: offsetHeight,
+			width: offsetWidth,
+			transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
 		});
-	}, [activeKey]);
+	}, [activeKey, bar]);
 
 	useEffect(() => {
 		setActiveKey((prev) => {
@@ -76,7 +93,11 @@ function Tabs(props: Props) {
 			<div className='i-tab-navs-container'>
 				{prepend}
 
-				<div className='i-tab-navs'>
+				<div
+					ref={navsRef}
+					className='i-tab-navs'
+					onWheel={handleMouseWheel}
+				>
 					{tabs.map((tab, i) => {
 						const { title, key } = tab;
 
