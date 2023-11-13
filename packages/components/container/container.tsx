@@ -41,7 +41,6 @@ const Container = (props: Props): JSX.Element => {
 		children,
 	} = props;
 
-	const $container = useRef<HTMLDivElement>(null);
 	const $sider = useRef<HTMLDivElement>(null);
 	const state = useReactive<{
 		contentStyle: CSSProperties;
@@ -83,7 +82,7 @@ const Container = (props: Props): JSX.Element => {
 	switch (layout) {
 		case "menu":
 			return (
-				<div ref={$container} className='i-container flex'>
+				<div className='i-container flex'>
 					<SiderLayout ref={$sider} collapsed={state.collapsed}>
 						{Sider}
 					</SiderLayout>
@@ -99,7 +98,7 @@ const Container = (props: Props): JSX.Element => {
 			);
 		default:
 			return (
-				<div ref={$container} className='i-container'>
+				<div className='i-container'>
 					<Area name='header'>{Header}</Area>
 
 					<div className='flex'>

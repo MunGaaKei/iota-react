@@ -9,25 +9,33 @@ const columns = [
 	},
 	{
 		field: "name",
+		fixed: "left",
+		width: "90px",
 	},
 	{
 		field: "email",
+		width: "300px",
 	},
 	{
 		field: "phone",
+		width: "160px",
 	},
 	{
 		field: "gender",
 		title: "性别",
+		width: "80px",
 		render: (value: number) => {
 			return value > 0 ? "男" : "女";
 		},
 	},
 	{
 		field: "birth",
+		width: "150px",
 	},
 	{
 		field: "address",
+		width: "400px",
+		fixed: "right",
 	},
 ];
 

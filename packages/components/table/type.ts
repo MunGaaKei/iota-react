@@ -4,8 +4,11 @@ export type IData = {} & Record<string, any>;
 
 export type IColumn = {
 	field: string;
+	title?: ReactNode;
 	sorter?: boolean;
 	fixed?: "left" | "right";
+	rowSpan?: number;
+	colSpan?: number;
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
 };
 
@@ -28,7 +31,7 @@ export interface Props {
 
 export interface IRow {
 	data: IData;
-	columns: any[];
+	columns: IColumn[];
 }
 
 export interface ICol {
@@ -41,5 +44,6 @@ export interface IHeader extends Omit<IRow, "data"> {}
 
 export interface IResize {
 	widths: string[];
+	columns: IColumn[];
 	onWidthChange: (index: number, width: number) => void;
 }

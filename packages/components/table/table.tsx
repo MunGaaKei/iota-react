@@ -56,14 +56,15 @@ const Table = (props: Props): JSX.Element => {
 			>
 				<Header columns={state.columns} />
 
-				<Resize
-					widths={state.widths}
-					onWidthChange={handleWidthChange}
-				/>
-
 				{data.map((row, i) => (
 					<Row key={i} data={row} columns={state.columns} />
 				))}
+
+				<Resize
+					columns={state.columns}
+					widths={state.widths}
+					onWidthChange={handleWidthChange}
+				/>
 			</div>
 		</div>
 	);

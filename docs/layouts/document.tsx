@@ -58,7 +58,7 @@ const Footer = (): JSX.Element => {
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
-	const [collapsed, toggleCollapsed] = useState<boolean>(true);
+	const [collapsed, toggleCollapsed] = useState<boolean>(false);
 
 	return (
 		<Container

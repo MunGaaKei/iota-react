@@ -1,7 +1,6 @@
 .i-table-container {
 	overflow: auto;
 	--table-border-color: var(--color-8);
-	border: 1px solid var(--table-border-color);
 }
 
 .i-table {
@@ -16,28 +15,23 @@
 }
 
 .i-table-bordered {
-	.i-table-row {
-		&:first-child {
-			.i-table-td {
-				// border-block-start: 1px solid var(--table-border-color);
-			}
-		}
-		&:not(:last-child) {
-			.i-table-td {
-				border-block-end: 1px solid var(--table-border-color);
-			}
+	.i-table-td {
+		border: 1px solid var(--table-border-color);
+		+ .i-table-td {
+			margin-left: -1px;
 		}
 	}
-	.i-table-td {
-		border-inline-end: 1px solid var(--table-border-color);
-		border-block-end: 1px solid var(--table-border-color);
+	.i-table-row {
+		+ .i-table-row {
+			margin-top: -1px;
+		}
 	}
 }
 
 .i-table-row {
 	display: grid;
 	grid-template-columns: var(--table-columns);
-	&:hover {
+	&:hover .i-table-td {
 		background: var(--background-opacity-1);
 	}
 }
@@ -48,11 +42,13 @@
 	text-overflow: ellipsis;
 	outline: none;
 	grid-column: var(--table-column);
+	background: var(--background);
+	backdrop-filter: var(--blur);
 }
 
 .i-table-resizes {
 	position: absolute;
-	z-index: 10;
+	z-index: 12;
 	inset: 0;
 	display: grid;
 	grid-template-columns: var(--table-columns);

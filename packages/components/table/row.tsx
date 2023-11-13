@@ -17,16 +17,16 @@ export default function Row(props: IRow) {
 
 function Col(props: ICol) {
 	const { col, index, data } = props;
-	const { field, fixed, render } = col;
+	const { field, fixed, colSpan = 1, render } = col;
 
 	const style = {
-		"--table-column": `${1 + index} / ${2 + index}`,
+		"--table-column": `${1 + index} / ${1 + colSpan + index}`,
 	} as CSSProperties;
 
 	return (
 		<div
 			className={classNames("i-table-td", {
-				[`sticky-${fixed} bg-blur`]: fixed,
+				[`sticky-${fixed}`]: fixed,
 			})}
 			data-col={field}
 			style={style}
@@ -40,18 +40,18 @@ export function Header(props: IHeader) {
 	const { columns } = props;
 
 	return (
-		<div className='i-table-header i-table-row sticky-top bg-blur'>
+		<div className='i-table-header i-table-row sticky-top'>
 			{columns.map((col, i) => {
-				const { field, title, fixed } = col;
+				const { field, title, fixed, colSpan = 1 } = col;
 				const style = {
-					"--table-column": `${1 + i} / ${2 + i}`,
+					"--table-column": `${1 + i} / ${1 + colSpan + i}`,
 				} as CSSProperties;
 
 				return (
 					<div
 						key={i}
 						className={classNames("i-table-td", {
-							[`sticky-${fixed} bg-blur`]: fixed,
+							[`sticky-${fixed}`]: fixed,
 						})}
 						style={style}
 					>
@@ -64,7 +64,7 @@ export function Header(props: IHeader) {
 }
 
 export function Resize(props: IResize) {
-	const { widths, onWidthChange } = props;
+	const { columns, widths, onWidthChange } = props;
 	const state = useReactive({
 		resizing: false,
 		x: 0,
@@ -112,14 +112,17 @@ export function Resize(props: IResize) {
 	return (
 		<div className='i-table-resizes'>
 			{widths.map((w, i) => {
+				const { colSpan = 1, fixed } = columns[i];
 				const style = {
-					"--table-column": `${2 + i} / ${3 + i}`,
+					"--table-column": `${2 + i} / ${2 + colSpan + i}`,
 				} as CSSProperties;
 
 				return (
 					<span
 						key={i}
-						className='i-table-y-resize'
+						className={classNames("i-table-y-resize", {
+							[`sticky-${fixed}`]: fixed,
+						})}
 						style={style}
 						onMouseDown={(e) => handleMouseDown(e, i)}
 					/>
