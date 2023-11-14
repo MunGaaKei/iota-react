@@ -3,6 +3,18 @@ import classNames from "classnames";
 import { CSSProperties, MouseEvent, useEffect } from "react";
 import { ICol, IHeader, IResize, IRow } from "./type";
 
+function getCellStyle({ align, fixed, index }: any) {
+	const style: any = {
+		"--table-align": align,
+	};
+
+	if (fixed) {
+		style.insetInline = `var(--table-td-inset-${index})`;
+	}
+
+	return style;
+}
+
 export default function Row(props: IRow) {
 	const { data, columns } = props;
 
@@ -17,16 +29,13 @@ export default function Row(props: IRow) {
 
 function Col(props: ICol) {
 	const { col, index, data } = props;
-	const { field, fixed, colSpan = 1, render } = col;
-
-	const style = {
-		"--table-column": `${1 + index} / ${1 + colSpan + index}`,
-	} as CSSProperties;
+	const { field, fixed, colSpan = 1, align, render } = col;
+	const style = getCellStyle({ align, fixed, index });
 
 	return (
 		<div
 			className={classNames("i-table-td", {
-				[`sticky-${fixed}`]: fixed,
+				"i-table-td-sticky": fixed,
 			})}
 			data-col={field}
 			style={style}
@@ -41,17 +50,16 @@ export function Header(props: IHeader) {
 
 	return (
 		<div className='i-table-header i-table-row sticky-top'>
-			{columns.map((col, i) => {
-				const { field, title, fixed, colSpan = 1 } = col;
-				const style = {
-					"--table-column": `${1 + i} / ${1 + colSpan + i}`,
-				} as CSSProperties;
+			{columns.map((col, index) => {
+				const { field, title, fixed, colSpan = 1, align } = col;
+				const style = getCellStyle({ align, fixed, index });
 
 				return (
 					<div
-						key={i}
+						key={index}
+						data-col={field}
 						className={classNames("i-table-td", {
-							[`sticky-${fixed}`]: fixed,
+							"i-table-td-sticky": fixed,
 						})}
 						style={style}
 					>
@@ -113,16 +121,12 @@ export function Resize(props: IResize) {
 		<div className='i-table-resizes'>
 			{widths.map((w, i) => {
 				const { colSpan = 1, fixed } = columns[i];
-				const style = {
-					"--table-column": `${2 + i} / ${2 + colSpan + i}`,
-				} as CSSProperties;
+				const style = {} as CSSProperties;
 
 				return (
 					<span
 						key={i}
-						className={classNames("i-table-y-resize", {
-							[`sticky-${fixed}`]: fixed,
-						})}
+						className='i-table-y-resize'
 						style={style}
 						onMouseDown={(e) => handleMouseDown(e, i)}
 					/>

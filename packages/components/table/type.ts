@@ -5,8 +5,10 @@ export type IData = {} & Record<string, any>;
 export type IColumn = {
 	field: string;
 	title?: ReactNode;
+	width?: string;
 	sorter?: boolean;
 	fixed?: "left" | "right";
+	align?: string;
 	rowSpan?: number;
 	colSpan?: number;
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
@@ -14,7 +16,7 @@ export type IColumn = {
 
 export interface Props {
 	data: IData[];
-	columns?: any[];
+	columns?: IColumn[];
 	border?: boolean;
 	striped?: boolean;
 	header?: boolean;

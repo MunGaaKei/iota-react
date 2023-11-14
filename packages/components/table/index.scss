@@ -4,7 +4,7 @@
 }
 
 .i-table {
-	--padding: 0 8px;
+	--padding: 2px 8px;
 
 	position: relative;
 	min-width: 100%;
@@ -16,34 +16,40 @@
 
 .i-table-bordered {
 	.i-table-td {
+		// outline: 1px solid var(--table-border-color);
 		border: 1px solid var(--table-border-color);
-		+ .i-table-td {
-			margin-left: -1px;
-		}
-	}
-	.i-table-row {
-		+ .i-table-row {
-			margin-top: -1px;
-		}
 	}
 }
 
 .i-table-row {
 	display: grid;
 	grid-template-columns: var(--table-columns);
-	&:hover .i-table-td {
-		background: var(--background-opacity-1);
+	&:hover {
+		background: var(--color-9);
 	}
+}
+.i-table-header {
+	--table-td-background: var(--background);
 }
 
 .i-table-td {
 	padding: var(--padding);
-	overflow: hidden;
+	overflow: clip;
 	text-overflow: ellipsis;
-	outline: none;
-	grid-column: var(--table-column);
-	background: var(--background);
-	backdrop-filter: var(--blur);
+	text-align: var(--table-align);
+	background: var(--table-td-background);
+	&.i-table-td-sticky {
+		position: sticky;
+		z-index: 1;
+	}
+}
+
+.i-table-striped {
+	.i-table-row {
+		&:nth-child(even) {
+			--table-td-background: var(--color-9);
+		}
+	}
 }
 
 .i-table-resizes {

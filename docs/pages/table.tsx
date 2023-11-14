@@ -1,4 +1,5 @@
 import { Table } from "@p";
+import { IColumn } from "@p/components/table/type";
 import { mock } from "mockjs";
 
 const columns = [
@@ -10,11 +11,11 @@ const columns = [
 	{
 		field: "name",
 		fixed: "left",
-		width: "90px",
+		width: "80px",
 	},
 	{
 		field: "email",
-		width: "300px",
+		width: "200px",
 	},
 	{
 		field: "phone",
@@ -34,10 +35,15 @@ const columns = [
 	},
 	{
 		field: "address",
-		width: "400px",
-		fixed: "right",
+		width: "500px",
 	},
-];
+	{
+		field: "action",
+		width: "80px",
+		fixed: "right",
+		align: "center",
+	},
+] as IColumn[];
 
 export default function Page() {
 	const { list } = mock({
