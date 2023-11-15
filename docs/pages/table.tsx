@@ -1,4 +1,4 @@
-import { Table } from "@p";
+import { Button, Table } from "@p";
 import { IColumn } from "@p/components/table/type";
 import { mock } from "mockjs";
 
@@ -25,6 +25,7 @@ const columns = [
 		field: "gender",
 		title: "性别",
 		width: "80px",
+		align: "center",
 		render: (value: number) => {
 			return value > 0 ? "男" : "女";
 		},
@@ -38,10 +39,20 @@ const columns = [
 		width: "500px",
 	},
 	{
+		field: "active",
+		width: "70px",
+		fixed: "right",
+		align: "center",
+		render: (value: boolean) => {
+			return value ? "是" : "否";
+		},
+	},
+	{
 		field: "action",
 		width: "80px",
 		fixed: "right",
 		align: "center",
+		render: () => <Button size='small'>操作</Button>,
 	},
 ] as IColumn[];
 
@@ -57,12 +68,23 @@ export default function Page() {
 				birth: "@date",
 				// "tags|0-2": ["@ctitle(2)"],
 				address: "@county(true)",
-				// active: "@boolean",
+				active: "@boolean",
 			},
 		],
 	});
 
 	return (
-		<Table data={list} columns={columns} style={{ height: 500 }}></Table>
+		<>
+			<Table
+				data={list}
+				columns={columns}
+				style={{ height: 500 }}
+			></Table>
+			<Table
+				data={list}
+				columns={[{ field: "id", width: "40px" }]}
+				style={{ height: 500 }}
+			></Table>
+		</>
 	);
 }

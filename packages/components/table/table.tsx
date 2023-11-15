@@ -37,7 +37,7 @@ const Table = (props: Props): JSX.Element => {
 		const style: any = {};
 		const widths: string[] = [];
 		const lefts: string[] = [];
-		const rights: string[] = [];
+		const rights: any = {};
 
 		state.widths.map((w, i) => {
 			const { fixed, width } = w;
@@ -56,10 +56,12 @@ const Table = (props: Props): JSX.Element => {
 				style[`--table-td-inset-${i}`] = `${before} auto`;
 				lefts.push(width);
 			} else {
-				rights.push(width);
+				rights[i] = width;
 			}
-			console.log(rights);
 		});
+
+		console.log(rights);
+
 		style["--table-columns"] = widths.join(" ");
 
 		state.style = style;
@@ -84,16 +86,17 @@ const Table = (props: Props): JSX.Element => {
 
 	return (
 		<div
-			className={classNames("i-table-container", className)}
-			style={style}
-		>
-			<div
-				className={classNames("i-table", {
+			className={classNames(
+				"i-table-container",
+				{
 					"i-table-bordered": border,
 					"i-table-striped": striped,
-				})}
-				style={state.style}
-			>
+				},
+				className
+			)}
+			style={style}
+		>
+			<div className={classNames("i-table")} style={state.style}>
 				<Header columns={state.columns} />
 
 				{data.map((row, i) => (
