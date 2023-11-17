@@ -48,6 +48,10 @@ const columns = [
 		},
 	},
 	{
+		field: "none",
+		width: "70px",
+	},
+	{
 		field: "action",
 		width: "80px",
 		fixed: "right",
@@ -80,11 +84,11 @@ export default function Page() {
 				columns={columns}
 				style={{ height: 500 }}
 			></Table>
-			<Table
+			{/* <Table
 				data={list}
 				columns={[{ field: "id", width: "40px" }]}
 				style={{ height: 500 }}
-			></Table>
+			></Table> */}
 		</>
 	);
 }

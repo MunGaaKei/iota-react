@@ -1,6 +1,6 @@
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { CSSProperties, MouseEvent, useEffect } from "react";
+import { MouseEvent } from "react";
 import { ICol, IHeader, IResize, IRow } from "./type";
 
 function getCellStyle({ align, fixed, index }: any) {
@@ -93,7 +93,7 @@ export function Resize(props: IResize) {
 		});
 	});
 
-	const handleMouseMove = useMemoizedFn((e: globalThis.MouseEvent) => {
+	const handleMouseMove = useMemoizedFn((e: MouseEvent) => {
 		if (!state.resizing) return;
 
 		e.preventDefault();
@@ -107,28 +107,21 @@ export function Resize(props: IResize) {
 		state.resizing = false;
 	};
 
-	useEffect(() => {
-		document.addEventListener("mouseup", handleMouseUp);
-		document.addEventListener("mousemove", handleMouseMove);
-
-		return () => {
-			document.removeEventListener("mouseup", handleMouseUp);
-			document.removeEventListener("mousemove", handleMouseMove);
-		};
-	}, []);
-
 	return (
 		<div className='i-table-resizes'>
-			{widths.map((w, i) => {
-				const { colSpan = 1, fixed } = columns[i];
-				const style = {} as CSSProperties;
+			{widths.map((w, index) => {
+				const { fixed } = columns[index];
+				const style = {
+					position: "sticky",
+					...getCellStyle({ fixed, index }),
+				};
 
 				return (
 					<span
-						key={i}
+						key={index}
 						className='i-table-y-resize'
 						style={style}
-						onMouseDown={(e) => handleMouseDown(e, i)}
+						onMouseDown={(e) => handleMouseDown(e, index)}
 					/>
 				);
 			})}

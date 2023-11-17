@@ -1,6 +1,5 @@
-import { useClickOutside } from "@p/js/hooks";
 import { getPosition } from "@p/js/utils";
-import { useCreation, useReactive } from "ahooks";
+import { useClickAway, useCreation, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
 	CSSProperties,
@@ -68,11 +67,12 @@ export default function Popup(props: Props) {
 		style: { position: fixed ? "fixed" : "absolute" },
 	});
 
-	useClickOutside(
-		contentRef.current,
-		() => handleToggle(false),
-		!["click", "none"].includes(trigger)
-	);
+	useClickAway((e: Event) => {
+		const tar = e.target as HTMLElement;
+		const isContain = triggerRef.current?.contains(tar);
+
+		state.show && !isContain && handleToggle(false);
+	}, contentRef);
 
 	const handleShow = useCallback(() => {
 		if (state.show) return;

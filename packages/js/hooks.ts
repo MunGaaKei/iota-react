@@ -1,5 +1,5 @@
 import PubSub from "pubsub-js";
-import { useEffect } from "react";
+import { MouseEvent, useEffect } from "react";
 
 export function useFormRegist(props: {
 	form?: string;
@@ -39,36 +39,16 @@ export function useFormRegist(props: {
 	};
 }
 
-const ClickOutsideHandlers = new Map();
+const eventsMap = new Map();
 
-document.addEventListener("mousedown", function (e) {
-	const target = e.target;
-
-	for (const handler of ClickOutsideHandlers.entries()) {
-		const [$el, listener] = handler;
-		if (!$el) {
-			ClickOutsideHandlers.delete($el);
-			return;
-		}
-
-		!$el.contains(target) && listener?.(e);
-	}
+document.addEventListener("mousemove", function (e: MouseEvent) {
+	const callbacks = eventsMap.get("mousemove");
+	console.log(callbacks);
 });
 
-export function useClickOutside(
-	target?: HTMLElement | null,
-	listener?: (e: MouseEvent) => void,
-	disable?: boolean
-) {
-	if (disable) return;
-	const handleClick = (e: MouseEvent) => {
-		target && !target.contains(e.target as HTMLElement) && listener?.(e);
-	};
-
+export function useEvents(event: string, callback: (e?: any) => void) {
 	useEffect(() => {
-		ClickOutsideHandlers.set(target, handleClick);
-		return () => {
-			ClickOutsideHandlers.delete(target);
-		};
-	});
+		eventsMap.set(event, callback);
+		return () => {};
+	}, []);
 }

@@ -2,7 +2,7 @@ import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { CSSProperties, useEffect } from "react";
 import "./index.scss";
-import Row, { Header } from "./row";
+import Row, { Header, Resize } from "./row";
 import type { Props } from "./type";
 
 type State = {
@@ -10,6 +10,11 @@ type State = {
 	widths: any[];
 	style: CSSProperties;
 };
+
+function stickyOffset(widths: string[]) {
+	const l = widths.length;
+	return l === 0 ? 0 : l > 1 ? `calc(${widths.join(" + ")})` : widths[0];
+}
 
 const Table = (props: Props): JSX.Element => {
 	const {
@@ -29,7 +34,8 @@ const Table = (props: Props): JSX.Element => {
 
 	const handleWidthChange = (i: number, width: number) => {
 		const { widths } = state;
-		widths[i] = `${width}px`;
+
+		widths[i].width = `${width}px`;
 		state.widths = [...widths];
 	};
 
@@ -37,7 +43,7 @@ const Table = (props: Props): JSX.Element => {
 		const style: any = {};
 		const widths: string[] = [];
 		const lefts: string[] = [];
-		const rights: any = {};
+		let rights: any = {};
 
 		state.widths.map((w, i) => {
 			const { fixed, width } = w;
@@ -46,21 +52,21 @@ const Table = (props: Props): JSX.Element => {
 			if (!fixed) return;
 
 			if (fixed === "left") {
-				const l = lefts.length;
-				const before =
-					l === 0
-						? 0
-						: l > 1
-						? `calc(${lefts.join(" + ")})`
-						: lefts[0];
-				style[`--table-td-inset-${i}`] = `${before} auto`;
+				style[`--table-td-inset-${i}`] = `${stickyOffset(lefts)} auto`;
 				lefts.push(width);
 			} else {
 				rights[i] = width;
 			}
 		});
 
-		console.log(rights);
+		rights.length = state.widths.length;
+		rights = Array.from(rights);
+		rights.map((w: string, i: number) => {
+			if (!w) return;
+
+			const ends = rights.slice(i + 1).filter(Boolean);
+			style[`--table-td-inset-${i}`] = `auto ${stickyOffset(ends)}`;
+		});
 
 		style["--table-columns"] = widths.join(" ");
 
@@ -103,11 +109,11 @@ const Table = (props: Props): JSX.Element => {
 					<Row key={i} data={row} columns={state.columns} />
 				))}
 
-				{/* <Resize
+				<Resize
 					columns={state.columns}
-					widths={state.widths}
 					onWidthChange={handleWidthChange}
-				/> */}
+					widths={state.widths}
+				/>
 			</div>
 		</div>
 	);
