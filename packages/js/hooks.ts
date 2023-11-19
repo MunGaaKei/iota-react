@@ -1,5 +1,5 @@
 import PubSub from "pubsub-js";
-import { MouseEvent, useEffect } from "react";
+import { useEffect } from "react";
 
 export function useFormRegist(props: {
 	form?: string;
@@ -37,18 +37,4 @@ export function useFormRegist(props: {
 	return (value: any) => {
 		PubSub.publish(`${form}:setFormState`, { [name]: value });
 	};
-}
-
-const eventsMap = new Map();
-
-document.addEventListener("mousemove", function (e: MouseEvent) {
-	const callbacks = eventsMap.get("mousemove");
-	console.log(callbacks);
-});
-
-export function useEvents(event: string, callback: (e?: any) => void) {
-	useEffect(() => {
-		eventsMap.set(event, callback);
-		return () => {};
-	}, []);
 }

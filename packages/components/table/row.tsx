@@ -1,6 +1,6 @@
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect } from "react";
 import { ICol, IHeader, IResize, IRow } from "./type";
 
 function getCellStyle({ align, fixed, index }: any) {
@@ -82,8 +82,21 @@ export function Resize(props: IResize) {
 
 	const handleMouseDown = useMemoizedFn((e: MouseEvent, i: number) => {
 		const tar = e.target as HTMLElement;
-		const prev = tar.previousElementSibling as HTMLElement;
-		const width = tar.offsetLeft - (prev?.offsetLeft || 0);
+		const fixed = widths[i].fixed;
+		let sibling;
+
+		if (fixed === "right") {
+			sibling = tar.nextElementSibling;
+		} else {
+			sibling = tar.previousElementSibling;
+		}
+		const left = sibling
+			? sibling.getBoundingClientRect().left
+			: tar.parentNode.getBoundingClientRect().left;
+
+		console.log(tar.getBoundingClientRect());
+
+		const width = tar.getBoundingClientRect().left - left;
 
 		Object.assign(state, {
 			x: e.pageX,
@@ -107,24 +120,34 @@ export function Resize(props: IResize) {
 		state.resizing = false;
 	};
 
-	return (
-		<div className='i-table-resizes'>
-			{widths.map((w, index) => {
-				const { fixed } = columns[index];
-				const style = {
-					position: "sticky",
-					...getCellStyle({ fixed, index }),
-				};
+	useEffect(() => {
+		document.addEventListener("mouseup", handleMouseUp);
+		document.addEventListener("mousemove", handleMouseMove);
+		return () => {
+			document.removeEventListener("mouseup", handleMouseUp);
+			document.removeEventListener("mousemove", handleMouseMove);
+		};
+	}, []);
 
-				return (
-					<span
-						key={index}
-						className='i-table-y-resize'
-						style={style}
-						onMouseDown={(e) => handleMouseDown(e, index)}
-					/>
-				);
-			})}
+	return (
+		<div className='i-table-resize'>
+			<div className='i-table-resize-lines'>
+				{widths.map((w, index) => {
+					const { fixed } = columns[index];
+					const style = {
+						insetInline: `var(--table-resize-inset-${index})`,
+					};
+
+					return (
+						<span
+							key={index}
+							className='i-table-resize-y'
+							style={style}
+							onMouseDown={(e) => handleMouseDown(e, index)}
+						/>
+					);
+				})}
+			</div>
 		</div>
 	);
 }

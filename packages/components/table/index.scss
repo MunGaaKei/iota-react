@@ -1,11 +1,14 @@
 .i-table-container {
-	overflow: auto;
 	--table-border-color: var(--color-8);
+
+	overflow: auto;
 }
 
 .i-table {
 	--padding: 2px 8px;
+
 	position: relative;
+	transform: translate3d(0, 0, 0);
 
 	.sticky-top {
 		z-index: 11;
@@ -28,15 +31,18 @@
 }
 
 .i-table-row {
+	--table-td-background: var(--background);
+
 	display: grid;
 	grid-template-columns: var(--table-columns);
-	--table-td-background: var(--background);
+	width: fit-content;
 	&:hover .i-table-td {
 		--table-td-background: var(--color-main-slight);
 	}
 }
 .i-table-header {
 	--table-td-background: var(--background);
+	user-select: none;
 }
 
 .i-table-td {
@@ -53,21 +59,27 @@
 	}
 }
 
-.i-table-resizes {
-	position: absolute;
-	z-index: 12;
+.i-table-resize {
+	position: fixed;
+	z-index: 1;
 	inset: 0;
-	display: grid;
-	grid-template-columns: var(--table-columns);
 	pointer-events: none;
 }
-.i-table-y-resize {
+.i-table-resize-lines {
+	height: 100%;
+	display: grid;
+	grid-template-columns: var(--table-columns);
+}
+.i-table-resize-y {
+	position: sticky;
+	z-index: 1;
 	margin-left: auto;
 	width: 3px;
-	height: 100%;
+	height: inherit;
 	cursor: ew-resize;
 	pointer-events: initial;
-	transition: var(--transition);
+	transition: background-color 0.15s;
+	background: #000;
 	&:hover {
 		background: var(--color-5);
 	}

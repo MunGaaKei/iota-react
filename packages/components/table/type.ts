@@ -2,17 +2,20 @@ import { CSSProperties, ReactNode } from "react";
 
 export type IData = {} & Record<string, any>;
 
+export type TWidth = {
+	width?: string;
+	fixed?: "left" | "right";
+};
+
 export type IColumn = {
 	field: string;
 	title?: ReactNode;
-	width?: string;
 	sorter?: boolean;
-	fixed?: "left" | "right";
 	align?: string;
 	rowSpan?: number;
 	colSpan?: number;
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
-};
+} & TWidth;
 
 export interface Props {
 	data: IData[];
@@ -45,7 +48,7 @@ export interface ICol {
 export interface IHeader extends Omit<IRow, "data"> {}
 
 export interface IResize {
-	widths: string[];
+	widths: TWidth[];
 	columns: IColumn[];
 	onWidthChange: (index: number, width: number) => void;
 }

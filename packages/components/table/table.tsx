@@ -3,15 +3,15 @@ import classNames from "classnames";
 import { CSSProperties, useEffect } from "react";
 import "./index.scss";
 import Row, { Header, Resize } from "./row";
-import type { Props } from "./type";
+import type { Props, TWidth } from "./type";
 
 type State = {
 	columns: any[];
-	widths: any[];
+	widths: TWidth[];
 	style: CSSProperties;
 };
 
-function stickyOffset(widths: string[]) {
+function tdStickyOffset(widths: string[]) {
 	const l = widths.length;
 	return l === 0 ? 0 : l > 1 ? `calc(${widths.join(" + ")})` : widths[0];
 }
@@ -46,14 +46,21 @@ const Table = (props: Props): JSX.Element => {
 		let rights: any = {};
 
 		state.widths.map((w, i) => {
-			const { fixed, width } = w;
+			const { fixed, width = "" } = w;
 			widths.push(width);
 
 			if (!fixed) return;
 
 			if (fixed === "left") {
-				style[`--table-td-inset-${i}`] = `${stickyOffset(lefts)} auto`;
+				style[`--table-td-inset-${i}`] = `${tdStickyOffset(
+					lefts
+				)} auto`;
+
 				lefts.push(width);
+
+				style[`--table-resize-inset-${i}`] = `${tdStickyOffset(
+					lefts
+				)} auto`;
 			} else {
 				rights[i] = width;
 			}
@@ -64,8 +71,11 @@ const Table = (props: Props): JSX.Element => {
 		rights.map((w: string, i: number) => {
 			if (!w) return;
 
-			const ends = rights.slice(i + 1).filter(Boolean);
-			style[`--table-td-inset-${i}`] = `auto ${stickyOffset(ends)}`;
+			const ends = rights.slice(i).filter(Boolean);
+			style[`--table-resize-inset-${i}`] = `auto ${tdStickyOffset(ends)}`;
+			style[`--table-td-inset-${i}`] = `auto ${tdStickyOffset(
+				ends.slice(1)
+			)}`;
 		});
 
 		style["--table-columns"] = widths.join(" ");
@@ -111,8 +121,8 @@ const Table = (props: Props): JSX.Element => {
 
 				<Resize
 					columns={state.columns}
-					onWidthChange={handleWidthChange}
 					widths={state.widths}
+					onWidthChange={handleWidthChange}
 				/>
 			</div>
 		</div>
