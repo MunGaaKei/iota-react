@@ -49,6 +49,5 @@ export interface IHeader extends Omit<IRow, "data"> {}
 
 export interface IResize {
 	widths: TWidth[];
-	columns: IColumn[];
 	onWidthChange: (index: number, width: number) => void;
 }

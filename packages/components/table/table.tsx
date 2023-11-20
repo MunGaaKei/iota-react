@@ -2,7 +2,8 @@ import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { CSSProperties, useEffect } from "react";
 import "./index.scss";
-import Row, { Header, Resize } from "./row";
+import Resize from "./resize";
+import Row, { Header } from "./row";
 import type { Props, TWidth } from "./type";
 
 type State = {
@@ -11,7 +12,7 @@ type State = {
 	style: CSSProperties;
 };
 
-function tdStickyOffset(widths: string[]) {
+function tdOffset(widths: string[]) {
 	const l = widths.length;
 	return l === 0 ? 0 : l > 1 ? `calc(${widths.join(" + ")})` : widths[0];
 }
@@ -43,7 +44,7 @@ const Table = (props: Props): JSX.Element => {
 		const style: any = {};
 		const widths: string[] = [];
 		const lefts: string[] = [];
-		let rights: any = {};
+		const rights: string[] = [];
 
 		state.widths.map((w, i) => {
 			const { fixed, width = "" } = w;
@@ -52,30 +53,24 @@ const Table = (props: Props): JSX.Element => {
 			if (!fixed) return;
 
 			if (fixed === "left") {
-				style[`--table-td-inset-${i}`] = `${tdStickyOffset(
-					lefts
-				)} auto`;
-
+				style[`--table-td-inset-${i}`] = `${tdOffset(lefts)} auto`;
 				lefts.push(width);
-
-				style[`--table-resize-inset-${i}`] = `${tdStickyOffset(
-					lefts
-				)} auto`;
 			} else {
 				rights[i] = width;
 			}
 		});
 
 		rights.length = state.widths.length;
-		rights = Array.from(rights);
-		rights.map((w: string, i: number) => {
+		Array.from(rights).map((w, i, arr) => {
 			if (!w) return;
 
-			const ends = rights.slice(i).filter(Boolean);
-			style[`--table-resize-inset-${i}`] = `auto ${tdStickyOffset(ends)}`;
-			style[`--table-td-inset-${i}`] = `auto ${tdStickyOffset(
-				ends.slice(1)
-			)}`;
+			const offset = tdOffset(
+				arr.flatMap((rw: string, j: number) =>
+					j > i && rw ? [rw] : []
+				)
+			);
+
+			style[`--table-td-inset-${i}`] = `auto ${offset}`;
 		});
 
 		style["--table-columns"] = widths.join(" ");
@@ -120,7 +115,6 @@ const Table = (props: Props): JSX.Element => {
 				))}
 
 				<Resize
-					columns={state.columns}
 					widths={state.widths}
 					onWidthChange={handleWidthChange}
 				/>
