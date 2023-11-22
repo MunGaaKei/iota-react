@@ -33,7 +33,7 @@
 		border-radius: inherit;
 		&.i-list-option-active {
 			color: var(--color-main);
-			background: var(--background-opacity-1);
+			background: var(--color-main-slight);
 		}
 		&.disabled {
 			pointer-events: none;
@@ -44,5 +44,5 @@
 .i-select-value {
 	padding: 0 0.4em;
 	border-radius: var(--radius);
-	background: var(--background-opacity);
+	background: var(--color-main-slight);
 }

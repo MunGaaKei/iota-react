@@ -23,8 +23,12 @@ const Table = (props: Props): JSX.Element => {
 		columns,
 		border = true,
 		striped = true,
-		style,
+		header = true,
+		resizable = true,
 		className,
+		onCellClick,
+		onRowClick,
+		...restProps
 	} = props;
 
 	const state = useReactive<State>({
@@ -105,19 +109,28 @@ const Table = (props: Props): JSX.Element => {
 				},
 				className
 			)}
-			style={style}
+			{...restProps}
 		>
 			<div className={classNames("i-table")} style={state.style}>
-				<Header columns={state.columns} />
+				{header && <Header columns={state.columns} />}
 
 				{data.map((row, i) => (
-					<Row key={i} data={row} columns={state.columns} />
+					<Row
+						key={i}
+						row={i}
+						data={row}
+						columns={state.columns}
+						onCellClick={onCellClick}
+						onRowClick={onRowClick}
+					/>
 				))}
 
-				<Resize
-					widths={state.widths}
-					onWidthChange={handleWidthChange}
-				/>
+				{resizable && (
+					<Resize
+						widths={state.widths}
+						onWidthChange={handleWidthChange}
+					/>
+				)}
 			</div>
 		</div>
 	);

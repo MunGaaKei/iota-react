@@ -46,7 +46,7 @@ export default function Popup(props: Props) {
 		fixed,
 		position,
 		showDelay = 16,
-		hideDelay = 60,
+		hideDelay = 16,
 		touchable,
 		fitWidth,
 		style,

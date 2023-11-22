@@ -1,3 +1,4 @@
+import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
 import { createElement, forwardRef } from "react";
 import "./index.scss";
@@ -36,8 +37,11 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		square,
 		size,
 		href,
+		ripple = true,
 		...rest
 	} = props;
+
+	ripple && useRipple();
 
 	const childNodes = [
 		loading &&
@@ -52,13 +56,18 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		),
 	];
 
+	const attrs = {
+		className: formatClass(props),
+		["data-ripple"]: ripple,
+	};
+
 	if (typeof As === "string") {
 		return createElement(
 			As,
 			{
 				ref,
 				href,
-				className: formatClass(props),
+				...attrs,
 				...rest,
 			},
 			childNodes
@@ -69,7 +78,7 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		As,
 		{
 			to: href || "",
-			className: formatClass(props),
+			...attrs,
 			...rest,
 		},
 		childNodes

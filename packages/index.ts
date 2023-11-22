@@ -10,6 +10,7 @@ import Input from "./components/input";
 import List from "./components/list";
 import Loading from "./components/loading";
 import Message from "./components/message";
+import Pagination from "./components/pagination";
 import Popup from "./components/popup";
 import Radio from "./components/radio";
 import Select from "./components/select";
@@ -28,6 +29,7 @@ export {
 	List,
 	Loading,
 	Message,
+	Pagination,
 	Popup,
 	Radio,
 	Select,

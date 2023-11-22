@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 export type IData = {} & Record<string, any>;
 
@@ -17,35 +17,38 @@ export type IColumn = {
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
 } & TWidth;
 
-export interface Props {
+export interface Props
+	extends Pick<HTMLAttributes<HTMLDivElement>, "style" | "className"> {
 	data: IData[];
 	columns?: IColumn[];
 	border?: boolean;
 	striped?: boolean;
 	header?: boolean;
-	style?: CSSProperties;
-	className?: string;
+	resizable?: boolean;
+
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,
 		field?: string,
-		col?: number,
-		row?: number
+		row?: number,
+		col?: number
 	) => void;
 }
 
-export interface IRow {
+export interface IRow extends Pick<Props, "onCellClick" | "onRowClick"> {
 	data: IData;
 	columns: IColumn[];
+	row: number;
 }
 
-export interface ICol {
-	col: IColumn;
+export interface ICol extends Pick<Props, "onCellClick"> {
+	column: IColumn;
 	data: IData;
-	index: number;
+	row: number;
+	col: number;
 }
 
-export interface IHeader extends Omit<IRow, "data"> {}
+export interface IHeader extends Omit<IRow, "data" | "row"> {}
 
 export interface IResize {
 	widths: TWidth[];

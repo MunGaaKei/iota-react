@@ -1,0 +1,41 @@
+.i-pagination {
+	display: flex;
+	align-items: center;
+	gap: 0.2em;
+}
+
+.i-page {
+	--color: var(--color-5);
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 0.32em;
+	height: 2.25em;
+	min-width: 2.25em;
+	border-radius: var(--radius);
+	border: 2px solid transparent;
+	transition: var(--transition);
+	user-select: none;
+	cursor: pointer;
+	white-space: nowrap;
+	outline: none;
+	color: var(--color);
+	background: var(--background);
+	.i-ripple-container,
+	.i-loading-container {
+		inset: -2px;
+	}
+	&:hover {
+		--background: var(--background-opacity-1);
+	}
+	&.i-page-active {
+		--background: unset;
+		--color: var(--color-main);
+		cursor: default;
+	}
+	&.i-page-loading {
+		--background: unset;
+		cursor: default;
+	}
+}

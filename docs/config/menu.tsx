@@ -30,20 +30,24 @@ import { Link } from "react-router-dom";
 export default [
 	{
 		title: "Install",
+		as: Link,
 		icon: <Icon icon={<MoveToInboxTwotone />} />,
 	},
 	{
 		title: "Style & Colors",
+		as: Link,
 		icon: <Icon icon={<SoupKitchenTwotone />} />,
 		children: [
 			{
 				title: "Colors",
 				href: "/docs/colors",
+				as: Link,
 				icon: <Icon icon={<ColorLensTwotone />} />,
 			},
 			{
 				title: "Helper Class",
 				href: "/docs/helper",
+				as: Link,
 				icon: <Icon icon={<StyleTwotone />} />,
 			},
 		],
@@ -62,6 +66,7 @@ export default [
 			{
 				title: "Container",
 				href: "/docs/container",
+				as: Link,
 				icon: <Icon icon={<ViewQuiltOutlined />} />,
 			},
 			{
@@ -73,6 +78,7 @@ export default [
 			{
 				title: "Dropdown",
 				href: "/docs/dropdown",
+				as: Link,
 				icon: <Icon icon={<TableRowsOutlined />} />,
 			},
 			{
@@ -84,21 +90,25 @@ export default [
 					{
 						title: "Checkbox",
 						href: "/docs/checkbox",
+						as: Link,
 						icon: <Icon icon={<CheckBoxOutlined />} />,
 					},
 					{
 						title: "Input",
 						href: "/docs/input",
+						as: Link,
 						icon: <Icon icon={<PowerInputRound />} />,
 					},
 					{
 						title: "Radio",
 						href: "/docs/radio",
+						as: Link,
 						icon: <Icon icon={<RadioButtonCheckedRound />} />,
 					},
 					{
 						title: "Select",
 						href: "/docs/select",
+						as: Link,
 						icon: <Icon icon={<UnfoldMoreRound />} />,
 					},
 				],
@@ -106,36 +116,43 @@ export default [
 			{
 				title: "Icon",
 				href: "/docs/icon",
+				as: Link,
 				icon: <Icon icon={<EmojiNatureTwotone />} />,
 			},
 			{
 				title: "List",
 				href: "/docs/list",
+				as: Link,
 				icon: <Icon icon={<FormatListNumberedRound />} />,
 			},
 			{
 				title: "Message",
 				href: "/docs/message",
+				as: Link,
 				icon: <Icon icon={<LineWeightRound />} />,
 			},
 			{
 				title: "Pagination",
 				href: "/docs/pagination",
+				as: Link,
 				icon: <Icon icon={<Looks5Round />} />,
 			},
 			{
 				title: "Popup",
 				href: "/docs/popup",
+				as: Link,
 				icon: <Icon icon={<ChatBubbleOutlineRound />} />,
 			},
 			{
 				title: "Tabs",
 				href: "/docs/tabs",
+				as: Link,
 				icon: <Icon icon={<PaddingTwotone />} />,
 			},
 			{
 				title: "Table",
 				href: "/docs/table",
+				as: Link,
 				icon: <Icon icon={<GridOnRound />} />,
 			},
 		],
@@ -147,11 +164,13 @@ export default [
 			{
 				title: "Clickoutside",
 				href: "/docs/clickoutside",
+				as: Link,
 				icon: <Icon icon={<AdsClickRound />} />,
 			},
 			{
 				title: "Ripple",
 				href: "/docs/ripple",
+				as: Link,
 				icon: <Icon icon={<BubbleChartTwotone />} />,
 			},
 		],

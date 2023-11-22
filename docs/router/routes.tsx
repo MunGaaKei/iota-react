@@ -10,7 +10,7 @@ export default [
 	{
 		path: "/docs/:name",
 		element: <Document />,
-		errorElement: <>error</>,
+		errorElement: <Page404 />,
 	},
 	{
 		path: "/*",

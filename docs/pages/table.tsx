@@ -26,6 +26,7 @@ const columns = [
 		title: "性别",
 		width: "80px",
 		align: "center",
+		sorter: true,
 		render: (value: number) => {
 			return value > 0 ? "男" : "女";
 		},
@@ -56,7 +57,11 @@ const columns = [
 		width: "80px",
 		fixed: "right",
 		align: "center",
-		render: () => <Button size='small'>操作</Button>,
+		render: () => (
+			<Button size='small' flat>
+				操作
+			</Button>
+		),
 	},
 ] as IColumn[];
 
@@ -82,13 +87,8 @@ export default function Page() {
 			<Table
 				data={list}
 				columns={columns}
-				style={{ height: 500 }}
+				style={{ height: 400 }}
 			></Table>
-			{/* <Table
-				data={list}
-				columns={[{ field: "id", width: "40px" }]}
-				style={{ height: 500 }}
-			></Table> */}
 		</>
 	);
 }

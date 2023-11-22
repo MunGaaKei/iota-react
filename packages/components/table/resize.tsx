@@ -28,7 +28,10 @@ export default function Resize(props: IResize) {
 
 		e.preventDefault();
 
-		onWidthChange(state.index, state.width + e.pageX - state.x);
+		const after = state.width + e.pageX - state.x;
+		if (after <= 0) return;
+
+		onWidthChange(state.index, after);
 	});
 
 	const handleMouseUp = () => {

@@ -3,12 +3,13 @@ import "./index.scss";
 import { Props } from "./type";
 
 const Loading = (props: Props): JSX.Element => {
-	const { text, className, ...rest } = props;
+	const { icon, text, className, ...rest } = props;
 
 	return (
-		<div className={classNames("loading-container", className)} {...rest}>
-			<div className='i-loading-icon'></div>
-			<span className='loading-text'>{text}</span>
+		<div className={classNames("i-loading-container", className)} {...rest}>
+			{icon || <div className='i-loading-icon'></div>}
+
+			{text}
 		</div>
 	);
 };

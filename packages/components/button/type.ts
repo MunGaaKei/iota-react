@@ -24,6 +24,7 @@ interface BaseProps {
 	disabled?: boolean;
 	block?: boolean;
 	round?: boolean;
+	ripple?: boolean;
 }
 
 export type Props = BaseProps &
