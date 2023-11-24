@@ -9,5 +9,7 @@ export interface Props
 	sizeOptions?: number[];
 	prev?: ReactNode;
 	next?: ReactNode;
+	simple?: boolean;
+	jumper?: boolean;
 	onChange?: (page: number) => void;
 }

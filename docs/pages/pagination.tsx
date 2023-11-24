@@ -5,7 +5,7 @@ export default function Page() {
 		return new Promise((res, rej) => {
 			setTimeout(() => {
 				res(true);
-			}, 1000);
+			}, 3000);
 		});
 	};
 

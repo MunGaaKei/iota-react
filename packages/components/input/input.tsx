@@ -1,110 +1,126 @@
+import "@p/css/input.scss";
 import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
 	ChangeEvent,
+	ForwardRefExoticComponent,
 	KeyboardEvent,
 	forwardRef,
 	useCallback,
 	useEffect,
 } from "react";
-import "../../css/input.scss";
 import "./index.scss";
-import { PropsInput } from "./type";
+import Textarea from "./textarea";
+import type { PropsInput } from "./type";
 
-const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, PropsInput>(
-	(props, ref) => {
-		const {
-			type = "text",
-			label,
-			name,
-			value = "",
-			prepend,
-			append,
-			labelInline,
-			className = "",
-			form,
-			status = "normal",
-			message,
-			onChange,
-			onEnter,
-			...rest
-		} = props;
+const BaseInput = forwardRef<HTMLInputElement, PropsInput>((props, ref) => {
+	return <input />;
+});
 
-		const state = useReactive({
-			value,
+export const InputContainer = (props, ref) => {
+	const {
+		type = "text",
+		label,
+		name,
+		value = "",
+		prepend,
+		append,
+		labelInline,
+		className,
+		disabled,
+		input: Control = BaseInput,
+		form,
+		status = "normal",
+		message,
+		onChange,
+		onEnter,
+		...rest
+	} = props;
+
+	const state = useReactive({
+		value,
+		status,
+		message,
+	});
+
+	const emitForm = useFormRegist({
+		form,
+		name,
+		state,
+	});
+
+	const handleChange = useCallback(
+		(e: ChangeEvent<HTMLInputElement>) => {
+			const v = e.target.value;
+			Object.assign(state, {
+				status: "normal",
+				message: "",
+			});
+
+			emitForm?.(v);
+			state.value = v;
+			onChange?.(v, e);
+		},
+		[onChange]
+	);
+
+	const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {
+		e.code === "Enter" && onEnter?.();
+	});
+
+	useEffect(() => {
+		Object.assign(state, {
 			status,
 			message,
 		});
+	}, [status, message]);
 
-		const emitForm = useFormRegist({
-			form,
-			name,
-			state,
-		});
+	const { status: iptStatus, message: msg, value: v } = state;
 
-		const handleChange = useCallback(
-			(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-				const v = e.target.value;
-				Object.assign(state, {
-					status: "normal",
-					message: "",
-				});
+	const componentProps = {
+		type,
+		ref,
+		name,
+		value: v,
+		className: classNames("i-input", `i-input-${type}`),
+		disabled,
+		onChange: handleChange,
+		onKeyDown: handleKeydown,
+		...rest,
+	};
 
-				emitForm?.(v);
-				state.value = v;
-				onChange?.(v, e);
-			},
-			[onChange]
-		);
+	return (
+		<label
+			className={classNames("i-input-label", className, {
+				"i-input-inline": labelInline,
+			})}
+		>
+			{label && <span className='i-input-label-text'>{label}</span>}
 
-		const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {
-			e.code === "Enter" && onEnter?.();
-		});
-
-		useEffect(() => {
-			Object.assign(state, {
-				status,
-				message,
-			});
-		}, [status, message]);
-
-		const { status: sts, message: msg, value: v } = state;
-		const InputElement = type === "textarea" ? "textarea" : "input";
-
-		return (
-			<label
-				className={classNames("i-input-label", className, {
-					"i-input-inline": labelInline,
+			<div
+				className={classNames("i-input-item", {
+					[`i-input-${iptStatus}`]: iptStatus !== "normal",
 				})}
 			>
-				{label && <span className='i-input-label-text'>{label}</span>}
+				{prepend}
 
-				<div
-					className={classNames("i-input-item", {
-						[`i-input-${sts}`]: sts !== "normal",
-					})}
-				>
-					{prepend}
+				<input {...componentProps} />
 
-					<InputElement
-						type={type}
-						ref={ref}
-						name={name}
-						value={v}
-						className={classNames("i-input", `i-input-${type}`)}
-						onChange={handleChange}
-						onKeyDown={handleKeydown}
-						{...rest}
-					/>
+				{msg && <span className='i-input-message'>{msg}</span>}
 
-					{msg && <span className='i-input-message'>{msg}</span>}
+				{append}
+			</div>
+		</label>
+	);
+};
 
-					{append}
-				</div>
-			</label>
-		);
-	}
-);
+type InputRefType = ForwardRefExoticComponent<PropsInput> & {
+	Textarea: typeof Textarea;
+};
+
+const Input = forwardRef(InputContainer) as InputRefType;
+
+Input.Textarea = Textarea;
 
 export default Input;

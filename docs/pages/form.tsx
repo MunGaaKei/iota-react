@@ -4,18 +4,23 @@ import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
 
 const rules = {
-	name: (value: any) => {
+	name: (value) => {
 		if (!value) return "不能为空";
 		return false;
 	},
-	hobit: (value: any) => {
+	hobit: (value) => {
 		if (!value || value.length < 2) return "请至少选2个";
 		return false;
 	},
-	gender: (value: any) => {
+	gender: (value) => {
 		return value ? false : "请勾选";
 	},
-	country: (value: any) => {
+	country: (value) => {
+		if (!value) return "不能为空";
+
+		return false;
+	},
+	bio: (value) => {
 		if (!value) return "不能为空";
 
 		return false;
@@ -58,6 +63,12 @@ export default function Page() {
 					}
 					form={form.name}
 				></Input>
+				<Input
+					label='花'
+					name='flower'
+					disabled
+					form={form.name}
+				></Input>
 				<Select
 					label='国家'
 					name='country'
@@ -92,12 +103,7 @@ export default function Page() {
 					form={form.name}
 					type='button'
 				/>
-				<Input
-					type='textarea'
-					label='bio'
-					name='bio'
-					form={form.name}
-				></Input>
+				<Input label='bio' name='bio' form={form.name}></Input>
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>

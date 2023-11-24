@@ -6,7 +6,7 @@ import {
 	TextareaHTMLAttributes,
 } from "react";
 
-export type PropsInput = {
+export interface PropsBaseInput {
 	label?: ReactNode;
 	prepend?: ReactNode;
 	append?: ReactNode;
@@ -14,12 +14,17 @@ export type PropsInput = {
 	form?: string;
 	message?: ReactNode;
 	status?: "normal" | "error" | "warning" | "success";
+	input?: JSX.Element | Element;
 	onEnter?: () => void;
-	onChange?: (
-		value?: TValue,
-		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => void;
-} & InputHTMLAttributes<HTMLInputElement> &
-	TextareaHTMLAttributes<HTMLTextAreaElement>;
+	onChange?: (value: TValue, e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-export type PropsTextarea = {};
+export interface PropsInput
+	extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">,
+		PropsBaseInput {}
+
+export interface PropsTextarea
+	extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange">,
+		PropsBaseInput {}
+
+export interface PropsDatePicker extends PropsBaseInput {}

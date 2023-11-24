@@ -64,6 +64,7 @@
 		caret-color: transparent;
 	}
 	&:disabled {
+		background: var(--background-opacity-1);
 		cursor: not-allowed;
 	}
 }

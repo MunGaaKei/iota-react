@@ -27,6 +27,7 @@ const Page = (props: any) => {
 			className={classNames("i-page", {
 				"i-page-active": active,
 				"i-page-loading": loading,
+				"i-page-disabled": false,
 			})}
 			data-page={page}
 			onClick={handleClick}
@@ -47,6 +48,8 @@ const Pagination = (props: Props): JSX.Element => {
 		sibling = 2,
 		prev = <Icon icon={<KeyboardArrowLeftRound />} />,
 		next = <Icon icon={<KeyboardArrowRightRound />} />,
+		simple,
+		jumper,
 		className,
 		onChange,
 		...restProps
@@ -54,38 +57,34 @@ const Pagination = (props: Props): JSX.Element => {
 
 	const [page, setPage] = useState(defaultPage);
 
-	const totalPage = useMemo(() => {
-		return Math.ceil(total / size);
-	}, [size, total]);
+	const totalPage = useMemo(() => Math.ceil(total / size), [size, total]);
 
-	const [start, end] = useMemo(() => {
+	const [start, end, loop] = useMemo(() => {
+		const start = Math.max(1, page - sibling);
+		const end = Math.min(totalPage, page + sibling);
+
 		return [
-			Math.max(1, page - sibling),
-			Math.min(totalPage, page + sibling),
+			start,
+			end,
+			Array.from({ length: end - start + 1 }).map((n, i) => start + i),
 		];
 	}, [page, totalPage, sibling]);
 
 	if (totalPage <= page && page === 1) return <></>;
 
-	const loop = Array.from({ length: end - start + 1 }).map(
-		(n, i) => start + i
-	);
-
-	const handlePageChange = async (p: number) =>
-		new Promise<void>(async (resolve) => {
+	const handlePageChange = async (p: number) => {
+		return new Promise<void>(async (resolve) => {
 			await onChange?.(p);
 			setPage(p);
 			resolve();
 		});
-
-	useEffect(() => {
-		setPage(defaultPage);
-	}, [defaultPage]);
+	};
+	useEffect(() => setPage(defaultPage), [defaultPage]);
 
 	return (
 		<div className={classNames("i-pagination", className)} {...restProps}>
 			{prev && (
-				<Page page={page - 1} onChange={handlePageChange}>
+				<Page page={page - 1 || 1} onChange={handlePageChange}>
 					{prev}
 				</Page>
 			)}

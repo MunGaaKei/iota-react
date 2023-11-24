@@ -21,7 +21,8 @@
 			"@d/*": ["./docs/*"],
 			"@p": ["./packages"],
 			"@p/*": ["./packages/*"]
-		}
+		},
+		"noImplicitAny": false
 	},
 	"include": ["docs", "packages"],
 	"references": [{ "path": "./tsconfig.node.json" }]

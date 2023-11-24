@@ -1,5 +1,8 @@
-import { PropsTextarea } from "./type";
+import { InputContainer } from "./input";
+import { PropsInput } from "./type";
 
-export default function Textarea(props: PropsTextarea) {
-	return <></>;
-}
+const Textarea = (props: PropsInput, ref) => {
+	return <InputContainer ref={ref} {...props} />;
+};
+
+export default Textarea;
