@@ -1,10 +1,24 @@
-import { Button, Form, Icon, Input, Message, Radio, Select } from "@p";
+import {
+	Button,
+	Form,
+	Icon,
+	Input,
+	Message,
+	Radio,
+	Select,
+	Textarea,
+} from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
+import { createRef } from "react";
 
 const rules = {
 	name: (value) => {
+		if (!value) return "不能为空";
+		return false;
+	},
+	password: (value) => {
 		if (!value) return "不能为空";
 		return false;
 	},
@@ -29,6 +43,7 @@ const rules = {
 
 export default function Page() {
 	const form = Form.useForm();
+	const ref = createRef<HTMLInputElement>();
 
 	const handleSubmit = useMemoizedFn(() => {
 		console.log(form.get());
@@ -39,6 +54,8 @@ export default function Page() {
 	});
 
 	const handleClear = useMemoizedFn(() => {
+		console.log(ref.current);
+
 		form.clear();
 	});
 
@@ -58,16 +75,18 @@ export default function Page() {
 					prepend={
 						<Icon
 							icon={<AccountCircleTwotone />}
-							className='my-auto ml-12'
+							className='mx-8'
 						/>
 					}
 					form={form.name}
 				></Input>
 				<Input
-					label='花'
-					name='flower'
-					disabled
+					ref={ref}
+					type='password'
+					label='密码'
+					name='password'
 					form={form.name}
+					append={<Button className='bg-blue'>校验</Button>}
 				></Input>
 				<Select
 					label='国家'
@@ -87,6 +106,7 @@ export default function Page() {
 					placeholder='国家'
 					multiple
 					maxDisplay={2}
+					clear
 					form={form.name}
 				/>
 				<Checkbox
@@ -103,7 +123,7 @@ export default function Page() {
 					form={form.name}
 					type='button'
 				/>
-				<Input label='bio' name='bio' form={form.name}></Input>
+				<Textarea label='bio' name='bio' form={form.name}></Textarea>
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>

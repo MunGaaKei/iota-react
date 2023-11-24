@@ -1,6 +1,6 @@
 import menus from "@d/config/menu";
 import { Button, Container, Icon, Loading, Popup, Tree } from "@p";
-import { MenuFilled } from "@ricons/material";
+import { MenuFilled, WbTwilightRound } from "@ricons/material";
 import { Suspense, lazy, memo, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -27,9 +27,12 @@ const Header = ({
 	onToggleSider: Function;
 }): JSX.Element => {
 	return (
-		<div className='py-8 px-12 flex'>
+		<div className='py-8 px-12 flex gap-4'>
 			<Button flat square onClick={() => onToggleSider()}>
 				<Icon icon={<MenuFilled />}></Icon>
+			</Button>
+			<Button flat square>
+				<Icon icon={<WbTwilightRound />}></Icon>
 			</Button>
 		</div>
 	);
@@ -37,12 +40,11 @@ const Header = ({
 
 const Sider = (): JSX.Element => {
 	return (
-		<div className='px-4 py-12' style={{ minWidth: 240 }}>
+		<div className='pd-12 text-center' style={{ minWidth: 240 }}>
 			<h1>
 				<Popup
-					position='right'
 					offset={8}
-					content={<div className='pd-12 bg-yellow'>IOTA REACT</div>}
+					content={<h4 className='pd-12 bg-black'>IOTA REACT</h4>}
 				>
 					<span>R</span>
 				</Popup>

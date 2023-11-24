@@ -1,24 +1,19 @@
-import "@p/css/input.scss";
 import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
 	ChangeEvent,
-	ForwardRefExoticComponent,
 	KeyboardEvent,
 	forwardRef,
 	useCallback,
 	useEffect,
 } from "react";
+import "../../css/input.scss";
+import InputContainer from "./container";
 import "./index.scss";
-import Textarea from "./textarea";
-import type { PropsInput } from "./type";
+import type { Props } from "./type";
 
-const BaseInput = forwardRef<HTMLInputElement, PropsInput>((props, ref) => {
-	return <input />;
-});
-
-export const InputContainer = (props, ref) => {
+const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	const {
 		type = "text",
 		label,
@@ -27,12 +22,11 @@ export const InputContainer = (props, ref) => {
 		prepend,
 		append,
 		labelInline,
-		className,
-		disabled,
-		input: Control = BaseInput,
+		className = "",
 		form,
 		status = "normal",
 		message,
+		clear,
 		onChange,
 		onEnter,
 		...rest
@@ -51,7 +45,7 @@ export const InputContainer = (props, ref) => {
 	});
 
 	const handleChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement>) => {
+		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			const v = e.target.value;
 			Object.assign(state, {
 				status: "normal",
@@ -76,51 +70,39 @@ export const InputContainer = (props, ref) => {
 		});
 	}, [status, message]);
 
-	const { status: iptStatus, message: msg, value: v } = state;
-
-	const componentProps = {
-		type,
+	const { status: sts, message: msg, value: v } = state;
+	const inputProps = {
 		ref,
+		type,
 		name,
 		value: v,
 		className: classNames("i-input", `i-input-${type}`),
-		disabled,
 		onChange: handleChange,
 		onKeyDown: handleKeydown,
 		...rest,
 	};
 
 	return (
-		<label
-			className={classNames("i-input-label", className, {
-				"i-input-inline": labelInline,
-			})}
+		<InputContainer
+			label={label}
+			labelInline={labelInline}
+			className={className}
 		>
-			{label && <span className='i-input-label-text'>{label}</span>}
-
 			<div
 				className={classNames("i-input-item", {
-					[`i-input-${iptStatus}`]: iptStatus !== "normal",
+					[`i-input-${sts}`]: sts !== "normal",
 				})}
 			>
-				{prepend}
+				{prepend && <div className='i-input-prepend'>{prepend}</div>}
 
-				<input {...componentProps} />
+				<input {...inputProps} />
 
 				{msg && <span className='i-input-message'>{msg}</span>}
 
-				{append}
+				{append && <div className='i-input-append'>{append}</div>}
 			</div>
-		</label>
+		</InputContainer>
 	);
-};
-
-type InputRefType = ForwardRefExoticComponent<PropsInput> & {
-	Textarea: typeof Textarea;
-};
-
-const Input = forwardRef(InputContainer) as InputRefType;
-
-Input.Textarea = Textarea;
+});
 
 export default Input;

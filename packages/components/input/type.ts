@@ -1,30 +1,20 @@
-import { TValue } from "@p/type";
-import {
-	ChangeEvent,
-	InputHTMLAttributes,
-	ReactNode,
-	TextareaHTMLAttributes,
-} from "react";
+import { BaseInput } from "@p/type";
+import { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 
-export interface PropsBaseInput {
+export interface IInputContainer {
 	label?: ReactNode;
-	prepend?: ReactNode;
-	append?: ReactNode;
+	className?: string;
 	labelInline?: boolean;
-	form?: string;
-	message?: ReactNode;
-	status?: "normal" | "error" | "warning" | "success";
-	input?: JSX.Element | Element;
-	onEnter?: () => void;
-	onChange?: (value: TValue, e: ChangeEvent<HTMLInputElement>) => void;
+	children?: ReactNode;
 }
 
-export interface PropsInput
-	extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">,
-		PropsBaseInput {}
+export interface Props
+	extends BaseInput,
+		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+	prepend?: ReactNode;
+	append?: ReactNode;
+}
 
 export interface PropsTextarea
-	extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange">,
-		PropsBaseInput {}
-
-export interface PropsDatePicker extends PropsBaseInput {}
+	extends BaseInput,
+		Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {}

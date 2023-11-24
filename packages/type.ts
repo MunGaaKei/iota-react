@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, ReactNode } from "react";
+import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export type TStatus = "normal" | "success" | "warning" | "error";
 
@@ -14,5 +14,18 @@ export type TOptions = (TOption | string | number)[];
 
 export type TValidate = {
 	status?: TStatus;
-	message?: string;
+	message?: ReactNode;
 };
+
+export interface BaseInput extends TValidate {
+	label?: ReactNode;
+	value?: TValue;
+	labelInline?: boolean;
+	form?: string;
+	clear?: boolean;
+	onChange?: (
+		value?: TValue,
+		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+	onEnter?: () => void;
+}

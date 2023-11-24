@@ -1,19 +1,16 @@
-import { TOption, TOptions, TValidate, TValue } from "@p/type";
+import { BaseInput, TOption, TOptions, TValue } from "@p/type";
 import { InputHTMLAttributes, ReactNode } from "react";
 
 export interface Props
 	extends Omit<
 			InputHTMLAttributes<HTMLInputElement>,
-			"value" | "onSelect" | "onChange"
+			"onSelect" | "onChange"
 		>,
-		TValidate {
-	label?: ReactNode;
-	value?: TValue;
+		BaseInput {
 	options: TOptions;
 	multiple?: boolean;
 	prepend?: ReactNode;
 	append?: ReactNode;
-	labelInline?: boolean;
 	clear?: boolean;
 	max?: number;
 	maxDisplay?: number;
