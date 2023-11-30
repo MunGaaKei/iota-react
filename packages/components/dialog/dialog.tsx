@@ -1,8 +1,7 @@
-import { Button } from "@p";
-import { CloseRound } from "@ricons/material";
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Helpericon from "../helpericon";
 import "./index.scss";
 import { Props, PropsContent } from "./type";
 
@@ -12,7 +11,7 @@ export default function Dialog(props: Props) {
 		title,
 		closable = true,
 		backdropClosable = true,
-		closeButton = true,
+		hideCloseButton,
 		width,
 		height,
 		customized,
@@ -89,7 +88,7 @@ export default function Dialog(props: Props) {
 					) : (
 						<DefaultContent
 							title={title}
-							closeButton={closeButton}
+							hideCloseButton={hideCloseButton}
 							onHide={handleHide}
 						>
 							{children}
@@ -103,29 +102,19 @@ export default function Dialog(props: Props) {
 }
 
 function DefaultContent(props: PropsContent) {
-	const { title, closeButton, onHide, children } = props;
+	const { title, hideCloseButton, children, onHide } = props;
 
 	return (
 		<>
 			{
 				<header className='i-dialog-header'>
 					{title}
-					{closeButton && (
-						<Button
-							flat
-							square
-							size='small'
-							className='i-dialog-close ml-auto'
-							onClick={onHide}
-						>
-							<CloseRound
-								style={{
-									width: "1.5em",
-									height: "1.5em",
-								}}
-							/>
-						</Button>
-					)}
+
+					<Helpericon
+						active={!hideCloseButton}
+						className='i-dialog-close'
+						onClick={onHide}
+					/>
 				</header>
 			}
 

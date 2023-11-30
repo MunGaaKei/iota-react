@@ -2,11 +2,21 @@ import { Popup } from "@p";
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TOption, TValidate, TValue } from "@p/type";
+import { UnfoldMoreRound } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent, forwardRef, useCallback, useMemo, useState } from "react";
+import { debounce } from "lodash";
+import {
+	ChangeEvent,
+	MouseEvent,
+	forwardRef,
+	useCallback,
+	useMemo,
+	useState,
+} from "react";
 import "../../css/input.scss";
-import { DisplayIcon, DisplayValues, Options, activeLabels } from "./display";
+import Helpericon from "../helpericon";
+import { DisplayValues, Options, activeLabels } from "./display";
 import "./index.scss";
 import { Props } from "./type";
 
@@ -22,12 +32,13 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		prepend,
 		append,
 		labelInline,
-		className = "",
+		style,
+		className,
 		form,
 		message,
 		status = "normal",
-		clear,
-		maxDisplay = 9999,
+		hideClear,
+		maxDisplay = 6,
 		filter,
 		onSelect,
 		onChange,
@@ -96,20 +107,26 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		setActive(true);
 	};
 
-	const handleSpinClick = (e: MouseEvent) => {
+	const handleHelperClick = (e: MouseEvent) => {
 		e.stopPropagation();
 
 		changeValue(multiple ? [] : "");
 	};
 
+	const handleChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
+		console.log(e.target.value);
+	}, 500);
+
 	const { value: val, message: msg, status: sts, loading } = state;
 	const hasValue = multiple ? (val as TValue[]).length > 0 : !!val;
+	const clearable = !hideClear && active && hasValue;
 
 	return (
 		<label
 			className={classNames("i-input-label", className, {
 				"i-input-inline": labelInline,
 			})}
+			style={style}
 		>
 			{label && <span className='i-input-label-text'>{label}</span>}
 
@@ -124,6 +141,8 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 						options={formattedOptions}
 						value={val}
 						multiple={multiple}
+						filter={!!filter}
+						maxDisplay={maxDisplay}
 						onSelect={handleSelect}
 					/>
 				}
@@ -136,14 +155,9 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 				>
 					{prepend}
 
-					<input
-						type='hidden'
-						ref={ref}
-						value={val}
-						{...rest}
-					></input>
+					<input type='hidden' ref={ref} value={val} {...rest} />
 
-					{hasValue ? (
+					{hasValue && !filter ? (
 						<div className='i-input i-select'>
 							{multiple ? (
 								<DisplayValues
@@ -161,15 +175,17 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 						<input
 							className='i-input i-select'
 							placeholder={placeholder}
+							readOnly={!filter}
+							onChange={handleChange}
 						/>
 					)}
 
 					{msg && <span className='i-input-message'>{msg}</span>}
 
-					<DisplayIcon
-						loading={loading}
-						clearable={clear && active && hasValue}
-						onClick={handleSpinClick}
+					<Helpericon
+						active
+						icon={clearable ? undefined : <UnfoldMoreRound />}
+						onClick={handleHelperClick}
 					/>
 
 					{append}

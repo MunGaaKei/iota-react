@@ -13,6 +13,7 @@ export interface Props
 		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
 	prepend?: ReactNode;
 	append?: ReactNode;
+	hideVisible?: boolean;
 }
 
 export interface PropsTextarea

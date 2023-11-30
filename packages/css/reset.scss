@@ -52,7 +52,8 @@ select {
 	font: inherit;
 }
 input:-webkit-autofill {
-	background-color: initial;
+	box-shadow: inherit;
+	transition: none;
 }
 ul,
 ol {

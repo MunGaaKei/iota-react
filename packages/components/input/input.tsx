@@ -1,4 +1,5 @@
 import { useFormRegist } from "@p/js/hooks";
+import { VisibilityOffRound, VisibilityRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -7,8 +8,10 @@ import {
 	forwardRef,
 	useCallback,
 	useEffect,
+	useMemo,
 } from "react";
 import "../../css/input.scss";
+import Helpericon from "../helpericon";
 import InputContainer from "./container";
 import "./index.scss";
 import type { Props } from "./type";
@@ -26,7 +29,8 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		form,
 		status = "normal",
 		message,
-		clear,
+		hideClear,
+		hideVisible,
 		onChange,
 		onEnter,
 		...rest
@@ -36,6 +40,8 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		value,
 		status,
 		message,
+		type,
+		visible: false,
 	});
 
 	const emitForm = useFormRegist({
@@ -63,6 +69,27 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		e.code === "Enter" && onEnter?.();
 	});
 
+	const handleHelperClick = () => {
+		if (type === "password" && !hideVisible) {
+			state.visible = !state.visible;
+			state.type = state.visible ? "text" : "password";
+			return;
+		}
+
+		const v = "";
+		emitForm?.(v);
+		state.value = v;
+		onChange?.(v);
+	};
+
+	const HelperIcon = useMemo(() => {
+		if (type === "password") {
+			return state.visible ? <VisibilityRound /> : <VisibilityOffRound />;
+		}
+
+		return undefined;
+	}, [state.visible]);
+
 	useEffect(() => {
 		Object.assign(state, {
 			status,
@@ -73,7 +100,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
-		type,
+		type: state.type,
 		name,
 		value: v,
 		className: classNames("i-input", `i-input-${type}`),
@@ -81,6 +108,8 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		onKeyDown: handleKeydown,
 		...rest,
 	};
+
+	const clearable = !hideClear && v;
 
 	return (
 		<InputContainer
@@ -96,6 +125,12 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}
 
 				<input {...inputProps} />
+
+				<Helpericon
+					active={!!clearable}
+					icon={HelperIcon}
+					onClick={handleHelperClick}
+				/>
 
 				{msg && <span className='i-input-message'>{msg}</span>}
 

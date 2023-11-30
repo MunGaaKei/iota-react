@@ -75,7 +75,7 @@ export default function Page() {
 					prepend={
 						<Icon
 							icon={<AccountCircleTwotone />}
-							className='mx-8'
+							className='ml-8'
 						/>
 					}
 					form={form.name}
@@ -106,7 +106,6 @@ export default function Page() {
 					placeholder='国家'
 					multiple
 					maxDisplay={2}
-					clear
 					form={form.name}
 				/>
 				<Checkbox

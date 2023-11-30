@@ -120,8 +120,6 @@ export default function Popup(props: Props) {
 
 	const handleToggle = useCallback(
 		(action?: boolean) => {
-			state.toggling && clearTimeout(state.toggling as TTimeout);
-
 			if (action !== undefined) {
 				action ? handleShow() : handleHide();
 				return;

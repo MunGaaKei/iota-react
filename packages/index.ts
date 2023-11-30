@@ -4,6 +4,7 @@ import Button from "./components/button";
 import Checkbox from "./components/checkbox";
 import Container from "./components/container";
 import Dialog from "./components/dialog";
+import Dropdown from "./components/dropdown";
 import Form from "./components/form";
 import Icon from "./components/icon";
 import Input, { Textarea } from "./components/input";
@@ -23,6 +24,7 @@ export {
 	Checkbox,
 	Container,
 	Dialog,
+	Dropdown,
 	Form,
 	Icon,
 	Input,

@@ -15,7 +15,7 @@ const Page = (props: any) => {
 	const [loading, setLoading] = useState(false);
 
 	const handleClick = async () => {
-		if (active) return;
+		if (active || loading) return;
 
 		setLoading(true);
 		await onChange(page);
@@ -56,6 +56,7 @@ const Pagination = (props: Props): JSX.Element => {
 	} = props;
 
 	const [page, setPage] = useState(defaultPage);
+	const [loading, setLoading] = useState(false);
 
 	const totalPage = useMemo(() => Math.ceil(total / size), [size, total]);
 
@@ -73,12 +74,17 @@ const Pagination = (props: Props): JSX.Element => {
 	if (totalPage <= page && page === 1) return <></>;
 
 	const handlePageChange = async (p: number) => {
+		if (!onChange || loading) return;
+		setLoading(true);
+
 		return new Promise<void>(async (resolve) => {
-			await onChange?.(p);
+			await onChange(p);
 			setPage(p);
+			setLoading(false);
 			resolve();
 		});
 	};
+
 	useEffect(() => setPage(defaultPage), [defaultPage]);
 
 	return (

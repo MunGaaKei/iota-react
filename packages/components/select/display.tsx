@@ -1,20 +1,16 @@
-import { Icon, List, Loading } from "@p";
+import { Icon, List } from "@p";
 import { TOption, TValue } from "@p/type";
-import { ClearRound, UnfoldMoreRound } from "@ricons/material";
-import classNames from "classnames";
-import { MouseEvent, ReactNode } from "react";
+import { InboxTwotone } from "@ricons/material";
+import { ReactNode } from "react";
 
 interface IOptions {
 	multiple?: boolean;
 	value?: TValue;
 	options: TOption[];
+	maxDisplay?: number;
+	filter?: boolean;
+	empty?: ReactNode;
 	onSelect?: (v: TValue, option: TOption) => void;
-}
-
-interface IDisplayIcon {
-	loading?: boolean;
-	clearable?: boolean;
-	onClick?: (e: MouseEvent) => void;
 }
 
 interface IDisplayValues {
@@ -23,10 +19,36 @@ interface IDisplayValues {
 }
 
 export const Options = (props: IOptions) => {
-	const { value: val, options, multiple, onSelect } = props;
+	const {
+		value: val,
+		options,
+		filter,
+		maxDisplay = 6,
+		multiple,
+		empty,
+		onSelect,
+	} = props;
+
+	if (!options.length) {
+		return (
+			empty || (
+				<div className='i-select-options-empty'>
+					<Icon icon={<InboxTwotone />} size='2.5em' />
+				</div>
+			)
+		);
+	}
 
 	return (
 		<div className='i-select-options'>
+			{filter && multiple && (
+				<div className='i-select-options-header'>
+					<DisplayValues
+						values={activeLabels(options, val as string[])}
+						max={maxDisplay}
+					/>
+				</div>
+			)}
 			{options.map((option, i) => {
 				const { label, value, disabled } = option;
 				const isActive = multiple
@@ -34,46 +56,18 @@ export const Options = (props: IOptions) => {
 					: val === value;
 
 				return (
-					<List.Option
+					<List.Item
 						key={(value as string) || i}
 						active={isActive}
+						type='option'
 						onClick={() => onSelect?.(value, option)}
 						disabled={disabled}
 					>
 						{label}
-					</List.Option>
+					</List.Item>
 				);
 			})}
 		</div>
-	);
-};
-
-export const DisplayIcon = (props: IDisplayIcon) => {
-	const { loading, clearable, onClick } = props;
-	const state: {
-		icon?: ReactNode;
-		className?: string;
-	} = {};
-
-	switch (true) {
-		case clearable:
-			state.icon = <ClearRound />;
-			state.className = "i-select-clear";
-			break;
-		case loading:
-			state.icon = <Loading />;
-			break;
-		default:
-			state.icon = <UnfoldMoreRound />;
-			break;
-	}
-
-	return (
-		<Icon
-			icon={state.icon}
-			className={classNames("i-select-spin", state.className)}
-			onClick={onClick}
-		/>
 	);
 };
 

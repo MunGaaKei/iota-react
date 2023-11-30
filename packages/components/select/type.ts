@@ -11,10 +11,11 @@ export interface Props
 	multiple?: boolean;
 	prepend?: ReactNode;
 	append?: ReactNode;
-	clear?: boolean;
+	hideClear?: boolean;
 	max?: number;
 	maxDisplay?: number;
 	filter?: boolean | (() => boolean);
+	empty?: ReactNode;
 	onSelect?: (v?: TValue, option?: TOption) => void;
 	onChange?: (v: TValue) => void;
 }

@@ -1,13 +1,18 @@
+import classNames from "classnames";
 import "./index.scss";
-import Option from "./option";
+import Item from "./item";
 import { Props } from "./type";
 
 const List = (props: Props): JSX.Element => {
-	const { children } = props;
+	const { className, children, ...restProps } = props;
 
-	return <ul>{children}</ul>;
+	return (
+		<ul className={classNames("i-list", className)} {...restProps}>
+			{children}
+		</ul>
+	);
 };
 
-List.Option = Option;
+List.Item = Item;
 
 export default List;

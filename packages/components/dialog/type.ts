@@ -4,7 +4,7 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	visible?: boolean;
 	title?: ReactNode;
 	closable?: boolean;
-	closeButton?: boolean;
+	hideCloseButton?: boolean;
 	backdropClosable?: boolean;
 	width?: string | number;
 	height?: string | number;
@@ -14,6 +14,6 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 }
 
 export interface PropsContent
-	extends Pick<Props, "title" | "closeButton" | "children"> {
+	extends Pick<Props, "title" | "hideCloseButton" | "children"> {
 	onHide: () => void;
 }

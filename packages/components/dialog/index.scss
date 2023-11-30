@@ -54,12 +54,8 @@
 }
 
 .i-dialog-close {
+	margin: 0 0 0 auto;
 	display: flex;
-	padding: 2px;
-	border-radius: var(--radius);
-	opacity: 0.6;
 	align-self: flex-start;
-	&:hover {
-		opacity: 1;
-	}
+	border-radius: var(--radius);
 }

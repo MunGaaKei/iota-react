@@ -1,7 +1,5 @@
-import { SwapVertRound } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
 import classNames from "classnames";
-import Icon from "../icon";
 import { ICol, IColumn, IHeader, IRow } from "./type";
 
 function getCellStyle({
@@ -89,13 +87,6 @@ export function Header(props: IHeader) {
 						})}
 						style={style}
 					>
-						{sorter && (
-							<Icon
-								icon={<SwapVertRound />}
-								className='i-table-sorter'
-							/>
-						)}
-
 						<div className='i-table-td-content'>
 							{title || field}
 						</div>
