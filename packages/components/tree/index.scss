@@ -14,7 +14,7 @@
 		flex: 1;
 		height: 1px;
 		align-self: center;
-		background: var(--color-slight);
+		background: var(--color-8);
 	}
 }
 .i-tree-item {
@@ -35,7 +35,7 @@
 	}
 	&.i-tree-item-active,
 	&:hover {
-		background: var(--color-main-slight);
+		background: var(--color-main-0);
 		color: var(--color-main);
 		opacity: 1;
 	}

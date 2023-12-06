@@ -1,0 +1,20 @@
+.i-tag {
+	--background: var(--color-9);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5em;
+	padding: 0.25em 0.628em;
+	border-radius: 2em var(--radius) var(--radius) 2em / 2.2em var(--radius)
+		var(--radius) 2.2em;
+	background: var(--background);
+	color: var(--color);
+}
+
+.i-tag-dot {
+	content: "\20";
+	width: 0.325em;
+	height: 0.325em;
+	border-radius: 50%;
+	background-color: var(--color);
+	box-shadow: 0 -1px 1px 0 rgba(var(--color), 0.3);
+}

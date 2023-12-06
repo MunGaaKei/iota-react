@@ -19,18 +19,18 @@
 	&:hover {
 		.i-radio-input {
 			box-shadow: inset 0 0 0 3px var(--color-5);
-			background-color: var(--color-main-slight);
+			background-color: var(--color-main-0);
 		}
 	}
 }
 .i-input-success .i-radio-input {
-	box-shadow: inset 0 0 0 3px var(--green-slight);
+	box-shadow: inset 0 0 0 3px var(--green-0);
 }
 .i-input-warning .i-radio-input {
-	box-shadow: inset 0 0 0 3px var(--yellow-slight);
+	box-shadow: inset 0 0 0 3px var(--yellow-0);
 }
 .i-input-error .i-radio-input {
-	box-shadow: inset 0 0 0 3px var(--error-slight);
+	box-shadow: inset 0 0 0 3px var(--error-0);
 }
 
 .i-radio-options {
@@ -88,7 +88,7 @@
 		line-height: 2;
 		font-size: 0.94em;
 		white-space: nowrap;
-		background: var(--color-main-slight);
+		background: var(--color-main-0);
 	}
 	&:checked + .i-radio-text {
 		background: var(--color-main);
@@ -103,7 +103,7 @@
 
 .i-radio-success {
 	.i-radio-input {
-		box-shadow: inset 0 0 0 3px var(--green-slight);
+		box-shadow: inset 0 0 0 3px var(--green-0);
 	}
 	.i-radio-message {
 		color: var(--green);
@@ -111,7 +111,7 @@
 }
 .i-radio-warning {
 	.i-radio-input {
-		box-shadow: inset 0 0 0 3px var(--yellow-slight);
+		box-shadow: inset 0 0 0 3px var(--yellow-0);
 	}
 	.i-radio-message {
 		color: var(--yellow);
@@ -119,7 +119,7 @@
 }
 .i-radio-error {
 	.i-radio-input {
-		box-shadow: inset 0 0 0 3px var(--error-slight);
+		box-shadow: inset 0 0 0 3px var(--error-0);
 	}
 	.i-radio-message {
 		color: var(--error);

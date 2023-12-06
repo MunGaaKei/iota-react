@@ -113,14 +113,13 @@ export default function Page() {
 					options={["足球", "篮球", "棒球"]}
 					name='hobit'
 					form={form.name}
-					type='button'
+					type='switch'
 				/>
 				<Radio
 					label='性别'
 					name='gender'
 					options={["男", "女"]}
 					form={form.name}
-					type='button'
 				/>
 				<Textarea label='bio' name='bio' form={form.name}></Textarea>
 

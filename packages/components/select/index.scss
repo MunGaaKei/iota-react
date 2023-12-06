@@ -16,7 +16,7 @@
 		color: var(--color-4);
 		&.i-list-item-active {
 			color: var(--color-main);
-			background: var(--color-main-slight);
+			background: var(--color-main-0);
 		}
 		&.disabled {
 			pointer-events: none;
@@ -54,7 +54,7 @@
 .i-select-value {
 	padding: 0 0.4em;
 	border-radius: var(--radius);
-	background: var(--color-main-slight);
+	background: var(--color-main-0);
 	transition: var(--transition);
 	cursor: default;
 	&:hover {

@@ -1,12 +1,56 @@
-import { Button, Dropdown, Icon } from "@p";
-import { ArrowDropDownRound } from "@ricons/material";
+import { Button, Dropdown, Icon, List } from "@p";
+import {
+	KeyboardArrowDownRound,
+	KeyboardCommandKeyRound,
+} from "@ricons/material";
+import { useState } from "react";
 
 export default function Page() {
+	const [visible, setVisible] = useState(true);
+
+	const Dropmenu = (
+		<>
+			<List.Item
+				type='option'
+				shortcut={
+					<>
+						<Icon icon={<KeyboardCommandKeyRound />} size='1em' />c
+					</>
+				}
+			>
+				复制
+			</List.Item>
+			<List.Item
+				type='option'
+				shortcut={
+					<>
+						<Icon icon={<KeyboardCommandKeyRound />} size='1em' />v
+					</>
+				}
+			>
+				粘贴
+			</List.Item>
+			<Button
+				className='bg-grey mt-12'
+				size='small'
+				onClick={() => setVisible(false)}
+			>
+				推出
+			</Button>
+		</>
+	);
+
 	return (
 		<>
-			<Dropdown visible list={[]}>
+			<Dropdown
+				visible={visible}
+				content={Dropmenu}
+				width={160}
+				onVisibleChange={setVisible}
+			>
 				<Button>
-					国家 <Icon icon={<ArrowDropDownRound />} />
+					下拉菜单
+					<Icon icon={<KeyboardArrowDownRound />} size='1.25em' />
 				</Button>
 			</Dropdown>
 		</>

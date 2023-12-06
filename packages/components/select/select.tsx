@@ -16,8 +16,8 @@ import {
 } from "react";
 import "../../css/input.scss";
 import Helpericon from "../helpericon";
-import { DisplayValues, Options, activeLabels } from "./display";
 import "./index.scss";
+import { DisplayValues, Options, activeLabels } from "./options";
 import { Props } from "./type";
 
 const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {

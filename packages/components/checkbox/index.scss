@@ -56,7 +56,7 @@
 	&:hover {
 		&:after {
 			box-shadow: 0 0 0 3px var(--color-5);
-			background-color: var(--color-main-slight);
+			background-color: var(--color-main-0);
 		}
 	}
 }
@@ -105,8 +105,8 @@
 	&.i-checkbox-switch {
 		background: var(--color-main);
 		&:after {
-			box-shadow: 0 0 0 2px var(--color-main-2);
-			transform: translate(1.4em, -50%);
+			box-shadow: 0 0 0 3px var(--color-main-2);
+			transform: translate(1.25em, -50%);
 		}
 	}
 	& + .i-checkbox-text {
@@ -121,7 +121,7 @@
 		display: flex;
 		align-items: center;
 		white-space: nowrap;
-		background: var(--color-main-slight);
+		background: var(--color-main-0);
 	}
 	&:checked + .i-checkbox-text {
 		background: var(--color-main);
@@ -136,9 +136,9 @@
 
 .i-checkbox-success {
 	.i-checkbox-input {
-		box-shadow: inset 0 0 0 3px var(--green-slight);
+		box-shadow: inset 0 0 0 3px var(--green-0);
 		&:checked {
-			background: var(--green-slight);
+			background: var(--green-0);
 		}
 	}
 	.i-checkbox-message {
@@ -147,9 +147,9 @@
 }
 .i-checkbox-warning {
 	.i-checkbox-input {
-		box-shadow: inset 0 0 0 3px var(--yellow-slight);
+		box-shadow: inset 0 0 0 3px var(--yellow-0);
 		&:checked {
-			background: var(--yellow-slight);
+			background: var(--yellow-0);
 		}
 	}
 	.i-checkbox-message {
@@ -158,9 +158,9 @@
 }
 .i-checkbox-error {
 	.i-checkbox-input {
-		box-shadow: inset 0 0 0 3px var(--error-slight);
+		box-shadow: inset 0 0 0 3px var(--error-0);
 		&:checked {
-			background: var(--error-slight);
+			background: var(--error-0);
 		}
 	}
 	.i-checkbox-message {

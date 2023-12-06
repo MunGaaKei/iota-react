@@ -32,7 +32,7 @@
 	grid-template-columns: var(--table-columns);
 	width: fit-content;
 	&:hover .i-table-td {
-		--table-td-background: var(--color-main-slight);
+		--table-td-background: var(--color-main-0);
 	}
 }
 

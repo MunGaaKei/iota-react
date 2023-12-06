@@ -1,14 +1,46 @@
 $colors: (
-	"white": #ffffff,
-	"black": #000000,
+	"white": white,
+	"white-0": white,
+	"white-1": whitesmoke,
+	"white-2": #ebebeb,
+	"black": black,
+	"black-0": black,
+	"black-1": #1a1a1a,
+	"black-2": #333,
 	"red": #dc143c,
+	"red-0": #fcdfe4,
+	"red-1": #dc143c,
+	"red-2": #ee4063,
 	"blue": #1e90ff,
+	"blue-0": #d6ebff,
+	"blue-1": #007cf4,
+	"blue-2": #47a4ff,
 	"green": #3cb371,
+	"green-0": #cdeedc,
+	"green-1": #37a467,
+	"green-2": #53c586,
 	"yellow": #ffc549,
+	"yellow-0": #ffecc3,
+	"yellow-1": #ffb820,
+	"yellow-2": #ffd272,
 	"grey": #d7d7d7,
+	"grey-0": #f6f6f6,
+	"grey-1": #c3c3c3,
+	"grey-2": #e1e1e1,
 	"pink": #ff69b4,
+	"pink-0": #ffe3f1,
+	"pink-1": #ff55aa,
+	"pink-2": #ff92c8,
 	"purple": #8a2be2,
+	"purple-0": #eddefb,
+	"purple-1": #751bc9,
+	"purple-2": #a861e9,
+	"warning": #f3c327,
+	"warning-0": #fff0bf,
 	"error": #ff4545,
+	"error-0": #ffdbdb,
+	"success": #38be17,
+	"success-0": #acf899,
 );
 
 :root {
@@ -18,11 +50,10 @@ $colors: (
 
 	--color: #212121;
 	--color-main: #6d82f7;
+	--color-main-0: #eff1fc;
 	--color-main-1: #7b8ef8;
 	--color-main-2: #4f65e4;
-	--color-main-slight: #eff1fc;
 	--color-main-reverse: #fafafa;
-	--color-slight: rgba(0, 0, 0, 0.1);
 
 	.color-main {
 		color: var(--color-main);
@@ -47,61 +78,9 @@ $colors: (
 	@each $name, $value in $colors {
 		--#{$name}: #{$value};
 
-		@if ($name == "black") {
-			--#{$name}-1: #{lighten($value, 10%)};
-			--#{$name}-2: #{lighten($value, 20%)};
-			--#{$name}-slight: #{lighten($value, 80%)};
-		} @else if ($name == "red") {
-			--#{$name}-1: #{darken($value, 6%)};
-			--#{$name}-2: #{lighten($value, 12%)};
-			--#{$name}-slight: #{lighten($value, 46%)};
-		} @else if ($name == "blue") {
-			--#{$name}-1: #{darken($value, 8%)};
-			--#{$name}-2: #{lighten($value, 8%)};
-			--#{$name}-slight: #{lighten($value, 36%)};
-		} @else if ($name == "green") {
-			--#{$name}-1: #{darken($value, 4%)};
-			--#{$name}-2: #{lighten($value, 8%)};
-			--#{$name}-slight: #{lighten($value, 40%)};
-		} @else if ($name == "yellow") {
-			--#{$name}-1: #{darken($value, 8%)};
-			--#{$name}-2: #{lighten($value, 8%)};
-			--#{$name}-slight: #{lighten($value, 24%)};
-		} @else if ($name == "grey") {
-			--#{$name}-1: #{darken($value, 8%)};
-			--#{$name}-2: #{lighten($value, 4%)};
-			--#{$name}-slight: #{lighten($value, 12%)};
-		} @else if ($name == "pink") {
-			--#{$name}-1: #{darken($value, 4%)};
-			--#{$name}-2: #{lighten($value, 8%)};
-			--#{$name}-slight: #{lighten($value, 24%)};
-		} @else if ($name == "purple") {
-			--#{$name}-1: #{darken($value, 8%)};
-			--#{$name}-2: #{lighten($value, 12%)};
-			--#{$name}-slight: #{lighten($value, 40%)};
-		} @else {
-			--#{$name}-1: #{darken($value, 4%)};
-			--#{$name}-2: #{darken($value, 8%)};
-			--#{$name}-slight: #{lighten($value, 24%)};
-		}
-
 		.#{$name} {
-			--background-hover: var(--#{$name}-slight);
+			--background-hover: var(--#{$name}-0);
 			--color: var(--#{$name});
-			color: var(--color);
-		}
-		.#{$name}-1 {
-			--background-hover: var(--#{$name}-slight);
-			--color: var(--#{$name}-1);
-			color: var(--color);
-		}
-		.#{$name}-2 {
-			--background-hover: var(--#{$name}-slight);
-			--color: var(--#{$name}-2);
-			color: var(--color);
-		}
-		.#{$name}-slight {
-			--color: var(--#{$name}-slight);
 			color: var(--color);
 		}
 
@@ -110,22 +89,7 @@ $colors: (
 			--background: var(--#{$name});
 			background: var(--#{$name});
 		}
-		.bg-#{$name}-1 {
-			--background: var(--#{$name}-1);
-			background: var(--#{$name}-1);
-		}
-		.bg-#{$name}-2 {
-			--background: var(--#{$name}-2);
-			background: var(--#{$name}-2);
-		}
-		.bg-#{$name}-slight {
-			--background: var(--#{$name}-slight);
-			--color: var(--#{$name});
-			background: var(--#{$name}-slight);
-		}
-		.bg-#{$name},
-		.bg-#{$name}-1,
-		.bg-#{$name}-2 {
+		.bg-#{$name} {
 			@if $name == "white" or $name == "grey" or $name == "yellow" {
 				--color: var(--black);
 				color: var(--color);
@@ -141,7 +105,7 @@ $colors: (
 }
 
 .bg-slight {
-	background-color: var(--color-slight);
+	background-color: var(--color-9);
 	color: var(--black);
 }
 .slight {
@@ -156,39 +120,13 @@ $colors: (
 	--blur: blur(12px);
 
 	--color-main: #faf2d9;
+	--color-main-0: #67645d;
 	--color-main-1: #f6eac5;
 	--color-main-2: #e8debf;
-	--color-main-slight: #67645d;
 	--color-main-reverse: #212121;
-	--color-slight: rgba(0, 0, 0, 0.1);
 
 	background: var(--background);
 	color: var(--color);
-
-	@each $name, $value in $colors {
-		@if ($name == "black") {
-			--#{$name}-slight: rgba(0, 0, 0, 0.2);
-		} @else if ($name == "red") {
-			--#{$name}-slight: #4c3338;
-		} @else if ($name == "blue") {
-			--#{$name}-slight: #{darken($value, 36%)};
-		} @else if ($name == "green") {
-			--#{$name}-slight: #{darken($value, 30%)};
-		} @else if ($name == "yellow") {
-			--#{$name}-slight: #684f18;
-		} @else if ($name == "grey") {
-			--#{$name}-slight: #{darken($value, 40%)};
-		} @else if ($name == "pink") {
-			--#{$name}-slight: #402935;
-		} @else if ($name == "purple") {
-			--#{$name}-slight: #{darken($value, 40%)};
-		} @else {
-			--#{$name}-slight: #a1a1a1;
-		}
-		.bg-#{$name}-slight {
-			--color: var(--white);
-		}
-	}
 
 	@for $i from 1 to 10 {
 		--color-#{$i}: #{darken(#fff, (9.5% * $i))};

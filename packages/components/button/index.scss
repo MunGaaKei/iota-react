@@ -6,6 +6,7 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	gap: 0.125em;
 	padding: 0 0.6em;
 	height: 2.25em;
 	border-radius: var(--radius);
@@ -51,13 +52,13 @@
 	--background: var(--color-main);
 }
 .i-btn-flat {
-	--background-hover: var(--color-slight);
+	--background-hover: var(--color-9);
 	--color-main-reverse: var(--color);
 	--background: transparent;
 	--color: var(--color-1);
 }
 .i-btn-outline {
-	--background-hover: var(--color-main-slight);
+	--background-hover: var(--color-main-0);
 	--color: var(--color-main);
 	&.i-btn {
 		--background: transparent;

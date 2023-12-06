@@ -3,6 +3,7 @@ import "./js/init";
 import Button from "./components/button";
 import Checkbox from "./components/checkbox";
 import Container from "./components/container";
+import Datepicker from "./components/datepicker";
 import Dialog from "./components/dialog";
 import Dropdown from "./components/dropdown";
 import Form from "./components/form";
@@ -17,12 +18,14 @@ import Radio from "./components/radio";
 import Select from "./components/select";
 import Table from "./components/table";
 import Tabs from "./components/tabs";
+import Tag from "./components/tag";
 import Tree from "./components/tree";
 
 export {
 	Button,
 	Checkbox,
 	Container,
+	Datepicker,
 	Dialog,
 	Dropdown,
 	Form,
@@ -37,6 +40,7 @@ export {
 	Select,
 	Table,
 	Tabs,
+	Tag,
 	Textarea,
 	Tree,
 };

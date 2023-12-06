@@ -2,7 +2,15 @@ import classNames from "classnames";
 import { IItem } from "./type";
 
 function Item(props: IItem) {
-	const { active, type, disabled, className, children, ...restProps } = props;
+	const {
+		active,
+		type,
+		disabled,
+		shortcut,
+		className,
+		children,
+		...restProps
+	} = props;
 
 	return (
 		<div
@@ -14,6 +22,10 @@ function Item(props: IItem) {
 			{...restProps}
 		>
 			{children}
+
+			{shortcut && (
+				<div className='i-list-option-shortcut'>{shortcut}</div>
+			)}
 		</div>
 	);
 }

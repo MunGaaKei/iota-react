@@ -8,12 +8,29 @@
 }
 
 .i-list-option {
+	justify-content: space-between;
 	cursor: pointer;
 	user-select: none;
+	white-space: nowrap;
 	&:hover {
 		background: var(--background-opacity-1);
+		.i-list-option-shortcut {
+			opacity: 1;
+			background: var(--background-opacity);
+		}
 	}
 	&.disabled {
 		order: 2;
 	}
+}
+
+.i-list-option-shortcut {
+	display: flex;
+	align-items: center;
+	padding: 0 0.5em;
+	font-size: 0.9em;
+	opacity: 0.5;
+	border-radius: inherit;
+	background: var(--background-opacity-1);
+	transition: var(--transition);
 }
