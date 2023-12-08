@@ -41,8 +41,8 @@ $colors: (
 	"purple-2": #a861e9,
 	"aqua": aqua,
 	"aqua-0": #e8ffff,
-	"aqua-1": #05e4e4,
-	"aqua-2": #00cece,
+	"aqua-1": #1efdfd,
+	"aqua-2": #0ae0e0,
 	"orange": #fb812a,
 	"orange-0": #ffdbc3,
 	"orange-1": #eb7521,
@@ -95,22 +95,17 @@ $colors: (
 
 		--#{$name}: #{$value};
 
-		.#{$name} {
-			--color: var(--#{$name});
-			color: var(--color);
-
-			@if $enhanced == null {
-				--background-hover: var(--#{$name}-0);
-			}
-		}
-
 		.bg-#{$name} {
 			--background: var(--#{$name});
 			background: var(--#{$name});
 			color: var(--color);
 
 			@if $isLightColor != null or $number == "0" {
+				$hoverColor: str-slice($name, 0, -3);
 				--color: var(--color-1);
+				&:hover {
+					--background-hover: var(--#{$hoverColor});
+				}
 			} @else {
 				--color: var(--color-9);
 			}
@@ -119,6 +114,15 @@ $colors: (
 				&:hover {
 					--background-hover: var(--#{$name}-1);
 				}
+			}
+		}
+
+		.#{$name} {
+			--color: var(--#{$name});
+			color: var(--color);
+
+			@if $enhanced == null {
+				--background-hover: var(--#{$name}-0);
 			}
 		}
 	}

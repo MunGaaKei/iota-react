@@ -12,21 +12,31 @@ export default function Page() {
 					tag
 				</Tag>
 				<Tag className='bg-yellow'>tag</Tag>
-				<Tag className='bg-purple'>tag</Tag>
-				<Tag className='bg-brown'>tag</Tag>
-				<Tag className='bg-aqua'>tag</Tag>
-				<Tag className='bg-orange'>tag</Tag>
+				<Tag className='bg-purple' onClose={() => null}>
+					tag
+				</Tag>
+				<Tag className='brown' outline onClick={() => null}>
+					tag
+				</Tag>
+				<Tag className='bg-aqua' onClick={() => null}>
+					tag
+				</Tag>
+				<Tag className='orange'>tag</Tag>
 				<Tag className='bg-black'>tag</Tag>
 			</div>
 			<div className='flex gap-12 mt-12 items-center'>
 				<Tag className='bg-blue-0'>tag</Tag>
-				<Tag className='bg-red-0'>tag</Tag>
+				<Tag className='bg-red-0' dotClass='red'>
+					tag
+				</Tag>
 				<Tag className='bg-pink-0'>tag</Tag>
 				<Tag className='bg-green-0' hideDot>
 					tag
 				</Tag>
 				<Tag className='bg-yellow-0'>tag</Tag>
-				<Tag className='bg-purple-0'>tag</Tag>
+				<Tag className='bg-purple-0' onClick={() => null}>
+					tag
+				</Tag>
 				<Tag className='bg-brown-0'>tag</Tag>
 				<Tag className='bg-aqua-0'>tag</Tag>
 				<Tag className='bg-orange-0'>tag</Tag>
