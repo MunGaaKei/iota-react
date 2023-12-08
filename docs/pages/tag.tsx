@@ -1,24 +1,37 @@
-import { Button, Tag } from "@p";
+import { Tag } from "@p";
 
 export default function Page() {
 	return (
-		<div className='flex gap-12 items-center'>
+		<>
 			<Tag>tag</Tag>
-			<Tag className='bg-blue'>tag</Tag>
-			<Tag className='bg-red'>tag</Tag>
-			<Tag className='bg-pink'>tag</Tag>
-			<Tag className='bg-green'>tag</Tag>
-			<Tag className='bg-yellow'>tag</Tag>
-			<Tag className='bg-black'>tag</Tag>
-			<Tag className='bg-green-0'>tag</Tag>
-			<Button>button</Button>
-			<Button className='bg-blue'>button</Button>
-			<Button className='bg-red'>button</Button>
-			<Button className='bg-pink'>button</Button>
-			<Button className='bg-green'>button</Button>
-			<Button className='bg-yellow'>button</Button>
-			<Button className='bg-black'>button</Button>
-			<Button className='bg-green-0'>button</Button>
-		</div>
+			<div className='flex gap-12 mt-12 items-center'>
+				<Tag className='bg-blue'>tag</Tag>
+				<Tag className='bg-red'>tag</Tag>
+				<Tag className='bg-pink'>tag</Tag>
+				<Tag className='bg-green' hideDot>
+					tag
+				</Tag>
+				<Tag className='bg-yellow'>tag</Tag>
+				<Tag className='bg-purple'>tag</Tag>
+				<Tag className='bg-brown'>tag</Tag>
+				<Tag className='bg-aqua'>tag</Tag>
+				<Tag className='bg-orange'>tag</Tag>
+				<Tag className='bg-black'>tag</Tag>
+			</div>
+			<div className='flex gap-12 mt-12 items-center'>
+				<Tag className='bg-blue-0'>tag</Tag>
+				<Tag className='bg-red-0'>tag</Tag>
+				<Tag className='bg-pink-0'>tag</Tag>
+				<Tag className='bg-green-0' hideDot>
+					tag
+				</Tag>
+				<Tag className='bg-yellow-0'>tag</Tag>
+				<Tag className='bg-purple-0'>tag</Tag>
+				<Tag className='bg-brown-0'>tag</Tag>
+				<Tag className='bg-aqua-0'>tag</Tag>
+				<Tag className='bg-orange-0'>tag</Tag>
+				<Tag className='bg-black-0'>tag</Tag>
+			</div>
+		</>
 	);
 }

@@ -12,7 +12,7 @@ export default function button(): JSX.Element {
 			</Button>
 			<Button outline>边框</Button>
 			<Button flat>文字</Button>
-			<Button flat className='red'>
+			<Button flat className='aqua'>
 				文字
 			</Button>
 			<Button disabled>禁用</Button>

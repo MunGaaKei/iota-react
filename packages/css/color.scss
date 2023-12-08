@@ -4,7 +4,7 @@ $colors: (
 	"white-1": whitesmoke,
 	"white-2": #ebebeb,
 	"black": black,
-	"black-0": black,
+	"black-0": #dbdbdb,
 	"black-1": #1a1a1a,
 	"black-2": #333,
 	"red": #dc143c,
@@ -16,13 +16,17 @@ $colors: (
 	"blue-1": #007cf4,
 	"blue-2": #47a4ff,
 	"green": #3cb371,
-	"green-0": #cdeedc,
+	"green-0": #e7fff2,
 	"green-1": #37a467,
 	"green-2": #53c586,
 	"yellow": #ffc549,
 	"yellow-0": #ffecc3,
 	"yellow-1": #ffb820,
 	"yellow-2": #ffd272,
+	"brown": #95410c,
+	"brown-0": #f5ceb5,
+	"brown-1": #8b3a07,
+	"brown-2": #6d2e07,
 	"grey": #d7d7d7,
 	"grey-0": #f6f6f6,
 	"grey-1": #c3c3c3,
@@ -35,6 +39,14 @@ $colors: (
 	"purple-0": #eddefb,
 	"purple-1": #751bc9,
 	"purple-2": #a861e9,
+	"aqua": aqua,
+	"aqua-0": #e8ffff,
+	"aqua-1": #05e4e4,
+	"aqua-2": #00cece,
+	"orange": #fb812a,
+	"orange-0": #ffdbc3,
+	"orange-1": #eb7521,
+	"orange-2": #e66a12,
 	"warning": #f3c327,
 	"warning-0": #fff0bf,
 	"error": #ff4545,
@@ -58,7 +70,7 @@ $colors: (
 	.color-main {
 		color: var(--color-main);
 	}
-	.background-main {
+	.bg-main {
 		background: var(--color-main);
 		color: var(--color-main-reverse);
 	}
@@ -67,7 +79,7 @@ $colors: (
 		.color-#{$i} {
 			color: var(--color-#{$i});
 		}
-		.background-#{$i} {
+		.bg-#{$i} {
 			background: var(--color-#{$i});
 			@if ($i < 5) {
 				color: var(--white);
@@ -76,30 +88,38 @@ $colors: (
 	}
 
 	@each $name, $value in $colors {
+		$number: str-slice($name, -1);
+		$enhanced: str-index(("012"), $number);
+		$lightColors: ("white", "grey", "yellow", "aqua");
+		$isLightColor: index($lightColors, $name);
+
 		--#{$name}: #{$value};
 
 		.#{$name} {
-			--background-hover: var(--#{$name}-0);
 			--color: var(--#{$name});
 			color: var(--color);
+
+			@if $enhanced == null {
+				--background-hover: var(--#{$name}-0);
+			}
 		}
 
 		.bg-#{$name} {
-			--background-hover: var(--#{$name}-2);
 			--background: var(--#{$name});
 			background: var(--#{$name});
-		}
-		.bg-#{$name} {
-			@if $name == "white" or $name == "grey" or $name == "yellow" {
-				--color: var(--black);
-				color: var(--color);
+			color: var(--color);
+
+			@if $isLightColor != null or $number == "0" {
+				--color: var(--color-1);
 			} @else {
-				--color: var(--white);
-				color: var(--color);
+				--color: var(--color-9);
 			}
-		}
-		.bg-#{$name}:hover {
-			--background-hover: var(--#{$name}-1);
+
+			@if $enhanced == null {
+				&:hover {
+					--background-hover: var(--#{$name}-1);
+				}
+			}
 		}
 	}
 }
