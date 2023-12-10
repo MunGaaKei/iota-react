@@ -1,0 +1,9 @@
+.i-datepicker-dates {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+}
+
+.i-datepicker-date {
+	display: flex;
+	padding: 0.25em 0.625em;
+}

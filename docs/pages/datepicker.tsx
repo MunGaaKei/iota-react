@@ -1,3 +1,9 @@
+import { Datepicker } from "@p";
+
 export default function Page() {
-	return <></>;
+	return (
+		<>
+			<Datepicker popupProps={{ visible: true }} />
+		</>
+	);
 }

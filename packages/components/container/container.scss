@@ -7,7 +7,7 @@
 	position: relative;
 	flex: 1 1 auto;
 	transition: var(--transition);
-	overflow: auto;
+	overflow-x: hidden;
 }
 .i-header,
 .i-footer {

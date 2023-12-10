@@ -4,7 +4,7 @@ export default function Page() {
 	return (
 		<>
 			<Tag>tag</Tag>
-			<div className='flex gap-12 mt-12 items-center'>
+			<div className='flex flex-wrap gap-12 mt-12 items-center'>
 				<Tag className='bg-blue'>tag</Tag>
 				<Tag className='bg-red'>tag</Tag>
 				<Tag className='bg-pink'>tag</Tag>
@@ -24,7 +24,7 @@ export default function Page() {
 				<Tag className='orange'>tag</Tag>
 				<Tag className='bg-black'>tag</Tag>
 			</div>
-			<div className='flex gap-12 mt-12 items-center'>
+			<div className='flex gap-12 mt-12 items-center flex-wrap'>
 				<Tag className='bg-blue-0'>tag</Tag>
 				<Tag className='bg-red-0' dotClass='red'>
 					tag

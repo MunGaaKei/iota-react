@@ -1,7 +1,7 @@
 import { Popup } from "@p";
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
-import { TOption, TValidate, TValue } from "@p/type";
+import { TOption, TValue } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
@@ -45,12 +45,7 @@ const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		...rest
 	} = props;
 
-	const state = useReactive<
-		{
-			value: TValue;
-			loading: boolean;
-		} & TValidate
-	>({
+	const state = useReactive({
 		value,
 		status,
 		message,
