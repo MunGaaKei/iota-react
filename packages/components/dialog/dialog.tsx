@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Helpericon from "../helpericon";
+import Helpericon from "../utils/helpericon";
 import "./index.scss";
 import { Props, PropsContent } from "./type";
 

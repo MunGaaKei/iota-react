@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import Helpericon from "../helpericon";
+import Helpericon from "../utils/helpericon";
 import "./index.scss";
 import { Props } from "./type";
 

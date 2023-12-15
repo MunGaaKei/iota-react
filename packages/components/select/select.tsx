@@ -15,7 +15,7 @@ import {
 	useState,
 } from "react";
 import "../../css/input.scss";
-import Helpericon from "../helpericon";
+import Helpericon from "../utils/helpericon";
 import "./index.scss";
 import { DisplayValues, Options, activeLabels } from "./options";
 import { Props } from "./type";

@@ -1,6 +1,6 @@
 import { CloseRound } from "@ricons/material";
 import classNames from "classnames";
-import Icon from "../icon";
+import Icon from "../../icon";
 import "./index.scss";
 import { Props } from "./type";
 

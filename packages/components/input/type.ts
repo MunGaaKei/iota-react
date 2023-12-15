@@ -1,11 +1,17 @@
 import { BaseInput } from "@p/type";
-import { InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
+import {
+	CSSProperties,
+	InputHTMLAttributes,
+	ReactNode,
+	TextareaHTMLAttributes,
+} from "react";
 
 export interface IInputContainer {
 	label?: ReactNode;
 	className?: string;
 	labelInline?: boolean;
 	children?: ReactNode;
+	style?: CSSProperties;
 }
 
 export interface Props

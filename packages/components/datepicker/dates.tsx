@@ -1,67 +1,281 @@
-import { useReactive } from "ahooks";
-import dayjs from "dayjs";
-import { ReactNode, useMemo } from "react";
+import {
+	KeyboardArrowLeftRound,
+	KeyboardArrowRightRound,
+} from "@ricons/material";
+import { useMemoizedFn, useReactive } from "ahooks";
+import classNames from "classnames";
+import dayjs, { Dayjs } from "dayjs";
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
+import Icon from "../icon";
+import InfiniteScroll from "../infinitescroll";
+import Helpericon from "../utils/helpericon";
 import { BaseDates } from "./type";
 
-const Panel = (props) => {
-	return (
-		<div className='i-datepicker'>
-			<Dates {...props} />
-		</div>
-	);
-};
+const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Dates = (props: BaseDates) => {
+const Panel = (props: BaseDates) => {
 	const {
-		value = dayjs(),
-		weeks = ["日", "一", "二", "三", "四", "五", "六"],
-		renderDate = (n: number) => n,
-		renderWeek = (w: ReactNode) => w,
-		renderMonth = (m: number) => m,
-		renderYear = (y: number) => y,
+		value,
+		unitYear,
+		unitMonth,
+		renderDate,
+		renderWeek,
+		renderMonth = (m: ReactNode) => m,
+		renderYear = (y: ReactNode) => y,
+		onDateClick,
 	} = props;
 
 	const state = useReactive({
 		today: value,
+		month: value || dayjs(),
+		selectedMonths: dayjs(),
+		years: [] as number[],
+		selectable: false,
 	});
 
-	const dates = useMemo(() => {
-		const { today } = state;
-		const dates: any[] = [];
+	const $years = useRef<HTMLDivElement>(null);
 
-		const lastDateOfLastMonth = today.add(-1, "month").endOf("month");
+	const handleOperateMonth = useCallback((next: boolean) => {
+		state.month = state.month[next ? "add" : "subtract"](1, "month");
+	}, []);
+
+	const handleChangeDate = (date: Dayjs) => {
+		if (date.isSame(state.today, "day")) return;
+
+		if (!date.isSame(state.month, "month")) {
+			state.month = date;
+		}
+
+		state.today = date;
+		onDateClick?.(date);
+	};
+
+	const handleChangeMonth = (month: number) => {
+		state.month = state.month.month(month - 1);
+		state.selectable = false;
+	};
+
+	const getMoreYears = useMemoizedFn((isNext) => {
+		let range = 5;
+		const years: number[] = [];
+
+		if (isNext) {
+			const year = state.years.at(-1) || state.month.year();
+			while (range--) {
+				years.push(year + 5 - range);
+			}
+			state.years.push(...years);
+		} else {
+			const year = state.years.at(0) || state.month.year();
+			while (range--) {
+				years.unshift(year - 5 + range);
+			}
+			state.years.unshift(...years);
+			// $years.current?.scrollTo({ top: 20 });
+		}
+	});
+
+	useEffect(() => {
+		if (!state.selectable) return;
+
+		state.selectedMonths = state.month;
+
+		const years: number[] = [state.selectedMonths.year()];
+
+		state.years = years;
+	}, [state.selectable]);
+
+	return (
+		<div className='i-datepicker'>
+			<div className='i-datepicker-units'>
+				<YearMonth
+					value={state.month}
+					unitYear={unitYear}
+					unitMonth={unitMonth}
+					renderMonth={renderMonth}
+					renderYear={renderYear}
+					onClick={() => (state.selectable = true)}
+				/>
+				<a
+					className='ml-auto i-datepicker-action'
+					data-ripple
+					onClick={() => handleOperateMonth(false)}
+				>
+					<Icon icon={<KeyboardArrowLeftRound />} />
+				</a>
+				<a
+					className='i-datepicker-action'
+					data-ripple
+					onClick={() => handleOperateMonth(true)}
+				>
+					<Icon icon={<KeyboardArrowRightRound />} />
+				</a>
+			</div>
+
+			<div
+				className={classNames("i-datepicker-ym", {
+					"i-datepicker-active": state.selectable,
+				})}
+			>
+				<Helpericon
+					active
+					className='i-datepicker-close'
+					onClick={() => (state.selectable = false)}
+				/>
+
+				{state.selectable && (
+					<InfiniteScroll
+						ref={$years}
+						hasNext
+						hasPrev
+						className='i-datepicker-years'
+						onLoadMore={getMoreYears}
+					>
+						{state.years.map((y) => {
+							return (
+								<a
+									key={y}
+									className={classNames("i-datepicker-year", {
+										"i-datepicker-active":
+											y === state.month.year(),
+									})}
+								>
+									{renderYear(y)}
+								</a>
+							);
+						})}
+					</InfiniteScroll>
+				)}
+
+				<div className='i-datepicker-months'>
+					{MONTHS.map((m) => {
+						return (
+							<a
+								key={m}
+								className={classNames("i-datepicker-month", {
+									"i-datepicker-active":
+										m === state.month.month() + 1,
+								})}
+								onClick={() => handleChangeMonth(m)}
+							>
+								{renderMonth(m)}
+							</a>
+						);
+					})}
+				</div>
+			</div>
+
+			<Dates
+				value={state.today}
+				month={state.month}
+				onDateClick={handleChangeDate}
+				renderDate={renderDate}
+				renderWeek={renderWeek}
+			/>
+		</div>
+	);
+};
+
+const Dates = (
+	props: BaseDates & {
+		month: any;
+	}
+) => {
+	const {
+		value,
+		month,
+		weeks = ["一", "二", "三", "四", "五", "六", "日"],
+		renderDate = (date: Dayjs) => date.date(),
+		renderWeek = (w: ReactNode) => w,
+		onDateClick,
+	} = props;
+
+	const dates = useMemo(() => {
+		const dates: Dayjs[] = [];
+
+		const lastDateOfLastMonth = month.add(-1, "month").endOf("month");
 		let { $W, $D } = lastDateOfLastMonth;
-		if ($W !== 6) {
-			const lastMonthDates = Array.from({ length: $W + 1 }).map(
-				(whatever, i) => ({
-					date: $D - $W + i,
-					day: lastDateOfLastMonth.add(i - $W, "day"),
-				})
+
+		if ($W !== 0) {
+			const lastMonthDates = Array.from({ length: $W }).map(
+				(whatever, i) => lastDateOfLastMonth.add(i + 1 - $W, "day")
 			);
 			dates.push(...lastMonthDates);
 		}
-		const lastDate = today.endOf("month");
-		dates.push();
 
-		console.log(dates);
+		const lastDate = month.endOf("month");
+		$D = lastDate.$D;
+		$W = lastDate.$W;
+		dates.push(
+			...Array.from({ length: $D }).map((whatever, i) =>
+				lastDate.add(i + 1 - $D, "day")
+			)
+		);
 
-		return [];
-	}, [state.today]);
+		if ($W !== 0) {
+			dates.push(
+				...Array.from({ length: 7 - $W }).map((whatever, i) =>
+					lastDate.add(i + 1, "day")
+				)
+			);
+		}
+
+		return dates;
+	}, [month]);
 
 	return (
-		<div className='i-datepicker-dates'>
-			{weeks.map((week: ReactNode, i: number) => (
-				<b key={i} className='i-datepicker-date'>
-					{renderWeek(week)}
-				</b>
-			))}
+		<>
+			<div className='i-datepicker-weeks'>
+				{weeks.map((week: ReactNode, i: number) => (
+					<b key={i} className='i-datepicker-week'>
+						{renderWeek(week)}
+					</b>
+				))}
+			</div>
+			<div className='i-datepicker-dates'>
+				{dates.map((date, i: number) => {
+					const isToday = date.isSame(value, "day");
+					const isSameMonth = date.isSame(month, "month");
 
-			{dates.map((date: number, i: number) => (
-				<div key={i} className='i-datepicker-date'>
-					{renderDate(date)}
-				</div>
-			))}
-		</div>
+					return (
+						<div
+							key={i}
+							className={classNames("i-datepicker-item", {
+								"i-datepicker-active": isToday,
+								"i-datepicker-same-month": isSameMonth,
+							})}
+							onClick={() => onDateClick?.(date)}
+						>
+							{renderDate(date)}
+						</div>
+					);
+				})}
+			</div>
+		</>
+	);
+};
+
+const YearMonth = (
+	props: BaseDates & {
+		onClick?: () => void;
+	}
+) => {
+	const {
+		value,
+		unitMonth = "月",
+		unitYear = "年",
+		renderYear,
+		renderMonth,
+		onClick,
+	} = props;
+
+	return (
+		<a className='i-datepicker-action' data-ripple onClick={onClick}>
+			<span>{renderYear?.(value.year())}</span>
+			{unitYear}
+			<span>{renderMonth?.(value.month() + 1)}</span>
+			{unitMonth}
+		</a>
 	);
 };
 

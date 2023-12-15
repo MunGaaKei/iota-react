@@ -1,22 +1,35 @@
+import { useFormRegist } from "@p/js/hooks";
+import { CalendarMonthTwotone } from "@ricons/material";
 import { useReactive } from "ahooks";
+import dayjs, { Dayjs } from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useMemo } from "react";
+import Icon from "../icon";
 import Input from "../input";
 import Popup from "../popup";
 import { Panel } from "./dates";
 import "./index.scss";
 import { Props } from "./type";
 
+dayjs.extend(customParseFormat);
+
 const Datepicker = (props: Props): JSX.Element => {
 	const {
+		name,
 		value,
 		status,
 		message,
 		weeks,
-		format,
+		format = "YYYY-MM-DD",
+		form,
 		renderDate,
 		renderWeek,
 		renderMonth,
 		renderYear,
 		popupProps,
+		onDateClick,
+		onChange,
+		onBlur,
 		...restProps
 	} = props;
 
@@ -24,8 +37,50 @@ const Datepicker = (props: Props): JSX.Element => {
 		value,
 		status,
 		message,
-		visible: false,
 	});
+
+	const emitForm = useFormRegist({
+		form,
+		name,
+		state,
+	});
+
+	const dayJsValue = useMemo(() => {
+		if (!state.value) return null;
+
+		const date = dayjs(state.value as string, format, true);
+
+		if (date.isValid()) return date;
+
+		return null;
+	}, [state.value]);
+
+	const handleDateClick = (date: Dayjs) => {
+		handleChange(date.format(format));
+	};
+
+	const handleChange = (v) => {
+		Object.assign(state, {
+			value: v,
+			status: "normal",
+			message: "",
+		});
+
+		emitForm?.(v);
+		onChange?.(v);
+	};
+
+	const handleBlur = (e) => {
+		onBlur?.(e);
+
+		if (!state.value) return;
+
+		const date = dayjs(state.value as string, format, true);
+
+		if (date.isValid()) return;
+
+		handleChange("");
+	};
 
 	const { value: val, message: msg, status: sts } = state;
 
@@ -35,17 +90,32 @@ const Datepicker = (props: Props): JSX.Element => {
 			position='bottom'
 			content={
 				<Panel
+					value={dayJsValue}
 					weeks={weeks}
-					format={format}
 					renderDate={renderDate}
 					renderWeek={renderWeek}
 					renderMonth={renderMonth}
 					renderYear={renderYear}
+					onDateClick={handleDateClick}
 				/>
 			}
 			{...popupProps}
 		>
-			<Input value={val} message={msg} status={sts} {...restProps} />
+			<Input
+				value={val}
+				message={msg}
+				status={sts}
+				append={
+					<Icon
+						icon={<CalendarMonthTwotone />}
+						className='i-datepicker-icon'
+						size='1em'
+					/>
+				}
+				onChange={handleChange}
+				onBlur={handleBlur}
+				{...restProps}
+			/>
 		</Popup>
 	);
 };

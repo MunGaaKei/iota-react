@@ -11,7 +11,7 @@ import {
 	useMemo,
 } from "react";
 import "../../css/input.scss";
-import Helpericon from "../helpericon";
+import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
 import "./index.scss";
 import type { Props } from "./type";
@@ -33,6 +33,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		hideVisible,
 		onChange,
 		onEnter,
+		style,
 		...rest
 	} = props;
 
@@ -97,6 +98,10 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		});
 	}, [status, message]);
 
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
+
 	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
@@ -116,6 +121,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 			label={label}
 			labelInline={labelInline}
 			className={className}
+			style={style}
 		>
 			<div
 				className={classNames("i-input-item", {
