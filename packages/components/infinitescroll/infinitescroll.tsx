@@ -29,7 +29,9 @@ const InfiniteScroll = forwardRef<HTMLDivElement, Props>((props, ref) => {
 				onLoadMore(isNext);
 
 				!isNext &&
-					(ref.current as any)?.scrollTo({ top: initialOffset });
+					((ref as any)?.current as HTMLDivElement)?.scrollTo({
+						top: initialOffset,
+					});
 			});
 		});
 

@@ -28,7 +28,7 @@ const Panel = (props: BaseDates) => {
 	const state = useReactive({
 		today: value,
 		month: value || dayjs(),
-		selectedMonths: dayjs(),
+		selectedYear: dayjs(),
 		years: [] as number[],
 		selectable: false,
 	});
@@ -51,36 +51,38 @@ const Panel = (props: BaseDates) => {
 	};
 
 	const handleChangeMonth = (month: number) => {
-		state.month = state.month.month(month - 1);
+		state.month = state.month
+			.year(state.selectedYear.year())
+			.month(month - 1);
 		state.selectable = false;
 	};
 
 	const getMoreYears = useMemoizedFn((isNext) => {
-		let range = 5;
+		const range = 4;
+		let time = range;
 		const years: number[] = [];
 
 		if (isNext) {
 			const year = state.years.at(-1) || state.month.year();
-			while (range--) {
-				years.push(year + 5 - range);
+			while (time--) {
+				years.push(year + range - time);
 			}
 			state.years.push(...years);
 		} else {
 			const year = state.years.at(0) || state.month.year();
-			while (range--) {
-				years.unshift(year - 5 + range);
+			while (time--) {
+				years.unshift(year - range + time);
 			}
 			state.years.unshift(...years);
-			// $years.current?.scrollTo({ top: 20 });
 		}
 	});
 
 	useEffect(() => {
 		if (!state.selectable) return;
 
-		state.selectedMonths = state.month;
+		state.selectedYear = state.month;
 
-		const years: number[] = [state.selectedMonths.year()];
+		const years: number[] = [state.selectedYear.year()];
 
 		state.years = years;
 	}, [state.selectable]);
@@ -128,22 +130,25 @@ const Panel = (props: BaseDates) => {
 						ref={$years}
 						hasNext
 						hasPrev
+						initialOffset={30}
 						className='i-datepicker-years'
 						onLoadMore={getMoreYears}
 					>
-						{state.years.map((y) => {
-							return (
-								<a
-									key={y}
-									className={classNames("i-datepicker-year", {
-										"i-datepicker-active":
-											y === state.month.year(),
-									})}
-								>
-									{renderYear(y)}
-								</a>
-							);
-						})}
+						{state.years.map((y) => (
+							<a
+								key={y}
+								className={classNames("i-datepicker-year", {
+									"i-datepicker-active":
+										y === state.selectedYear.year(),
+								})}
+								onClick={() =>
+									(state.selectedYear =
+										state.selectedYear.year(y))
+								}
+							>
+								{renderYear(y)}
+							</a>
+						))}
 					</InfiniteScroll>
 				)}
 

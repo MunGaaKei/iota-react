@@ -3,7 +3,7 @@ import { CalendarMonthTwotone } from "@ricons/material";
 import { useReactive } from "ahooks";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Icon from "../icon";
 import Input from "../input";
 import Popup from "../popup";
@@ -12,6 +12,8 @@ import "./index.scss";
 import { Props } from "./type";
 
 dayjs.extend(customParseFormat);
+
+const FORMATTYPES = ["YYYY-MM-DD", "YYYY-M-D", "YYYY/MM/DD", "YYYY/M/D"];
 
 const Datepicker = (props: Props): JSX.Element => {
 	const {
@@ -45,6 +47,8 @@ const Datepicker = (props: Props): JSX.Element => {
 		state,
 	});
 
+	const [active, setActive] = useState<boolean>(false);
+
 	const dayJsValue = useMemo(() => {
 		if (!state.value) return null;
 
@@ -57,6 +61,7 @@ const Datepicker = (props: Props): JSX.Element => {
 
 	const handleDateClick = (date: Dayjs) => {
 		handleChange(date.format(format));
+		setActive(false);
 	};
 
 	const handleChange = (v) => {
@@ -75,9 +80,12 @@ const Datepicker = (props: Props): JSX.Element => {
 
 		if (!state.value) return;
 
-		const date = dayjs(state.value as string, format, true);
+		const date = dayjs(state.value as string, FORMATTYPES, true);
 
-		if (date.isValid()) return;
+		if (date.isValid()) {
+			handleChange(date.format(format));
+			return;
+		}
 
 		handleChange("");
 	};
@@ -86,6 +94,7 @@ const Datepicker = (props: Props): JSX.Element => {
 
 	return (
 		<Popup
+			visible={active}
 			trigger='click'
 			position='bottom'
 			content={
@@ -100,6 +109,7 @@ const Datepicker = (props: Props): JSX.Element => {
 				/>
 			}
 			{...popupProps}
+			onVisibleChange={setActive}
 		>
 			<Input
 				value={val}
