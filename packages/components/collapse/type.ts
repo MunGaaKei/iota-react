@@ -2,23 +2,21 @@ import { HTMLAttributes, ReactNode } from "react";
 
 export type TKey = string | number;
 
-export interface ITab {
+export interface ICollapse {
 	key?: TKey;
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
 }
 
-export interface PropsItem extends ITab {
+export interface PropsItem extends ICollapse {
 	children?: ReactNode;
 }
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
-	active?: TKey;
-	prepend?: ReactNode;
-	append?: ReactNode;
-	vertical?: boolean;
-	lazyload?: boolean;
-	bar?: boolean;
-	onTabChange?: (to?: TKey, from?: TKey) => void;
+	active?: TKey | TKey[];
+	onlyone?: boolean;
+	border?: boolean;
+	icon?: (active?: boolean) => ReactNode;
+	onCollapse?: (key?: TKey, before?: TKey | TKey[]) => void;
 }

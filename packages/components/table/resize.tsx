@@ -1,5 +1,6 @@
+import { useMouseMove, useMouseUp } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent } from "react";
 import { IResize } from "./type";
 
 export default function Resize(props: IResize) {
@@ -40,14 +41,8 @@ export default function Resize(props: IResize) {
 		state.resizing = false;
 	};
 
-	useEffect(() => {
-		document.addEventListener("mouseup", handleMouseUp);
-		document.addEventListener("mousemove", handleMouseMove);
-		return () => {
-			document.removeEventListener("mouseup", handleMouseUp);
-			document.removeEventListener("mousemove", handleMouseMove);
-		};
-	}, []);
+	useMouseMove(handleMouseMove);
+	useMouseUp(handleMouseUp);
 
 	return (
 		<div className='i-table-resize'>

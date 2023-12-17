@@ -1,0 +1,33 @@
+.i-progress {
+	position: relative;
+	display: flex;
+	background: var(--background-opacity-1);
+	border-radius: var(--radius);
+	cursor: pointer;
+	&:hover {
+		.i-progress-btn {
+			transform: translate(50%, -50%) scale(1);
+		}
+	}
+}
+
+.i-progress-bar {
+	position: relative;
+	width: 100%;
+	background: var(--color-main);
+	border-radius: var(--radius);
+	transform-origin: left;
+	transition: var(--transition);
+}
+
+.i-progress-btn {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	min-height: 120%;
+	min-width: 1em;
+	background: inherit;
+	transform: translate(50%, -50%) scale(0);
+	transition: var(--transition);
+	border-radius: inherit;
+}

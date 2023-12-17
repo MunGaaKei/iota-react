@@ -9,7 +9,7 @@ import {
 } from "react";
 import "./index.scss";
 import TabItem from "./item";
-import { ITab, Props, TabKey } from "./type";
+import { ITab, Props, TKey } from "./type";
 
 function Tabs(props: Props) {
 	const {
@@ -31,23 +31,25 @@ function Tabs(props: Props) {
 	const navsRef = useRef<HTMLDivElement>(null);
 	const [barStyle, setBarStyle] = useState({});
 
-	const tabs: ITab[] = useMemo(() => {
-		return Children.map(children, (node, i) => {
-			const { key, props: nodeProps } = node as {
-				key?: TabKey;
-				props?: any;
-			};
-			const { title, children, content } = nodeProps;
+	const tabs: ITab[] = useMemo(
+		() =>
+			Children.map(children, (node, i) => {
+				const { key, props: nodeProps } = node as {
+					key?: TKey;
+					props?: any;
+				};
+				const { title, children, content } = nodeProps;
 
-			return {
-				key: key || i,
-				title,
-				content: children || content,
-			};
-		}) as ITab[];
-	}, [children]);
+				return {
+					key: key || i,
+					title,
+					content: children || content,
+				};
+			}) as ITab[],
+		[children]
+	);
 
-	const handleNavClick = (key?: TabKey) => {
+	const handleNavClick = (key?: TKey) => {
 		if (key === activeKey) return;
 
 		setActiveKey((prev) => {

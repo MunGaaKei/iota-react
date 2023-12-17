@@ -126,6 +126,9 @@
 	.hidden {
 		display: none !important;
 	}
+	.no-transition {
+		transition: none;
+	}
 
 	.mg-auto {
 		margin: auto;

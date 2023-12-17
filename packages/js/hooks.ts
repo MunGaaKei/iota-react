@@ -1,6 +1,8 @@
 import PubSub from "pubsub-js";
 import { useEffect } from "react";
 
+type TMouseEvent = (e: MouseEvent) => void;
+
 export function useFormRegist(props: {
 	form?: string;
 	name?: string;
@@ -37,4 +39,37 @@ export function useFormRegist(props: {
 	return (value: any) => {
 		PubSub.publish(`${form}:setFormState`, { [name]: value });
 	};
+}
+
+const MouseMoveEvents = new Set<TMouseEvent>();
+const MouseUpEvents = new Set<TMouseEvent>();
+
+document.addEventListener("mousemove", (e: MouseEvent) => {
+	for (const listener of MouseMoveEvents.values()) {
+		listener(e);
+	}
+});
+
+document.addEventListener("mouseup", (e) => {
+	for (const listener of MouseUpEvents.values()) {
+		listener(e);
+	}
+});
+
+export function useMouseMove(listener: TMouseEvent) {
+	useEffect(() => {
+		MouseMoveEvents.add(listener);
+		return () => {
+			MouseMoveEvents.delete(listener);
+		};
+	}, []);
+}
+
+export function useMouseUp(listener: TMouseEvent) {
+	useEffect(() => {
+		MouseUpEvents.add(listener);
+		return () => {
+			MouseUpEvents.delete(listener);
+		};
+	}, []);
 }
