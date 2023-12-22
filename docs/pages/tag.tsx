@@ -8,7 +8,7 @@ export default function Page() {
 				<Tag className='bg-blue'>tag</Tag>
 				<Tag className='bg-red'>tag</Tag>
 				<Tag className='bg-pink'>tag</Tag>
-				<Tag className='bg-green' hideDot>
+				<Tag className='bg-green' dot>
 					tag
 				</Tag>
 				<Tag className='bg-yellow'>tag</Tag>
@@ -30,7 +30,7 @@ export default function Page() {
 					tag
 				</Tag>
 				<Tag className='bg-pink-0'>tag</Tag>
-				<Tag className='bg-green-0' hideDot>
+				<Tag className='bg-green-0' dot>
 					tag
 				</Tag>
 				<Tag className='bg-yellow-0'>tag</Tag>

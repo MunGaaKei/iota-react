@@ -7,24 +7,24 @@ import Tree from "./tree";
 import { Props, TTreeHeader, TTreeItem } from "./type";
 
 const Header = (props: TTreeHeader) => {
-	const { as, href, children, active, ...rest } = props;
-	const As = as || "a";
+	const { as: Tag = "a", href, children, active, ...rest } = props;
+
 	const className = classNames("i-tree-item-header", {
 		"i-tree-item-active": active,
 	});
 
-	if (typeof As === "string") {
+	if (typeof Tag === "string") {
 		return (
-			<As href={href} className={className} {...rest}>
+			<Tag href={href} className={className} {...rest}>
 				{children}
-			</As>
+			</Tag>
 		);
 	}
 
 	return (
-		<As to={href || ""} className={className} {...rest}>
+		<Tag to={href || ""} className={className} {...rest}>
 			{children}
-		</As>
+		</Tag>
 	);
 };
 

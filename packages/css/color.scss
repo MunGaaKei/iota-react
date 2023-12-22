@@ -102,12 +102,15 @@ $colors: (
 
 			@if $isLightColor != null or $number == "0" {
 				$hoverColor: str-slice($name, 0, -3);
-				--color: var(--color-1);
+				--color: var(--black);
 				&:hover {
 					--background-hover: var(--#{$hoverColor});
+					@if $number == "0" and $isLightColor == null {
+						--color-hover: var(--white);
+					}
 				}
 			} @else {
-				--color: var(--color-9);
+				--color: var(--white);
 			}
 
 			@if $enhanced == null {

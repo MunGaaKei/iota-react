@@ -8,6 +8,7 @@ import Container from "./components/container";
 import Datepicker from "./components/datepicker";
 import Dialog from "./components/dialog";
 import Dropdown from "./components/dropdown";
+import Flex from "./components/flex";
 import Form from "./components/form";
 import Icon from "./components/icon";
 import Input, { Textarea } from "./components/input";
@@ -22,6 +23,7 @@ import Select from "./components/select";
 import Table from "./components/table";
 import Tabs from "./components/tabs";
 import Tag from "./components/tag";
+import Text from "./components/text";
 import Tree from "./components/tree";
 
 export {
@@ -33,6 +35,7 @@ export {
 	Datepicker,
 	Dialog,
 	Dropdown,
+	Flex,
 	Form,
 	Icon,
 	Input,
@@ -47,6 +50,7 @@ export {
 	Table,
 	Tabs,
 	Tag,
+	Text,
 	Textarea,
 	Tree,
 };

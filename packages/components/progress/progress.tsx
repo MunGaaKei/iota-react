@@ -1,19 +1,29 @@
-import { useMouseMove, useMouseUp } from "@p/js/hooks";
+import { useFormRegist, useMouseMove, useMouseUp } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent, useEffect, useRef } from "react";
+import { MouseEvent, useEffect, useMemo, useRef } from "react";
+import "../../css/input.scss";
+import Circle from "./circle";
 import "./index.scss";
+import Line from "./line";
 import { Props } from "./type";
 
 const Progress = (props: Props): JSX.Element => {
 	const {
+		name,
 		value = 0,
-		height = 8,
-		style = {},
-		draggable,
+		size = 8,
+		height = 40,
+		digits = 0,
+		style,
+		draggable = true,
+		type = "line",
 		barClass,
-		button,
+		label,
+		labelInline,
+		form,
 		className,
+		cursor,
 		onChange,
 	} = props;
 
@@ -25,14 +35,28 @@ const Progress = (props: Props): JSX.Element => {
 		start: 0,
 	});
 
+	const emitForm = useFormRegist({
+		form,
+		name,
+		state,
+	});
+
+	const toFixedValue = useMemo(() => {
+		let value = +state.value.toFixed(digits);
+		value = Math.min(100, value);
+		value = Math.max(0, value);
+
+		return value;
+	}, [state.value, digits]);
+
 	const handleMouseDown = useMemoizedFn((e: MouseEvent) => {
 		if (!ref.current || !draggable) return;
 
 		const rect = ref.current.getBoundingClientRect();
-		const offset = e.pageX - rect.left;
+		const value = ((e.pageX - rect.left) * 100) / rect.width;
 
 		Object.assign(state, {
-			value: ((e.pageX - rect.left) * 100) / rect.width,
+			value,
 			width: rect.width,
 			start: rect.left,
 			dragging: true,
@@ -41,6 +65,7 @@ const Progress = (props: Props): JSX.Element => {
 
 	const handleMouseMove = useMemoizedFn((e: any) => {
 		if (!state.dragging || !draggable) return;
+		e.preventDefault();
 		const { start, width } = state;
 		const offset = e.pageX - start;
 
@@ -51,7 +76,9 @@ const Progress = (props: Props): JSX.Element => {
 
 	const handleMouseUp = useMemoizedFn(() => {
 		if (!state.dragging || !draggable) return;
-		onChange?.(state.value);
+
+		emitForm?.(toFixedValue);
+		onChange?.(toFixedValue);
 		state.dragging = false;
 	});
 
@@ -59,24 +86,41 @@ const Progress = (props: Props): JSX.Element => {
 	useMouseUp(handleMouseUp);
 
 	useEffect(() => {
+		if (value > 100) {
+			state.value = 100;
+			return;
+		}
+
+		if (value < 0) {
+			state.value = 0;
+			return;
+		}
+
 		state.value = value;
 	}, [value]);
 
 	return (
 		<div
-			ref={ref}
-			className={classNames("i-progress", className)}
-			style={{ height, ...style }}
-			onMouseDown={handleMouseDown}
+			className={classNames("i-input-label", className, {
+				"i-input-inline": labelInline,
+			})}
+			style={style}
 		>
-			<div
-				className={classNames("i-progress-bar", barClass, {
-					"no-transition": state.dragging,
-				})}
-				style={{ transform: `scaleX(${state.value / 100})` }}
-			>
-				{button && <a className='i-progress-btn'>{button}</a>}
-			</div>
+			{label && <span className='i-input-label-text'>{label}</span>}
+
+			{type === "line" ? (
+				<Line
+					ref={ref}
+					size={size}
+					barClass={barClass}
+					dragging={state.dragging}
+					value={state.value}
+					cursor={cursor}
+					onMouseDown={handleMouseDown}
+				/>
+			) : (
+				<Circle value={state.value} height={height} size={size} />
+			)}
 		</div>
 	);
 };

@@ -7,7 +7,7 @@ const Badge = (props: Props): JSX.Element => {
 		visible = true,
 		content,
 		contentClass,
-		dot = true,
+		dot,
 		dotSize,
 		style,
 		className,

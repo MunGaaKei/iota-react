@@ -1,12 +1,18 @@
+import { BaseInput } from "@p/type";
 import { CSSProperties, ReactNode } from "react";
 
-export interface Props {
+export interface Props
+	extends Omit<BaseInput, "value" | "hideClear" | "onChange"> {
+	name?: string;
 	value?: number;
-	height?: number | string;
+	digits?: number;
+	height?: number;
+	size?: number;
 	barClass?: string;
 	draggable?: boolean;
+	type?: "line" | "circle";
 	className?: string;
 	style?: CSSProperties;
-	button?: ReactNode;
+	cursor?: (v?: number) => ReactNode;
 	onChange?: (v: number) => void;
 }

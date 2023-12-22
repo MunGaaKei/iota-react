@@ -4,12 +4,13 @@ import "./index.scss";
 import { Props } from "./type";
 
 const Icon = (props: Props) => {
-	const { icon, size = "1.425em", className = "", ...rest } = props;
+	const { icon, size = "1.425em", style, className = "", ...rest } = props;
 
 	if (!isValidElement(icon)) return icon;
 
 	const elProps = {
 		style: {
+			...style,
 			width: size,
 			height: size,
 		},

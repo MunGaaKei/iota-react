@@ -6,7 +6,7 @@ export interface Props {
 	children?: ReactNode;
 }
 
-export interface IItem extends HTMLAttributes<HTMLDivElement> {
+export interface IItem extends HTMLAttributes<HTMLLIElement> {
 	active?: boolean;
 	type?: "option" | "default";
 	disabled?: boolean;

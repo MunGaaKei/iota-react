@@ -13,7 +13,7 @@ function Item(props: IItem) {
 	} = props;
 
 	return (
-		<div
+		<li
 			className={classNames("i-list-item", className, {
 				"i-list-item-active": active,
 				"i-list-option": type === "option",
@@ -26,7 +26,7 @@ function Item(props: IItem) {
 			{shortcut && (
 				<div className='i-list-option-shortcut'>{shortcut}</div>
 			)}
-		</div>
+		</li>
 	);
 }
 

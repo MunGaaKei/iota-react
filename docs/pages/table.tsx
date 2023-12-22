@@ -1,4 +1,4 @@
-import { Button, Table } from "@p";
+import { Button, Table, Tag } from "@p";
 import { IColumn } from "@p/components/table/type";
 import { mock } from "mockjs";
 
@@ -45,12 +45,23 @@ const columns = [
 		fixed: "right",
 		align: "center",
 		render: (value: boolean) => {
-			return value ? "是" : "否";
+			return value ? (
+				<Tag className='bg-green-0' size='small'>
+					是
+				</Tag>
+			) : (
+				<Tag className='bg-red-0' size='small'>
+					否
+				</Tag>
+			);
 		},
 	},
 	{
 		field: "none",
-		width: "70px",
+		width: "140px",
+		renderHeader: (column) => {
+			return "自定义渲染头部";
+		},
 	},
 	{
 		field: "action",
@@ -58,7 +69,7 @@ const columns = [
 		fixed: "right",
 		align: "center",
 		render: () => (
-			<Button size='small' flat>
+			<Button size='small' className='bg-brown-0'>
 				操作
 			</Button>
 		),

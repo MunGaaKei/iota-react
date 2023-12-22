@@ -7,16 +7,18 @@ export interface ICollapse {
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
+	disabled?: boolean;
 }
 
 export interface PropsItem extends ICollapse {
+	disabled?: boolean;
 	children?: ReactNode;
 }
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
 	active?: TKey | TKey[];
-	onlyone?: boolean;
+	multiple?: boolean;
 	border?: boolean;
 	icon?: (active?: boolean) => ReactNode;
-	onCollapse?: (key?: TKey, before?: TKey | TKey[]) => void;
+	onCollapse?: (key?: TKey, active?: boolean) => void;
 }

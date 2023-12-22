@@ -126,7 +126,13 @@ export default [
 						title: "Radio",
 						href: "/docs/radio",
 						as: Link,
-						icon: <Icon icon={<RadioButtonCheckedRound />} />,
+						icon: (
+							<Icon
+								icon={<RadioButtonCheckedRound />}
+								size='1.2em'
+								style={{ marginInline: ".15em" }}
+							/>
+						),
 					},
 					{
 						title: "Select",

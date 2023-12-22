@@ -57,10 +57,10 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 			Object.assign(state, {
 				status: "normal",
 				message: "",
+				value: v,
 			});
 
 			emitForm?.(v);
-			state.value = v;
 			onChange?.(v, e);
 		},
 		[onChange]

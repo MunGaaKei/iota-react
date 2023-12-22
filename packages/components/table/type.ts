@@ -15,6 +15,7 @@ export type IColumn = {
 	rowSpan?: number;
 	colSpan?: number;
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
+	renderHeader?: (column?: IColumn, index?: number) => ReactNode;
 } & TWidth;
 
 export interface Props

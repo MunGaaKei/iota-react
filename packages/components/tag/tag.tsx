@@ -5,9 +5,11 @@ import { Props } from "./type";
 
 const Tag = (props: Props): JSX.Element => {
 	const {
-		hideDot,
+		dot,
 		dotClass,
 		outline,
+		round,
+		size,
 		className,
 		children,
 		onClose,
@@ -22,16 +24,18 @@ const Tag = (props: Props): JSX.Element => {
 				{
 					"i-tag-outline": outline,
 					"i-tag-clickable": onClick,
+					[`i-tag-${size}`]: size !== "normal",
+					rounded: round,
 				},
 				className
 			)}
 			onClick={onClick}
 			{...restProps}
 		>
-			{!hideDot && (
-				<span className={classNames("i-tag-dot", dotClass)}></span>
-			)}
+			{dot && <span className={classNames("i-tag-dot", dotClass)}></span>}
+
 			{children}
+
 			{onClose && <Helpericon active className='i-tag-close' />}
 		</span>
 	);

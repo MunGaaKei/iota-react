@@ -14,7 +14,8 @@ const toggleIcon = (isActive: boolean) => {
 const Collapse = (props: Props): JSX.Element => {
 	const {
 		active,
-		onlyone,
+		multiple,
+		border,
 		className,
 		children,
 		icon = toggleIcon,
@@ -33,51 +34,60 @@ const Collapse = (props: Props): JSX.Element => {
 					key?: TKey;
 					props?: any;
 				};
-				const { title, children, content } = nodeProps;
+				const { title, children, content, disabled } = nodeProps;
 
 				return {
 					key: key || i,
 					title,
 					content: children || content,
+					disabled,
 				};
 			}) || [],
 		[children]
 	);
 
-	const handleItemClick = useMemoizedFn(
-		(key: TKey, before?: TKey | TKey[]) => {
-			// onCollapse?.(key, before);
-
-			if (onlyone) {
-				state.active = state.active === key ? undefined : key;
-				return;
-			}
-
-			if (!Array.isArray(state.active)) state.active = [];
-
-			const i = state.active.findIndex((k) => k === key);
-
-			if (i > -1) {
-				state.active.splice(i, 1);
-			} else {
-				state.active.push(key);
-			}
+	const handleItemClick = useMemoizedFn((key: TKey) => {
+		if (!multiple) {
+			state.active = state.active === key ? undefined : key;
+			onCollapse?.(key, state.active !== undefined);
+			return;
 		}
-	);
+
+		if (!Array.isArray(state.active)) state.active = [];
+
+		const i = state.active.findIndex((k) => k === key);
+
+		if (i > -1) {
+			state.active.splice(i, 1);
+		} else {
+			state.active.push(key);
+		}
+		onCollapse?.(key, i < 0);
+	});
 
 	return (
-		<div className={classNames("i-collapse", className)} {...restProps}>
+		<div
+			className={classNames(
+				"i-collapse",
+				{
+					"i-collapse-bordered": border,
+				},
+				className
+			)}
+			{...restProps}
+		>
 			{items.map((item) => {
-				const { key, title, content } = item;
-				const isActive = onlyone
-					? state.active === key
-					: ((state.active as TKey[]) || []).includes(key);
+				const { key, title, content, disabled } = item;
+				const isActive = multiple
+					? ((state.active as TKey[]) || []).includes(key)
+					: state.active === key;
 
 				return (
 					<div
 						key={key}
 						className={classNames("i-collapse-item", {
 							"i-collapse-active": isActive,
+							"i-collapse-disabled": disabled,
 						})}
 					>
 						<div

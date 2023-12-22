@@ -75,6 +75,7 @@ export function Header(props: IHeader) {
 					colSpan = 1,
 					sorter,
 					align,
+					renderHeader,
 				} = column;
 				const style = getCellStyle({ align, fixed, col });
 
@@ -88,7 +89,7 @@ export function Header(props: IHeader) {
 						style={style}
 					>
 						<div className='i-table-td-content'>
-							{title || field}
+							{renderHeader?.(column, col) || title || field}
 						</div>
 					</div>
 				);
