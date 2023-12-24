@@ -5,11 +5,6 @@
 	background: var(--background-opacity-1);
 	border-radius: var(--radius);
 	cursor: pointer;
-	&:hover {
-		.i-progress-btn {
-			transform: translate(50%, -50%) scale(1);
-		}
-	}
 }
 
 .i-progress-bar {
@@ -33,6 +28,11 @@
 	transition: var(--transition);
 	border-radius: inherit;
 	box-shadow: var(--shadow);
+}
+
+.i-progress:hover .i-progress-btn,
+.no-transition > .i-progress-btn {
+	transform: translate(50%, -50%) scale(1);
 }
 
 .i-progress-circle {

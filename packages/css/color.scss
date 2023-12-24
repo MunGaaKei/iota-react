@@ -89,6 +89,7 @@ $colors: (
 
 	@each $name, $value in $colors {
 		$number: str-slice($name, -1);
+		$sourceColor: str-slice($name, 0, -3);
 		$enhanced: str-index(("012"), $number);
 		$lightColors: ("white", "grey", "yellow", "aqua");
 		$isLightColor: index($lightColors, $name);
@@ -102,7 +103,7 @@ $colors: (
 
 			@if $isLightColor != null or $number == "0" {
 				$hoverColor: str-slice($name, 0, -3);
-				--color: var(--black);
+				--color: var(--#{$sourceColor});
 				&:hover {
 					--background-hover: var(--#{$hoverColor});
 					@if $number == "0" and $isLightColor == null {

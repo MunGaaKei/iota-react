@@ -1,5 +1,5 @@
 import { Button, Progress } from "@p";
-import { MultipleStopRound } from "@ricons/material";
+import { DiscordRound } from "@ricons/material";
 import { useState } from "react";
 
 export default function Page() {
@@ -12,7 +12,7 @@ export default function Page() {
 				label={`${value.toFixed(0)}%`}
 				value={value}
 				onChange={setValue}
-				cursor={() => <MultipleStopRound className='white ' />}
+				cursor={() => <DiscordRound className='white' />}
 			/>
 			<Progress
 				className='mb-12'

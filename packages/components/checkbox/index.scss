@@ -85,17 +85,28 @@
 	transform: rotate(90deg) scale(0);
 	border-radius: 1px;
 }
-.i-checkbox-switch:after {
-	left: 0;
-	top: 50%;
-	width: 1em;
-	height: 1em;
-	transform: translate(0, -50%);
-	box-shadow: 0 0 0 2px var(--color-8);
-	border-radius: 1em;
-	transition: var(--transition);
-	background: var(--color-main-reverse);
+.i-checkbox-switch {
+	&:after {
+		left: 0;
+		top: 50%;
+		width: 1em;
+		height: 1em;
+		transform: translate(0, -50%);
+		box-shadow: 0 0 0 2px var(--color-8);
+		border-radius: 1em;
+		transition: var(--transition);
+		background: var(--color-main-reverse);
+	}
+	&:active {
+		&:after {
+			width: 100%;
+		}
+		&:checked:after {
+			left: -1.4em;
+		}
+	}
 }
+
 .i-checkbox-input:checked {
 	&.i-checkbox-default {
 		background: var(--color-main);

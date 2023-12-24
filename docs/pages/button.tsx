@@ -15,6 +15,7 @@ export default function button(): JSX.Element {
 			<Button flat className='aqua'>
 				文字
 			</Button>
+			<Button className='bg-pink-0'>文字</Button>
 			<Button disabled>禁用</Button>
 		</div>
 	);
