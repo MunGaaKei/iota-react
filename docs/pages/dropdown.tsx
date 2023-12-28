@@ -35,7 +35,7 @@ export default function Page() {
 				size='small'
 				onClick={() => setVisible(false)}
 			>
-				推出
+				取消
 			</Button>
 		</>
 	);

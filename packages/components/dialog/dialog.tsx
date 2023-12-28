@@ -67,7 +67,7 @@ export default function Dialog(props: Props) {
 	return createPortal(
 		show && (
 			<div
-				className={classNames("i-backdrop", {
+				className={classNames("i-backdrop-dialog", {
 					"i-active": active,
 				})}
 				onClick={handleBackdropClick}

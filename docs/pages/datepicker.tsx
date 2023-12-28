@@ -1,4 +1,4 @@
-import { Button, Datepicker } from "@p";
+import { Datepicker } from "@p";
 import { useReactive } from "ahooks";
 
 export default function Page() {
@@ -13,10 +13,6 @@ export default function Page() {
 				onChange={(v: any) => (state.date = v)}
 				style={{ width: 240 }}
 			/>
-			<Button className='bg-pink'>pink</Button>
-			<Button className='bg-purple'>purple</Button>
-			<Button className='bg-aqua'>aqua</Button>
-			<Button className='bg-yellow'>yellow</Button>
 		</>
 	);
 }

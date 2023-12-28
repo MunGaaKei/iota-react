@@ -1,4 +1,7 @@
 .i-tree {
+	display: flex;
+	flex-direction: column;
+	gap: 1px;
 	color: var(--color-2);
 }
 .i-tree-group-title {
@@ -16,9 +19,6 @@
 		align-self: center;
 		background: var(--color-8);
 	}
-}
-.i-tree-item {
-	margin: 1px 0;
 }
 .i-tree-item-header {
 	position: relative;

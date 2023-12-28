@@ -28,10 +28,6 @@
 .i-btn-block {
 	width: 100%;
 }
-.i-btn-square {
-	padding: 0;
-	width: 2.25em;
-}
 .i-btn-large {
 	font-size: 1.25em;
 }
@@ -44,6 +40,14 @@
 	line-height: 2;
 	font-size: 0.86em;
 	padding: 0 0.4em;
+}
+.i-btn-square {
+	padding: 0;
+	width: 2.25em;
+	&.i-btn-extreme,
+	&.i-btn-small {
+		width: 2em;
+	}
 }
 .i-btn:hover {
 	--background: var(--background-hover);

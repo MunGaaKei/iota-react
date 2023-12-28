@@ -21,11 +21,7 @@ const DynamicPage = memo(
 	(pp: DpProps, np: DpProps) => pp.name === np.name
 );
 
-const Header = ({
-	onToggleSider,
-}: {
-	onToggleSider: Function;
-}): JSX.Element => {
+const Header = ({ onToggleSider }): JSX.Element => {
 	return (
 		<div className='py-8 px-12 flex gap-4'>
 			<Button flat square onClick={() => onToggleSider()}>
@@ -40,8 +36,8 @@ const Header = ({
 
 const Sider = (): JSX.Element => {
 	return (
-		<div className='pd-12 text-center' style={{ minWidth: 240 }}>
-			<h1>
+		<div className='px-12 text-center' style={{ minWidth: 240 }}>
+			<h1 className='bg-blur sticky-top py-8'>
 				<Popup
 					offset={8}
 					content={<h4 className='pd-12 bg-black'>IOTA REACT</h4>}
@@ -72,6 +68,8 @@ export default function Document(): JSX.Element {
 			}
 			sider={<Sider />}
 			footer={<Footer />}
+			drawer
+			onToggle={toggleCollapsed}
 		>
 			<div className='pd-12'>
 				<DynamicPage name={name}></DynamicPage>

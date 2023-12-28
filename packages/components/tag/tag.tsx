@@ -9,7 +9,7 @@ const Tag = (props: Props): JSX.Element => {
 		dotClass,
 		outline,
 		round,
-		size,
+		size = "normal",
 		className,
 		children,
 		onClose,

@@ -9,7 +9,6 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	width?: string | number;
 	height?: string | number;
 	customized?: boolean;
-	children?: ReactNode;
 	onClose?: (visible?: boolean) => void;
 }
 

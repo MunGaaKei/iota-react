@@ -1,119 +1,113 @@
 import { useReactive } from "ahooks";
-import { CSSProperties, forwardRef, useEffect, useRef } from "react";
+import { forwardRef, useEffect, useRef } from "react";
+import Area from "./Area";
+import Sider from "./Sider";
 import "./container.scss";
-import { Props, PropsArea, PropsSider } from "./type";
+import { Props } from "./type";
 
-const SiderLayout = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
-	const { children, collapsed = false } = props;
+const Container = forwardRef<HTMLDivElement, Props>(
+	(props, ref): JSX.Element => {
+		const {
+			layout = "default",
+			collapsed = false,
+			breakpoint,
+			sider,
+			header: Header,
+			footer: Footer,
+			drawer,
+			children,
+			onToggle,
+		} = props;
 
-	if (!children) return <></>;
+		const $sider = useRef<HTMLDivElement>(null);
+		const state = useReactive({
+			contentStyle: {},
+			collapsed,
+			mini: false,
+		});
 
-	return (
-		<div
-			className='i-sider'
-			style={{ transform: collapsed ? `translate3d(-100%, 0, 0)` : "" }}
-			ref={ref}
-		>
-			{children}
-		</div>
-	);
-});
+		useEffect(() => {
+			onToggle?.(state.collapsed);
 
-const Area = ({ children, name }: PropsArea) => {
-	if (!children) return <></>;
+			if (drawer && state.mini) return;
 
-	return name === "header" ? (
-		<header className='i-header bg-blur'>{children}</header>
-	) : (
-		<footer className='i-footer bg-blur'>{children}</footer>
-	);
-};
+			const siderWidth = $sider.current?.offsetWidth || 0;
 
-const Container = (props: Props): JSX.Element => {
-	const {
-		layout = "default",
-		collapsed = false,
-		breakpoint,
-		header: Header,
-		sider: Sider,
-		footer: Footer,
-		onToggle,
-		children,
-	} = props;
+			state.contentStyle = {
+				marginLeft: state.collapsed ? -siderWidth : 0,
+			};
+		}, [state.collapsed, drawer]);
 
-	const $sider = useRef<HTMLDivElement>(null);
-	const state = useReactive<{
-		contentStyle: CSSProperties;
-		collapsed: boolean;
-	}>({
-		contentStyle: {},
-		collapsed,
-	});
+		useEffect(() => {
+			state.collapsed = collapsed;
+		}, [collapsed]);
 
-	useEffect(() => {
-		const siderWidth = $sider.current?.offsetWidth;
+		useEffect(() => {
+			if (!breakpoint) return;
 
-		state.contentStyle = state.collapsed
-			? {
-					["marginLeft"]: `-${siderWidth}px`,
-			  }
-			: {};
-		onToggle?.(state.collapsed);
-	}, [state.collapsed]);
+			const mql = matchMedia(`(max-width: ${breakpoint}px)`);
 
-	useEffect(() => {
-		state.collapsed = collapsed;
-	}, [collapsed]);
+			const listener = () => {
+				state.collapsed = mql.matches;
+				state.mini = mql.matches;
+			};
+			listener();
+			mql.addEventListener("change", listener);
 
-	useEffect(() => {
-		if (!breakpoint) return;
+			return () => {
+				mql.removeEventListener("change", listener);
+			};
+		}, [breakpoint]);
 
-		const mql = matchMedia(`(max-width: ${breakpoint}px)`);
-		const listener = () => {
-			state.collapsed = mql.matches;
-		};
-		mql.addEventListener("change", listener);
+		switch (layout) {
+			case "menu":
+				return (
+					<div className='i-container flex'>
+						<Sider
+							ref={$sider}
+							collapsed={state.collapsed}
+							mini={state.mini}
+							onHide={() => (state.collapsed = true)}
+						>
+							{sider}
+						</Sider>
 
-		return () => {
-			mql.removeEventListener("change", listener);
-		};
-	}, [breakpoint]);
+						<div
+							ref={ref}
+							className='i-content'
+							style={state.contentStyle}
+						>
+							<Area name='header'>{Header}</Area>
 
-	switch (layout) {
-		case "menu":
-			return (
-				<div className='i-container flex'>
-					<SiderLayout ref={$sider} collapsed={state.collapsed}>
-						{Sider}
-					</SiderLayout>
+							{children}
 
-					<div className='i-content' style={state.contentStyle}>
+							<Area name='footer'>{Footer}</Area>
+						</div>
+					</div>
+				);
+			default:
+				return (
+					<div className='i-container i-container-default'>
 						<Area name='header'>{Header}</Area>
 
-						{children}
+						<div className='i-container-flex'>
+							<Sider ref={$sider} collapsed={state.collapsed}>
+								{sider}
+							</Sider>
+							<div
+								ref={ref}
+								className='i-content'
+								style={state.contentStyle}
+							>
+								{children}
+							</div>
+						</div>
 
 						<Area name='footer'>{Footer}</Area>
 					</div>
-				</div>
-			);
-		default:
-			return (
-				<div className='i-container'>
-					<Area name='header'>{Header}</Area>
-
-					<div className='flex'>
-						<SiderLayout ref={$sider} collapsed={state.collapsed}>
-							{Sider}
-						</SiderLayout>
-						<div className='i-content' style={state.contentStyle}>
-							{children}
-						</div>
-					</div>
-
-					<Area name='footer'>{Footer}</Area>
-				</div>
-			);
+				);
+		}
 	}
-};
+);
 
 export default Container;

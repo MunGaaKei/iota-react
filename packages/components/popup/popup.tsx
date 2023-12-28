@@ -46,7 +46,7 @@ export default function Popup(props: Props) {
 		fixed,
 		position,
 		showDelay = 16,
-		hideDelay = 16,
+		hideDelay = 12,
 		touchable,
 		fitWidth,
 		style,
@@ -136,7 +136,7 @@ export default function Popup(props: Props) {
 				onClick: () => handleToggle(true),
 			},
 			hover: {
-				onMouseEnter: () => handleToggle(true),
+				onMouseOver: () => handleToggle(true),
 				onMouseLeave: () => handleToggle(false),
 			},
 			focus: {

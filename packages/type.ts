@@ -1,8 +1,19 @@
-import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import {
+	CSSProperties,
+	ChangeEvent,
+	InputHTMLAttributes,
+	ReactNode,
+} from "react";
 
 export type TStatus = "normal" | "success" | "warning" | "error";
 
 export type TValue = InputHTMLAttributes<HTMLInputElement>["value"];
+
+export type BaseElement = {
+	style?: CSSProperties;
+	className?: string;
+	children?: ReactNode;
+};
 
 export type TOption = {
 	label: ReactNode;

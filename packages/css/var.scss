@@ -6,10 +6,11 @@ $breakpoint-mobile: 880px;
 		sans-serif;
 	--transition: all 0.24s ease;
 
+	--dim: rgba(0, 0, 0, 0.15);
 	--padding: 0.5em 0.628em;
 	--radius: 4px;
-	--shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
-	--blur: blur(24px);
+	--shadow: 0px 2px 8px var(--dim);
+	--blur: blur(16px);
 	--breakpoint: #{$breakpoint-mobile};
 
 	--label-width: auto;

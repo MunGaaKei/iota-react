@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from "react";
+import { BaseElement } from "@p/type";
 
 type FlexDirection =
 	| "column"
@@ -12,14 +12,12 @@ type FlexDirection =
 
 type FlexWrap = "wrap" | "nowrap";
 
-export interface Props {
+export interface Props extends BaseElement {
 	as?: keyof JSX.IntrinsicElements;
 	align?: string;
 	justify?: string;
 	gap?: string;
 	direction?: FlexDirection;
 	wrap?: FlexWrap;
-	style?: CSSProperties;
-	className?: string;
-	children?: ReactNode;
+	columns?: string | number;
 }

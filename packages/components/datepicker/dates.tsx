@@ -232,9 +232,9 @@ const Dates = (
 		<>
 			<div className='i-datepicker-weeks'>
 				{weeks.map((week: ReactNode, i: number) => (
-					<b key={i} className='i-datepicker-week'>
+					<span key={i} className='i-datepicker-week'>
 						{renderWeek(week)}
-					</b>
+					</span>
 				))}
 			</div>
 			<div className='i-datepicker-dates'>

@@ -1,4 +1,4 @@
-.i-backdrop {
+.i-backdrop-dialog {
 	position: fixed;
 	inset: 0;
 	padding: 12px;
@@ -42,7 +42,7 @@
 .i-dialog-footer {
 	display: flex;
 	align-items: center;
-	padding: 12px;
+	padding: 0.5em;
 	&:empty {
 		display: none;
 	}

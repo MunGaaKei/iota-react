@@ -13,22 +13,28 @@ import {
 	DataUsageRound,
 	FormatListNumberedRound,
 	GridOnRound,
+	ImageTwotone,
 	KeyboardArrowDownRound,
 	LabelTwotone,
 	LineWeightRound,
+	LocalGasStationTwotone,
 	Looks5Round,
 	MoveToInboxTwotone,
 	NoiseControlOffRound,
 	PaddingTwotone,
 	PowerInputRound,
+	PushPinTwotone,
 	RadioButtonCheckedRound,
 	SavingsTwotone,
 	SoupKitchenTwotone,
-	StyleTwotone,
+	TextFormatRound,
 	UnfoldMoreRound,
+	ViewCarouselTwotone,
 	ViewDayTwotone,
 	ViewQuiltOutlined,
+	ViewSidebarTwotone,
 	WebAssetTwotone,
+	WysiwygTwotone,
 } from "@ricons/material";
 import { Link } from "react-router-dom";
 
@@ -53,7 +59,7 @@ export default [
 				title: "Helper Class",
 				href: "/docs/helper",
 				as: Link,
-				icon: <Icon icon={<StyleTwotone />} />,
+				icon: <Icon icon={<LocalGasStationTwotone />} />,
 			},
 		],
 	},
@@ -62,6 +68,12 @@ export default [
 		icon: <Icon icon={<DashboardTwotone />} />,
 		expanded: true,
 		children: [
+			{
+				title: "Affix",
+				href: "/docs/affix",
+				as: Link,
+				icon: <Icon icon={<PushPinTwotone />} />,
+			},
 			{
 				title: "Badge",
 				href: "/docs/badge",
@@ -73,6 +85,12 @@ export default [
 				href: "/docs/button",
 				as: Link,
 				icon: <Icon icon={<Crop75Round />} />,
+			},
+			{
+				title: "Card",
+				href: "/docs/card",
+				as: Link,
+				icon: <Icon icon={<WysiwygTwotone />} />,
 			},
 			{
 				title: "Collapse",
@@ -91,6 +109,12 @@ export default [
 				href: "/docs/dialog",
 				icon: <Icon icon={<WebAssetTwotone />} />,
 				as: Link,
+			},
+			{
+				title: "Drawer",
+				href: "/docs/drawer",
+				as: Link,
+				icon: <Icon icon={<ViewSidebarTwotone />} />,
 			},
 			{
 				title: "Dropdown",
@@ -149,6 +173,12 @@ export default [
 				icon: <Icon icon={<SavingsTwotone />} />,
 			},
 			{
+				title: "Image",
+				href: "/docs/image",
+				as: Link,
+				icon: <Icon icon={<ImageTwotone />} />,
+			},
+			{
 				title: "List",
 				href: "/docs/list",
 				as: Link,
@@ -179,6 +209,12 @@ export default [
 				icon: <Icon icon={<DataUsageRound />} />,
 			},
 			{
+				title: "Swiper",
+				href: "/docs/swiper",
+				as: Link,
+				icon: <Icon icon={<ViewCarouselTwotone />} />,
+			},
+			{
 				title: "Tabs",
 				href: "/docs/tabs",
 				as: Link,
@@ -195,6 +231,12 @@ export default [
 				href: "/docs/tag",
 				as: Link,
 				icon: <Icon icon={<LabelTwotone />} />,
+			},
+			{
+				title: "Text",
+				href: "/docs/text",
+				as: Link,
+				icon: <Icon icon={<TextFormatRound />} />,
 			},
 		],
 	},
