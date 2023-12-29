@@ -1,8 +1,31 @@
-const Header = (props) => <div className='i-card-header'>{props.children}</div>;
+import classNames from "classnames";
 
-const Footer = (props) => <div className='i-card-footer'>{props.children}</div>;
+const Header = (props) => (
+	<div
+		style={props.style}
+		className={classNames("i-card-header", props.className)}
+	>
+		{props.children}
+	</div>
+);
 
-const Banner = (props) => <div className='i-card-banner'>{props.children}</div>;
+const Footer = (props) => (
+	<div
+		style={props.style}
+		className={classNames("i-card-footer", props.className)}
+	>
+		{props.children}
+	</div>
+);
+
+const Banner = (props) => (
+	<div
+		style={props.style}
+		className={classNames("i-card-banner", props.className)}
+	>
+		{props.children}
+	</div>
+);
 
 Header.iotaName = "CardHeader";
 Footer.iotaName = "CardFooter";

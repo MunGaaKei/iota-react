@@ -35,7 +35,7 @@ const Flex = (props: Props): JSX.Element => {
 				gridTemplateColumns: gridColumns as any,
 			}}
 			className={classNames(className, {
-				grid: columns,
+				[columns ? "grid" : "flex"]: true,
 			})}
 			{...restProps}
 		/>

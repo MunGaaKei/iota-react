@@ -16,7 +16,7 @@ export interface Props extends BaseElement {
 	as?: keyof JSX.IntrinsicElements;
 	align?: string;
 	justify?: string;
-	gap?: string;
+	gap?: string | number;
 	direction?: FlexDirection;
 	wrap?: FlexWrap;
 	columns?: string | number;

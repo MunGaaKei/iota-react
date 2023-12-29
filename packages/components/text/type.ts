@@ -5,6 +5,8 @@ export interface Props {
 	size?: string | number;
 	decoration?: string;
 	weight?: string | number;
+	gradient?: string[];
+	highlight?: string | string[];
 	style?: CSSProperties;
 	className?: string;
 	children?: ReactNode;

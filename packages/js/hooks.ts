@@ -62,7 +62,7 @@ export function useMouseMove(listener: TMouseEvent) {
 		return () => {
 			MouseMoveEvents.delete(listener);
 		};
-	}, []);
+	}, [listener]);
 }
 
 export function useMouseUp(listener: TMouseEvent) {
@@ -71,5 +71,5 @@ export function useMouseUp(listener: TMouseEvent) {
 		return () => {
 			MouseUpEvents.delete(listener);
 		};
-	}, []);
+	}, [listener]);
 }

@@ -58,10 +58,12 @@ const Affix = (props: Props): JSX.Element => {
 	useEffect(() => {
 		const container = getContainer();
 		if (!offset || !container) return;
+
 		const listener = debounce(() => {
 			const top = container.scrollTop;
 			setHidden(top < offset);
 		}, 160);
+		listener();
 
 		container.addEventListener("scroll", listener);
 

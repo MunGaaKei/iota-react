@@ -123,11 +123,13 @@ $colors: (
 
 		.#{$name} {
 			--color: var(--#{$name});
-			color: var(--color);
 
 			@if $enhanced == null {
 				--background-hover: var(--#{$name}-0);
+				--color-hover: var(--#{$name});
 			}
+
+			color: var(--color);
 		}
 	}
 }

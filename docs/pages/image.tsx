@@ -1,14 +1,12 @@
-import { Image } from "@p";
+import { Flex, Image } from "@p";
 
 export default function Page() {
 	return (
-		<>
-			<Image
-				src='https://via.placeholder.com/150'
-				onError={() => {
-					console.log(123);
-				}}
-			/>
-		</>
+		<Flex gap={12}>
+			<Image src='https://via.placeholder.com/150' />
+			<Image size={40} className='bg-yellow' round>
+				😊
+			</Image>
+		</Flex>
 	);
 }

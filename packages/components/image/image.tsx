@@ -5,17 +5,33 @@ import { Props } from "./type";
 import View from "./view";
 
 const Image = (props: Props): JSX.Element => {
-	const { src, round, loading, ...restProps } = props;
+	const {
+		src,
+		round,
+		size,
+		loading,
+		style,
+		className,
+		children,
+		...restProps
+	} = props;
 
 	return (
 		<div
-			className={classNames("i-image", {
+			style={{
+				width: size,
+				height: size,
+				...style,
+			}}
+			className={classNames("i-image", className, {
 				rounded: round,
 			})}
 		>
 			{loading && <Loading />}
 
-			<img src={src} {...restProps} />
+			{src && <img src={src} {...restProps} />}
+
+			{children && <span className='i-image-text'>{children}</span>}
 		</div>
 	);
 };
