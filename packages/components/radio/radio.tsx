@@ -4,6 +4,7 @@ import { TStatus, TValue } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { useMemo } from "react";
+import "../../css/input.scss";
 import "./index.scss";
 import RadioItem from "./item";
 import { Props } from "./type";
@@ -16,10 +17,9 @@ function Radio(props: Props) {
 		value,
 		type = "default",
 		form,
-		status,
+		status = "normal",
 		message,
-		children,
-		optionInline,
+		optionInline = true,
 		labelInline,
 		disabled,
 		className,
@@ -27,11 +27,11 @@ function Radio(props: Props) {
 	} = props;
 
 	const state = useReactive<{
-		value: TValue[];
+		value: TValue;
 		status?: TStatus;
 		message?: string;
 	}>({
-		value: [],
+		value,
 		status,
 		message,
 	});
@@ -58,14 +58,22 @@ function Radio(props: Props) {
 	return (
 		<div
 			className={classNames(
-				"i-radio",
-				{ [`i-radio-${state.status}`]: state.status !== "normal" },
+				"i-radio i-input-label",
+				{
+					[`i-radio-${state.status}`]: state.status !== "normal",
+					"i-input-inline": labelInline,
+				},
 				className
 			)}
 		>
-			{label && <span className='i-radio-label'>{label}</span>}
+			{label && <span className='i-input-label-text'>{label}</span>}
 
-			<div className='i-radio-options'>
+			<div
+				className={classNames("i-radio-options", {
+					"i-options-block": !optionInline,
+					"i-radio-options-button": type === "button",
+				})}
+			>
 				{formattedOptions.map((option) => (
 					<RadioItem
 						key={option.value as string}
@@ -73,6 +81,7 @@ function Radio(props: Props) {
 						value={option.value}
 						checked={state.value === option.value}
 						type={type}
+						disabled={disabled || option.disabled}
 						onChange={handleChange}
 					>
 						{option.label}

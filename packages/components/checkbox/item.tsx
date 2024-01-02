@@ -12,8 +12,9 @@ export default function CheckboxItem(props: PropsItem) {
 		value = false,
 		className,
 		form,
-		status,
+		status = "normal",
 		message,
+		disabled,
 		children,
 		onChange,
 		...restProps
@@ -54,6 +55,7 @@ export default function CheckboxItem(props: PropsItem) {
 				"i-checkbox-item",
 				{
 					[`i-checkbox-${state.status}`]: state.status !== "normal",
+					disabled,
 				},
 				className
 			)}
@@ -64,6 +66,7 @@ export default function CheckboxItem(props: PropsItem) {
 				name={name}
 				className={classNames("i-checkbox-input", `i-checkbox-${type}`)}
 				checked={state.value}
+				disabled={disabled}
 				onChange={handleChange}
 			/>
 

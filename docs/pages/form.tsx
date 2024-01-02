@@ -114,12 +114,22 @@ export default function Page() {
 					name='hobit'
 					form={form.name}
 					type='switch'
+					labelInline
 				/>
 				<Radio
 					label='性别'
 					name='gender'
 					options={["男", "女"]}
 					form={form.name}
+					labelInline
+				/>
+				<Radio
+					label='士大夫'
+					name='sdfsdf'
+					options={["同样", "农民", "广告", "多少", "稍等"]}
+					form={form.name}
+					labelInline
+					type='button'
 				/>
 				<Textarea label='bio' name='bio' form={form.name}></Textarea>
 

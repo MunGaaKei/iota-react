@@ -5,6 +5,7 @@ import {
 } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
+import { clamp } from "lodash";
 import { Children, MouseEvent, useCallback, useMemo, useRef } from "react";
 import Icon from "../icon";
 import "./index.scss";
@@ -27,9 +28,11 @@ const Swiper = (props: Props): JSX.Element => {
 		dragOffset = 40,
 		gap = 0,
 		itemHeight,
+		indicator,
 		style,
 		className,
 		children,
+		renderIndicator,
 		onBeforeSwipe,
 		onAfterSwipe,
 		onInitial,
@@ -96,6 +99,12 @@ const Swiper = (props: Props): JSX.Element => {
 		};
 	}, [vertical, itemHeight, display]);
 
+	const indicatorsLoop = useMemo(() => {
+		return Array.from({
+			length: Math.ceil((size - display) / scroll) + 1,
+		});
+	}, [loop, indicator]);
+
 	const swipeTo = useCallback(
 		(i: number) => {
 			if (!state.swipable || i === state.current) return;
@@ -105,9 +114,14 @@ const Swiper = (props: Props): JSX.Element => {
 			let reset = false;
 			let next = i;
 
-			if (loop && (i >= size || i < 0)) {
-				reset = true;
-				next = (i + size) % size;
+			if (loop) {
+				if (i >= size - display || i < -display) {
+					reset = true;
+					next = (i + size) % size;
+				}
+			} else {
+				next = clamp(next, 0, size - display);
+				i = next;
 			}
 
 			setTimeout(() => {
@@ -136,25 +150,13 @@ const Swiper = (props: Props): JSX.Element => {
 		[duration]
 	);
 
-	const swipeNext = () => {
-		let next = state.current + scroll;
+	const swipeNext = () => swipeTo(state.current + scroll);
 
-		if (!loop && next > size - display) next = size - display;
-
-		swipeTo(next);
-	};
-
-	const swipePrev = () => {
-		let prev = state.current - scroll;
-
-		if (!loop && prev < 0) prev = 0;
-
-		swipeTo(prev);
-	};
+	const swipePrev = () => swipeTo(state.current - scroll);
 
 	const handleMouseDown = useCallback(
 		(e: MouseEvent) => {
-			if (!draggable || !state.swipable) return;
+			if (!draggable || !state.swipable || type === "fade") return;
 			e.stopPropagation();
 
 			Object.assign(state, {
@@ -200,12 +202,12 @@ const Swiper = (props: Props): JSX.Element => {
 				const mod = (absOffset % part) - dragOffset > 0 ? 1 : 0;
 				const p = base + mod;
 
-				const to = state.current + (offset > 0 ? -p : p);
+				let to = state.current + (offset > 0 ? -p : p);
 
 				swipeTo(to);
-			} else {
-				$list.current.style.transform = position || "";
 			}
+
+			$list.current.style.transform = position || "";
 
 			Object.assign(state, {
 				dragging: false,
@@ -269,6 +271,25 @@ const Swiper = (props: Props): JSX.Element => {
 					{next}
 				</a>
 			</div>
+			{indicator && (
+				<div className='i-swiper-indicators'>
+					{indicatorsLoop.map((whatever, i) => (
+						<a
+							key={i}
+							className={classNames("i-swiper-indicator", {
+								"i-indicator-active":
+									i ===
+									Math[loop ? "floor" : "ceil"](
+										((state.current + size) % size) / scroll
+									),
+							})}
+							onClick={() => swipeTo(i * scroll)}
+						>
+							{renderIndicator?.(i)}
+						</a>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

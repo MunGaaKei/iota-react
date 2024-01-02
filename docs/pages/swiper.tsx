@@ -20,10 +20,10 @@ export default function Page() {
 			<Swiper
 				display={2}
 				style={{ width: 600 }}
-				vertical
 				scroll={2}
 				itemHeight={120}
 				gap={10}
+				indicator
 			>
 				<Swiper.Item>
 					<div style={itemStyle}>1</div>

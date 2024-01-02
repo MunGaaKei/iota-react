@@ -56,7 +56,7 @@ const Footer = (): JSX.Element => {
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
-	const [collapsed, toggleCollapsed] = useState<boolean>(false);
+	const [collapsed, toggleCollapsed] = useState(true);
 
 	return (
 		<Container
@@ -69,7 +69,7 @@ export default function Document(): JSX.Element {
 			sider={<Sider />}
 			footer={<Footer />}
 			drawer
-			onToggle={toggleCollapsed}
+			onToggle={(v) => toggleCollapsed(v || false)}
 		>
 			<div className='pd-12'>
 				<DynamicPage name={name}></DynamicPage>

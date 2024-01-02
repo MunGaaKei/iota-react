@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { useMemo } from "react";
+import Highlight from "./highlight";
 import "./index.scss";
+import Number from "./number";
 import { Props } from "./type";
 
 const Text = (props: Props): JSX.Element => {
@@ -19,8 +21,8 @@ const Text = (props: Props): JSX.Element => {
 		if (!gradient || !Array.isArray(gradient)) return {};
 
 		return {
-			WebkitBackgroundClip: "text",
 			background: `-webkit-linear-gradient(${gradient.join(",")})`,
+			backgroundClip: "text",
 		};
 	}, [gradient]);
 
@@ -41,5 +43,8 @@ const Text = (props: Props): JSX.Element => {
 		</Tag>
 	);
 };
+
+Text.Highlight = Highlight;
+Text.Number = Number;
 
 export default Text;

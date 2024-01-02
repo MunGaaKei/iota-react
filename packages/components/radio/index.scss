@@ -14,7 +14,7 @@
 
 .i-radio-item {
 	display: inline-flex;
-	align-items: center;
+	align-items: baseline;
 	border-radius: var(--radius);
 	&:hover {
 		.i-radio-input {
@@ -38,6 +38,10 @@
 	position: relative;
 	display: flex;
 	gap: 1em;
+	align-self: baseline;
+}
+.i-radio-options-button {
+	gap: 1px;
 }
 
 .i-radio-text {
@@ -91,7 +95,9 @@
 		line-height: 2;
 		font-size: 0.94em;
 		white-space: nowrap;
-		background: var(--color-main-0);
+		&:hover {
+			background: var(--color-main-0);
+		}
 	}
 	&:checked + .i-radio-text {
 		background: var(--color-main);

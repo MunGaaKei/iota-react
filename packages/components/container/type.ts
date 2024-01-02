@@ -9,7 +9,7 @@ export interface Props {
 	children?: ReactNode;
 	collapsed?: boolean;
 	drawer?: boolean;
-	onToggle?: (collapsed: boolean) => void;
+	onToggle?: (collapsed?: boolean) => void;
 }
 
 export type PropsSider = {

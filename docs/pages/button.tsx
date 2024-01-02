@@ -2,7 +2,7 @@ import { Button } from "@p";
 
 export default function button(): JSX.Element {
 	return (
-		<div className='flex flex-column gap-12'>
+		<div className='flex flex-column gap-12 items-center'>
 			<Button size='small'>小型</Button>
 			<Button>正常</Button>
 			<Button size='large'>大型</Button>

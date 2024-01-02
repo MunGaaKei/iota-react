@@ -9,7 +9,7 @@ const Container = forwardRef<HTMLDivElement, Props>(
 	(props, ref): JSX.Element => {
 		const {
 			layout = "default",
-			collapsed = false,
+			collapsed,
 			breakpoint,
 			sider,
 			header: Header,
@@ -51,7 +51,6 @@ const Container = forwardRef<HTMLDivElement, Props>(
 				state.collapsed = mql.matches;
 				state.mini = mql.matches;
 			};
-			listener();
 			mql.addEventListener("change", listener);
 
 			return () => {

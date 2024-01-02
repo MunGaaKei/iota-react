@@ -13,7 +13,9 @@ export default function Page() {
 				header={<h4>标题</h4>}
 				onClose={() => setVisible(false)}
 			>
-				<div style={{ width: 240 }}>✌️✌️</div>
+				<div className='pd-12' style={{ width: 240 }}>
+					✌️✌️
+				</div>
 			</Drawer>
 		</>
 	);

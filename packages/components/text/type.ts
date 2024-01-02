@@ -6,8 +6,15 @@ export interface Props {
 	decoration?: string;
 	weight?: string | number;
 	gradient?: string[];
-	highlight?: string | string[];
 	style?: CSSProperties;
 	className?: string;
 	children?: ReactNode;
+}
+
+export interface TextNumber extends Props {
+	count?: number;
+	to?: number;
+	decimal?: number;
+	thousand?: string;
+	duration?: number;
 }

@@ -3,7 +3,7 @@ import { formatOption } from "@p/js/utils";
 import { TStatus, TValue } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import "../../css/input.scss";
 import "./index.scss";
 import CheckboxItem from "./item";
@@ -16,11 +16,11 @@ function Checkbox(props: Props) {
 		options = [],
 		value = [],
 		type = "default",
-		optionInline,
+		optionInline = true,
 		labelInline,
 		disabled,
 		form,
-		status,
+		status = "normal",
 		message,
 		className,
 		onChange,
@@ -30,7 +30,7 @@ function Checkbox(props: Props) {
 	const state = useReactive<{
 		value: TValue[];
 		status?: TStatus;
-		message?: string;
+		message?: ReactNode;
 	}>({
 		value: [],
 		status,
@@ -69,14 +69,22 @@ function Checkbox(props: Props) {
 		<div
 			className={classNames(
 				"i-checkbox i-input-label",
-				{ [`i-checkbox-${state.status}`]: state.status !== "normal" },
+				{
+					[`i-checkbox-${state.status}`]: state.status !== "normal",
+					"i-input-inline": labelInline,
+				},
+
 				className
 			)}
 			{...restProps}
 		>
 			{label && <span className='i-input-label-text'>{label}</span>}
 
-			<div className='i-checkbox-options'>
+			<div
+				className={classNames("i-checkbox-options", {
+					"i-options-block": !optionInline,
+				})}
+			>
 				{formattedOptions.map((option) => {
 					return (
 						<CheckboxItem
@@ -84,6 +92,7 @@ function Checkbox(props: Props) {
 							name={name}
 							value={state.value.includes(option.value)}
 							type={type}
+							disabled={disabled || option.disabled}
 							onChange={(checked, e) =>
 								handleChange(checked, option, e)
 							}

@@ -19,6 +19,7 @@ export interface Props extends BaseElement {
 	vertical?: boolean;
 	prev?: ReactNode;
 	next?: ReactNode;
+	renderIndicator?: (i: number) => ReactNode;
 	onInitial?: () => void;
 	onBeforeSwipe?: (before?: number) => void;
 	onAfterSwipe?: (after?: number) => void;
