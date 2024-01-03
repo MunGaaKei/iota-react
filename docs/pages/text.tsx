@@ -10,7 +10,7 @@ export default function Page() {
 				sdjflkj slkdfjlksdjf lksdjf lksdjf l;sadjfl;sdka f
 				<span className='mark'>123321</span>
 			</Text> */}
-			<Text.Number count={5000} size={40} weight='600' />
+			<Text.Number count={0} to={1000} size={40} weight='600' />
 		</>
 	);
 }

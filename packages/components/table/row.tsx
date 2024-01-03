@@ -1,15 +1,23 @@
 import { useMemoizedFn } from "ahooks";
 import classNames from "classnames";
+import { CSSProperties } from "react";
 import { ICol, IColumn, IHeader, IRow } from "./type";
 
 function getCellStyle({
 	align,
 	fixed,
 	col,
-}: Pick<IColumn, "align" | "fixed"> & { col: number }) {
-	const style: any = {
+	colSpan = 1,
+	rowSpan = 1,
+}: Pick<IColumn, "align" | "fixed"> & {
+	col: number;
+	colSpan?: number;
+	rowSpan?: number;
+}) {
+	const style = {
 		"--table-align": align,
-	};
+		"--table-column": `${col + 1} / ${col + colSpan + 1}`,
+	} as CSSProperties;
 
 	if (fixed) {
 		style.insetInline = `var(--table-td-inset-${col})`;
@@ -20,8 +28,8 @@ function getCellStyle({
 
 function Col(props: ICol) {
 	const { column, row, col, data, onCellClick } = props;
-	const { field, fixed, colSpan = 1, align, render } = column;
-	const style = getCellStyle({ align, fixed, col });
+	const { field, fixed, align, rowSpan, render } = column;
+	const style = getCellStyle({ align, fixed, col, rowSpan });
 
 	const handleTdClick = useMemoizedFn(() => {
 		onCellClick?.(data, field, row, col);
@@ -72,12 +80,12 @@ export function Header(props: IHeader) {
 					field,
 					title,
 					fixed,
-					colSpan = 1,
+					colSpan,
 					sorter,
 					align,
 					renderHeader,
 				} = column;
-				const style = getCellStyle({ align, fixed, col });
+				const style = getCellStyle({ align, fixed, col, colSpan });
 
 				return (
 					<div

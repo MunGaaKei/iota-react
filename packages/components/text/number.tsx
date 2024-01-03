@@ -1,18 +1,37 @@
-import { useMemo, useState } from "react";
+import { animate } from "@p/js/utils";
+import { useEffect, useMemo, useState } from "react";
 import Text from "./text";
 import { TextNumber } from "./type";
 
 export default function Number(props: TextNumber) {
-	const { count, to, decimal, thousand = ",", ...restProps } = props;
+	const {
+		count,
+		to,
+		decimal,
+		thousand = ",",
+		duration = 2400,
+		easing,
+		...restProps
+	} = props;
 	const [n, setN] = useState(count);
 
 	const number = useMemo(() => {
-		let z = String(n);
+		if (!n) return;
 
-		if (thousand) z = z.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
+		const z = n.toFixed(decimal);
 
-		return z;
-	}, [to, thousand]);
+		if (!thousand) return z;
+
+		return z.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
+	}, [n, thousand]);
+
+	useEffect(() => {
+		if (count === undefined || to === undefined) return;
+
+		animate(count, to, duration, (v) => setN(count + v), easing);
+	}, [to]);
+
+	useEffect(() => setN(count), [count]);
 
 	return <Text {...restProps}>{number}</Text>;
 }

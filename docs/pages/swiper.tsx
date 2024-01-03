@@ -17,14 +17,7 @@ export default function Page() {
 
 	return (
 		<>
-			<Swiper
-				display={2}
-				style={{ width: 600 }}
-				scroll={2}
-				itemHeight={120}
-				gap={10}
-				indicator
-			>
+			<Swiper display={2} style={{ width: 600 }} gap={10}>
 				<Swiper.Item>
 					<div style={itemStyle}>1</div>
 				</Swiper.Item>

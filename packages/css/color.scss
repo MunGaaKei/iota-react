@@ -5,8 +5,8 @@ $colors: (
 	"white-2": #ebebeb,
 	"black": black,
 	"black-0": #dbdbdb,
-	"black-1": #1a1a1a,
-	"black-2": #333,
+	"black-1": #272727,
+	"black-2": #3b3b3b,
 	"red": #dc143c,
 	"red-0": #fcdfe4,
 	"red-1": #dc143c,
@@ -29,8 +29,8 @@ $colors: (
 	"brown-2": #6d2e07,
 	"grey": #d7d7d7,
 	"grey-0": #f6f6f6,
-	"grey-1": #c3c3c3,
-	"grey-2": #e1e1e1,
+	"grey-1": #b1b1b1,
+	"grey-2": #9c9c9c,
 	"pink": #ff69b4,
 	"pink-0": #ffe3f1,
 	"pink-1": #ff55aa,
@@ -89,7 +89,6 @@ $colors: (
 
 	@each $name, $value in $colors {
 		$number: str-slice($name, -1);
-		$sourceColor: str-slice($name, 0, -3);
 		$enhanced: str-index(("012"), $number);
 		$lightColors: ("white", "grey", "yellow", "aqua");
 		$isLightColor: index($lightColors, $name);
@@ -101,7 +100,16 @@ $colors: (
 			background: var(--#{$name});
 			color: var(--color);
 
-			@if $isLightColor != null or $number == "0" {
+			@if $isLightColor {
+				--color: var(--black);
+				--color-hover: var(--black);
+			} @else {
+				--color: var(--white);
+				--color-hover: var(--white);
+			}
+
+			@if $number == "0" {
+				$sourceColor: str-slice($name, 0, -3);
 				$hoverColor: str-slice($name, 0, -3);
 				--color: var(--#{$sourceColor});
 				&:hover {
@@ -110,14 +118,16 @@ $colors: (
 						--color-hover: var(--white);
 					}
 				}
-			} @else {
-				--color: var(--white);
 			}
 
 			@if $enhanced == null {
 				&:hover {
 					--background-hover: var(--#{$name}-1);
 				}
+			}
+			&.i-btn:hover {
+				background: var(--background-hover);
+				color: var(--color-hover);
 			}
 		}
 

@@ -1,4 +1,4 @@
-import { Button } from "@p";
+import { Button, Flex } from "@p";
 
 export default function button(): JSX.Element {
 	return (
@@ -17,6 +17,16 @@ export default function button(): JSX.Element {
 			</Button>
 			<Button className='bg-pink-0'>文字</Button>
 			<Button disabled>禁用</Button>
+			<Flex gap={12}>
+				<Button className='bg-grey'>你好</Button>
+				<Button className='bg-grey'>你好</Button>
+				<Button className='bg-blue'>你好</Button>
+				<Button className='bg-red'>你好</Button>
+				<Button className='bg-yellow'>你好</Button>
+				<Button className='bg-pink'>你好</Button>
+				<Button className='bg-black'>你好</Button>
+				<Button className='bg-white'>你好</Button>
+			</Flex>
 		</div>
 	);
 }

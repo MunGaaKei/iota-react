@@ -45,6 +45,7 @@
 	background: var(--table-td-background);
 	transition: background-color 0.08s;
 	grid-column: var(--table-column);
+	grid-row: var(--table-row);
 	&.i-table-td-sticky {
 		position: sticky;
 		z-index: 3;

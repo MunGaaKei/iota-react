@@ -17,4 +17,5 @@ export interface TextNumber extends Props {
 	decimal?: number;
 	thousand?: string;
 	duration?: number;
+	easing?: (x: number) => number;
 }

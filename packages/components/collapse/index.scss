@@ -8,6 +8,9 @@
 		border-top: 1px solid var(--color-8);
 	}
 }
+.i-collapse-item {
+	border-radius: var(--radius);
+}
 .i-collapse-header {
 	display: flex;
 	justify-content: space-between;
@@ -16,10 +19,9 @@
 	transition: var(--transition);
 	font-weight: 500;
 	border-radius: var(--radius);
-	background: var(--color-9);
 	cursor: pointer;
 	&:hover {
-		background: transparent;
+		background: var(--background-opacity-1);
 	}
 }
 .i-collapse-toggle {

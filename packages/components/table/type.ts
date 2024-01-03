@@ -26,7 +26,7 @@ export interface Props
 	striped?: boolean;
 	header?: boolean;
 	resizable?: boolean;
-
+	padding?: string | number;
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,

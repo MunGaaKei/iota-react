@@ -135,3 +135,30 @@ export function formatOption(options: TOptions): TOption[] {
 			: option
 	) as TOption[];
 }
+
+export function animate(
+	from: number,
+	to: number,
+	duration: number = 1000,
+	callback?: (v: number) => void,
+	easing: (t: number) => number = (t) => 1 - Math.pow(1 - t, 4)
+) {
+	const start = performance.now();
+	const diff = to - from;
+	let raf = requestAnimationFrame(loop);
+
+	function loop() {
+		raf = requestAnimationFrame(loop);
+
+		const past = performance.now() - start;
+		let percent = past / duration;
+
+		if (percent >= 1) {
+			percent = 1;
+			cancelAnimationFrame(raf);
+		}
+
+		const pass = diff * easing(percent);
+		callback?.(pass);
+	}
+}

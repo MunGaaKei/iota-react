@@ -21,10 +21,11 @@ const Table = (props: Props): JSX.Element => {
 	const {
 		data = [],
 		columns,
-		border = true,
+		border,
 		striped = true,
 		header = true,
-		resizable = true,
+		resizable,
+		padding = ".25em .5em",
 		className,
 		onCellClick,
 		onRowClick,
@@ -99,6 +100,10 @@ const Table = (props: Props): JSX.Element => {
 		});
 	}, [columns]);
 
+	const style = {
+		"--padding": padding,
+	} as CSSProperties;
+
 	return (
 		<div
 			className={classNames(
@@ -111,7 +116,10 @@ const Table = (props: Props): JSX.Element => {
 			)}
 			{...restProps}
 		>
-			<div className={classNames("i-table")} style={state.style}>
+			<div
+				className={classNames("i-table")}
+				style={{ ...state.style, ...style }}
+			>
 				{header && <Header columns={state.columns} />}
 
 				{data.map((row, i) => (

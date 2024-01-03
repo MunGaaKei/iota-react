@@ -153,7 +153,7 @@ export default function Popup(props: Props) {
 		const events: { [key: string]: () => void } = {};
 
 		if (trigger === "hover") {
-			events["onMouseEnter"] = () => handleToggle(true);
+			events["onMouseOver"] = () => handleToggle(true);
 			events["onMouseLeave"] = () => handleToggle(false);
 		}
 
