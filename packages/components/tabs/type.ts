@@ -1,12 +1,11 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export type TKey = string | number;
-
 export interface ITab {
-	key?: TKey;
+	key?: string;
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
+	keepalive?: boolean;
 }
 
 export interface PropsItem extends ITab {
@@ -14,11 +13,16 @@ export interface PropsItem extends ITab {
 }
 
 export interface Props extends HTMLAttributes<HTMLDivElement> {
-	active?: TKey;
+	active?: string;
 	prepend?: ReactNode;
 	append?: ReactNode;
 	vertical?: boolean;
-	lazyload?: boolean;
 	bar?: boolean;
-	onTabChange?: (to?: TKey, from?: TKey) => void;
+	toggable?: boolean;
+	maxCache?: number;
+	onTabChange?: (to?: string, from?: string) => void;
+}
+
+export interface ITabs {
+	open: (key: string) => void;
 }

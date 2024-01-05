@@ -5,6 +5,13 @@ export interface Props extends HTMLAttributes<HTMLImageElement> {
 	alt?: string;
 	round?: boolean;
 	size?: string | number;
-	loading?: boolean;
+	lazyload?: boolean;
 	fallback?: ReactNode;
+}
+
+export interface ImageList {
+	items: string[];
+	gap?: number | string;
+	round?: boolean;
+	lazyload?: boolean;
 }

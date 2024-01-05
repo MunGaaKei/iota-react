@@ -73,3 +73,33 @@ export function useMouseUp(listener: TMouseEvent) {
 		};
 	}, [listener]);
 }
+
+const IOMaps = new Map();
+const IO = new IntersectionObserver((entries) => {
+	entries.map((entry) => {
+		const { target, isIntersecting } = entry;
+
+		const callback = IOMaps.get(target);
+		callback?.(isIntersecting);
+	});
+});
+
+export function useIntersectionObserver(
+	el: HTMLElement | null,
+	callback?: (visible?: boolean) => void,
+	disabled?: boolean
+) {
+	useEffect(() => {
+		if (disabled || !el) return;
+
+		IOMaps.set(el, callback);
+		IO.observe(el);
+
+		return () => {
+			IOMaps.delete(el);
+			IO.unobserve(el);
+		};
+	}, [el]);
+
+	return IO;
+}

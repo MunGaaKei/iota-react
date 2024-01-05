@@ -1,15 +1,18 @@
 .i-tag {
 	--background: var(--color-9);
+	--color: var(--color-1);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	align-self: center;
 	gap: 0.5em;
-	padding: 0.15em 0.628em;
+	padding: 0.1em 0.5em;
 	border-radius: var(--radius);
 	background: var(--background);
 	color: var(--color);
 	border: 2px solid transparent;
 	transition: var(--transition);
+	font-size: 0.9em;
 }
 .i-tag-large {
 	font-size: 1.25em;
@@ -19,10 +22,8 @@
 	height: 2em;
 }
 .i-tag-small {
-	height: 2em;
-	line-height: 2;
-	font-size: 0.86em;
-	padding: 0 0.4em;
+	font-size: 0.8em;
+	padding: 0.125em 0.4em;
 }
 
 .i-tag-dot {

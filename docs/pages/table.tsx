@@ -46,13 +46,9 @@ const columns = [
 		align: "center",
 		render: (value: boolean) => {
 			return value ? (
-				<Tag className='bg-green-0' size='small'>
-					是
-				</Tag>
+				<Tag className='bg-green-0'>是</Tag>
 			) : (
-				<Tag className='bg-red-0' size='small'>
-					否
-				</Tag>
+				<Tag className='bg-red-0'>否</Tag>
 			);
 		},
 	},
@@ -68,11 +64,7 @@ const columns = [
 		width: "80px",
 		fixed: "right",
 		align: "center",
-		render: () => (
-			<Button size='small' className='bg-brown-0'>
-				操作
-			</Button>
-		),
+		render: () => <Button className='bg-black-0'>操作</Button>,
 	},
 ] as IColumn[];
 

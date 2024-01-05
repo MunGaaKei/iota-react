@@ -1,5 +1,5 @@
 import { BaseElement } from "@p/type";
-import { ReactNode } from "react";
+import { ForwardRefExoticComponent, ReactNode } from "react";
 
 export interface Props extends BaseElement {
 	initial?: number;
@@ -31,4 +31,14 @@ export interface IItem
 	active?: boolean;
 	index?: number;
 	transition?: string;
+}
+
+export interface ISwiper {
+	swipeTo: (i: number) => void;
+	swipeNext: () => void;
+	swipePrev: () => void;
+}
+
+export interface ISwiperRef extends ForwardRefExoticComponent<any> {
+	Item: (props: IItem) => ReactNode;
 }

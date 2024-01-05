@@ -8,7 +8,11 @@
 	align-items: center;
 	gap: 1em;
 	font-size: inherit;
-	background: var(--background);
+	background: var(--background-opacity);
+	backdrop-filter: var(--blur);
+}
+.i-loading-static {
+	position: static;
 }
 .i-loading-icon {
 	display: flex;
@@ -16,6 +20,7 @@
 	background: inherit;
 	color: var(--color);
 	border-radius: inherit;
+	background: transparent;
 }
 .i-loading-icon:before,
 .i-loading-icon:after {

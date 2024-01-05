@@ -1,5 +1,6 @@
-import { Swiper } from "@p";
-import { CSSProperties } from "react";
+import { Button, Flex, Swiper } from "@p";
+import { ISwiper } from "@p/components/swiper/type";
+import { CSSProperties, useRef } from "react";
 
 export default function Page() {
 	const itemStyle = {
@@ -14,10 +15,11 @@ export default function Page() {
 		textAlign: "center",
 		borderRadius: "var(--radius)",
 	} as CSSProperties;
+	const ref = useRef<ISwiper>();
 
 	return (
 		<>
-			<Swiper display={2} style={{ width: 600 }} gap={10}>
+			<Swiper ref={ref} display={2} style={{ width: 600 }} gap={10}>
 				<Swiper.Item>
 					<div style={itemStyle}>1</div>
 				</Swiper.Item>
@@ -40,6 +42,18 @@ export default function Page() {
 					<div style={itemStyle}>7</div>
 				</Swiper.Item>
 			</Swiper>
+
+			<Flex className='mt-12' gap={12}>
+				<Button onClick={() => ref.current?.swipeTo(2)}>
+					Swipe to 3
+				</Button>
+				<Button onClick={() => ref.current?.swipePrev()}>
+					Swipe Prev
+				</Button>
+				<Button onClick={() => ref.current?.swipeNext()}>
+					Swipe Next
+				</Button>
+			</Flex>
 		</>
 	);
 }

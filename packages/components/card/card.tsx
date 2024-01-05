@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Children, useMemo } from "react";
-import { Banner, Footer, Header } from "./area";
+import { Banner, Footer, Header, Tailer } from "./area";
 import "./index.scss";
 import { Props } from "./type";
 
@@ -23,6 +23,9 @@ const Card = (props: Props): JSX.Element => {
 				case "CardBanner":
 					nodes["banner"] = child;
 					break;
+				case "CardTailer":
+					nodes["tailer"] = child;
+					break;
 				default:
 					nodes["content"] = [...(nodes["content"] || []), child];
 					break;
@@ -32,7 +35,7 @@ const Card = (props: Props): JSX.Element => {
 		return nodes;
 	}, [children]);
 
-	const { header, banner, content, footer } = slots;
+	const { header, banner, content, footer, tailer } = slots;
 
 	return (
 		<div
@@ -48,6 +51,8 @@ const Card = (props: Props): JSX.Element => {
 			{content && <div className='i-card-content'>{content}</div>}
 
 			{footer}
+
+			{tailer}
 		</div>
 	);
 };
@@ -55,5 +60,6 @@ const Card = (props: Props): JSX.Element => {
 Card.Header = Header;
 Card.Footer = Footer;
 Card.Banner = Banner;
+Card.Tailer = Tailer;
 
 export default Card;

@@ -1,9 +1,19 @@
-import { Tag } from "@p";
+import { Button, Flex, Tag } from "@p";
 
 export default function Page() {
 	return (
 		<>
-			<Tag>tag</Tag>
+			<Flex gap={12}>
+				<Button>
+					<span>tag</span>
+					<Tag dot dotClass='bg-red'>
+						tag
+					</Tag>
+				</Button>
+				<Tag dot dotClass='bg-red'>
+					tag
+				</Tag>
+			</Flex>
 			<div className='flex flex-wrap gap-12 mt-12 items-center'>
 				<Tag className='bg-blue'>tag</Tag>
 				<Tag className='bg-red'>tag</Tag>

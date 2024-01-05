@@ -21,6 +21,7 @@ import Loading from "./components/loading";
 import Message from "./components/message";
 import Pagination from "./components/pagination";
 import Popup from "./components/popup";
+import Preview from "./components/preview";
 import Progress from "./components/progress";
 import Radio from "./components/radio";
 import Select from "./components/select";
@@ -30,6 +31,7 @@ import Tabs from "./components/tabs";
 import Tag from "./components/tag";
 import Text from "./components/text";
 import Tree from "./components/tree";
+import Upload from "./components/upload";
 
 export {
 	Affix,
@@ -53,6 +55,7 @@ export {
 	Message,
 	Pagination,
 	Popup,
+	Preview,
 	Progress,
 	Radio,
 	Select,
@@ -63,4 +66,5 @@ export {
 	Text,
 	Textarea,
 	Tree,
+	Upload,
 };

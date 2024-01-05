@@ -1,34 +1,23 @@
 import classNames from "classnames";
 
-const Header = (props) => (
-	<div
-		style={props.style}
-		className={classNames("i-card-header", props.className)}
-	>
-		{props.children}
-	</div>
-);
+const Area = (name: string) => (props) =>
+	(
+		<div
+			style={props.style}
+			className={classNames("i-card-" + name, props.className)}
+		>
+			{props.children}
+		</div>
+	);
 
-const Footer = (props) => (
-	<div
-		style={props.style}
-		className={classNames("i-card-footer", props.className)}
-	>
-		{props.children}
-	</div>
-);
-
-const Banner = (props) => (
-	<div
-		style={props.style}
-		className={classNames("i-card-banner", props.className)}
-	>
-		{props.children}
-	</div>
-);
+const Header = Area("header") as any;
+const Footer = Area("footer") as any;
+const Banner = Area("banner") as any;
+const Tailer = Area("tail") as any;
 
 Header.iotaName = "CardHeader";
 Footer.iotaName = "CardFooter";
 Banner.iotaName = "CardBanner";
+Tailer.iotaName = "CardTailer";
 
-export { Banner, Footer, Header };
+export { Banner, Footer, Header, Tailer };

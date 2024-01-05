@@ -17,6 +17,7 @@ export default function button(): JSX.Element {
 			</Button>
 			<Button className='bg-pink-0'>文字</Button>
 			<Button disabled>禁用</Button>
+			<Button loading>加载</Button>
 			<Flex gap={12}>
 				<Button className='bg-grey'>你好</Button>
 				<Button className='bg-grey'>你好</Button>

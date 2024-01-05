@@ -1,17 +1,21 @@
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import {
+	CSSProperties,
 	Children,
 	WheelEvent,
+	forwardRef,
+	useCallback,
 	useEffect,
+	useImperativeHandle,
 	useMemo,
 	useRef,
-	useState,
 } from "react";
 import "./index.scss";
 import TabItem from "./item";
-import { ITab, Props, TKey } from "./type";
+import { ITab, ITabs, Props } from "./type";
 
-function Tabs(props: Props) {
+const Tabs = forwardRef<ITabs, Props>((props, ref) => {
 	const {
 		active,
 		prepend,
@@ -19,44 +23,57 @@ function Tabs(props: Props) {
 		children,
 		className,
 		vertical,
-		lazyload,
+		toggable,
+		maxCache = 13,
 		bar = true,
 		onTabChange,
 		...rest
 	} = props;
 
-	const [activeKey, setActiveKey] = useState(active);
 	const navRefs = useRef<HTMLAnchorElement[]>([]);
 	const barRef = useRef<HTMLSpanElement>(null);
 	const navsRef = useRef<HTMLDivElement>(null);
-	const [barStyle, setBarStyle] = useState({});
+	const state = useReactive<{
+		active?: string;
+		barStyle: CSSProperties;
+		cache: string[];
+	}>({
+		active,
+		barStyle: {},
+		cache: [],
+	});
 
 	const tabs: ITab[] = useMemo(
 		() =>
 			Children.map(children, (node, i) => {
 				const { key, props: nodeProps } = node as {
-					key?: TKey;
+					key?: string;
 					props?: any;
 				};
-				const { title, children, content } = nodeProps;
+				const { title, children, content, keepalive } = nodeProps;
 
 				return {
-					key: key || i,
+					key: key || String(i),
 					title,
 					content: children || content,
+					keepalive,
 				};
 			}) as ITab[],
 		[children]
 	);
 
-	const handleNavClick = (key?: TKey) => {
-		if (key === activeKey) return;
+	const open = useCallback((key?: string) => {
+		if (key === state.active) {
+			if (!toggable) return;
 
-		setActiveKey((prev) => {
-			onTabChange?.(key, prev);
-			return key;
-		});
-	};
+			onTabChange?.(undefined, key);
+			state.active = undefined;
+			return;
+		}
+
+		onTabChange?.(key, state.active);
+		state.active = key;
+	}, []);
 
 	const handleMouseWheel = (e: WheelEvent) => {
 		if (vertical) return;
@@ -69,26 +86,36 @@ function Tabs(props: Props) {
 	useEffect(() => {
 		if (!bar) return;
 
-		const index = tabs.findIndex((tab) => tab.key === activeKey);
+		const index = tabs.findIndex((tab) => tab.key === state.active);
 		const nav = navRefs.current[index];
 
 		if (!nav) return;
 
+		if (tabs[index].keepalive && state.active) {
+			const i = state.cache.findIndex((k) => k === state.active);
+			i < 0 && state.cache.unshift(state.active);
+
+			if (state.cache.length > maxCache) {
+				state.cache.length = maxCache;
+			}
+		}
+
 		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
 
-		setBarStyle({
+		state.barStyle = {
 			height: offsetHeight,
 			width: offsetWidth,
 			transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
-		});
-	}, [activeKey, bar]);
+		};
+	}, [state.active, bar]);
 
 	useEffect(() => {
-		setActiveKey((prev) => {
-			onTabChange?.(active, prev);
-			return active;
-		});
+		open(active);
 	}, [active]);
+
+	useImperativeHandle(ref, () => ({
+		open,
+	}));
 
 	return (
 		<div className={classNames("i-tab", className)} {...rest}>
@@ -111,9 +138,9 @@ function Tabs(props: Props) {
 										ref as HTMLAnchorElement)
 								}
 								className={classNames("i-tab-nav", {
-									"i-tab-active": activeKey === key,
+									"i-tab-active": state.active === key,
 								})}
-								onClick={() => handleNavClick(key)}
+								onClick={() => open(key)}
 							>
 								{title}
 							</a>
@@ -124,8 +151,8 @@ function Tabs(props: Props) {
 						<span
 							ref={barRef}
 							className='i-tab-navs-bar'
-							style={barStyle}
-						></span>
+							style={state.barStyle}
+						/>
 					)}
 				</div>
 
@@ -135,10 +162,11 @@ function Tabs(props: Props) {
 			<div className='i-tab-contents'>
 				{tabs.map((tab) => {
 					const { key, content } = tab;
-					const isActive = activeKey === key;
+					const isActive = state.active === key;
+					const show = isActive || (key && state.cache.includes(key));
 
 					return (
-						(isActive || !lazyload) && (
+						show && (
 							<div
 								key={key}
 								className={classNames("i-tab-content", {
@@ -153,7 +181,7 @@ function Tabs(props: Props) {
 			</div>
 		</div>
 	);
-}
+}) as any;
 
 Tabs.Item = TabItem;
 

@@ -1,20 +1,65 @@
+import { useIntersectionObserver } from "@p/js/hooks";
+import { HideImageTwotone } from "@ricons/material";
+import { useReactive } from "ahooks";
 import classNames from "classnames";
+import { useEffect, useRef } from "react";
+import Icon from "../icon";
 import Loading from "../loading";
 import "./index.scss";
+import List from "./list";
 import { Props } from "./type";
-import View from "./view";
 
 const Image = (props: Props): JSX.Element => {
 	const {
 		src,
 		round,
 		size,
-		loading,
+		lazyload,
+		fallback = (
+			<Icon icon={<HideImageTwotone />} size='2em' className='color-5' />
+		),
 		style,
 		className,
 		children,
-		...restProps
+		onLoad,
+		onError,
+		...rest
 	} = props;
+
+	const state = useReactive<{ status?: string }>({
+		status: "loading",
+	});
+	const ref = useRef<HTMLImageElement>(null);
+
+	const IO = useIntersectionObserver(
+		ref.current,
+		(visible) => {
+			if (!ref.current || !visible || !src) return;
+
+			ref.current.src = ref.current.dataset.src || "";
+			IO.unobserve(ref.current);
+		},
+		!lazyload
+	);
+
+	const handleError = (err) => {
+		onError?.(err);
+		state.status = "error";
+	};
+
+	const handleLoad = (e) => {
+		onLoad?.(e);
+		state.status = undefined;
+	};
+
+	useEffect(() => {
+		if (!src) return;
+
+		state.status = "loading";
+		lazyload && ref.current && IO.observe(ref.current);
+	}, [src]);
+
+	rest[lazyload ? "data-src" : "src"] = src;
 
 	return (
 		<div
@@ -25,17 +70,31 @@ const Image = (props: Props): JSX.Element => {
 			}}
 			className={classNames("i-image", className, {
 				rounded: round,
+				[`i-image-${state.status}`]: state.status,
 			})}
 		>
-			{loading && <Loading />}
+			{state.status === "error" ? (
+				fallback
+			) : (
+				<>
+					{src && (
+						<img
+							ref={ref}
+							{...rest}
+							onLoad={handleLoad}
+							onError={handleError}
+						/>
+					)}
 
-			{src && <img src={src} {...restProps} />}
+					{src && state.status === "loading" && <Loading />}
 
-			{children && <span className='i-image-text'>{children}</span>}
+					{children && <div className='i-image-text'>{children}</div>}
+				</>
+			)}
 		</div>
 	);
 };
 
-Image.View = View;
+Image.List = List;
 
 export default Image;

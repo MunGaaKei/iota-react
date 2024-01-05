@@ -85,6 +85,9 @@ $colors: (
 				color: var(--white);
 			}
 		}
+		.opacity-#{$i} {
+			opacity: #{$i/10};
+		}
 	}
 
 	@each $name, $value in $colors {

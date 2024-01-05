@@ -6,13 +6,21 @@ import {
 import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { clamp } from "lodash";
-import { Children, MouseEvent, useCallback, useMemo, useRef } from "react";
+import {
+	Children,
+	MouseEvent,
+	forwardRef,
+	useCallback,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+} from "react";
 import Icon from "../icon";
 import "./index.scss";
 import Item from "./item";
-import { Props } from "./type";
+import { ISwiper, ISwiperRef, Props } from "./type";
 
-const Swiper = (props: Props): JSX.Element => {
+const Swiper = forwardRef<ISwiper, Props>((props, ref): JSX.Element => {
 	const {
 		type = "normal",
 		initial = 0,
@@ -24,7 +32,7 @@ const Swiper = (props: Props): JSX.Element => {
 		next = <Icon icon={<KeyboardArrowRightRound />} size='2em' />,
 		duration = 600,
 		interval = 3000,
-		draggable = true,
+		draggable,
 		dragOffset = 40,
 		gap = 0,
 		itemHeight,
@@ -115,7 +123,7 @@ const Swiper = (props: Props): JSX.Element => {
 			let next = i;
 
 			if (loop) {
-				if (i >= size - display || i < -display) {
+				if (i >= size - display || i < 0) {
 					reset = true;
 					next = (i + size) % size;
 				}
@@ -136,7 +144,12 @@ const Swiper = (props: Props): JSX.Element => {
 
 			state.current = i;
 
-			if (!reset) return;
+			if (!reset) {
+				setTimeout(() => {
+					onAfterSwipe?.(next);
+				}, duration + 12);
+				return;
+			}
 
 			setTimeout(() => {
 				state.transition = "none";
@@ -220,6 +233,12 @@ const Swiper = (props: Props): JSX.Element => {
 	useMouseMove(handleMouseMove);
 	useMouseUp(handleMouseUp);
 
+	useImperativeHandle(ref, () => ({
+		swipeTo,
+		swipeNext,
+		swipePrev,
+	}));
+
 	return (
 		<div
 			style={style}
@@ -292,7 +311,7 @@ const Swiper = (props: Props): JSX.Element => {
 			)}
 		</div>
 	);
-};
+}) as ISwiperRef;
 
 Swiper.Item = Item;
 

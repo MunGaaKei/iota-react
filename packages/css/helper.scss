@@ -98,6 +98,18 @@
 	.justify-between {
 		justify-content: space-between;
 	}
+	.justify-start {
+		justify-content: flex-start;
+	}
+	.justify-end {
+		justify-content: flex-end;
+	}
+	.items-start {
+		align-items: flex-start;
+	}
+	.items-end {
+		align-items: flex-end;
+	}
 	.items-center {
 		align-items: center;
 	}
