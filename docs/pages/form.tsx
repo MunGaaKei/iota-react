@@ -1,17 +1,8 @@
-import {
-	Button,
-	Form,
-	Icon,
-	Input,
-	Message,
-	Radio,
-	Select,
-	Textarea,
-} from "@p";
+import { Button, Flex, Form, Icon, Input, Message, Radio, Select } from "@p";
 import Checkbox from "@p/components/checkbox";
 import { AccountCircleTwotone } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
-import { createRef } from "react";
+import { createRef, useState } from "react";
 
 const rules = {
 	name: (value) => {
@@ -39,11 +30,17 @@ const rules = {
 
 		return false;
 	},
+	age: (value) => {
+		if (value > 5) return "不能超过5岁";
+
+		return false;
+	},
 };
 
 export default function Page() {
 	const form = Form.useForm();
 	const ref = createRef<HTMLInputElement>();
+	const [val, setVal] = useState("");
 
 	const handleSubmit = useMemoizedFn(() => {
 		console.log(form.get());
@@ -54,8 +51,6 @@ export default function Page() {
 	});
 
 	const handleClear = useMemoizedFn(() => {
-		console.log(ref.current);
-
 		form.clear();
 	});
 
@@ -69,6 +64,7 @@ export default function Page() {
 	return (
 		<>
 			<Form form={form} rules={rules} width={400} className='gap-12'>
+				<Input value={val} onChange={(v) => setVal(v as string)} />
 				<Input
 					label='name'
 					name='name'
@@ -79,7 +75,7 @@ export default function Page() {
 						/>
 					}
 					form={form.name}
-				></Input>
+				/>
 				<Input
 					ref={ref}
 					type='password'
@@ -87,7 +83,32 @@ export default function Page() {
 					name='password'
 					form={form.name}
 					append={<Button className='bg-blue'>校验</Button>}
-				></Input>
+				/>
+				<Flex align='baseline'>
+					<Input.Number
+						label='年龄'
+						form={form.name}
+						name='age'
+						labelInline
+						max={150}
+						min={1}
+					/>
+
+					<Radio
+						label='性别'
+						name='gender'
+						options={["男", "女", "四大皆空"]}
+						form={form.name}
+						labelInline
+					/>
+				</Flex>
+				<Input.Range
+					label='体重范围'
+					name='weight'
+					form={form.name}
+					labelInline
+					min={0}
+				/>
 				<Select
 					label='国家'
 					name='country'
@@ -110,28 +131,13 @@ export default function Page() {
 				/>
 				<Checkbox
 					label='兴趣'
-					options={["足球", "篮球", "棒球"]}
+					options={["足球", "篮球", "棒球", "排球", "橄榄球"]}
 					name='hobit'
 					form={form.name}
 					type='switch'
 					labelInline
 				/>
-				<Radio
-					label='性别'
-					name='gender'
-					options={["男", "女"]}
-					form={form.name}
-					labelInline
-				/>
-				<Radio
-					label='士大夫'
-					name='sdfsdf'
-					options={["同样", "农民", "广告", "多少", "稍等"]}
-					form={form.name}
-					labelInline
-					type='button'
-				/>
-				<Textarea label='bio' name='bio' form={form.name}></Textarea>
+				<Input.Textarea label='bio' name='bio' form={form.name} />
 
 				<div className='flex gap-12'>
 					<Button onClick={handleSubmit}>获取表单值</Button>
@@ -143,6 +149,13 @@ export default function Page() {
 					</Button>
 					<Button onClick={handleClear} className='bg-yellow'>
 						清空
+					</Button>
+					<Button
+						onClick={() => {
+							form?.set("age", 20000);
+						}}
+					>
+						设置AGE的值
 					</Button>
 				</div>
 			</Form>

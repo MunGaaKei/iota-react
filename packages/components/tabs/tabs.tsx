@@ -118,8 +118,15 @@ const Tabs = forwardRef<ITabs, Props>((props, ref) => {
 	}));
 
 	return (
-		<div className={classNames("i-tab", className)} {...rest}>
-			<div className='i-tab-navs-container'>
+		<div
+			className={classNames("i-tabs", { flex: vertical }, className)}
+			{...rest}
+		>
+			<div
+				className={classNames("i-tab-navs-container", {
+					"flex-column": vertical,
+				})}
+			>
 				{prepend}
 
 				<div

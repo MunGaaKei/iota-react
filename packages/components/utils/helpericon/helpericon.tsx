@@ -5,12 +5,16 @@ import "./index.scss";
 import { Props } from "./type";
 
 const Helpericon = (props: Props): JSX.Element => {
-	const { active, className, icon = <CloseRound />, onClick } = props;
+	const { active, style, className, icon = <CloseRound />, onClick } = props;
 
 	if (!active) return <></>;
 
 	return (
-		<a className={classNames("i-helpericon", className)} onClick={onClick}>
+		<a
+			className={classNames("i-helpericon", className)}
+			style={style}
+			onClick={onClick}
+		>
 			<Icon icon={icon} />
 		</a>
 	);

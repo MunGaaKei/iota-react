@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { forwardRef } from "react";
-import { PropsSider } from "./type";
+import { ISider, PropsSider } from "./type";
 
 const Sider = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
 	const { mini, collapsed, children, onHide } = props;
@@ -24,6 +24,8 @@ const Sider = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
 			</div>
 		</div>
 	);
-});
+}) as ISider;
+
+Sider.iotaName = "ContainerSider";
 
 export default Sider;

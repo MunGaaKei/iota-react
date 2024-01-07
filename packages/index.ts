@@ -15,7 +15,7 @@ import Flex from "./components/flex";
 import Form from "./components/form";
 import Icon from "./components/icon";
 import Image from "./components/image";
-import Input, { Textarea } from "./components/input";
+import Input from "./components/input";
 import List from "./components/list";
 import Loading from "./components/loading";
 import Message from "./components/message";
@@ -64,7 +64,6 @@ export {
 	Tabs,
 	Tag,
 	Text,
-	Textarea,
 	Tree,
 	Upload,
 };

@@ -47,13 +47,13 @@ const Textarea = forwardRef<HTMLTextAreaElement, PropsTextarea>(
 				Object.assign(state, {
 					status: "normal",
 					message: "",
+					value: v,
 				});
 
 				emitForm?.(v);
-				state.value = v;
 				onChange?.(v, e);
 			},
-			[onChange]
+			[]
 		);
 
 		const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {

@@ -14,7 +14,10 @@ import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
 import "./index.scss";
-import type { Props } from "./type";
+import Number from "./number";
+import Range from "./range";
+import Textarea from "./textarea";
+import type { CompositionInput, Props } from "./type";
 
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	const {
@@ -25,11 +28,11 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		prepend,
 		append,
 		labelInline,
-		className = "",
+		className,
 		form,
 		status = "normal",
 		message,
-		hideClear,
+		clear,
 		hideVisible,
 		onChange,
 		onEnter,
@@ -51,20 +54,18 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		state,
 	});
 
-	const handleChange = useCallback(
-		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-			const v = e.target.value;
-			Object.assign(state, {
-				status: "normal",
-				message: "",
-				value: v,
-			});
+	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		const v = e.target.value;
 
-			emitForm?.(v);
-			onChange?.(v, e);
-		},
-		[onChange]
-	);
+		Object.assign(state, {
+			status: "normal",
+			message: "",
+			value: v,
+		});
+
+		emitForm?.(v);
+		onChange?.(v, e);
+	}, []);
 
 	const handleKeydown = useMemoizedFn((e: KeyboardEvent<HTMLElement>) => {
 		e.code === "Enter" && onEnter?.();
@@ -72,14 +73,15 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
 	const handleHelperClick = () => {
 		if (type === "password" && !hideVisible) {
-			state.visible = !state.visible;
-			state.type = state.visible ? "text" : "password";
+			Object.assign(state, {
+				visible: !state.visible,
+				type: state.visible ? "text" : "password",
+			});
 			return;
 		}
 
 		const v = "";
 		emitForm?.(v);
-		state.value = v;
 		onChange?.(v);
 	};
 
@@ -114,7 +116,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 		...rest,
 	};
 
-	const clearable = !hideClear && v;
+	const clearable = clear && v;
 
 	return (
 		<InputContainer
@@ -144,6 +146,10 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 			</div>
 		</InputContainer>
 	);
-});
+}) as CompositionInput;
+
+Input.Textarea = Textarea;
+Input.Number = Number;
+Input.Range = Range;
 
 export default Input;

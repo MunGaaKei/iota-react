@@ -45,6 +45,7 @@
 	}
 	.flex {
 		display: flex;
+		gap: inherit;
 	}
 	.grid {
 		display: grid;

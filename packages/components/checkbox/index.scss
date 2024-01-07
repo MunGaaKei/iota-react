@@ -1,7 +1,10 @@
+.i-checkbox {
+	gap: 1em;
+}
 .i-checkbox-item {
 	display: inline-flex;
 	align-items: baseline;
-	gap: 0.4em;
+	gap: 0.25em;
 	border-radius: var(--radius);
 	align-self: flex-start;
 	&:hover {
@@ -23,7 +26,8 @@
 	flex: 1 1 100%;
 	position: relative;
 	display: flex;
-	gap: 1em;
+	flex-wrap: wrap;
+	gap: 0.625em;
 	align-self: baseline;
 }
 
@@ -143,8 +147,10 @@
 }
 
 .i-checkbox-message {
+	margin-top: 0.5em;
 	font-size: 0.8em;
 	align-self: flex-start;
+	pointer-events: none;
 }
 
 .i-checkbox-success {

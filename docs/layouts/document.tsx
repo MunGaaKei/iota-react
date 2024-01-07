@@ -1,15 +1,14 @@
-import menus from "@d/config/menu";
-import { Button, Container, Icon, Loading, Popup, Tree } from "@p";
-import { MenuFilled, WbTwilightRound } from "@ricons/material";
-import { Suspense, lazy, memo, useState } from "react";
+import { Container, Loading } from "@p";
+import { Suspense, lazy, memo } from "react";
 import { useParams } from "react-router-dom";
+const { Header, Sider, Footer } = Container;
 
-interface DpProps {
+interface DProps {
 	name?: string;
 }
 
 const DynamicPage = memo(
-	({ name }: DpProps) => {
+	({ name }: DProps) => {
 		const Page = lazy(() => import(`../pages/${name}`));
 
 		return (
@@ -18,59 +17,17 @@ const DynamicPage = memo(
 			</Suspense>
 		);
 	},
-	(pp: DpProps, np: DpProps) => pp.name === np.name
+	(p: DProps, n: DProps) => p.name === n.name
 );
-
-const Header = ({ onToggleSider }): JSX.Element => {
-	return (
-		<div className='py-8 px-12 flex gap-4'>
-			<Button flat square onClick={() => onToggleSider()}>
-				<Icon icon={<MenuFilled />}></Icon>
-			</Button>
-			<Button flat square>
-				<Icon icon={<WbTwilightRound />}></Icon>
-			</Button>
-		</div>
-	);
-};
-
-const Sider = (): JSX.Element => {
-	return (
-		<div className='px-12 text-center' style={{ minWidth: 240 }}>
-			<h1 className='bg-blur sticky-top py-8'>
-				<Popup
-					offset={8}
-					content={<h4 className='pd-12 bg-black'>IOTA REACT</h4>}
-				>
-					<span>R</span>
-				</Popup>
-			</h1>
-			<Tree items={menus}></Tree>
-		</div>
-	);
-};
-
-const Footer = (): JSX.Element => {
-	return <></>;
-};
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
-	const [collapsed, toggleCollapsed] = useState(true);
 
 	return (
-		<Container
-			layout='menu'
-			collapsed={collapsed}
-			breakpoint={880}
-			header={
-				<Header onToggleSider={() => toggleCollapsed(!collapsed)} />
-			}
-			sider={<Sider />}
-			footer={<Footer />}
-			drawer
-			onToggle={(v) => toggleCollapsed(v || false)}
-		>
+		<Container breakpoint={880}>
+			<Header>
+				<h1>R</h1>
+			</Header>
 			<div className='pd-12'>
 				<DynamicPage name={name}></DynamicPage>
 			</div>

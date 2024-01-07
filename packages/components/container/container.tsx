@@ -1,23 +1,14 @@
 import { useReactive } from "ahooks";
-import { forwardRef, useEffect, useRef } from "react";
-import Area from "./Area";
-import Sider from "./Sider";
+import { Children, forwardRef, useEffect, useMemo, useRef } from "react";
 import "./container.scss";
-import { Props } from "./type";
+import Footer from "./footer";
+import Header from "./header";
+import Sider from "./sider";
+import { IContainer, Props } from "./type";
 
 const Container = forwardRef<HTMLDivElement, Props>(
 	(props, ref): JSX.Element => {
-		const {
-			layout = "default",
-			collapsed,
-			breakpoint,
-			sider,
-			header: Header,
-			footer: Footer,
-			drawer,
-			children,
-			onToggle,
-		} = props;
+		const { collapsed, breakpoint, drawer, children, onToggle } = props;
 
 		const $sider = useRef<HTMLDivElement>(null);
 		const state = useReactive({
@@ -26,17 +17,28 @@ const Container = forwardRef<HTMLDivElement, Props>(
 			mini: false,
 		});
 
-		useEffect(() => {
-			onToggle?.(state.collapsed);
+		const slots = useMemo(() => {
+			const nodes: any = {};
 
-			if (drawer && state.mini) return;
+			Children.map(children, (child: any) => {
+				const name = child.type?.iotaName;
+				console.log(child);
 
-			const siderWidth = $sider.current?.offsetWidth || 0;
+				switch (name) {
+					case "ContainerHeader":
+						nodes["header"] = child;
+						break;
+					case "ContainerFooter":
+						nodes["footer"] = child;
+						break;
+					default:
+						nodes["content"] = [...(nodes["content"] || []), child];
+						break;
+				}
+			});
 
-			state.contentStyle = {
-				marginLeft: state.collapsed ? -siderWidth : 0,
-			};
-		}, [state.collapsed, drawer]);
+			return nodes;
+		}, [children]);
 
 		useEffect(() => {
 			state.collapsed = collapsed;
@@ -58,55 +60,28 @@ const Container = forwardRef<HTMLDivElement, Props>(
 			};
 		}, [breakpoint]);
 
-		switch (layout) {
-			case "menu":
-				return (
-					<div className='i-container flex'>
-						<Sider
-							ref={$sider}
-							collapsed={state.collapsed}
-							mini={state.mini}
-							onHide={() => (state.collapsed = true)}
-						>
-							{sider}
-						</Sider>
+		const { header, content, footer } = slots;
 
-						<div
-							ref={ref}
-							className='i-content'
-							style={state.contentStyle}
-						>
-							<Area name='header'>{Header}</Area>
+		return (
+			<div className='i-container'>
+				{header}
 
-							{children}
+				<div className='flex'>
+					<div
+						className='sticky-top'
+						style={{ alignSelf: "flex-start" }}
+					></div>
+					<div className='i-content'>{content}</div>
+				</div>
 
-							<Area name='footer'>{Footer}</Area>
-						</div>
-					</div>
-				);
-			default:
-				return (
-					<div className='i-container i-container-default'>
-						<Area name='header'>{Header}</Area>
-
-						<div className='i-container-flex'>
-							<Sider ref={$sider} collapsed={state.collapsed}>
-								{sider}
-							</Sider>
-							<div
-								ref={ref}
-								className='i-content'
-								style={state.contentStyle}
-							>
-								{children}
-							</div>
-						</div>
-
-						<Area name='footer'>{Footer}</Area>
-					</div>
-				);
-		}
+				{footer}
+			</div>
+		);
 	}
-);
+) as IContainer;
+
+Container.Header = Header;
+Container.Sider = Sider;
+Container.Footer = Footer;
 
 export default Container;

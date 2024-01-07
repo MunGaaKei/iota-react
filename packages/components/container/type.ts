@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
+import { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react";
+import Footer from "./footer";
+import Header from "./header";
+import Sider from "./sider";
 
 export interface Props {
-	layout?: "default" | "menu";
 	breakpoint?: number;
-	sider?: ReactNode;
-	header?: ReactNode;
-	footer?: ReactNode;
 	children?: ReactNode;
 	collapsed?: boolean;
 	drawer?: boolean;
@@ -19,7 +18,16 @@ export type PropsSider = {
 	onHide?: () => void;
 };
 
-export type PropsArea = {
-	children?: ReactNode;
-	name: string;
-};
+export interface ISider
+	extends ForwardRefExoticComponent<
+		PropsSider & RefAttributes<HTMLInputElement>
+	> {
+	iotaName?: string;
+}
+
+export interface IContainer
+	extends ForwardRefExoticComponent<Props & RefAttributes<HTMLInputElement>> {
+	Header: typeof Header;
+	Sider: typeof Sider;
+	Footer: typeof Footer;
+}

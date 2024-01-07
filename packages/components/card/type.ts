@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 export interface Props extends BaseElement {
 	shadow?: boolean;
+	border?: boolean;
 	header?: ReactNode;
 	footer?: ReactNode;
 }

@@ -1,4 +1,4 @@
-import { animate } from "@p/js/utils";
+import { animate, formatNumber } from "@p/js/utils";
 import { useEffect, useMemo, useState } from "react";
 import Text from "./text";
 import { TextNumber } from "./type";
@@ -16,13 +16,13 @@ export default function Number(props: TextNumber) {
 	const [n, setN] = useState(count);
 
 	const number = useMemo(() => {
-		if (!n) return;
+		if (n === undefined) return;
 
 		const z = n.toFixed(decimal);
 
 		if (!thousand) return z;
 
-		return z.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
+		return formatNumber(n, { decimal, thousand });
 	}, [n, thousand]);
 
 	useEffect(() => {

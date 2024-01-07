@@ -5,7 +5,7 @@ import "./index.scss";
 import { Props } from "./type";
 
 const Card = (props: Props): JSX.Element => {
-	const { shadow = true, style, className, children } = props;
+	const { shadow = true, border = true, style, className, children } = props;
 
 	const slots: any = useMemo(() => {
 		const nodes = {};
@@ -42,6 +42,7 @@ const Card = (props: Props): JSX.Element => {
 			style={style}
 			className={classNames("i-card", className, {
 				shadow,
+				"i-card-bordered": border,
 			})}
 		>
 			{banner}

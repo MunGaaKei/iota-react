@@ -6,6 +6,9 @@
 	backdrop-filter: var(--blur);
 	border-radius: var(--radius);
 }
+.i-card-bordered {
+	border: 1px solid var(--color-5);
+}
 
 .i-card-header {
 	display: flex;

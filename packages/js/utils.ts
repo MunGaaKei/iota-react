@@ -162,3 +162,19 @@ export function animate(
 		callback?.(pass);
 	}
 }
+
+export function formatNumber(
+	value: number,
+	options: {
+		decimal?: number;
+		thousand?: string;
+	} = {}
+) {
+	const { decimal, thousand } = options;
+
+	let result = value.toFixed(decimal);
+
+	if (!thousand) return result;
+
+	return result.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
+}

@@ -66,7 +66,15 @@ function Radio(props: Props) {
 				className
 			)}
 		>
-			{label && <span className='i-input-label-text'>{label}</span>}
+			{label && (
+				<span className='i-input-label-text'>
+					{label}
+
+					{state.message && (
+						<p className='i-radio-message'>*{state.message}</p>
+					)}
+				</span>
+			)}
 
 			<div
 				className={classNames("i-radio-options", {
@@ -88,10 +96,6 @@ function Radio(props: Props) {
 					</RadioItem>
 				))}
 			</div>
-
-			{state.message && (
-				<span className='i-radio-message'>*{state.message}</span>
-			)}
 		</div>
 	);
 }

@@ -1,11 +1,6 @@
-.i-container {
+.i-container-full {
 	position: absolute;
 	inset: 0;
-	overflow: auto;
-}
-.i-container-default {
-	display: flex;
-	flex-direction: column;
 }
 .i-container-flex {
 	position: relative;
@@ -21,19 +16,22 @@
 }
 .i-header,
 .i-footer {
+	padding: 0.5em;
 	z-index: 1;
 	display: flex;
 	align-items: center;
+	background: var(--background-opacity);
+	backdrop-filter: var(--blur);
+	&:empty {
+		display: none;
+	}
 }
 .i-header {
 	position: sticky;
 	top: 0;
 	z-index: 50;
 }
-.i-footer {
-	top: unset;
-	bottom: 0;
-}
+
 .i-sider {
 	position: sticky;
 	top: 0;
