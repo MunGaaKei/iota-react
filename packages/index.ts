@@ -1,12 +1,12 @@
 import "./js/init";
 
 import Affix from "./components/affix";
+import Area from "./components/area";
 import Badge from "./components/badge";
 import Button from "./components/button";
 import Card from "./components/card";
 import Checkbox from "./components/checkbox";
 import Collapse from "./components/collapse";
-import Container from "./components/container";
 import Datepicker from "./components/datepicker";
 import Dialog from "./components/dialog";
 import Drawer from "./components/drawer";
@@ -35,12 +35,12 @@ import Upload from "./components/upload";
 
 export {
 	Affix,
+	Area,
 	Badge,
 	Button,
 	Card,
 	Checkbox,
 	Collapse,
-	Container,
 	Datepicker,
 	Dialog,
 	Drawer,

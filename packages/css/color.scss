@@ -86,7 +86,7 @@ $colors: (
 			}
 		}
 		.opacity-#{$i} {
-			opacity: #{$i/10};
+			opacity: #{calc($i/10)};
 		}
 	}
 

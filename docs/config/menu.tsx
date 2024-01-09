@@ -77,6 +77,12 @@ export default [
 				icon: <Icon icon={<PushPinTwotone />} />,
 			},
 			{
+				title: "Area",
+				href: "/docs/area",
+				as: Link,
+				icon: <Icon icon={<ViewQuiltOutlined />} />,
+			},
+			{
 				title: "Badge",
 				href: "/docs/badge",
 				as: Link,
@@ -99,12 +105,6 @@ export default [
 				href: "/docs/collapse",
 				as: Link,
 				icon: <Icon icon={<ViewDayTwotone />} />,
-			},
-			{
-				title: "Container",
-				href: "/docs/container",
-				as: Link,
-				icon: <Icon icon={<ViewQuiltOutlined />} />,
 			},
 			{
 				title: "Dialog",

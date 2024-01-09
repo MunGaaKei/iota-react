@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import { ISider, PropsSider } from "./type";
 
 const Sider = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
-	const { mini, collapsed, children, onHide } = props;
+	const { status, children, onHide } = props;
 
 	if (!children) return <></>;
 
@@ -11,8 +11,8 @@ const Sider = forwardRef<HTMLDivElement, PropsSider>((props, ref) => {
 		<div
 			ref={ref}
 			className={classNames("i-sider", {
-				"i-sider-mini": mini,
-				"i-sider-hidden": collapsed,
+				"i-sider-mini": status === "mini",
+				"i-sider-hidden": status === "hidden",
 			})}
 			onClick={onHide}
 		>

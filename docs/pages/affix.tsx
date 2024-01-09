@@ -1,10 +1,7 @@
 import { Affix, Button, Icon } from "@p";
 import { MicTwotone } from "@ricons/material";
-import { useRef } from "react";
 
 export default function Page() {
-	const ref = useRef(null);
-
 	return (
 		<>
 			<div style={{ height: 2000 }}>
@@ -15,7 +12,7 @@ export default function Page() {
 				bottom={20}
 				right={20}
 				offset={400}
-				getContainer={() => document.querySelector(".i-content")}
+				getContainer={() => document.querySelector(".i-area-content")}
 			>
 				<Affix.ToTop className='bg-black-0' />
 

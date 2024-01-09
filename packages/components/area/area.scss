@@ -1,0 +1,49 @@
+.i-area {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	overflow: auto;
+}
+
+.i-area-naruto {
+	grid-template-areas:
+		"header header"
+		"sider content"
+		"footer footer";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr auto;
+}
+.i-area-attackontitan {
+	grid-template-areas:
+		"sider header"
+		"sider content"
+		"sider footer";
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr auto;
+}
+
+.i-area-content {
+	position: relative;
+	// overflow-x: hidden;
+}
+.i-area-header,
+.i-area-footer {
+	padding: 0.5em;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	background: var(--background-opacity);
+	backdrop-filter: var(--blur);
+	&:empty {
+		display: none;
+	}
+}
+.i-area-header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+.i-area-sider {
+	overflow: auto;
+	align-self: start;
+}

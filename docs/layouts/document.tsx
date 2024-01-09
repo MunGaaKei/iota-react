@@ -1,7 +1,7 @@
-import { Container, Loading } from "@p";
+import menus from "@d/config/menu";
+import { Area, Loading, Tree } from "@p";
 import { Suspense, lazy, memo } from "react";
 import { useParams } from "react-router-dom";
-const { Header, Sider, Footer } = Container;
 
 interface DProps {
 	name?: string;
@@ -24,13 +24,18 @@ export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
 
 	return (
-		<Container breakpoint={880}>
-			<Header>
-				<h1>R</h1>
-			</Header>
-			<div className='pd-12'>
-				<DynamicPage name={name}></DynamicPage>
-			</div>
-		</Container>
+		<Area>
+			<Area.Item name='header'>
+				<h2>R</h2>
+			</Area.Item>
+			<Area.Item name='sider' className='pd-12'>
+				<Tree items={menus} style={{ minWidth: 240 }} />
+			</Area.Item>
+			<Area.Item>
+				<div className='pd-12'>
+					<DynamicPage name={name}></DynamicPage>
+				</div>
+			</Area.Item>
+		</Area>
 	);
 }
