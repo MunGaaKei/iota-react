@@ -1,11 +1,11 @@
 .i-area {
 	position: absolute;
 	inset: 0;
-	display: grid;
 	overflow: auto;
 }
 
 .i-area-naruto {
+	display: grid;
 	grid-template-areas:
 		"header header"
 		"sider content"
@@ -13,7 +13,8 @@
 	grid-template-columns: auto 1fr;
 	grid-template-rows: auto 1fr auto;
 }
-.i-area-attackontitan {
+.i-area-sasuke {
+	display: grid;
 	grid-template-areas:
 		"sider header"
 		"sider content"
@@ -24,8 +25,9 @@
 
 .i-area-content {
 	position: relative;
-	// overflow-x: hidden;
+	overflow-x: hidden;
 }
+
 .i-area-header,
 .i-area-footer {
 	padding: 0.5em;
@@ -45,5 +47,4 @@
 }
 .i-area-sider {
 	overflow: auto;
-	align-self: start;
 }

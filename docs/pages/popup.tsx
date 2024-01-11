@@ -1,8 +1,8 @@
-import { Button, Input, Popup } from "@p";
+import { Button, Flex, Input, Popup } from "@p";
 
 export default function Page() {
 	return (
-		<>
+		<Flex gap={12}>
 			<Popup content={<div className='pd-12'>popup</div>} trigger='click'>
 				<Button>CLICK</Button>
 			</Popup>
@@ -12,6 +12,6 @@ export default function Page() {
 			<Popup content={<div className='pd-12'>popup</div>} trigger='focus'>
 				<Input />
 			</Popup>
-		</>
+		</Flex>
 	);
 }

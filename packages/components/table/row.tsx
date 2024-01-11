@@ -7,21 +7,26 @@ function getCellStyle({
 	align,
 	fixed,
 	col,
+	row,
 	colSpan = 1,
 	rowSpan = 1,
+	isHeader,
 }: Pick<IColumn, "align" | "fixed"> & {
 	col: number;
+	row: number;
 	colSpan?: number;
 	rowSpan?: number;
+	isHeader?: boolean;
 }) {
 	const style = {
 		"--table-align": align,
-		"--table-column": `${col + 1} / ${col + colSpan + 1}`,
+		gridArea: `${row + 1} / ${col + 1} / ${row + 1 + rowSpan} / ${
+			col + 1 + colSpan
+		}`,
+		insetInline: `var(--table-td-inset-${col})`,
 	} as CSSProperties;
 
-	if (fixed) {
-		style.insetInline = `var(--table-td-inset-${col})`;
-	}
+	if (fixed) style.zIndex = isHeader ? 3 : 2;
 
 	return style;
 }
@@ -29,7 +34,7 @@ function getCellStyle({
 function Col(props: ICol) {
 	const { column, row, col, data, onCellClick } = props;
 	const { field, fixed, align, rowSpan, render } = column;
-	const style = getCellStyle({ align, fixed, col, rowSpan });
+	const style = getCellStyle({ align, fixed, col, row, rowSpan });
 
 	const handleTdClick = useMemoizedFn(() => {
 		onCellClick?.(data, field, row, col);
@@ -37,9 +42,7 @@ function Col(props: ICol) {
 
 	return (
 		<div
-			className={classNames("i-table-td", {
-				"i-table-td-sticky": fixed,
-			})}
+			className={classNames("i-table-td")}
 			data-col={field}
 			style={style}
 			onClick={handleTdClick}
@@ -85,16 +88,21 @@ export function Header(props: IHeader) {
 					align,
 					renderHeader,
 				} = column;
-				const style = getCellStyle({ align, fixed, col, colSpan });
+				const style = getCellStyle({
+					align,
+					fixed,
+					row: 0,
+					col,
+					colSpan,
+					isHeader: true,
+				});
 
 				return (
 					<div
 						key={col}
 						data-col={field}
-						className={classNames("i-table-td", {
-							"i-table-td-sticky": fixed,
-						})}
-						style={style}
+						className={classNames("i-table-td")}
+						style={{ ...style, insetBlockStart: 0 }}
 					>
 						<div className='i-table-td-content'>
 							{renderHeader?.(column, col) || title || field}

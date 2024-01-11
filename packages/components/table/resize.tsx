@@ -46,28 +46,26 @@ export default function Resize(props: IResize) {
 
 	return (
 		<div className='i-table-resize'>
-			<div className='i-table-resize-lines'>
-				{widths.map((w, index) => {
-					const { fixed } = w;
-					const style = {
-						zIndex: fixed ? 3 : undefined,
-						insetInline: `var(--table-td-inset-${index})`,
-					};
+			{widths.map((w, index) => {
+				const { fixed } = w;
+				const style = {
+					zIndex: fixed ? 3 : undefined,
+					insetInline: `var(--table-td-inset-${index})`,
+				};
 
-					return (
-						<div
-							key={index}
-							className='i-table-resize-cell'
-							style={style}
-						>
-							<span
-								className='i-table-resize-y'
-								onMouseDown={(e) => handleMouseDown(e, index)}
-							/>
-						</div>
-					);
-				})}
-			</div>
+				return (
+					<div
+						key={index}
+						className='i-table-resize-cell'
+						style={style}
+					>
+						<span
+							className='i-table-resize-y'
+							onMouseDown={(e) => handleMouseDown(e, index)}
+						/>
+					</div>
+				);
+			})}
 		</div>
 	);
 }

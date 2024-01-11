@@ -1,5 +1,4 @@
-import menus from "@d/config/menu";
-import { Area, Loading, Tree } from "@p";
+import { Area, Loading } from "@p";
 import { Suspense, lazy, memo } from "react";
 import { useParams } from "react-router-dom";
 
@@ -25,12 +24,12 @@ export default function Document(): JSX.Element {
 
 	return (
 		<Area>
-			<Area.Item name='header'>
+			{/* <Area.Item name='header' className='px-12'>
 				<h2>R</h2>
 			</Area.Item>
 			<Area.Item name='sider' className='pd-12'>
 				<Tree items={menus} style={{ minWidth: 240 }} />
-			</Area.Item>
+			</Area.Item> */}
 			<Area.Item>
 				<div className='pd-12'>
 					<DynamicPage name={name}></DynamicPage>

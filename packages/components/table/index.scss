@@ -1,13 +1,12 @@
-.i-table-container {
+.i-table {
+	--padding: 0.5em;
 	--table-border-color: var(--color-8);
 
-	overflow: auto;
-}
-
-.i-table {
-	--padding: 2px 8px;
-
 	position: relative;
+	display: grid;
+	overflow: auto;
+	contain: content;
+	content-visibility: auto;
 }
 
 .i-table-bordered {
@@ -19,24 +18,23 @@
 
 .i-table-striped {
 	.i-table-row {
-		&:nth-child(even) {
-			--table-td-background: var(--color-9);
+		&:nth-child(odd) {
+			--table-td-background: var(--background-opacity-1);
 		}
 	}
 }
 
 .i-table-row {
-	--table-td-background: var(--background);
+	--table-td-background: var(--background-opacity);
 
-	display: grid;
-	grid-template-columns: var(--table-columns);
-	width: fit-content;
+	display: contents;
 	&:hover .i-table-td {
 		--table-td-background: var(--color-main-0);
 	}
 }
 
 .i-table-td {
+	position: sticky;
 	display: flex;
 	align-items: center;
 	gap: 4px;
@@ -44,77 +42,18 @@
 	text-align: var(--table-align);
 	background: var(--table-td-background);
 	transition: background-color 0.08s;
-	grid-column: var(--table-column);
-	grid-row: var(--table-row);
-	&.i-table-td-sticky {
-		position: sticky;
-		z-index: 3;
-	}
+	backdrop-filter: var(--blur);
 	&:hover {
 		--table-td-background: var(--background);
 	}
 }
 .i-table-td-content {
 	flex: 1;
-	min-width: 0;
-	overflow: clip;
-	text-overflow: ellipsis;
-}
-.i-table-sorter {
-	flex-shrink: 0;
-	font-size: 0.8em;
-	transition: var(--transition);
-	border-radius: var(--radius);
-	color: var(--color-6);
-	&:hover {
-		color: var(--color-3);
-		background: var(--background-opacity);
-	}
-	cursor: pointer;
 }
 
 .i-table-header {
-	--table-td-background: var(--background);
-
-	position: sticky;
-	z-index: 5;
-	top: 0;
-	user-select: none;
-
-	.i-table-td-sticky {
-		z-index: 4;
-	}
-}
-
-.i-table-resize {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-}
-.i-table-resize-lines {
-	height: 100%;
-	display: grid;
-	grid-template-columns: var(--table-columns);
-}
-.i-table-resize-cell {
-	position: sticky;
-	padding: var(--padding);
-	height: inherit;
-	&:hover {
-		z-index: 3;
-	}
-}
-.i-table-resize-y {
-	position: absolute;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	width: 3px;
-	transform: translate(1px, 0);
-	pointer-events: initial;
-	cursor: ew-resize;
-	transition: background-color 0.15s;
-	&:hover {
-		background: var(--color-7);
+	--table-td-background: var(--background-opacity-1);
+	.i-table-td {
+		z-index: 2;
 	}
 }

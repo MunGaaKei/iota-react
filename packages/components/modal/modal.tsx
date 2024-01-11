@@ -4,8 +4,33 @@ import { createPortal } from "react-dom";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
 import { Props, PropsContent } from "./type";
+import useModal from "./useModal";
 
-export default function Dialog(props: Props) {
+function DefaultContent(props: PropsContent) {
+	const { title, hideCloseButton, children, onHide } = props;
+
+	return (
+		<>
+			{
+				<header className='i-modal-header'>
+					{title}
+
+					<Helpericon
+						active={!hideCloseButton}
+						className='i-modal-close'
+						onClick={onHide}
+					/>
+				</header>
+			}
+
+			<div className='i-modal-content'>{children}</div>
+
+			{<footer className='i-modal-footer'></footer>}
+		</>
+	);
+}
+
+function Modal(props: Props) {
 	const {
 		visible,
 		title,
@@ -23,10 +48,6 @@ export default function Dialog(props: Props) {
 	const [active, setActive] = useState(visible);
 	const [bounced, setBounced] = useState(false);
 	const toggable = useRef(true);
-
-	useEffect(() => {
-		visible ? handleShow() : handleHide();
-	}, [visible]);
 
 	const handleShow = useCallback(() => {
 		if (!toggable.current) return;
@@ -64,63 +85,47 @@ export default function Dialog(props: Props) {
 		backdropClosable && handleHide();
 	}, []);
 
+	useEffect(() => {
+		visible ? handleShow() : handleHide();
+	}, [visible]);
+
+	if (!show) return <></>;
+
 	return createPortal(
-		show && (
+		<div
+			className={classNames("i-backdrop-modal", {
+				"i-active": active,
+			})}
+			onClick={handleBackdropClick}
+		>
 			<div
-				className={classNames("i-backdrop-dialog", {
-					"i-active": active,
+				className={classNames("i-modal", {
+					bounced,
 				})}
-				onClick={handleBackdropClick}
+				style={{
+					width,
+					height,
+				}}
+				onClick={(e) => e.stopPropagation()}
+				{...rest}
 			>
-				<div
-					className={classNames("i-dialog", {
-						bounced,
-					})}
-					style={{
-						width,
-						height,
-					}}
-					onClick={(e) => e.stopPropagation()}
-					{...rest}
-				>
-					{customized ? (
-						children
-					) : (
-						<DefaultContent
-							title={title}
-							hideCloseButton={hideCloseButton}
-							onHide={handleHide}
-						>
-							{children}
-						</DefaultContent>
-					)}
-				</div>
+				{customized ? (
+					children
+				) : (
+					<DefaultContent
+						title={title}
+						hideCloseButton={hideCloseButton}
+						onHide={handleHide}
+					>
+						{children}
+					</DefaultContent>
+				)}
 			</div>
-		),
+		</div>,
 		document.body
 	);
 }
 
-function DefaultContent(props: PropsContent) {
-	const { title, hideCloseButton, children, onHide } = props;
+Modal.useModal = useModal;
 
-	return (
-		<>
-			{
-				<header className='i-dialog-header'>
-					{title}
-
-					<Helpericon
-						active={!hideCloseButton}
-						className='i-dialog-close'
-						onClick={onHide}
-					/>
-				</header>
-			}
-
-			<div className='i-dialog-content'>{children}</div>
-
-			{<footer className='i-dialog-footer'></footer>}
-		</>
-	);
-}
+export default Modal;

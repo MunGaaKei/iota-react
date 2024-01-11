@@ -1,5 +1,5 @@
 .i-datepicker {
-	padding: 0.5em;
+	padding: 1em;
 	.i-datepicker-item {
 		cursor: pointer;
 	}
@@ -40,11 +40,11 @@
 		--background: var(--color-main);
 		--color: var(--color-main-reverse);
 		opacity: 1;
-		box-shadow: var(--shadow);
 	}
 }
 
 .i-datepicker-units {
+	margin-bottom: 0.5em;
 	display: flex;
 	align-items: center;
 	gap: 0.125em;
@@ -113,7 +113,7 @@
 }
 .i-datepicker-year,
 .i-datepicker-month {
-	padding: 0.125em 0.5em;
+	padding: 0.25em 0.5em;
 	user-select: none;
 	border-radius: var(--radius);
 	text-align: center;
@@ -124,7 +124,6 @@
 		background: var(--color-main);
 		color: var(--color-main-reverse);
 		opacity: 1;
-		box-shadow: var(--shadow);
 	}
 }
 

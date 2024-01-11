@@ -26,6 +26,7 @@ const Table = (props: Props): JSX.Element => {
 		header = true,
 		resizable,
 		padding = ".25em .5em",
+		style,
 		className,
 		onCellClick,
 		onRowClick,
@@ -52,20 +53,22 @@ const Table = (props: Props): JSX.Element => {
 		const rights: string[] = [];
 
 		state.widths.map((w, i) => {
-			const { fixed, width = "" } = w;
-			widths.push(width);
+			const { fixed, width } = w;
+			const wid = typeof width === "number" ? `${width}px` : width || "";
+			widths.push(wid);
 
 			if (!fixed) return;
 
 			if (fixed === "left") {
 				style[`--table-td-inset-${i}`] = `${tdOffset(lefts)} auto`;
-				lefts.push(width);
+				lefts.push(wid);
 			} else {
-				rights[i] = width;
+				rights[i] = wid;
 			}
 		});
 
 		rights.length = state.widths.length;
+
 		Array.from(rights).map((w, i, arr) => {
 			if (!w) return;
 
@@ -78,7 +81,7 @@ const Table = (props: Props): JSX.Element => {
 			style[`--table-td-inset-${i}`] = `auto ${offset}`;
 		});
 
-		style["--table-columns"] = widths.join(" ");
+		style["gridTemplateColumns"] = widths.join(" ");
 
 		state.style = style;
 	}, [state.widths]);
@@ -94,52 +97,51 @@ const Table = (props: Props): JSX.Element => {
 			const { width, fixed } = col;
 
 			return {
-				width: width ?? "1fr",
+				width: width ?? "auto",
 				fixed,
 			};
 		});
 	}, [columns]);
 
-	const style = {
+	const calcStyle = {
 		"--padding": padding,
+		gridTemplateRows: header
+			? `repeat(1, auto) repeat(${data.length}, auto)`
+			: `repeat(${data.length}, auto)`,
 	} as CSSProperties;
 
 	return (
 		<div
 			className={classNames(
-				"i-table-container",
+				"i-table",
 				{
 					"i-table-bordered": border,
 					"i-table-striped": striped,
 				},
 				className
 			)}
+			style={{ ...state.style, ...calcStyle, ...style }}
 			{...restProps}
 		>
-			<div
-				className={classNames("i-table")}
-				style={{ ...state.style, ...style }}
-			>
-				{header && <Header columns={state.columns} />}
+			{header && <Header columns={state.columns} />}
 
-				{data.map((row, i) => (
-					<Row
-						key={i}
-						row={i}
-						data={row}
-						columns={state.columns}
-						onCellClick={onCellClick}
-						onRowClick={onRowClick}
-					/>
-				))}
+			{data.map((row, i) => (
+				<Row
+					key={i}
+					row={i + (header ? 1 : 0)}
+					data={row}
+					columns={state.columns}
+					onCellClick={onCellClick}
+					onRowClick={onRowClick}
+				/>
+			))}
 
-				{resizable && (
-					<Resize
-						widths={state.widths}
-						onWidthChange={handleWidthChange}
-					/>
-				)}
-			</div>
+			{resizable && (
+				<Resize
+					widths={state.widths}
+					onWidthChange={handleWidthChange}
+				/>
+			)}
 		</div>
 	);
 };

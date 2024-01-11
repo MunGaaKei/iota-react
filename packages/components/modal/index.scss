@@ -1,4 +1,4 @@
-.i-backdrop-dialog {
+.i-backdrop-modal {
 	position: fixed;
 	inset: 0;
 	padding: 12px;
@@ -15,7 +15,7 @@
 	}
 }
 
-.i-dialog {
+.i-modal {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -32,14 +32,14 @@
 		animation: bounce 0.4s ease-in-out 0s;
 	}
 }
-.i-active > .i-dialog {
+.i-active > .i-modal {
 	opacity: 1;
 	transform: none;
 	pointer-events: unset;
 }
 
-.i-dialog-header,
-.i-dialog-footer {
+.i-modal-header,
+.i-modal-footer {
 	display: flex;
 	align-items: center;
 	padding: 0.5em;
@@ -48,12 +48,12 @@
 	}
 }
 
-.i-dialog-content {
+.i-modal-content {
 	max-height: 100%;
 	overflow-x: hidden;
 }
 
-.i-dialog-close {
+.i-modal-close {
 	margin: 0 0 0 auto;
 	display: flex;
 	align-self: flex-start;

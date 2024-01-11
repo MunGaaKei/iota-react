@@ -107,12 +107,6 @@ export default [
 				icon: <Icon icon={<ViewDayTwotone />} />,
 			},
 			{
-				title: "Dialog",
-				href: "/docs/dialog",
-				icon: <Icon icon={<WebAssetTwotone />} />,
-				as: Link,
-			},
-			{
 				title: "Drawer",
 				href: "/docs/drawer",
 				as: Link,
@@ -203,6 +197,12 @@ export default [
 				href: "/docs/message",
 				as: Link,
 				icon: <Icon icon={<LineWeightRound />} />,
+			},
+			{
+				title: "Modal",
+				href: "/docs/modal",
+				icon: <Icon icon={<WebAssetTwotone />} />,
+				as: Link,
 			},
 			{
 				title: "Pagination",

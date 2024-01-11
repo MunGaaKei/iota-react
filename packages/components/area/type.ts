@@ -7,7 +7,7 @@ import {
 import Item from "./item";
 
 export interface Props {
-	layout?: "naruto" | "attackontitan";
+	layout?: "naruto" | "sasuke" | "goku";
 	gap?: number | string;
 	style?: CSSProperties;
 	className?: string;

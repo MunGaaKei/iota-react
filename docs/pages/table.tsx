@@ -6,25 +6,21 @@ const columns = [
 	{
 		field: "id",
 		fixed: "left",
-		width: "45px",
+		width: 40,
 	},
 	{
 		field: "name",
 		fixed: "left",
-		width: "80px",
 	},
 	{
 		field: "email",
-		width: "200px",
 	},
 	{
 		field: "phone",
-		width: "160px",
 	},
 	{
 		field: "gender",
 		title: "性别",
-		width: "80px",
 		align: "center",
 		sorter: true,
 		render: (value: number) => {
@@ -33,15 +29,14 @@ const columns = [
 	},
 	{
 		field: "birth",
-		width: "150px",
+		width: 160,
 	},
 	{
 		field: "address",
-		width: "500px",
+		width: 200,
 	},
 	{
 		field: "active",
-		width: "70px",
 		fixed: "right",
 		align: "center",
 		render: (value: boolean) => {
@@ -54,17 +49,19 @@ const columns = [
 	},
 	{
 		field: "none",
-		width: "140px",
 		renderHeader: (column) => {
 			return "自定义渲染头部";
 		},
 	},
 	{
 		field: "action",
-		width: "80px",
 		fixed: "right",
 		align: "center",
-		render: () => <Button className='bg-black-0'>操作</Button>,
+		render: () => (
+			<Button className='bg-black-0' size='small'>
+				操作
+			</Button>
+		),
 	},
 ] as IColumn[];
 
@@ -91,6 +88,7 @@ export default function Page() {
 				data={list}
 				columns={columns}
 				style={{ height: 400 }}
+				// resizable
 			></Table>
 		</>
 	);

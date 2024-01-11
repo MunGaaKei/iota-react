@@ -8,7 +8,6 @@ import Card from "./components/card";
 import Checkbox from "./components/checkbox";
 import Collapse from "./components/collapse";
 import Datepicker from "./components/datepicker";
-import Dialog from "./components/dialog";
 import Drawer from "./components/drawer";
 import Dropdown from "./components/dropdown";
 import Flex from "./components/flex";
@@ -19,6 +18,7 @@ import Input from "./components/input";
 import List from "./components/list";
 import Loading from "./components/loading";
 import Message from "./components/message";
+import Modal from "./components/modal";
 import Pagination from "./components/pagination";
 import Popup from "./components/popup";
 import Preview from "./components/preview";
@@ -42,7 +42,6 @@ export {
 	Checkbox,
 	Collapse,
 	Datepicker,
-	Dialog,
 	Drawer,
 	Dropdown,
 	Flex,
@@ -53,6 +52,7 @@ export {
 	List,
 	Loading,
 	Message,
+	Modal,
 	Pagination,
 	Popup,
 	Preview,
