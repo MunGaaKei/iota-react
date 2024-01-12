@@ -16,3 +16,9 @@ export interface PropsContent
 	extends Pick<Props, "title" | "hideCloseButton" | "children"> {
 	onHide: () => void;
 }
+
+export interface PropsHookModal extends Props {}
+
+export interface RefHookModal {
+	update: (props?: Props) => void;
+}

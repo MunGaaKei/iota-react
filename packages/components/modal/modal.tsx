@@ -45,7 +45,7 @@ function Modal(props: Props) {
 		...rest
 	} = props;
 	const [show, setShow] = useState(visible);
-	const [active, setActive] = useState(visible);
+	const [active, setActive] = useState(false);
 	const [bounced, setBounced] = useState(false);
 	const toggable = useRef(true);
 
@@ -79,11 +79,14 @@ function Modal(props: Props) {
 			toggable.current = true;
 			onClose?.();
 		}, 240);
-	}, []);
+	}, [closable]);
 
-	const handleBackdropClick = useCallback(function () {
-		backdropClosable && handleHide();
-	}, []);
+	const handleBackdropClick = useCallback(
+		function () {
+			backdropClosable && handleHide();
+		},
+		[closable, backdropClosable]
+	);
 
 	useEffect(() => {
 		visible ? handleShow() : handleHide();
@@ -94,7 +97,7 @@ function Modal(props: Props) {
 	return createPortal(
 		<div
 			className={classNames("i-backdrop-modal", {
-				"i-active": active,
+				"i-modal-active": active,
 			})}
 			onClick={handleBackdropClick}
 		>

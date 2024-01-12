@@ -1,6 +1,6 @@
 import { TOption, TOptions } from "@p/type";
 import { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
+import { Root, createRoot } from "react-dom/client";
 import type { RelativeOptions } from "./type";
 
 export function getPosition(
@@ -182,17 +182,19 @@ export function formatNumber(
 }
 
 export function renderNode(node: ReactNode, parent = document.body) {
-	const div = document.createElement("div");
+	let div: HTMLDivElement | null = document.createElement("div");
 	parent.append(div);
 
-	const root = createRoot(div);
+	let root: Root | null = createRoot(div);
 	const sto = setTimeout(() => {
-		root.render(node);
+		root?.render(node);
 	}, 0);
 
 	return () => {
 		div?.remove();
 		root?.unmount();
+		div = null;
+		root = null;
 		sto && clearTimeout(sto);
 	};
 }

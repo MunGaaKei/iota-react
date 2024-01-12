@@ -1,28 +1,35 @@
 import { renderNode } from "@p/js/utils";
-import { useReactive } from "ahooks";
-import Modal from "./modal";
-import { Props } from "./type";
+import { useRef } from "react";
+import HookModal from "./hookModal";
+import { Props, RefHookModal } from "./type";
 
-export default function useModal(props: Props) {
-	const { visible, onClose } = props;
-	const state = useReactive({
-		visible: false,
-	});
+export default function useModal() {
+	const ref = useRef<RefHookModal>(null);
 
-	const handleOpen = () => {
-		const unMount = renderNode(
-			<Modal {...props} visible={state.visible} onClose={handleClose} />
+	const handleOpen = (props: Props) => {
+		let unMount: any = renderNode(
+			<HookModal
+				ref={ref}
+				visible
+				{...props}
+				onClose={() => {
+					props.onClose?.();
+					unMount?.();
+					unMount = null;
+				}}
+			/>
 		);
 	};
 
-	const handleClose = () => {
-		onClose?.();
-		// unMount?.();
+	const handleUpdate = (props?: Props) => {
+		if (!ref.current) return;
+
+		const { update } = ref.current;
+		update(props);
 	};
 
 	return {
 		open: handleOpen,
-		close: handleClose,
-		update: () => {},
+		update: handleUpdate,
 	};
 }
