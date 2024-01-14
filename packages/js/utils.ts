@@ -1,3 +1,4 @@
+import { TFileType } from "@p/js/usePreview/type";
 import { TOption, TOptions } from "@p/type";
 import { ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
@@ -181,11 +182,11 @@ export function formatNumber(
 	return result.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
 }
 
-export function renderNode(node: ReactNode, parent = document.body) {
-	let div: HTMLDivElement | null = document.createElement("div");
-	parent.append(div);
+export function renderNode(node: ReactNode, container = document.body) {
+	const div: HTMLDivElement | null = document.createElement("div");
+	container.append(div);
 
-	let root: Root | null = createRoot(div);
+	const root: Root | null = createRoot(div);
 	const sto = setTimeout(() => {
 		root?.render(node);
 	}, 0);
@@ -193,8 +194,55 @@ export function renderNode(node: ReactNode, parent = document.body) {
 	return () => {
 		div?.remove();
 		root?.unmount();
-		div = null;
-		root = null;
 		sto && clearTimeout(sto);
 	};
+}
+
+export function getSuffixByUrl(url: string) {
+	return url.match(/\.([^\./\?]+)($|\?)/)?.[1];
+}
+
+export function getFileTypeBySuffix(suffix: string): TFileType {
+	switch (true) {
+		case ["jpg", "jpeg", "png", "webp", "svg"].includes(suffix):
+			return TFileType["IMAGE"];
+		case ["mp4", "avi"].includes(suffix):
+			return TFileType["VIDEO"];
+		default:
+			return TFileType["UNKNOWN"];
+	}
+}
+
+export function fullScreen(el: HTMLElement) {
+	el.requestFullscreen?.();
+}
+
+export function exitFullScreen() {
+	document.exitFullscreen?.();
+}
+
+export function formatTime(
+	time: number,
+	options?: {
+		zero?: boolean;
+		units?: string[];
+	}
+) {
+	const result: string[] = [];
+	const { zero = true, units = ["", ":", ":"] } = options || {};
+
+	const l = units.length;
+	let i = 0;
+
+	while (i < l) {
+		if (time <= 0 && i > 1) break;
+
+		const n = Math.round(time % 60);
+
+		time = Math.floor(time / 60);
+
+		result.unshift((zero && n < 10 ? `0${n}` : n) + units[i++]);
+	}
+
+	return result.join("");
 }

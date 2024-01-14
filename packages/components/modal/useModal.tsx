@@ -7,7 +7,7 @@ export default function useModal() {
 	const ref = useRef<RefHookModal>(null);
 
 	const handleOpen = (props: Props) => {
-		let unMount: any = renderNode(
+		const unMount = renderNode(
 			<HookModal
 				ref={ref}
 				visible
@@ -15,7 +15,6 @@ export default function useModal() {
 				onClose={() => {
 					props.onClose?.();
 					unMount?.();
-					unMount = null;
 				}}
 			/>
 		);

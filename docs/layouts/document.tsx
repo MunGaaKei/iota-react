@@ -28,7 +28,7 @@ export default function Document(): JSX.Element {
 				<h2>R</h2>
 			</Area.Item>
 			<Area.Item name='sider' className='pd-12'>
-				<Tree items={menus} style={{ minWidth: 240 }} />
+				<Tree items={menu} style={{ minWidth: 240 }} />
 			</Area.Item> */}
 			<Area.Item>
 				<div className='pd-12'>

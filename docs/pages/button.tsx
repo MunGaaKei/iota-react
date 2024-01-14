@@ -28,6 +28,9 @@ export default function button(): JSX.Element {
 				<Button className='bg-black'>你好</Button>
 				<Button className='bg-white'>你好</Button>
 			</Flex>
+			<Flex>
+				<Button.Toggle className='bg-aqua'>before</Button.Toggle>
+			</Flex>
 		</div>
 	);
 }

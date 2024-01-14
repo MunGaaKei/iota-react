@@ -40,9 +40,12 @@ function Modal(props: Props) {
 		width,
 		height,
 		customized,
+		fixed,
 		children,
+		style,
+		className,
 		onClose,
-		...rest
+		...restProps
 	} = props;
 	const [show, setShow] = useState(visible);
 	const [active, setActive] = useState(false);
@@ -96,9 +99,15 @@ function Modal(props: Props) {
 
 	return createPortal(
 		<div
-			className={classNames("i-backdrop-modal", {
-				"i-modal-active": active,
-			})}
+			className={classNames(
+				"i-backdrop-modal",
+				{
+					"i-modal-active": active,
+					fixed,
+				},
+				className
+			)}
+			style={style}
 			onClick={handleBackdropClick}
 		>
 			<div
@@ -110,7 +119,7 @@ function Modal(props: Props) {
 					height,
 				}}
 				onClick={(e) => e.stopPropagation()}
-				{...rest}
+				{...restProps}
 			>
 				{customized ? (
 					children

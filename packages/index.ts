@@ -21,7 +21,6 @@ import Message from "./components/message";
 import Modal from "./components/modal";
 import Pagination from "./components/pagination";
 import Popup from "./components/popup";
-import Preview from "./components/preview";
 import Progress from "./components/progress";
 import Radio from "./components/radio";
 import Select from "./components/select";
@@ -32,6 +31,8 @@ import Tag from "./components/tag";
 import Text from "./components/text";
 import Tree from "./components/tree";
 import Upload from "./components/upload";
+import Video from "./components/video";
+import usePreview from "./js/usePreview";
 
 export {
 	Affix,
@@ -55,7 +56,6 @@ export {
 	Modal,
 	Pagination,
 	Popup,
-	Preview,
 	Progress,
 	Radio,
 	Select,
@@ -66,4 +66,6 @@ export {
 	Text,
 	Tree,
 	Upload,
+	Video,
+	usePreview,
 };

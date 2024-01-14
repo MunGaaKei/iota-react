@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import Highlight from "./highlight";
 import "./index.scss";
 import Number from "./number";
+import Time from "./time";
 import { Props } from "./type";
 
 const Text = (props: Props): JSX.Element => {
@@ -46,5 +47,6 @@ const Text = (props: Props): JSX.Element => {
 
 Text.Highlight = Highlight;
 Text.Number = Number;
+Text.Time = Time;
 
 export default Text;

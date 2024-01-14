@@ -30,3 +30,11 @@ interface BaseProps {
 export type Props = BaseProps &
 	Omit<ButtonHTMLAttributes<HTMLElement>, "type"> &
 	AnchorHTMLAttributes<HTMLElement>;
+
+export interface PropsToggle extends Props {
+	active?: boolean;
+	activeClass?: string;
+	after?: ReactNode;
+	disabled?: boolean;
+	onToggle?: (active?: boolean) => void;
+}

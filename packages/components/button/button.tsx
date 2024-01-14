@@ -1,7 +1,8 @@
 import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
-import { createElement, forwardRef } from "react";
+import { createElement } from "react";
 import "./index.scss";
+import Toggle from "./toggle";
 import { Props } from "./type";
 
 const formatClass = ({
@@ -26,7 +27,7 @@ const formatClass = ({
 		disabled,
 	});
 
-const Button = forwardRef<HTMLElement, Props>((props, ref) => {
+const Button = (props: Props) => {
 	const {
 		as: As = "a",
 		children,
@@ -40,6 +41,8 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		ripple = true,
 		...rest
 	} = props;
+
+	if (!children) return <></>;
 
 	ripple && useRipple();
 
@@ -65,7 +68,6 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		return createElement(
 			As,
 			{
-				ref,
 				href,
 				...attrs,
 				...rest,
@@ -83,6 +85,8 @@ const Button = forwardRef<HTMLElement, Props>((props, ref) => {
 		},
 		childNodes
 	);
-});
+};
+
+Button.Toggle = Toggle;
 
 export default Button;

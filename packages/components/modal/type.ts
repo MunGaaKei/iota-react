@@ -9,6 +9,7 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	width?: string | number;
 	height?: string | number;
 	customized?: boolean;
+	fixed?: boolean;
 	onClose?: () => void;
 }
 

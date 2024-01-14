@@ -1,7 +1,6 @@
 .i-backdrop-modal {
-	position: fixed;
+	position: absolute;
 	inset: 0;
-	padding: 12px;
 	z-index: 100;
 	pointer-events: none;
 	background: rgba(0, 0, 0, 0.6);
@@ -23,7 +22,6 @@
 	max-width: 100%;
 	max-height: 100%;
 	overflow-x: hidden;
-	box-shadow: var(--shadow);
 	border-radius: var(--radius);
 	transform: translate(0, 12px);
 	transition: var(--transition);

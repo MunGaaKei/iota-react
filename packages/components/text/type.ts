@@ -19,3 +19,9 @@ export interface TextNumber extends Props {
 	duration?: number;
 	easing?: (x: number) => number;
 }
+
+export interface TextTime extends Props {
+	time?: number;
+	zero?: boolean;
+	units?: string[];
+}
