@@ -1,7 +1,7 @@
 export default `import "./index.scss";
-import { Props } from "./type";
+import { I{{name}} } from "./type";
 
-const {{name}} = (props: Props): JSX.Element => {
+const {{name}} = (props: I{{name}}): JSX.Element => {
 	return <></>;
 };
 

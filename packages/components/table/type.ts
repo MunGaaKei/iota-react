@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export type IData = {} & Record<string, any>;
+export type IData = Record<string, any>;
 
 export type TWidth = {
 	width?: string;
@@ -18,7 +18,7 @@ export type IColumn = {
 	renderHeader?: (column?: IColumn, index?: number) => ReactNode;
 } & TWidth;
 
-export interface Props
+export interface ITable
 	extends Pick<HTMLAttributes<HTMLDivElement>, "style" | "className"> {
 	data: IData[];
 	columns?: IColumn[];
@@ -36,13 +36,13 @@ export interface Props
 	) => void;
 }
 
-export interface IRow extends Pick<Props, "onCellClick" | "onRowClick"> {
+export interface IRow extends Pick<ITable, "onCellClick" | "onRowClick"> {
 	data: IData;
 	columns: IColumn[];
 	row: number;
 }
 
-export interface ICol extends Pick<Props, "onCellClick"> {
+export interface ICol extends Pick<ITable, "onCellClick"> {
 	column: IColumn;
 	data: IData;
 	row: number;

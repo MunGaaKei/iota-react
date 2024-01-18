@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface IDrawer extends HTMLAttributes<HTMLDivElement> {
 	visible?: boolean;
 	position?: "top" | "left" | "right" | "bottom";
 	header?: ReactNode;

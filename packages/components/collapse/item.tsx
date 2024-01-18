@@ -1,5 +1,5 @@
-import { PropsItem } from "./type";
+import { ICollapseItem } from "./type";
 
-export default function Item(props: PropsItem) {
+export default function Item(props: ICollapseItem) {
 	return <></>;
 }

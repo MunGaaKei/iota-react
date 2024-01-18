@@ -1,4 +1,4 @@
-import { Button, Flex, Image } from "@p";
+import { Badge, Button, Flex, Image } from "@p";
 import { useState } from "react";
 
 export default function Page() {
@@ -15,10 +15,14 @@ export default function Page() {
 				<Image size={40} className='bg-yellow' round>
 					😊
 				</Image>
+				<Badge content={5} round contentClass='bg-red'>
+					<Image size={40} className='bg-yellow' round>
+						😊
+					</Image>
+				</Badge>
 				<Image src='404'></Image>
 			</Flex>
-			<Flex gap={12} className='mt-12'>
-				<Image.List />
+			<Flex gap={12} className='my-12'>
 				<Button
 					onClick={() => {
 						setI((n) => n + 1);

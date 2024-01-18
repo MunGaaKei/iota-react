@@ -1,7 +1,7 @@
 import { BaseInput } from "@p/type";
 import { CSSProperties, ReactNode } from "react";
 
-export interface Props
+export interface IProgress
 	extends Omit<BaseInput, "value" | "hideClear" | "onChange"> {
 	name?: string;
 	value?: number;

@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface Props
+export interface IPagination
 	extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
 	page?: number;
 	total?: number;
@@ -11,5 +11,11 @@ export interface Props
 	next?: ReactNode;
 	simple?: boolean;
 	jumper?: boolean;
-	onChange?: (page: number) => void;
+	renderPage?: (i: number) => ReactNode;
+	onChange?: (page?: number) => void;
+}
+
+export interface IPageItem
+	extends Pick<IPagination, "page" | "children" | "onChange"> {
+	active?: boolean;
 }

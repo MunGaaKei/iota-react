@@ -1,46 +1,16 @@
 import {
 	KeyboardArrowLeftRound,
 	KeyboardArrowRightRound,
-	MoreHorizRound,
 } from "@ricons/material";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../icon";
-import Loading from "../loading";
+import Ellipsis from "./ellipsis";
 import "./index.scss";
-import { Props } from "./type";
+import Page from "./page";
+import { IPagination } from "./type";
 
-const Page = (props: any) => {
-	const { page, active, children, onChange } = props;
-	const [loading, setLoading] = useState(false);
-
-	const handleClick = async () => {
-		if (active || loading) return;
-
-		setLoading(true);
-		await onChange(page);
-		setLoading(false);
-	};
-
-	return (
-		<a
-			className={classNames("i-page", {
-				"i-page-active": active,
-				"i-page-loading": loading,
-				"i-page-disabled": false,
-			})}
-			data-page={page}
-			onClick={handleClick}
-		>
-			{loading && <Loading />}
-			{children}
-		</a>
-	);
-};
-
-const Ellipsis = () => <Icon icon={<MoreHorizRound />} className='color-7' />;
-
-const Pagination = (props: Props): JSX.Element => {
+const Pagination = (props: IPagination): JSX.Element => {
 	const {
 		page: defaultPage = 1,
 		size = 5,
@@ -51,6 +21,7 @@ const Pagination = (props: Props): JSX.Element => {
 		simple,
 		jumper,
 		className,
+		renderPage = (i) => i,
 		onChange,
 		...restProps
 	} = props;
@@ -73,11 +44,12 @@ const Pagination = (props: Props): JSX.Element => {
 
 	if (totalPage <= page && page === 1) return <></>;
 
-	const handlePageChange = async (p: number) => {
+	const handlePageChange = async (p?: number) => {
 		if (!onChange || loading) return;
 		setLoading(true);
 
 		return new Promise<void>(async (resolve) => {
+			if (p === undefined) return;
 			await onChange(p);
 			setPage(p);
 			setLoading(false);
@@ -97,7 +69,7 @@ const Pagination = (props: Props): JSX.Element => {
 
 			{start > 1 && (
 				<Page page={1} onChange={handlePageChange}>
-					1
+					{renderPage(1)}
 				</Page>
 			)}
 
@@ -111,7 +83,7 @@ const Pagination = (props: Props): JSX.Element => {
 						active={p === page}
 						onChange={handlePageChange}
 					>
-						{p}
+						{renderPage(p)}
 					</Page>
 				);
 			})}
@@ -120,7 +92,7 @@ const Pagination = (props: Props): JSX.Element => {
 
 			{end < totalPage && (
 				<Page page={totalPage} onChange={handlePageChange}>
-					{totalPage}
+					{renderPage(totalPage)}
 				</Page>
 			)}
 

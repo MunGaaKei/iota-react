@@ -3,9 +3,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
-import { Props } from "./type";
+import { IDrawer } from "./type";
 
-export default function Drawer(props: Props) {
+export default function Drawer(props: IDrawer) {
 	const {
 		visible,
 		position = "left",

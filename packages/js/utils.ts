@@ -2,12 +2,12 @@ import { TFileType } from "@p/js/usePreview/type";
 import { TOption, TOptions } from "@p/type";
 import { ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
-import type { RelativeOptions } from "./type";
+import type { TRelativeOptions } from "./type";
 
 export function getPosition(
 	$source?: HTMLElement | null,
 	$popup?: HTMLElement | null,
-	options: RelativeOptions = {}
+	options: TRelativeOptions = {}
 ): [x: number, y: number] {
 	const {
 		refWindow = true,

@@ -1,7 +1,7 @@
-import { PropsItem } from "./type";
+import { ITabItem } from "./type";
 
-const TabItem = (props: PropsItem) => {
+const Item = (props: ITabItem) => {
 	return <></>;
 };
 
-export default TabItem;
+export default Item;

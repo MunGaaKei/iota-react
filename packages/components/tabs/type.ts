@@ -1,18 +1,21 @@
-import { HTMLAttributes, ReactNode } from "react";
+import {
+	ForwardRefExoticComponent,
+	HTMLAttributes,
+	ReactNode,
+	RefAttributes,
+} from "react";
+import TabItem from "./item";
 
-export interface ITab {
+export interface ITabItem {
 	key?: string;
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
 	keepalive?: boolean;
-}
-
-export interface PropsItem extends ITab {
 	children?: ReactNode;
 }
 
-export interface Props extends HTMLAttributes<HTMLDivElement> {
+export interface ITabs extends HTMLAttributes<HTMLDivElement> {
 	active?: string;
 	prepend?: ReactNode;
 	append?: ReactNode;
@@ -23,6 +26,12 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
 	onTabChange?: (to?: string, from?: string) => void;
 }
 
-export interface ITabs {
+export interface RefTabs {
 	open: (key: string) => void;
 }
+
+export type CompositionTabs = ForwardRefExoticComponent<
+	ITabs & RefAttributes<HTMLDivElement>
+> & {
+	Item: typeof TabItem;
+};

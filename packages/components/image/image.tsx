@@ -7,9 +7,9 @@ import Icon from "../icon";
 import Loading from "../loading";
 import "./index.scss";
 import List from "./list";
-import { Props } from "./type";
+import { IImage } from "./type";
 
-const Image = (props: Props): JSX.Element => {
+const Image = (props: IImage): JSX.Element => {
 	const {
 		src,
 		round,

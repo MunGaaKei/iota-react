@@ -1,7 +1,7 @@
 import type { TOption, TValidate, TValue } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
-export interface Props
+export interface ICheckbox
 	extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">,
 		TValidate {
 	label?: ReactNode;
@@ -18,11 +18,12 @@ export interface Props
 	) => void;
 }
 
-export interface PropsItem
+export interface ICheckboxItem
 	extends Omit<InputHTMLAttributes<HTMLElement>, "value" | "onChange">,
 		TValidate {
 	type?: "default" | "switch" | "button";
 	label?: ReactNode;
 	value?: boolean;
+	partof?: boolean;
 	onChange?: (value?: boolean, e?: ChangeEvent<HTMLInputElement>) => void;
 }

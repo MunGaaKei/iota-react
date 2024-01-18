@@ -1,8 +1,8 @@
 import { HTMLAttributes } from "react";
-import { FormStore } from "./useForm";
+import { IFormHandler } from "./useForm";
 
-export interface Props extends HTMLAttributes<HTMLFormElement> {
-	form?: FormStore;
+export interface IForm extends HTMLAttributes<HTMLFormElement> {
+	form?: IFormHandler;
 	rules?: { [key: string]: (value: any) => string | boolean };
 	initialValues?: any;
 	width?: string | number;

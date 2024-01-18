@@ -1,9 +1,9 @@
 import { formatTime } from "@p/js/utils";
 import { useMemo } from "react";
 import Text from "./text";
-import { TextTime } from "./type";
+import { ITextTime } from "./type";
 
-export default function Number(props: TextTime) {
+export default function Number(props: ITextTime) {
 	const { time, zero, units, ...restProps } = props;
 
 	const text = useMemo(() => {

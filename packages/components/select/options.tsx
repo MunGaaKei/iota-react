@@ -2,23 +2,9 @@ import { Icon, List } from "@p";
 import { TOption, TValue } from "@p/type";
 import { InboxTwotone } from "@ricons/material";
 import { ReactNode } from "react";
+import { IDisplayValues, ISelectOptions } from "./type";
 
-interface IOptions {
-	multiple?: boolean;
-	value?: TValue;
-	options: TOption[];
-	maxDisplay?: number;
-	filter?: boolean;
-	empty?: ReactNode;
-	onSelect?: (v: TValue, option: TOption) => void;
-}
-
-interface IDisplayValues {
-	values?: ReactNode[];
-	max: number;
-}
-
-export const Options = (props: IOptions) => {
+export const Options = (props: ISelectOptions) => {
 	const {
 		value: val,
 		options,

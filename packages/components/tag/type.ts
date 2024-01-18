@@ -1,6 +1,6 @@
 import { HTMLAttributes, MouseEvent } from "react";
 
-export interface Props extends HTMLAttributes<HTMLSpanElement> {
+export interface ITag extends HTMLAttributes<HTMLSpanElement> {
 	dot?: boolean;
 	dotClass?: string;
 	outline?: boolean;

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { cloneElement, isValidElement } from "react";
 import "./index.scss";
-import { Props } from "./type";
+import { IIcon } from "./type";
 
-const Icon = (props: Props) => {
+const Icon = (props: IIcon) => {
 	const {
 		icon,
 		size = "1.425em",

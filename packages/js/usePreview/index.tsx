@@ -4,12 +4,12 @@ import { useRef } from "react";
 import { renderNode } from "../utils";
 import Content from "./content";
 import "./index.scss";
-import { Props } from "./type";
+import { IPreview } from "./type";
 
 export default function usePreview() {
 	const ref = useRef<RefHookModal>(null);
 
-	const preview = (config: Props) => {
+	const preview = (config: IPreview) => {
 		const { items, backdropClosable, onClose, ...restProps } = config;
 
 		const handleClose = () => {

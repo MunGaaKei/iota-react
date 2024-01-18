@@ -2,11 +2,7 @@ import { uniqueId } from "lodash";
 import PubSub from "pubsub-js";
 import { useRef } from "react";
 
-const presetValidators = {
-	required: (val?: any) => ([undefined, ""].includes(val) ? "*" : false),
-};
-
-export class FormStore {
+export class IFormHandler {
 	readonly name?: string;
 	state: { [key: string]: any } = {};
 	rules?: { [key: string]: (val?: any) => boolean | string } = {};
@@ -106,13 +102,13 @@ export class FormStore {
 	}
 }
 
-export default function useForm(form?: FormStore) {
-	const formRef = useRef<FormStore>();
+export default function useForm(form?: IFormHandler) {
+	const formRef = useRef<IFormHandler>();
 	if (!formRef.current) {
 		if (form) {
 			formRef.current = form;
 		} else {
-			formRef.current = new FormStore().getInstance() as FormStore;
+			formRef.current = new IFormHandler().getInstance() as IFormHandler;
 		}
 	}
 	return formRef.current;

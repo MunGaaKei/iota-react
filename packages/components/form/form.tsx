@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { useEffect } from "react";
 import "./index.scss";
-import { Props } from "./type";
+import { IForm } from "./type";
 import useForm from "./useForm";
 
-const Form = (props: Props): JSX.Element => {
+const Form = (props: IForm): JSX.Element => {
 	const {
 		form,
 		rules = {},

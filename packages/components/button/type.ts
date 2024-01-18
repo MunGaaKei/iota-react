@@ -6,8 +6,9 @@ import {
 	RefAttributes,
 } from "react";
 import { LinkProps } from "react-router-dom";
+import Toggle from "./toggle";
 
-interface BaseProps {
+interface BaseButtonProps {
 	as?:
 		| "a"
 		| "button"
@@ -27,14 +28,20 @@ interface BaseProps {
 	ripple?: boolean;
 }
 
-export type Props = BaseProps &
-	Omit<ButtonHTMLAttributes<HTMLElement>, "type"> &
-	AnchorHTMLAttributes<HTMLElement>;
+export interface IButton
+	extends BaseButtonProps,
+		Omit<ButtonHTMLAttributes<HTMLElement>, "type">,
+		AnchorHTMLAttributes<HTMLElement> {}
 
-export interface PropsToggle extends Props {
+export interface IButtonToggle extends IButton {
 	active?: boolean;
 	activeClass?: string;
 	after?: ReactNode;
 	disabled?: boolean;
 	onToggle?: (active?: boolean) => void;
+}
+
+export interface CompositionButton
+	extends ForwardRefExoticComponent<IButton & RefAttributes<HTMLElement>> {
+	Toggle: typeof Toggle;
 }

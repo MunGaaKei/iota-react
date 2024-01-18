@@ -1,7 +1,7 @@
 import { BaseElement } from "@p/type";
 import { MouseEvent } from "react";
 
-export interface Props extends BaseElement {
+export interface IAffix extends BaseElement {
 	position?: "fixed" | "absolute" | "sticky";
 	left?: string | number;
 	top?: string | number;

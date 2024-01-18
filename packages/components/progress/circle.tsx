@@ -1,8 +1,8 @@
 import Text from "../text";
-import { Props } from "./type";
+import { IProgress } from "./type";
 
 export default function Circle(
-	props: Pick<Props, "value" | "height" | "size">
+	props: Pick<IProgress, "value" | "height" | "size">
 ) {
 	const { value, height = 40, size = 8 } = props;
 

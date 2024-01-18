@@ -1,7 +1,7 @@
 import { HTMLAttributes } from "react";
-import { Props as PropsProgress } from "../progress/type";
+import { IProgress } from "../progress/type";
 
-export interface Props extends HTMLAttributes<HTMLVideoElement> {
+export interface IVideo extends HTMLAttributes<HTMLVideoElement> {
 	src?: string;
 	controls?: boolean;
 	autoplay?: boolean;
@@ -9,13 +9,15 @@ export interface Props extends HTMLAttributes<HTMLVideoElement> {
 	volume?: number;
 	height?: number | string;
 	width?: number | string;
-	timeProgressProps?: PropsProgress;
-	volumeProgressProps?: PropsProgress;
+	useOriginControls?: boolean;
+	timeProgressProps?: IProgress;
+	volumeProgressProps?: IProgress;
 }
 
 export interface RefVideo {
 	play: () => void;
 	pause: () => void;
+	stop: () => void;
 	fullscreen: (full?: boolean) => void;
 	getVideo: () => HTMLVideoElement | null;
 }

@@ -2,9 +2,9 @@ import classNames from "classnames";
 import { forwardRef } from "react";
 import "./area.scss";
 import Item from "./item";
-import { IArea, Props } from "./type";
+import { CompositionArea, IArea } from "./type";
 
-const Area = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
+const Area = forwardRef<HTMLDivElement, IArea>((props, ref): JSX.Element => {
 	const { layout = "naruto", gap, style, className, children } = props;
 
 	return (
@@ -16,7 +16,7 @@ const Area = forwardRef<HTMLDivElement, Props>((props, ref): JSX.Element => {
 			{children}
 		</div>
 	);
-}) as IArea;
+}) as CompositionArea;
 
 Area.Item = Item;
 

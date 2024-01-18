@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { ChangeEvent } from "react";
-import { PropsItem } from "./type";
+import { IRadioItem } from "./type";
 
-export default function RadioItem(props: PropsItem) {
+export default function RadioItem(props: IRadioItem) {
 	const {
 		type = "default",
 		name,

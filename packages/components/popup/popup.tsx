@@ -1,6 +1,5 @@
 import { getPosition } from "@p/js/utils";
 import { useClickAway, useCreation, useReactive } from "ahooks";
-import classNames from "classnames";
 import {
 	CSSProperties,
 	Children,
@@ -15,16 +14,16 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import "./index.scss";
-import { Props } from "./type";
+import { IPopup } from "./type";
 
 type TTimeout = ReturnType<typeof setTimeout>;
 
-type PropsContent = { style?: CSSProperties; children?: ReactNode } & Pick<
-	Props,
+type TContent = { style?: CSSProperties; children?: ReactNode } & Pick<
+	IPopup,
 	"getContainer"
 >;
 
-const Content = forwardRef<HTMLDivElement, PropsContent>((props, ref) => {
+const Content = forwardRef<HTMLDivElement, TContent>((props, ref) => {
 	const { getContainer = () => document.body, children, ...rest } = props;
 
 	const content = (
@@ -36,7 +35,7 @@ const Content = forwardRef<HTMLDivElement, PropsContent>((props, ref) => {
 	return createPortal(content, getContainer());
 });
 
-export default function Popup(props: Props) {
+export default function Popup(props: IPopup) {
 	const {
 		visible = false,
 		content,
@@ -80,7 +79,7 @@ export default function Popup(props: Props) {
 
 		state.toggling = setTimeout(() => {
 			const [left, top] = getPosition(
-				triggerRef.current?.closest(".i-popup-trigger"),
+				triggerRef.current,
 				contentRef.current,
 				{
 					position,
@@ -162,9 +161,7 @@ export default function Popup(props: Props) {
 
 	useLayoutEffect(() => {
 		if (!fitWidth || !state.show) return;
-		const width = (
-			triggerRef.current?.closest(".i-popup-trigger") as HTMLElement
-		)?.offsetWidth;
+		const width = triggerRef.current?.offsetWidth;
 		state.style = { ...state.style, width };
 	}, [state.show]);
 
@@ -181,8 +178,7 @@ export default function Popup(props: Props) {
 
 				if (typeof type === "function") return child;
 
-				const { className: inheritClass, ...rest } = props;
-				const className = classNames(inheritClass, "i-popup-trigger");
+				const { className, ...rest } = props;
 
 				return cloneElement(child, {
 					ref: triggerRef,

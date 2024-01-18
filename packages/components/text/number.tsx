@@ -1,9 +1,9 @@
 import { animate, formatNumber } from "@p/js/utils";
 import { useEffect, useMemo, useState } from "react";
 import Text from "./text";
-import { TextNumber } from "./type";
+import { ITextNumber } from "./type";
 
-export default function Number(props: TextNumber) {
+export default function Number(props: ITextNumber) {
 	const {
 		count,
 		to,

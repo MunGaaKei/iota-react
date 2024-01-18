@@ -1,7 +1,7 @@
 import "./index.scss";
-import { Props } from "./type";
+import { IUpload } from "./type";
 
-const Upload = (props: Props): JSX.Element => {
+const Upload = (props: IUpload): JSX.Element => {
 	return <></>;
 };
 

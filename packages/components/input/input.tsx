@@ -17,9 +17,9 @@ import "./index.scss";
 import Number from "./number";
 import Range from "./range";
 import Textarea from "./textarea";
-import type { CompositionInput, Props } from "./type";
+import type { CompositionInput, IInput } from "./type";
 
-const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
+const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 	const {
 		type = "text",
 		label,

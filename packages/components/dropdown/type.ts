@@ -1,5 +1,5 @@
-import type { Props as PopupProps } from "../popup/type";
+import type { IPopup } from "../popup/type";
 
-export interface Props extends PopupProps {
+export interface IDropdown extends IPopup {
 	width?: string | number;
 }

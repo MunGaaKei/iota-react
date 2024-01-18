@@ -1,3 +1,5 @@
 export default function List(props) {
-	return <></>;
+	const { children } = props;
+
+	return <div>{children}</div>;
 }

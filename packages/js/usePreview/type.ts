@@ -21,7 +21,7 @@ export enum TFileType {
 	UNKNOWN = "UNKNOWN",
 }
 
-export interface Props {
+export interface IPreview {
 	items: (TPreviewItem | string)[];
 	initial?: number;
 	controls?: boolean;

@@ -2,10 +2,10 @@ import classNames from "classnames";
 import { Children, useMemo } from "react";
 import { Banner, Footer, Header, Tailer } from "./area";
 import "./index.scss";
-import { Props } from "./type";
+import { ICard } from "./type";
 
-const Card = (props: Props): JSX.Element => {
-	const { shadow = true, border = true, style, className, children } = props;
+const Card = (props: ICard): JSX.Element => {
+	const { shadow = true, border, style, className, children } = props;
 
 	const slots: any = useMemo(() => {
 		const nodes = {};

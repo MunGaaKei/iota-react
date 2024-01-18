@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import "./index.scss";
-import { Props } from "./type";
+import { ILoading } from "./type";
 
-const Loading = (props: Props): JSX.Element => {
+const Loading = (props: ILoading): JSX.Element => {
 	const { icon, text, absolute = true, className, ...rest } = props;
 
 	return (

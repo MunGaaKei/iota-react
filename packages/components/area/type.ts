@@ -6,7 +6,7 @@ import {
 } from "react";
 import Item from "./item";
 
-export interface Props {
+export interface IArea {
 	layout?: "naruto" | "sasuke" | "goku";
 	gap?: number | string;
 	style?: CSSProperties;
@@ -15,7 +15,7 @@ export interface Props {
 	onToggle?: (collapsed?: boolean) => void;
 }
 
-export interface IArea
-	extends ForwardRefExoticComponent<Props & RefAttributes<HTMLInputElement>> {
+export interface CompositionArea
+	extends ForwardRefExoticComponent<IArea & RefAttributes<HTMLDivElement>> {
 	Item: typeof Item;
 }

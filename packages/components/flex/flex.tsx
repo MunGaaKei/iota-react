@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { useMemo } from "react";
 import "./index.scss";
-import { Props } from "./type";
+import { IFlex } from "./type";
 
-const Flex = (props: Props): JSX.Element => {
+const Flex = (props: IFlex): JSX.Element => {
 	const {
 		as: Component = "div",
 		align,

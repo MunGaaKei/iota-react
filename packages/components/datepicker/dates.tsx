@@ -9,11 +9,11 @@ import { ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 import Icon from "../icon";
 import InfiniteScroll from "../infinitescroll";
 import Helpericon from "../utils/helpericon";
-import { BaseDates } from "./type";
+import { IBaseDates } from "./type";
 
 const MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-const Panel = (props: BaseDates) => {
+const Panel = (props: IBaseDates) => {
 	const {
 		value,
 		unitYear,
@@ -182,7 +182,7 @@ const Panel = (props: BaseDates) => {
 };
 
 const Dates = (
-	props: BaseDates & {
+	props: IBaseDates & {
 		month: any;
 	}
 ) => {
@@ -261,7 +261,7 @@ const Dates = (
 };
 
 const YearMonth = (
-	props: BaseDates & {
+	props: IBaseDates & {
 		onClick?: () => void;
 	}
 ) => {

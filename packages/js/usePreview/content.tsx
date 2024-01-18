@@ -12,9 +12,9 @@ import {
 } from "@ricons/material";
 import { useReactive } from "ahooks";
 import { ReactNode, useMemo } from "react";
-import { Props, TFileType, TPreviewItem } from "./type";
+import { IPreview, TFileType, TPreviewItem } from "./type";
 
-export default function Content(props: Props) {
+export default function Content(props: IPreview) {
 	const {
 		items = [],
 		initial = 0,

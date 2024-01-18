@@ -2,9 +2,9 @@ import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { MouseEvent, useEffect } from "react";
 import Button from "./button";
-import { PropsToggle } from "./type";
+import { IButtonToggle } from "./type";
 
-export default function Toggle(props: PropsToggle) {
+export default function Toggle(props: IButtonToggle) {
 	const {
 		active,
 		activeClass,
@@ -31,7 +31,7 @@ export default function Toggle(props: PropsToggle) {
 
 		setTimeout(() => {
 			state.done = true;
-		}, 0);
+		}, 16);
 	});
 
 	const handleClick = (e: MouseEvent<HTMLElement>) => {

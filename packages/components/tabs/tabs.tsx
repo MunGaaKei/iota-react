@@ -13,9 +13,9 @@ import {
 } from "react";
 import "./index.scss";
 import TabItem from "./item";
-import { ITab, ITabs, Props } from "./type";
+import { CompositionTabs, ITabItem, ITabs, RefTabs } from "./type";
 
-const Tabs = forwardRef<ITabs, Props>((props, ref) => {
+const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const {
 		active,
 		prepend,
@@ -43,7 +43,7 @@ const Tabs = forwardRef<ITabs, Props>((props, ref) => {
 		cache: [],
 	});
 
-	const tabs: ITab[] = useMemo(
+	const tabs: ITabItem[] = useMemo(
 		() =>
 			Children.map(children, (node, i) => {
 				const { key, props: nodeProps } = node as {
@@ -58,7 +58,7 @@ const Tabs = forwardRef<ITabs, Props>((props, ref) => {
 					content: children || content,
 					keepalive,
 				};
-			}) as ITab[],
+			}) as ITabItem[],
 		[children]
 	);
 
@@ -188,7 +188,7 @@ const Tabs = forwardRef<ITabs, Props>((props, ref) => {
 			</div>
 		</div>
 	);
-}) as any;
+}) as CompositionTabs;
 
 Tabs.Item = TabItem;
 

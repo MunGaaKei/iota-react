@@ -2,9 +2,9 @@ import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ChangeEvent, useEffect } from "react";
-import { PropsItem } from "./type";
+import { ICheckboxItem } from "./type";
 
-export default function CheckboxItem(props: PropsItem) {
+export default function CheckboxItem(props: ICheckboxItem) {
 	const {
 		type = "default",
 		label,
@@ -15,6 +15,7 @@ export default function CheckboxItem(props: PropsItem) {
 		status = "normal",
 		message,
 		disabled,
+		partof,
 		children,
 		onChange,
 		...restProps
@@ -64,7 +65,10 @@ export default function CheckboxItem(props: PropsItem) {
 			<input
 				type='checkbox'
 				name={name}
-				className={classNames("i-checkbox-input", `i-checkbox-${type}`)}
+				className={classNames("i-checkbox-input", {
+					[`i-checkbox-${type}`]: !partof,
+					"i-checkbox-partof": partof,
+				})}
 				checked={state.value}
 				disabled={disabled}
 				onChange={handleChange}

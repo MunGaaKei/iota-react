@@ -7,9 +7,9 @@ import { ReactNode, useMemo } from "react";
 import "../../css/input.scss";
 import "./index.scss";
 import CheckboxItem from "./item";
-import type { Props } from "./type";
+import type { ICheckbox } from "./type";
 
-function Checkbox(props: Props) {
+function Checkbox(props: ICheckbox) {
 	const {
 		label,
 		name,

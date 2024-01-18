@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from "react";
 
-export interface Props extends HTMLAttributes<HTMLImageElement> {
+export interface IImage extends HTMLAttributes<HTMLImageElement> {
 	src?: string;
 	alt?: string;
 	round?: boolean;
@@ -9,7 +9,7 @@ export interface Props extends HTMLAttributes<HTMLImageElement> {
 	fallback?: ReactNode;
 }
 
-export interface ImageList {
+export interface IImageList {
 	items: string[];
 	gap?: number | string;
 	round?: boolean;

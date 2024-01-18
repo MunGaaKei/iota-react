@@ -18,9 +18,9 @@ import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
 import { DisplayValues, Options, activeLabels } from "./options";
-import { Props } from "./type";
+import { ISelect } from "./type";
 
-const Select = forwardRef<HTMLInputElement, Props>((props, ref) => {
+const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	const {
 		type = "text",
 		name,

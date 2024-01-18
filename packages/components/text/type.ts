@@ -1,6 +1,13 @@
-import { CSSProperties, ReactNode } from "react";
+import {
+	CSSProperties,
+	ForwardRefExoticComponent,
+	ReactNode,
+	RefAttributes,
+} from "react";
+import Number from "./number";
+import Time from "./time";
 
-export interface Props {
+export interface IText {
 	as?: keyof JSX.IntrinsicElements;
 	size?: string | number;
 	decoration?: string;
@@ -11,7 +18,7 @@ export interface Props {
 	children?: ReactNode;
 }
 
-export interface TextNumber extends Props {
+export interface ITextNumber extends IText {
 	count?: number;
 	to?: number;
 	decimal?: number;
@@ -20,8 +27,14 @@ export interface TextNumber extends Props {
 	easing?: (x: number) => number;
 }
 
-export interface TextTime extends Props {
+export interface ITextTime extends IText {
 	time?: number;
 	zero?: boolean;
 	units?: string[];
+}
+
+export interface CompositionSwiper
+	extends ForwardRefExoticComponent<IText & RefAttributes<HTMLElement>> {
+	Number: typeof Number;
+	Time: typeof Time;
 }

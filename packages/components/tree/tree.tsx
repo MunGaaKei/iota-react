@@ -1,44 +1,25 @@
 import { useReactive } from "ahooks";
-import classNames from "classnames";
 import "./index.scss";
-import { TreeItem } from "./item";
-import { Props } from "./type";
+import TreeList from "./list";
+import { ITree } from "./type";
 
-function Tree(props: Props): JSX.Element {
-	const { items = [], depth = 0, round, onItemClick, ...rest } = props;
+function Tree(props: ITree) {
+	const { selected = [], selectable, onItemSelect, ...restProps } = props;
 	const state = useReactive({
-		active: [],
+		selected,
 	});
 
+	const handleSelect = (key: string) => {
+		if (!selectable) return;
+		state.selected = [key];
+	};
+
 	return (
-		<div
-			className={classNames("i-tree", {
-				"i-tree-round": round,
-			})}
-			{...rest}
-		>
-			{items.map((item, i) => {
-				const { key, type, title } = item;
-				const index = key || `${depth}-${i}`;
-
-				if (type === "title") {
-					return (
-						<div key={index} className='i-tree-group-title'>
-							{title}
-						</div>
-					);
-				}
-
-				return (
-					<TreeItem
-						key={index}
-						item={item}
-						depth={depth}
-						onItemClick={onItemClick}
-					/>
-				);
-			})}
-		</div>
+		<TreeList
+			selected={state.selected}
+			onItemSelect={handleSelect}
+			{...restProps}
+		/>
 	);
 }
 

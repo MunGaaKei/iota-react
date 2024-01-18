@@ -1,6 +1,6 @@
 import { CSSProperties, ReactNode } from "react";
 
-export interface Props {
+export interface IInfiniteScroll {
 	hasPrev?: boolean;
 	hasNext?: boolean;
 	initialOffset?: number;

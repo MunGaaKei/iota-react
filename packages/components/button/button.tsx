@@ -1,9 +1,9 @@
 import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
-import { createElement } from "react";
+import { createElement, forwardRef } from "react";
 import "./index.scss";
 import Toggle from "./toggle";
-import { Props } from "./type";
+import { CompositionButton, IButton } from "./type";
 
 const formatClass = ({
 	outline,
@@ -15,7 +15,7 @@ const formatClass = ({
 	round,
 	square,
 	className,
-}: Props) =>
+}: IButton) =>
 	classnames("i-btn", className, {
 		"i-btn-outline": outline,
 		"i-btn-flat": flat,
@@ -27,7 +27,7 @@ const formatClass = ({
 		disabled,
 	});
 
-const Button = (props: Props) => {
+const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 	const {
 		as: As = "a",
 		children,
@@ -68,6 +68,7 @@ const Button = (props: Props) => {
 		return createElement(
 			As,
 			{
+				ref,
 				href,
 				...attrs,
 				...rest,
@@ -85,7 +86,7 @@ const Button = (props: Props) => {
 		},
 		childNodes
 	);
-};
+}) as CompositionButton;
 
 Button.Toggle = Toggle;
 

@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import { IItem } from "./type";
+import { IListItem } from "./type";
 
-function Item(props: IItem) {
+function Item(props: IListItem) {
 	const {
 		active,
 		type,

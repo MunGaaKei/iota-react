@@ -1,3 +1,4 @@
+import { exitFullScreen, fullScreen } from "@p/js/utils";
 import {
 	FullscreenExitRound,
 	FullscreenRound,
@@ -15,9 +16,9 @@ import Icon from "../icon";
 import Progress from "../progress";
 import Text from "../text";
 import "./index.scss";
-import { Props, RefVideo } from "./type";
+import { IVideo, RefVideo } from "./type";
 
-const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
+const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 	const {
 		style,
 		controls = true,
@@ -26,6 +27,7 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 		volume = 50,
 		height,
 		width,
+		useOriginControls,
 		timeProgressProps = {
 			barClass: "bg-black",
 		},
@@ -37,7 +39,9 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 	} = props;
 	const state = useReactive({
 		playing: autoplay,
-		volume,
+		volume: muted ? 0 : volume,
+		volumeCache: 0,
+		muted,
 		current: 0,
 		duration: 0,
 		isFullscreen: false,
@@ -54,15 +58,22 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 	});
 
 	const playChangeListener = useMemoizedFn((e) => {
-		const tar = e.target;
-		state.playing = !tar.paused;
+		state.playing = !e.target.paused;
 	});
 
-	const fullscreenListener = useMemoizedFn((e) => {
+	const fsChangeListener = useMemoizedFn((e) => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 
-		handleFullscreen();
+		state.isFullscreen = document.fullscreenElement === tar;
+	});
+
+	const volumeChangeListener = useMemoizedFn((e) => {
+		const tar = e.target;
+		Object.assign(state, {
+			volume: tar.volume * 100,
+			muted: tar.volume === 0,
+		});
 	});
 
 	const handlePlay = useMemoizedFn(() => {
@@ -77,8 +88,20 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 		Object.assign(state, {
 			duration: tar.duration,
 			current: tar.currentTime,
-			volume: tar.volume * 100,
 		});
+		tar.volume = state.volume / 100;
+	});
+
+	const handleMuted = useMemoizedFn(() => {
+		const v = $v.current;
+		if (!v) return;
+
+		if (v.volume > 0) {
+			state.volumeCache = v.volume;
+			v.volume = 0;
+			return;
+		}
+		v.volume = state.volumeCache === 0 ? 0.5 : state.volumeCache;
 	});
 
 	const handleStop = useMemoizedFn(() => {
@@ -86,14 +109,28 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 		if (!v) return;
 
 		v.currentTime = 0;
-		!v.paused && v.pause();
+		v.pause();
 	});
 
 	const handleFullscreen = useMemoizedFn((fs?: boolean) => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 
-		state.isFullscreen = typeof fs === "boolean" ? fs : !state.isFullscreen;
+		state.isFullscreen ? exitFullScreen() : fullScreen(tar);
+	});
+
+	const handleUpdateTime = useMemoizedFn((t) => {
+		const v = $v.current;
+		if (!v) return;
+
+		v.currentTime = (state.duration * t) / 100;
+	});
+
+	const handleUpdateVolume = useMemoizedFn((t) => {
+		const v = $v.current;
+		if (!v) return;
+
+		v.volume = t / 100;
 	});
 
 	useImperativeHandle(ref, () => ({
@@ -109,6 +146,7 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 
 			v.pause();
 		},
+		stop: handleStop,
 		fullscreen: handleFullscreen,
 		getVideo: () => $v.current,
 	}));
@@ -117,26 +155,18 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 		const v = $v.current;
 		if (!v) return;
 
-		state.playing ? v.play() : v.pause();
-	}, [state.playing, $v.current]);
-
-	useEffect(() => {
-		const v = $v.current;
-		if (!v) return;
-
 		v.addEventListener("timeupdate", timeUpdateListener);
 		v.addEventListener("play", playChangeListener);
 		v.addEventListener("pause", playChangeListener);
-		document.addEventListener("fullscreenchange", fullscreenListener);
+		v.addEventListener("volumechange", volumeChangeListener);
+		document.addEventListener("fullscreenchange", fsChangeListener);
 
 		return () => {
 			v.removeEventListener("timeupdate", timeUpdateListener);
 			v.removeEventListener("play", playChangeListener);
 			v.removeEventListener("pause", playChangeListener);
-			document.removeEventListener(
-				"fullscreenchange",
-				fullscreenListener
-			);
+			v.removeEventListener("volumechange", volumeChangeListener);
+			document.removeEventListener("fullscreenchange", fsChangeListener);
 		};
 	}, []);
 
@@ -144,16 +174,21 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 		<div
 			className={classNames("i-video", className)}
 			style={{ height, width, ...style }}
+			onClick={handlePlay}
+			onDoubleClick={() => handleFullscreen()}
 		>
 			<video
 				ref={$v}
-				muted={muted}
 				onCanPlay={handleReady}
 				{...restProps}
+				controls={useOriginControls}
 			/>
 
-			{controls && (
-				<div className='i-video-controls'>
+			{controls && !useOriginControls && (
+				<div
+					className='i-video-controls'
+					onClick={(e) => e.stopPropagation()}
+				>
 					<div className='i-video-control flex-1'>
 						<Button.Toggle
 							className='i-video-btn'
@@ -161,7 +196,7 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 							square
 							after={<Icon icon={<PauseRound />} />}
 							active={state.playing}
-							onToggle={handlePlay}
+							onClick={handlePlay}
 						>
 							<Icon icon={<PlayArrowRound />} />
 						</Button.Toggle>
@@ -178,8 +213,10 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 							<Text.Time time={state.duration} />
 						</span>
 						<Progress
+							className='mr-8'
 							{...timeProgressProps}
-							value={state.current}
+							value={(state.current / state.duration) * 100}
+							onChange={handleUpdateTime}
 						/>
 					</div>
 					<div className='i-video-control'>
@@ -189,7 +226,7 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 							square
 							after={<Icon icon={<FullscreenExitRound />} />}
 							active={state.isFullscreen}
-							onToggle={handleFullscreen}
+							onClick={() => handleFullscreen()}
 						>
 							<Icon icon={<FullscreenRound />} />
 						</Button.Toggle>
@@ -199,14 +236,20 @@ const Video = forwardRef<RefVideo, Props>((props, ref): JSX.Element => {
 							className='i-video-btn'
 							flat
 							square
-							after={<Icon icon={<VolumeOffRound />} />}
+							active={state.volume <= 0}
+							after={
+								<Icon icon={<VolumeOffRound />} size='1.2em' />
+							}
+							onClick={handleMuted}
 						>
 							<Icon icon={<VolumeDownRound />} />
 						</Button.Toggle>
 						<Progress
-							value={state.volume}
 							style={{ width: 100 }}
+							className='mr-8'
 							{...volumeProgressProps}
+							value={state.volume}
+							onChange={handleUpdateVolume}
 						/>
 					</div>
 				</div>

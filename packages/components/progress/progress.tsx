@@ -6,9 +6,9 @@ import "../../css/input.scss";
 import Circle from "./circle";
 import "./index.scss";
 import Line from "./line";
-import { Props } from "./type";
+import { IProgress } from "./type";
 
-const Progress = (props: Props): JSX.Element => {
+const Progress = (props: IProgress): JSX.Element => {
 	const {
 		name,
 		value = 0,

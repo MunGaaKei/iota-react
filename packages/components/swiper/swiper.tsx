@@ -18,9 +18,9 @@ import {
 import Icon from "../icon";
 import "./index.scss";
 import Item from "./item";
-import { ISwiper, ISwiperRef, Props } from "./type";
+import { CompositionSwiper, ISwiper, RefSwiper } from "./type";
 
-const Swiper = forwardRef<ISwiper, Props>((props, ref): JSX.Element => {
+const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 	const {
 		type = "normal",
 		initial = 0,
@@ -311,7 +311,7 @@ const Swiper = forwardRef<ISwiper, Props>((props, ref): JSX.Element => {
 			)}
 		</div>
 	);
-}) as ISwiperRef;
+}) as CompositionSwiper;
 
 Swiper.Item = Item;
 

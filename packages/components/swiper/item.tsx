@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import { IItem } from "./type";
+import { ISwiperItem } from "./type";
 
-function Item(props: IItem) {
+function Item(props: ISwiperItem) {
 	const {
 		index = 0,
 		active,

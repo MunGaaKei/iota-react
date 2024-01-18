@@ -25,7 +25,7 @@
 	display: flex;
 	align-items: center;
 	gap: 0.25em;
-	padding: 0.32em 0.4em;
+	padding: 0.4em;
 	user-select: none;
 	border-radius: var(--radius);
 	overflow: hidden;
@@ -33,7 +33,7 @@
 	&.i-tree-item-round {
 		border-radius: 100px;
 	}
-	&.i-tree-item-active,
+	&.i-tree-item-selected,
 	&:hover {
 		background: var(--color-main-0);
 		color: var(--color-main);

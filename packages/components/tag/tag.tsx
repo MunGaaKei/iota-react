@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
-import { Props } from "./type";
+import { ITag } from "./type";
 
-const Tag = (props: Props): JSX.Element => {
+const Tag = (props: ITag): JSX.Element => {
 	const {
 		dot,
 		dotClass,

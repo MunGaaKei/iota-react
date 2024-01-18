@@ -1,7 +1,8 @@
 import { Icon } from "@p";
 import {
+	AccountTreeTwotone,
 	AdsClickRound,
-	ApiRound,
+	ArrowDropDownCircleTwotone,
 	AssignmentOutlined,
 	BubbleChartTwotone,
 	CalendarMonthTwotone,
@@ -15,7 +16,6 @@ import {
 	FormatListNumberedRound,
 	GridOnRound,
 	ImageTwotone,
-	KeyboardArrowDownRound,
 	LabelTwotone,
 	LineWeightRound,
 	LocalGasStationTwotone,
@@ -23,6 +23,7 @@ import {
 	MoveToInboxTwotone,
 	NoiseControlOffRound,
 	PaddingTwotone,
+	PanToolAltTwotone,
 	PlayCircleOutlineRound,
 	PowerInputRound,
 	PreviewRound,
@@ -117,7 +118,13 @@ export default [
 				title: "Dropdown",
 				href: "/docs/dropdown",
 				as: Link,
-				icon: <Icon icon={<KeyboardArrowDownRound />} />,
+				icon: (
+					<Icon
+						icon={<ArrowDropDownCircleTwotone />}
+						size='1.2em'
+						style={{ marginInline: ".15em" }}
+					/>
+				),
 			},
 			{
 				title: "Form",
@@ -254,6 +261,12 @@ export default [
 				icon: <Icon icon={<TextFormatRound />} />,
 			},
 			{
+				title: "Tree",
+				href: "/docs/tree",
+				as: Link,
+				icon: <Icon icon={<AccountTreeTwotone />} />,
+			},
+			{
 				title: "Video",
 				href: "/docs/video",
 				as: Link,
@@ -262,8 +275,8 @@ export default [
 		],
 	},
 	{
-		title: "Directives",
-		icon: <Icon icon={<ApiRound />} />,
+		title: "Hooks",
+		icon: <Icon icon={<PanToolAltTwotone />} />,
 		children: [
 			{
 				title: "Clickoutside",

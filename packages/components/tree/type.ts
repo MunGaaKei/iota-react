@@ -7,38 +7,53 @@ import {
 } from "react";
 import { LinkProps } from "react-router-dom";
 
-export type TTreeHeader = {
-	active?: boolean;
+export interface ITreeHeader extends Pick<ITreeItem, "as" | "href"> {
+	selected?: boolean;
 	style?: CSSProperties;
 	children: ReactNode;
 	onClick?: (e: MouseEvent<HTMLElement>) => void;
-} & Pick<TTreeItem, "as" | "href">;
+}
 
-export type TTreeItem = {
-	key?: string;
+export interface ITreeItem {
 	as?:
 		| "a"
 		| "button"
 		| ForwardRefExoticComponent<
 				LinkProps & RefAttributes<HTMLAnchorElement>
 		  >;
+	key?: string;
 	type?: "item" | "title" | string;
 	title: string | ReactNode;
 	icon?: ReactNode;
 	href?: string;
-	children?: TTreeItem[];
-	active?: boolean;
+	children?: ITreeItem[];
+	selected?: boolean;
+	checked?: boolean;
 	expanded?: boolean;
 	disabled?: boolean;
-};
+}
 
-export interface Props {
-	items: TTreeItem[];
+export interface PropsTreeItem extends Omit<ITree, "items"> {
+	index?: number;
+	item: ITreeItem;
+}
+
+export interface ITree {
+	items: ITreeItem[];
 	depth?: number;
+	depthPrefix?: string;
 	selectable?: boolean;
+	selected?: string[];
+	checkable?: boolean;
 	round?: boolean;
-	active?: string[];
 	ripple?: boolean;
 	style?: CSSProperties;
-	onItemClick?: (item: TTreeItem, e: MouseEvent<HTMLElement>) => void;
+	className?: string;
+	onItemClick?: (item: ITreeItem, e: MouseEvent<HTMLElement>) => void;
+	onItemSelect?: (key: string) => void;
+	onItemCheck?: (
+		item: ITreeItem,
+		checked: boolean,
+		e?: MouseEvent<HTMLInputElement>
+	) => void;
 }

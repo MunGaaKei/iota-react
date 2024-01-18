@@ -1,49 +1,61 @@
 import { KeyboardArrowDownRound } from "@ricons/material";
-import { useMemoizedFn, useReactive } from "ahooks";
+import { useMemoizedFn } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
+import Checkbox from "../checkbox";
 import Icon from "../icon";
-import Tree from "./tree";
-import { Props, TTreeHeader, TTreeItem } from "./type";
+import TreeList from "./list";
+import { ITreeHeader, PropsTreeItem } from "./type";
 
-const Header = (props: TTreeHeader) => {
-	const { as: Tag = "a", href, children, active, ...rest } = props;
+const Header = (props: ITreeHeader) => {
+	const { as: Tag = "a", href, selected, children, ...restProps } = props;
 
 	const className = classNames("i-tree-item-header", {
-		"i-tree-item-active": active,
+		"i-tree-item-selected": selected,
 	});
 
 	if (typeof Tag === "string") {
 		return (
-			<Tag href={href} className={className} {...rest}>
+			<Tag href={href} className={className} {...restProps}>
 				{children}
 			</Tag>
 		);
 	}
 
 	return (
-		<Tag to={href || ""} className={className} {...rest}>
+		<Tag to={href || ""} className={className} {...restProps}>
 			{children}
 		</Tag>
 	);
 };
 
-export const TreeItem = (props: Omit<Props, "items"> & { item: TTreeItem }) => {
-	const { item, depth = 0, onItemClick } = props;
+export const TreeItem = (props: PropsTreeItem) => {
+	const {
+		item,
+		depth = 0,
+		depthPrefix,
+		index,
+		selected,
+		checkable,
+		onItemClick,
+		onItemSelect,
+		onItemCheck,
+		...restProps
+	} = props;
 	const {
 		as,
+		key,
 		href,
 		icon,
 		title,
 		children = [],
-		active,
 		expanded,
+		checked,
 		disabled,
 	} = item;
 
-	const state = useReactive({
-		expanded,
-	});
+	const [expand, setExpand] = useState(expanded);
+	const itemKey = key || `${depthPrefix}-${index}`;
 
 	const handleExpand = useMemoizedFn(
 		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
@@ -54,7 +66,7 @@ export const TreeItem = (props: Omit<Props, "items"> & { item: TTreeItem }) => {
 
 			if (disabled || !children.length) return;
 
-			state.expanded = !state.expanded;
+			setExpand((exp) => !exp);
 		}
 	);
 
@@ -65,25 +77,38 @@ export const TreeItem = (props: Omit<Props, "items"> & { item: TTreeItem }) => {
 			return;
 		}
 
-		item.active = !item.active;
 		handleExpand(e);
 		onItemClick?.(item, e);
+		onItemSelect?.(itemKey);
+	});
+
+	const handleItemCheck = useMemoizedFn((checked, e) => {
+		onItemCheck?.(item, checked, e);
 	});
 
 	return (
 		<div
 			className={classNames("i-tree-item", {
-				"i-tree-expand": state.expanded,
+				"i-tree-expand": expand,
 			})}
 		>
 			<Header
 				as={as}
 				href={href}
 				style={{ paddingLeft: `${depth * 1.5 + 0.5}em` }}
-				active={active}
+				selected={selected?.includes(itemKey)}
 				onClick={handleItemClick}
 			>
+				{checkable && (
+					<Checkbox.Item
+						value={checked}
+						onChange={handleItemCheck}
+						onClick={(e) => e.stopPropagation()}
+					/>
+				)}
+
 				{icon && <span className='i-tree-item-icon'>{icon}</span>}
+
 				<span className='i-tree-item-title'>{title}</span>
 
 				{children.length > 0 && (
@@ -91,13 +116,22 @@ export const TreeItem = (props: Omit<Props, "items"> & { item: TTreeItem }) => {
 						icon={<KeyboardArrowDownRound />}
 						className='i-tree-toggle'
 						onClick={(e) => handleExpand(e, true)}
-					></Icon>
+					/>
 				)}
 			</Header>
 
 			{children?.length > 0 && (
 				<div className='i-tree-item-content'>
-					<Tree items={children} depth={depth + 1} />
+					<TreeList
+						items={children}
+						depth={depth + 1}
+						depthPrefix={depthPrefix}
+						selected={selected}
+						checkable={checkable}
+						onItemClick={onItemClick}
+						onItemSelect={onItemSelect}
+						{...restProps}
+					/>
 				</div>
 			)}
 		</div>

@@ -20,7 +20,7 @@ export interface IInputContainer {
 	style?: CSSProperties;
 }
 
-export interface Props
+export interface IInput
 	extends BaseInput,
 		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
 	prepend?: ReactNode;
@@ -28,11 +28,11 @@ export interface Props
 	hideVisible?: boolean;
 }
 
-export interface PropsTextarea
+export interface ITextarea
 	extends BaseInput,
 		Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {}
 
-export interface PropsNumber
+export interface IInputNumber
 	extends BaseInput,
 		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
 	value?: string | number;
@@ -45,7 +45,7 @@ export interface PropsNumber
 	decimal?: number;
 }
 
-export interface PropsRange
+export interface IInputRange
 	extends Omit<BaseInput, "value" | "onChange">,
 		Omit<
 			InputHTMLAttributes<HTMLInputElement>,
@@ -67,7 +67,7 @@ export interface PropsRange
 }
 
 export type CompositionInput = ForwardRefExoticComponent<
-	Props & RefAttributes<HTMLInputElement>
+	IInput & RefAttributes<HTMLInputElement>
 > & {
 	Textarea: typeof Textarea;
 	Number: typeof Number;

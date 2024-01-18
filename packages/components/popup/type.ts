@@ -1,14 +1,14 @@
-import { Position } from "@p/js/type";
+import { TPosition } from "@p/js/type";
 import { CSSProperties, ReactNode } from "react";
 
-export interface Props {
+export interface IPopup {
 	visible?: boolean;
 	content?: ReactNode;
 	trigger?: "hover" | "click" | "focus" | "none";
 	gap?: number;
 	offset?: number;
 	fixed?: boolean;
-	position?: Position;
+	position?: TPosition;
 	showDelay?: number;
 	hideDelay?: number;
 	touchable?: boolean;

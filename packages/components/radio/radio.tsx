@@ -7,9 +7,9 @@ import { useMemo } from "react";
 import "../../css/input.scss";
 import "./index.scss";
 import RadioItem from "./item";
-import { Props } from "./type";
+import { IRadio } from "./type";
 
-function Radio(props: Props) {
+function Radio(props: IRadio) {
 	const {
 		label,
 		name,

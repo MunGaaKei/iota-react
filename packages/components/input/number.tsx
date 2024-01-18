@@ -15,9 +15,9 @@ import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
 import "./index.scss";
-import type { PropsNumber } from "./type";
+import type { IInputNumber } from "./type";
 
-const Number = forwardRef<HTMLInputElement, PropsNumber>((props, ref) => {
+const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 	const {
 		label,
 		name,

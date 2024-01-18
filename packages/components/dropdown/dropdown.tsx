@@ -1,8 +1,8 @@
 import { List, Popup } from "@p";
 import "./index.scss";
-import { Props } from "./type";
+import { IDropdown } from "./type";
 
-const Dropdown = (props: Props): JSX.Element => {
+const Dropdown = (props: IDropdown): JSX.Element => {
 	const {
 		trigger = "click",
 		position = "bottom",

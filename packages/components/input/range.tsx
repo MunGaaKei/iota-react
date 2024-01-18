@@ -15,9 +15,9 @@ import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
 import "./index.scss";
-import type { PropsRange } from "./type";
+import type { IInputRange } from "./type";
 
-const Range = (props: PropsRange) => {
+const Range = (props: IInputRange) => {
 	const {
 		label,
 		name,

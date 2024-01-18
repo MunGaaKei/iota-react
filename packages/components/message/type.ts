@@ -14,7 +14,7 @@ export interface IMessage {
 	timer?: ReturnType<typeof setTimeout>;
 }
 
-export interface PropsItem {
+export interface IMessageItem {
 	active?: boolean;
 	content?: ReactNode;
 	top?: number;

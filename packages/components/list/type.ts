@@ -1,12 +1,12 @@
 import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
-export interface Props {
+export interface IList {
 	className?: string;
 	style?: CSSProperties;
 	children?: ReactNode;
 }
 
-export interface IItem extends HTMLAttributes<HTMLLIElement> {
+export interface IListItem extends HTMLAttributes<HTMLLIElement> {
 	active?: boolean;
 	type?: "option" | "default";
 	disabled?: boolean;

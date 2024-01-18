@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import "./index.scss";
 import Item from "./item";
-import { Props } from "./type";
+import { IList } from "./type";
 
-const List = (props: Props): JSX.Element => {
+const List = (props: IList): JSX.Element => {
 	const { className, children, ...restProps } = props;
 
 	return (

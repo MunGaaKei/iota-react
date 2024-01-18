@@ -9,13 +9,13 @@ import Input from "../input";
 import Popup from "../popup";
 import { Panel } from "./dates";
 import "./index.scss";
-import { Props } from "./type";
+import { IDatePicker } from "./type";
 
 dayjs.extend(customParseFormat);
 
 const FORMATTYPES = ["YYYY-MM-DD", "YYYY-M-D", "YYYY/MM/DD", "YYYY/M/D"];
 
-const Datepicker = (props: Props): JSX.Element => {
+const Datepicker = (props: IDatePicker): JSX.Element => {
 	const {
 		name,
 		value,

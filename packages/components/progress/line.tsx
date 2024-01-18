@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import { MouseEvent, forwardRef } from "react";
-import { Props } from "./type";
+import { IProgress } from "./type";
 
 const Line = forwardRef<
 	HTMLDivElement,
-	Pick<Props, "value" | "size" | "barClass" | "cursor"> & {
+	Pick<IProgress, "value" | "size" | "barClass" | "cursor"> & {
 		dragging: boolean;
 		onMouseDown: (e: MouseEvent) => void;
 	}

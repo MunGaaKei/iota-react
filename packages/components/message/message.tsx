@@ -10,7 +10,7 @@ import {
 } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.scss";
-import type { IMessage, PropsItem } from "./type";
+import type { IMessage, IMessageItem } from "./type";
 
 const GlobalConfig = {
 	fromStart: true,
@@ -36,7 +36,7 @@ const handler = {
 
 createRoot(container).render(<Messages />);
 
-const MessageItem = forwardRef<HTMLDivElement, PropsItem>(function (
+const MessageItem = forwardRef<HTMLDivElement, IMessageItem>(function (
 	{ active, content, top, onClick },
 	ref
 ) {

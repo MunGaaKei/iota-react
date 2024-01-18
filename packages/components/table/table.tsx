@@ -4,7 +4,7 @@ import { CSSProperties, useEffect } from "react";
 import "./index.scss";
 import Resize from "./resize";
 import Row, { Header } from "./row";
-import type { Props, TWidth } from "./type";
+import type { ITable, TWidth } from "./type";
 
 type State = {
 	columns: any[];
@@ -17,7 +17,7 @@ function tdOffset(widths: string[]) {
 	return l === 0 ? 0 : l > 1 ? `calc(${widths.join(" + ")})` : widths[0];
 }
 
-const Table = (props: Props): JSX.Element => {
+const Table = (props: ITable): JSX.Element => {
 	const {
 		data = [],
 		columns,

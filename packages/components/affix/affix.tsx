@@ -10,9 +10,9 @@ import {
 } from "react";
 import "./index.scss";
 import ToTop from "./totop";
-import { Props } from "./type";
+import { IAffix } from "./type";
 
-const Affix = (props: Props): JSX.Element => {
+const Affix = (props: IAffix): JSX.Element => {
 	const {
 		position = "fixed",
 		left,

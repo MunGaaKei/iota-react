@@ -4,11 +4,14 @@ import { ReactNode } from "react";
 import { Props as InputProps } from "../input/type";
 import { Props as PopupProps } from "../popup/type";
 
-export interface Props extends BaseInput, InputProps, Omit<BaseDates, "value"> {
+export interface IDatePicker
+	extends BaseInput,
+		InputProps,
+		Omit<IBaseDates, "value"> {
 	popupProps?: PopupProps;
 }
 
-export interface BaseDates {
+export interface IBaseDates {
 	value?: any;
 	format?: string;
 	weeks?: ReactNode[];

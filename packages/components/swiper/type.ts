@@ -1,7 +1,8 @@
 import { BaseElement } from "@p/type";
-import { ForwardRefExoticComponent, ReactNode } from "react";
+import { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react";
+import Item from "./item";
 
-export interface Props extends BaseElement {
+export interface ISwiper extends BaseElement {
 	initial?: number;
 	type?: "normal" | "fade" | "flow";
 	display?: number;
@@ -25,20 +26,21 @@ export interface Props extends BaseElement {
 	onAfterSwipe?: (after?: number) => void;
 }
 
-export interface IItem
+export interface ISwiperItem
 	extends BaseElement,
-		Pick<Props, "gap" | "itemHeight" | "vertical" | "type"> {
+		Pick<ISwiper, "gap" | "itemHeight" | "vertical" | "type"> {
 	active?: boolean;
 	index?: number;
 	transition?: string;
 }
 
-export interface ISwiper {
+export interface RefSwiper {
 	swipeTo: (i: number) => void;
 	swipeNext: () => void;
 	swipePrev: () => void;
 }
 
-export interface ISwiperRef extends ForwardRefExoticComponent<any> {
-	Item: (props: IItem) => ReactNode;
+export interface CompositionSwiper
+	extends ForwardRefExoticComponent<ISwiper & RefAttributes<HTMLDivElement>> {
+	Item: typeof Item;
 }

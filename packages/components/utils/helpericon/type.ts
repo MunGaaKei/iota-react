@@ -1,6 +1,6 @@
 import { CSSProperties, MouseEvent, ReactNode } from "react";
 
-export interface Props {
+export interface IHelperIcon {
 	active?: boolean;
 	loading?: boolean;
 	icon?: ReactNode;

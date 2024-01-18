@@ -1,3 +1,3 @@
-export default `export interface Props {
+export default `export interface I{{name}} {
     
 }`;

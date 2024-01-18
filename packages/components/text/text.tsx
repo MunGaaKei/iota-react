@@ -4,9 +4,9 @@ import Highlight from "./highlight";
 import "./index.scss";
 import Number from "./number";
 import Time from "./time";
-import { Props } from "./type";
+import { IText } from "./type";
 
-const Text = (props: Props): JSX.Element => {
+const Text = (props: IText): JSX.Element => {
 	const {
 		as: Tag = "span",
 		size,

@@ -10,7 +10,7 @@ export interface ICollapse {
 	disabled?: boolean;
 }
 
-export interface PropsItem extends ICollapse {
+export interface ICollapseItem extends ICollapse {
 	disabled?: boolean;
 	children?: ReactNode;
 }
