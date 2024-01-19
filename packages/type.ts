@@ -40,3 +40,5 @@ export interface BaseInput extends TValidate {
 	) => void;
 	onEnter?: () => void;
 }
+
+export type TTimeout = ReturnType<typeof setTimeout>;

@@ -1,39 +1,19 @@
 import { getPosition } from "@p/js/utils";
+import { TTimeout } from "@p/type";
 import { useClickAway, useCreation, useReactive } from "ahooks";
 import {
 	CSSProperties,
 	Children,
-	ReactNode,
 	cloneElement,
-	forwardRef,
 	isValidElement,
 	useCallback,
 	useLayoutEffect,
 	useMemo,
 	useRef,
 } from "react";
-import { createPortal } from "react-dom";
+import Content from "./content";
 import "./index.scss";
 import { IPopup } from "./type";
-
-type TTimeout = ReturnType<typeof setTimeout>;
-
-type TContent = { style?: CSSProperties; children?: ReactNode } & Pick<
-	IPopup,
-	"getContainer"
->;
-
-const Content = forwardRef<HTMLDivElement, TContent>((props, ref) => {
-	const { getContainer = () => document.body, children, ...rest } = props;
-
-	const content = (
-		<div ref={ref} className='i-popup' {...rest}>
-			{children}
-		</div>
-	);
-
-	return createPortal(content, getContainer());
-});
 
 export default function Popup(props: IPopup) {
 	const {
@@ -47,8 +27,11 @@ export default function Popup(props: IPopup) {
 		showDelay = 16,
 		hideDelay = 12,
 		touchable,
+		arrow = true,
+		align,
 		fitWidth,
 		style,
+		className,
 		getContainer,
 		children,
 		onVisibleChange,
@@ -60,10 +43,12 @@ export default function Popup(props: IPopup) {
 		show: boolean;
 		toggling: TTimeout | boolean;
 		style: CSSProperties;
+		arrowStyle: CSSProperties;
 	}>({
 		show: false,
 		toggling: false,
 		style: { position: fixed ? "fixed" : "absolute" },
+		arrowStyle: {},
 	});
 
 	useClickAway((e: Event) => {
@@ -78,13 +63,14 @@ export default function Popup(props: IPopup) {
 		state.show = true;
 
 		state.toggling = setTimeout(() => {
-			const [left, top] = getPosition(
+			const [left, top, [arrowX, arrowY]] = getPosition(
 				triggerRef.current,
 				contentRef.current,
 				{
 					position,
 					gap,
 					offset,
+					align,
 				}
 			);
 
@@ -94,6 +80,10 @@ export default function Popup(props: IPopup) {
 				transform: "none",
 				left,
 				top,
+			};
+			state.arrowStyle = {
+				left: arrowX,
+				top: arrowY,
 			};
 			state.toggling && clearTimeout(state.toggling as TTimeout);
 			onVisibleChange?.(true);
@@ -191,7 +181,10 @@ export default function Popup(props: IPopup) {
 			{state.show && (
 				<Content
 					ref={contentRef}
+					arrow={arrow}
 					style={{ ...style, ...state.style }}
+					arrowStyle={state.arrowStyle}
+					className={className}
 					{...contentTouch}
 					getContainer={getContainer}
 				>

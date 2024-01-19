@@ -4,11 +4,20 @@ import { ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
 import type { TRelativeOptions } from "./type";
 
+type TComputePosition = {
+	containerSize: number;
+	targetSize: number;
+	targetOffset: number;
+	contentSize: number;
+	gap: number;
+	align?: "start" | "center" | "end";
+};
+
 export function getPosition(
 	$source?: HTMLElement | null,
 	$popup?: HTMLElement | null,
 	options: TRelativeOptions = {}
-): [x: number, y: number] {
+): [x: number, y: number, z: [x: number, y: number]] {
 	const {
 		refWindow = true,
 		gap = 0,
@@ -17,7 +26,7 @@ export function getPosition(
 		align,
 	} = options;
 
-	if (!$source || !$popup) return [0, 0];
+	if (!$source || !$popup) return [0, 0, [0, 0]];
 
 	const rectT = $source.getBoundingClientRect();
 	const rectC = $popup.getBoundingClientRect();
@@ -47,6 +56,8 @@ export function getPosition(
 
 	let y = 0;
 	let x = 0;
+	let zx = 0;
+	let zy = 0;
 
 	switch (position) {
 		case "left":
@@ -62,14 +73,18 @@ export function getPosition(
 							align,
 					  })
 					: tt;
+			zy = y < tt ? tt - y + th / 2 : th / 2;
 
 			const xl = tl - offset - cw;
 			const xr = tr + offset + cw;
 			if (position === "left") {
 				x = xl < 0 ? tr + offset : xl;
+				zx = xl < 0 ? 0 : cw;
 			} else {
 				x = w > xr ? tr + offset : xl;
+				zx = w > xr ? 0 : cw;
 			}
+
 			break;
 		case "top":
 		case "bottom":
@@ -84,20 +99,23 @@ export function getPosition(
 							align,
 					  })
 					: tl;
+			zx = x > tl ? cw / 2 : tl - x + tw / 2;
 
 			const yt = tt - offset - ch;
 			const yb = tb + offset + ch;
 			if (position === "top") {
 				y = yt < 0 ? tb + offset : yt;
+				zy = yt < 0 ? 0 : ch;
 			} else {
 				y = h > yb ? tb + offset : yt;
+				zy = h > yb ? 0 : ch;
 			}
 			break;
 		default:
 			break;
 	}
 
-	return [x, y];
+	return [x, y, [zx, zy]];
 }
 
 function computePosition({
@@ -106,29 +124,35 @@ function computePosition({
 	targetOffset,
 	contentSize,
 	gap,
-}: {
-	containerSize: number;
-	targetSize: number;
-	targetOffset: number;
-	contentSize: number;
-	gap: number;
-	align?: "start" | "center" | "end";
-}) {
+	align = "center",
+}: TComputePosition) {
 	const centerPoint = targetOffset + targetSize / 2;
 
-	if (targetSize >= contentSize) {
-		return centerPoint - contentSize / 2;
-	}
+	switch (align) {
+		case "start":
+			return targetOffset + contentSize > containerSize
+				? targetOffset + targetSize
+				: targetOffset;
+		case "center":
+			if (targetSize >= contentSize) {
+				return centerPoint - contentSize / 2;
+			}
 
-	if (centerPoint + contentSize / 2 + gap > containerSize) {
-		return targetOffset + targetSize - contentSize;
-	}
+			if (centerPoint + contentSize / 2 + gap > containerSize) {
+				return targetOffset + targetSize - contentSize;
+			}
 
-	if (centerPoint - contentSize / 2 - gap < 0) {
-		return gap;
-	}
+			if (centerPoint - contentSize / 2 - gap < 0) {
+				return gap;
+			}
 
-	return centerPoint - contentSize / 2;
+			return centerPoint - contentSize / 2;
+		case "end":
+			const result = targetOffset + targetSize - contentSize;
+			return result > 0 ? result : gap;
+		default:
+			return centerPoint - contentSize / 2;
+	}
 }
 
 export function formatOption(options: TOptions): TOption[] {

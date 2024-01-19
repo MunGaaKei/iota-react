@@ -7,7 +7,7 @@ function TreeList(props: ITree) {
 		items = [],
 		selectable,
 		depth = 0,
-		depthPrefix = "0",
+		keyPrefix,
 		round,
 		style,
 		className,
@@ -16,7 +16,7 @@ function TreeList(props: ITree) {
 
 	const contents = items.map((item, i) => {
 		const { type, title, key } = item;
-		const itemKey = key || `${depthPrefix}-${i}`;
+		const itemKey = key || (depth > 0 ? `${keyPrefix}-${i}` : `${i}`);
 
 		if (type === "title") {
 			return (
@@ -30,7 +30,7 @@ function TreeList(props: ITree) {
 			<TreeItem
 				key={itemKey}
 				index={i}
-				depthPrefix={`${depthPrefix}-${i}`}
+				keyPrefix={itemKey}
 				item={item}
 				depth={depth}
 				{...restProps}

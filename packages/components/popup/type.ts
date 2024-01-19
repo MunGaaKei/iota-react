@@ -9,12 +9,23 @@ export interface IPopup {
 	offset?: number;
 	fixed?: boolean;
 	position?: TPosition;
+	arrow?: boolean;
+	align?: "start" | "center" | "end";
 	showDelay?: number;
 	hideDelay?: number;
 	touchable?: boolean;
 	fitWidth?: boolean;
 	style?: CSSProperties;
 	children?: ReactNode;
+	className?: string;
 	getContainer?: () => HTMLElement;
 	onVisibleChange?: (visible: boolean) => void;
+}
+
+export interface IPopupContent
+	extends Pick<
+		IPopup,
+		"getContainer" | "arrow" | "className" | "style" | "children"
+	> {
+	arrowStyle?: CSSProperties;
 }

@@ -117,6 +117,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 	};
 
 	const clearable = clear && v;
+	const showHelper = type === "password" && !!v;
 
 	return (
 		<InputContainer
@@ -135,7 +136,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 				<input {...inputProps} />
 
 				<Helpericon
-					active={!!clearable}
+					active={!!clearable || showHelper}
 					icon={HelperIcon}
 					onClick={handleHelperClick}
 				/>

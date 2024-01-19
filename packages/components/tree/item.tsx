@@ -33,7 +33,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 	const {
 		item,
 		depth = 0,
-		depthPrefix,
+		keyPrefix = "0",
 		index,
 		selected,
 		checkable,
@@ -55,7 +55,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 	} = item;
 
 	const [expand, setExpand] = useState(expanded);
-	const itemKey = key || `${depthPrefix}-${index}`;
+	const itemKey = key || keyPrefix;
 
 	const handleExpand = useMemoizedFn(
 		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
@@ -125,7 +125,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 					<TreeList
 						items={children}
 						depth={depth + 1}
-						depthPrefix={depthPrefix}
+						keyPrefix={keyPrefix}
 						selected={selected}
 						checkable={checkable}
 						onItemClick={onItemClick}

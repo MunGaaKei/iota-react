@@ -41,7 +41,7 @@ export interface PropsTreeItem extends Omit<ITree, "items"> {
 export interface ITree {
 	items: ITreeItem[];
 	depth?: number;
-	depthPrefix?: string;
+	keyPrefix?: string;
 	selectable?: boolean;
 	selected?: string[];
 	checkable?: boolean;
