@@ -47,6 +47,7 @@ export default [
 		title: "Install",
 		as: Link,
 		icon: <Icon icon={<MoveToInboxTwotone />} />,
+		href: "/docs/install",
 	},
 	{
 		title: "Style & Colors",

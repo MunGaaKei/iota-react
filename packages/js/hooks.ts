@@ -74,32 +74,68 @@ export function useMouseUp(listener: TMouseEvent) {
 	}, [listener]);
 }
 
-const IOMaps = new Map();
-const IO = new IntersectionObserver((entries) => {
-	entries.map((entry) => {
-		const { target, isIntersecting } = entry;
+export function useIntersectionObserver(configs?: IntersectionObserverInit) {
+	const WM = new WeakMap();
+	const IO = new IntersectionObserver((entries) => {
+		entries.map((entry) => {
+			const callback = WM.get(entry.target);
 
-		const callback = IOMaps.get(target);
-		callback?.(isIntersecting);
+			callback?.(entry.target, entry.isIntersecting);
+		});
+	}, configs);
+
+	function observe(target: HTMLElement, callback: Function) {
+		if (WM.get(target)) return;
+
+		WM.set(target, callback);
+		target && IO.observe(target);
+	}
+
+	function unobserve(target: HTMLElement) {
+		target && IO.unobserve(target);
+		WM.delete(target);
+	}
+
+	function disconnect() {
+		IO.disconnect();
+	}
+
+	return {
+		observe,
+		unobserve,
+		disconnect,
+	};
+}
+
+export function useResizeObserver() {
+	const WM = new WeakMap();
+	const IO = new ResizeObserver((entries) => {
+		entries.map((entry) => {
+			const callback = WM.get(entry.target);
+
+			callback?.(entry.target);
+		});
 	});
-});
 
-export function useIntersectionObserver(
-	el: HTMLElement | null,
-	callback?: (visible?: boolean) => void,
-	disabled?: boolean
-) {
-	useEffect(() => {
-		if (disabled || !el) return;
+	function observe(target: HTMLElement, callback: Function) {
+		if (WM.get(target)) return;
 
-		IOMaps.set(el, callback);
-		IO.observe(el);
+		WM.set(target, callback);
+		IO.observe(target);
+	}
 
-		return () => {
-			IOMaps.delete(el);
-			IO.unobserve(el);
-		};
-	}, [el]);
+	function unobserve(target: HTMLElement) {
+		WM.delete(target);
+		IO.unobserve(target);
+	}
 
-	return IO;
+	function disconnect() {
+		IO.disconnect();
+	}
+
+	return {
+		observe,
+		unobserve,
+		disconnect,
+	};
 }

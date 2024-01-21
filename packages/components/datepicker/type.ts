@@ -1,14 +1,14 @@
 import { BaseInput } from "@p/type";
 import { Dayjs } from "dayjs";
 import { ReactNode } from "react";
-import { Props as InputProps } from "../input/type";
-import { Props as PopupProps } from "../popup/type";
+import { IInput } from "../input/type";
+import { IPopup } from "../popup/type";
 
 export interface IDatePicker
 	extends BaseInput,
-		InputProps,
+		IInput,
 		Omit<IBaseDates, "value"> {
-	popupProps?: PopupProps;
+	popupProps?: IPopup;
 }
 
 export interface IBaseDates {

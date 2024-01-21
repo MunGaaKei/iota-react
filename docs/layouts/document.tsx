@@ -13,7 +13,7 @@ const DynamicPage = memo(
 
 		return (
 			<Suspense fallback={<Loading />}>
-				<Page></Page>
+				<Page />
 			</Suspense>
 		);
 	},
@@ -29,7 +29,12 @@ export default function Document(): JSX.Element {
 				<h2>R</h2>
 			</Area.Item>
 			<Area.Item name='sider' className='px-12 pb-12'>
-				<Tree items={menu} style={{ minWidth: 240 }} />
+				<Tree
+					items={menu}
+					selected={`/docs/${name}`}
+					keyProp='href'
+					style={{ minWidth: 240 }}
+				/>
 			</Area.Item>
 			<Area.Item>
 				<div className='pd-12'>

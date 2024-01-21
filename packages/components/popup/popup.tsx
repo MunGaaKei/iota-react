@@ -1,3 +1,4 @@
+import { useResizeObserver } from "@p/js/hooks";
 import { getPosition } from "@p/js/utils";
 import { TTimeout } from "@p/type";
 import { useClickAway, useCreation, useReactive } from "ahooks";
@@ -7,6 +8,7 @@ import {
 	cloneElement,
 	isValidElement,
 	useCallback,
+	useEffect,
 	useLayoutEffect,
 	useMemo,
 	useRef,
@@ -23,13 +25,14 @@ export default function Popup(props: IPopup) {
 		gap = 12,
 		offset = 0,
 		fixed,
-		position,
+		position = "top",
 		showDelay = 16,
 		hideDelay = 12,
 		touchable,
 		arrow = true,
 		align,
-		fitWidth,
+		fitSize,
+		watchResize,
 		style,
 		className,
 		getContainer,
@@ -149,11 +152,45 @@ export default function Popup(props: IPopup) {
 		return events;
 	}, [touchable, trigger]);
 
+	useEffect(() => {
+		if (!watchResize || !contentRef.current) return;
+		const { observe, unobserve } = useResizeObserver();
+
+		observe(contentRef.current, () => {
+			if (!state.show) return;
+
+			const [left, top, [arrowX, arrowY]] = getPosition(
+				triggerRef.current,
+				contentRef.current,
+				{
+					position,
+					gap,
+					offset,
+					align,
+				}
+			);
+
+			Object.assign(state, {
+				style: { ...state.style, left, top },
+				arrowStyle: { left: arrowX, top: arrowY },
+			});
+		});
+
+		return () => {
+			if (!watchResize || !contentRef.current) return;
+
+			unobserve(contentRef.current);
+		};
+	}, [watchResize, contentRef.current]);
+
 	useLayoutEffect(() => {
-		if (!fitWidth || !state.show) return;
-		const width = triggerRef.current?.offsetWidth;
-		state.style = { ...state.style, width };
-	}, [state.show]);
+		if (!fitSize || !state.show) return;
+
+		const vertical = ["top", "bottom"].includes(position);
+		const size =
+			triggerRef.current?.[vertical ? "offsetWidth" : "offsetHeight"];
+		state.style = { ...state.style, [vertical ? "width" : "height"]: size };
+	}, [state.show, fitSize]);
 
 	useLayoutEffect(() => {
 		handleToggle(visible);

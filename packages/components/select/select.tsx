@@ -130,7 +130,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 				trigger='none'
 				position='bottom'
 				arrow={false}
-				fitWidth
+				fitSize
 				onVisibleChange={setActive}
 				content={
 					<Options

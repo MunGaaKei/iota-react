@@ -42,8 +42,9 @@ export interface ITree {
 	items: ITreeItem[];
 	depth?: number;
 	keyPrefix?: string;
+	keyProp?: string;
 	selectable?: boolean;
-	selected?: string[];
+	selected?: string;
 	checkable?: boolean;
 	round?: boolean;
 	ripple?: boolean;

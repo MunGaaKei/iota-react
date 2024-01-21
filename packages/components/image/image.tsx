@@ -31,16 +31,7 @@ const Image = (props: IImage): JSX.Element => {
 	});
 	const ref = useRef<HTMLImageElement>(null);
 
-	const IO = useIntersectionObserver(
-		ref.current,
-		(visible) => {
-			if (!ref.current || !visible || !src) return;
-
-			ref.current.src = ref.current.dataset.src || "";
-			IO.unobserve(ref.current);
-		},
-		!lazyload
-	);
+	const { observe, unobserve } = useIntersectionObserver();
 
 	const handleError = (err) => {
 		onError?.(err);
@@ -56,7 +47,19 @@ const Image = (props: IImage): JSX.Element => {
 		if (!src) return;
 
 		state.status = "loading";
-		lazyload && ref.current && IO.observe(ref.current);
+
+		if (!lazyload || !ref.current) return;
+
+		observe(ref.current, (tar: HTMLElement, visible: boolean) => {
+			if (!visible) return;
+
+			tar.setAttribute("src", tar.dataset.src || "");
+			unobserve(tar);
+		});
+
+		return () => {
+			ref.current && unobserve(ref.current);
+		};
 	}, [src]);
 
 	rest[lazyload ? "data-src" : "src"] = src;

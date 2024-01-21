@@ -1,3 +1,5 @@
+import { useIntersectionObserver } from "@p/js/hooks";
+import { MoreHorizRound } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -11,9 +13,21 @@ import {
 	useMemo,
 	useRef,
 } from "react";
+import Button from "../button";
+import Icon from "../icon";
+import List from "../list";
+import Popup from "../popup";
 import "./index.scss";
 import TabItem from "./item";
-import { CompositionTabs, ITabItem, ITabs, RefTabs } from "./type";
+import { CompositionTabs, ITabItem, ITabs, RefTabs, TTabKey } from "./type";
+
+type TState = {
+	active?: TTabKey;
+	barStyle: CSSProperties;
+	cache: TTabKey[];
+	overflow: boolean;
+	more: ITabItem[];
+};
 
 const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const {
@@ -30,24 +44,23 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		...rest
 	} = props;
 
-	const navRefs = useRef<HTMLAnchorElement[]>([]);
+	const navRefs = useRef<HTMLElement[]>([]);
 	const barRef = useRef<HTMLSpanElement>(null);
 	const navsRef = useRef<HTMLDivElement>(null);
-	const state = useReactive<{
-		active?: string;
-		barStyle: CSSProperties;
-		cache: string[];
-	}>({
+	const state = useReactive<TState>({
 		active,
 		barStyle: {},
 		cache: [],
+		overflow: false,
+		more: [],
 	});
+	const { observe, unobserve } = useIntersectionObserver();
 
 	const tabs: ITabItem[] = useMemo(
 		() =>
 			Children.map(children, (node, i) => {
 				const { key, props: nodeProps } = node as {
-					key?: string;
+					key?: TTabKey;
 					props?: any;
 				};
 				const { title, children, content, keepalive } = nodeProps;
@@ -62,7 +75,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		[children]
 	);
 
-	const open = useCallback((key?: string) => {
+	const open = useCallback((key: TTabKey) => {
 		if (key === state.active) {
 			if (!toggable) return;
 
@@ -110,11 +123,36 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, [state.active, bar]);
 
 	useEffect(() => {
+		if (!active) return;
+
 		open(active);
 	}, [active]);
 
+	useEffect(() => {
+		if (!navRefs.current) return;
+		const { scrollHeight, scrollWidth, offsetWidth, offsetHeight } =
+			navsRef.current as HTMLElement;
+
+		state.overflow =
+			scrollHeight > offsetHeight || scrollWidth > offsetWidth;
+
+		if (!state.overflow) return;
+
+		navRefs.current?.map((nav, i) => {
+			observe(nav, (tar: HTMLElement, visible: boolean) => {
+				tabs[i].intersecting = visible;
+				state.more = tabs.filter((tab) => !tab.intersecting);
+			});
+		});
+
+		return () => {
+			navRefs.current?.map(unobserve);
+		};
+	}, [tabs]);
+
 	useImperativeHandle(ref, () => ({
 		open,
+		close,
 	}));
 
 	return (
@@ -135,7 +173,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 					onWheel={handleMouseWheel}
 				>
 					{tabs.map((tab, i) => {
-						const { title, key } = tab;
+						const { title, key = i } = tab;
 
 						return (
 							<a
@@ -162,6 +200,41 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 						/>
 					)}
 				</div>
+
+				{state.overflow && (
+					<Popup
+						arrow={false}
+						position={vertical ? "right" : "bottom"}
+						align='end'
+						trigger='click'
+						watchResize
+						content={
+							<List className='pd-4'>
+								{state.more.map((tab, i) => {
+									const { key = i, title } = tab;
+
+									return (
+										<List.Item
+											key={key}
+											type='option'
+											className={classNames("i-tab-nav", {
+												"i-tab-active":
+													state.active === key,
+											})}
+											onClick={() => open(key)}
+										>
+											{title}
+										</List.Item>
+									);
+								})}
+							</List>
+						}
+					>
+						<Button flat square size='small'>
+							<Icon icon={<MoreHorizRound />} />
+						</Button>
+					</Popup>
+				)}
 
 				{append}
 			</div>

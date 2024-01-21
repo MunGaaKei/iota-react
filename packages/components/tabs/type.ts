@@ -6,28 +6,32 @@ import {
 } from "react";
 import TabItem from "./item";
 
+export type TTabKey = string | number;
+
 export interface ITabItem {
-	key?: string;
+	key?: TTabKey;
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
 	keepalive?: boolean;
+	intersecting?: boolean;
 	children?: ReactNode;
 }
 
 export interface ITabs extends HTMLAttributes<HTMLDivElement> {
-	active?: string;
+	active?: TTabKey;
 	prepend?: ReactNode;
 	append?: ReactNode;
 	vertical?: boolean;
 	bar?: boolean;
 	toggable?: boolean;
 	maxCache?: number;
-	onTabChange?: (to?: string, from?: string) => void;
+	onTabChange?: (to?: TTabKey, from?: TTabKey) => void;
 }
 
 export interface RefTabs {
-	open: (key: string) => void;
+	open: (key: TTabKey) => void;
+	close: (key: TTabKey) => void;
 }
 
 export type CompositionTabs = ForwardRefExoticComponent<
