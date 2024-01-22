@@ -19,13 +19,13 @@
 .i-table-striped {
 	.i-table-row {
 		&:nth-child(odd) {
-			--table-td-background: var(--background-opacity-1);
+			--table-td-background: var(--color-9);
 		}
 	}
 }
 
 .i-table-row {
-	--table-td-background: var(--background-opacity);
+	--table-td-background: var(--background);
 
 	display: contents;
 	&:hover .i-table-td {
@@ -42,7 +42,6 @@
 	text-align: var(--table-align);
 	background: var(--table-td-background);
 	transition: background-color 0.08s;
-	backdrop-filter: var(--blur);
 	&:hover {
 		--table-td-background: var(--background);
 	}
@@ -52,8 +51,11 @@
 }
 
 .i-table-header {
-	--table-td-background: var(--background-opacity-1);
+	--table-td-background: var(--color-9);
+
 	.i-table-td {
 		z-index: 2;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 }

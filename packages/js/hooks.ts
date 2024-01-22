@@ -120,13 +120,13 @@ export function useResizeObserver() {
 	function observe(target: HTMLElement, callback: Function) {
 		if (WM.get(target)) return;
 
+		target && IO.observe(target);
 		WM.set(target, callback);
-		IO.observe(target);
 	}
 
 	function unobserve(target: HTMLElement) {
+		target && IO.unobserve(target);
 		WM.delete(target);
-		IO.unobserve(target);
 	}
 
 	function disconnect() {

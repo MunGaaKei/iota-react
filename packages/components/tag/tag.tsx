@@ -36,7 +36,9 @@ const Tag = (props: ITag): JSX.Element => {
 
 			{children}
 
-			{onClose && <Helpericon active className='i-tag-close' />}
+			{onClose && (
+				<Helpericon active className='i-tag-close' onClick={onClose} />
+			)}
 		</span>
 	);
 };

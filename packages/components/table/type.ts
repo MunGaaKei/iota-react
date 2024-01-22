@@ -8,7 +8,7 @@ export type TWidth = {
 };
 
 export type IColumn = {
-	field: string;
+	id: string;
 	title?: ReactNode;
 	sorter?: boolean;
 	align?: string;
@@ -30,7 +30,7 @@ export interface ITable
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,
-		field?: string,
+		id?: string,
 		row?: number,
 		col?: number
 	) => void;

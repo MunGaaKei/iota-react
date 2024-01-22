@@ -1,15 +1,14 @@
-import { Icon, List } from "@p";
+import { Icon, List, Tag } from "@p";
 import { TOption, TValue } from "@p/type";
 import { InboxTwotone } from "@ricons/material";
-import { ReactNode } from "react";
-import { IDisplayValues, ISelectOptions } from "./type";
+import { ISelectOptions } from "./type";
 
 export const Options = (props: ISelectOptions) => {
 	const {
 		value: val,
 		options,
 		filter,
-		maxDisplay = 6,
+		maxDisplay = 2,
 		multiple,
 		empty,
 		onSelect,
@@ -29,10 +28,26 @@ export const Options = (props: ISelectOptions) => {
 		<div className='i-select-options'>
 			{filter && multiple && (
 				<div className='i-select-options-header'>
-					<DisplayValues
-						values={activeLabels(options, val as string[])}
-						max={maxDisplay}
-					/>
+					{activeOptions(options, val as TValue[], maxDisplay).map(
+						(opt, i) => {
+							if (typeof opt === "number")
+								return <Tag key={i}>+{opt}</Tag>;
+
+							const { label, value } = opt;
+
+							return (
+								<Tag
+									key={value as string}
+									onClose={(e) => {
+										e?.stopPropagation();
+										onSelect?.(value, opt);
+									}}
+								>
+									{label}
+								</Tag>
+							);
+						}
+					)}
 				</div>
 			)}
 			{options.map((option, i) => {
@@ -57,28 +72,20 @@ export const Options = (props: ISelectOptions) => {
 	);
 };
 
-export const DisplayValues = (props: IDisplayValues) => {
-	const { values, max } = props;
-	const l = values?.length;
+export const activeOptions = (
+	options: TOption[] = [],
+	value: TValue[] = [],
+	max = 6
+) => {
+	const total = options.flatMap((opt) =>
+		value.includes(opt.value) ? [opt] : []
+	);
 
-	if (!l) return <></>;
+	if (max >= total.length) return total;
 
-	const displays: ReactNode[] = [];
+	const rest = total.length - max;
+	const after = total.slice(0, max);
+	after.push(rest as any);
 
-	for (let i = 0; i < l; i++) {
-		if (i >= max) {
-			displays.push(`+${l - max}`);
-			break;
-		}
-		displays.push(values[i]);
-	}
-
-	return displays.map((v, i) => (
-		<span key={v as string} className='i-select-value'>
-			{v}
-		</span>
-	));
+	return after;
 };
-
-export const activeLabels = (options: TOption[] = [], value: TValue[] = []) =>
-	options.flatMap((opt) => (value.includes(opt.value) ? [opt.label] : []));

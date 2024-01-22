@@ -33,22 +33,22 @@ function getCellStyle({
 
 function Col(props: ICol) {
 	const { column, row, col, data, onCellClick } = props;
-	const { field, fixed, align, rowSpan, render } = column;
+	const { id, fixed, align, rowSpan, render } = column;
 	const style = getCellStyle({ align, fixed, col, row, rowSpan });
 
 	const handleTdClick = useMemoizedFn(() => {
-		onCellClick?.(data, field, row, col);
+		onCellClick?.(data, id, row, col);
 	});
 
 	return (
 		<div
 			className={classNames("i-table-td")}
-			data-col={field}
+			data-col={id}
 			style={style}
 			onClick={handleTdClick}
 		>
 			<div className='i-table-td-content'>
-				{render?.(data[field], data, col) || data[field]}
+				{render?.(data[id], data, col) || data[id]}
 			</div>
 		</div>
 	);
@@ -80,7 +80,7 @@ export function Header(props: IHeader) {
 		<div className='i-table-header i-table-row'>
 			{columns.map((column, col) => {
 				const {
-					field,
+					id,
 					title,
 					fixed,
 					colSpan,
@@ -100,12 +100,12 @@ export function Header(props: IHeader) {
 				return (
 					<div
 						key={col}
-						data-col={field}
+						data-col={id}
 						className={classNames("i-table-td")}
 						style={{ ...style, insetBlockStart: 0 }}
 					>
 						<div className='i-table-td-content'>
-							{renderHeader?.(column, col) || title || field}
+							{renderHeader?.(column, col) || title || id}
 						</div>
 					</div>
 				);

@@ -29,8 +29,3 @@ export interface ISelectOptions {
 	empty?: ReactNode;
 	onSelect?: (v: TValue, option: TOption) => void;
 }
-
-export interface IDisplayValues {
-	values?: ReactNode[];
-	max: number;
-}

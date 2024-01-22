@@ -4,10 +4,10 @@ import { CSSProperties, useEffect } from "react";
 import "./index.scss";
 import Resize from "./resize";
 import Row, { Header } from "./row";
-import type { ITable, TWidth } from "./type";
+import type { IColumn, ITable, TWidth } from "./type";
 
 type State = {
-	columns: any[];
+	columns: IColumn[];
 	widths: TWidth[];
 	style: CSSProperties;
 };
@@ -90,7 +90,7 @@ const Table = (props: ITable): JSX.Element => {
 		state.columns = columns
 			? columns
 			: data.length
-			? Object.keys(data[0]).map((key) => ({ field: key }))
+			? Object.keys(data[0]).map((key) => ({ id: key }))
 			: [];
 
 		state.widths = state.columns.map((col) => {

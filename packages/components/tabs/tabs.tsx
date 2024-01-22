@@ -1,4 +1,4 @@
-import { useIntersectionObserver } from "@p/js/hooks";
+import { useIntersectionObserver, useResizeObserver } from "@p/js/hooks";
 import { MoreHorizRound } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
@@ -54,7 +54,9 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		overflow: false,
 		more: [],
 	});
-	const { observe, unobserve } = useIntersectionObserver();
+	const { observe: IOobserve, unobserve: IOunobserve } =
+		useIntersectionObserver();
+	const { observe: ROobserve, unobserve: ROunobserve } = useResizeObserver();
 
 	const tabs: ITabItem[] = useMemo(
 		() =>
@@ -96,6 +98,25 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		});
 	};
 
+	const watchOverflow = useCallback(() => {
+		if (!navRefs.current || !navsRef.current) return;
+
+		const { scrollHeight, scrollWidth, offsetWidth, offsetHeight } =
+			navsRef.current as HTMLElement;
+
+		state.overflow =
+			scrollHeight > offsetHeight || scrollWidth > offsetWidth;
+
+		if (!state.overflow) return;
+
+		navRefs.current?.map((nav, i) => {
+			IOobserve(nav, (tar: HTMLElement, visible: boolean) => {
+				tabs[i].intersecting = visible;
+				state.more = tabs.filter((tab) => !tab.intersecting);
+			});
+		});
+	}, [navRefs.current]);
+
 	useEffect(() => {
 		if (!bar) return;
 
@@ -129,24 +150,12 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, [active]);
 
 	useEffect(() => {
-		if (!navRefs.current) return;
-		const { scrollHeight, scrollWidth, offsetWidth, offsetHeight } =
-			navsRef.current as HTMLElement;
-
-		state.overflow =
-			scrollHeight > offsetHeight || scrollWidth > offsetWidth;
-
-		if (!state.overflow) return;
-
-		navRefs.current?.map((nav, i) => {
-			observe(nav, (tar: HTMLElement, visible: boolean) => {
-				tabs[i].intersecting = visible;
-				state.more = tabs.filter((tab) => !tab.intersecting);
-			});
-		});
+		watchOverflow();
+		navsRef.current && ROobserve(navsRef.current, watchOverflow);
 
 		return () => {
-			navRefs.current?.map(unobserve);
+			navRefs.current?.map(IOunobserve);
+			ROunobserve(navsRef.current as HTMLElement);
 		};
 	}, [tabs]);
 
@@ -201,7 +210,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 					)}
 				</div>
 
-				{state.overflow && (
+				{state.overflow && state.more.length > 0 && (
 					<Popup
 						arrow={false}
 						position={vertical ? "right" : "bottom"}

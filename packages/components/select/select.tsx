@@ -17,7 +17,7 @@ import {
 import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
-import { DisplayValues, Options, activeLabels } from "./options";
+import { Options } from "./options";
 import { ISelect } from "./type";
 
 const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
@@ -38,7 +38,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		message,
 		status = "normal",
 		hideClear,
-		maxDisplay = 6,
+		maxDisplay,
 		filter,
 		onSelect,
 		onChange,
@@ -156,13 +156,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 					{hasValue && !filter ? (
 						<div className='i-input i-select'>
 							{multiple ? (
-								<DisplayValues
-									values={activeLabels(
-										formattedOptions,
-										val as string[]
-									)}
-									max={maxDisplay}
-								/>
+								<></>
 							) : (
 								(activeOption as TOption)?.label
 							)}

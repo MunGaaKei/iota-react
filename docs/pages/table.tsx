@@ -4,22 +4,22 @@ import { mock } from "mockjs";
 
 const columns = [
 	{
-		field: "id",
+		id: "id",
 		fixed: "left",
 		width: 40,
 	},
 	{
-		field: "name",
+		id: "name",
 		fixed: "left",
 	},
 	{
-		field: "email",
+		id: "email",
 	},
 	{
-		field: "phone",
+		id: "phone",
 	},
 	{
-		field: "gender",
+		id: "gender",
 		title: "性别",
 		align: "center",
 		sorter: true,
@@ -28,15 +28,15 @@ const columns = [
 		},
 	},
 	{
-		field: "birth",
+		id: "birth",
 		width: 160,
 	},
 	{
-		field: "address",
+		id: "address",
 		width: 200,
 	},
 	{
-		field: "active",
+		id: "active",
 		fixed: "right",
 		align: "center",
 		render: (value: boolean) => {
@@ -48,13 +48,13 @@ const columns = [
 		},
 	},
 	{
-		field: "none",
+		id: "none",
 		renderHeader: (column) => {
 			return "自定义渲染头部";
 		},
 	},
 	{
-		field: "action",
+		id: "action",
 		fixed: "right",
 		align: "center",
 		render: () => (
@@ -89,7 +89,7 @@ export default function Page() {
 				columns={columns}
 				style={{ height: 400 }}
 				// resizable
-			></Table>
+			/>
 		</>
 	);
 }
