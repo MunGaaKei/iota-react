@@ -3,7 +3,7 @@ import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TOption, TValue } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
-import { useReactive } from "ahooks";
+import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { debounce } from "lodash";
 import {
@@ -17,7 +17,7 @@ import {
 import "../../css/input.scss";
 import Helpericon from "../utils/helpericon";
 import "./index.scss";
-import { Options } from "./options";
+import { Options, displayValue } from "./options";
 import { ISelect } from "./type";
 
 const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
@@ -40,12 +40,15 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		hideClear,
 		maxDisplay,
 		filter,
+		filterPlaceholder = "...",
 		onSelect,
 		onChange,
-		...rest
+		...restProps
 	} = props;
 
 	const state = useReactive({
+		inputValue: "",
+		filterValue: "",
 		value,
 		status,
 		message,
@@ -62,13 +65,17 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 
 	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
-	const activeOption = useMemo(() => {
-		return multiple
-			? formattedOptions.filter((opt) =>
-					(state.value as TValue[])?.includes(opt.value)
-			  )
-			: formattedOptions.find((opt) => opt.value === state.value);
-	}, [state.value, formattedOptions]);
+	const filterOptions = useMemo(() => {
+		const { filterValue: fv } = state;
+		if (!fv || !filter) return formattedOptions;
+
+		const filterFn =
+			typeof filter === "function"
+				? filter
+				: (opt) => opt.value.includes(fv) || opt.label.includes(fv);
+
+		return formattedOptions.filter(filterFn);
+	}, [formattedOptions, filter, state.filterValue]);
 
 	const changeValue = (v: TValue) => {
 		Object.assign(state, {
@@ -81,7 +88,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		emitForm?.(v);
 	};
 
-	const handleSelect = useCallback((value: TValue, option: TOption) => {
+	const handleSelect = useCallback((value: TValue, option?: TOption) => {
 		onSelect?.(value, option);
 
 		if (multiple) {
@@ -99,20 +106,26 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	}, []);
 
 	const handleOpen = () => {
+		if (filter) state.filterValue = "";
+
 		setActive(true);
 	};
 
 	const handleHelperClick = (e: MouseEvent) => {
+		if (!active) return;
 		e.stopPropagation();
 
 		changeValue(multiple ? [] : "");
 	};
 
-	const handleChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
-	}, 500);
+	const handleInputChange = useMemoizedFn(
+		debounce((e: ChangeEvent<HTMLInputElement>) => {
+			const v = e.target.value;
+			state.filterValue = v;
+		}, 500)
+	);
 
-	const { value: val, message: msg, status: sts, loading } = state;
+	const { value: val, message: msg, status: sts } = state;
 	const hasValue = multiple ? (val as TValue[]).length > 0 : !!val;
 	const clearable = !hideClear && active && hasValue;
 
@@ -134,12 +147,13 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 				onVisibleChange={setActive}
 				content={
 					<Options
-						options={formattedOptions}
+						options={filterOptions}
 						value={val}
 						multiple={multiple}
 						filter={!!filter}
-						maxDisplay={maxDisplay}
+						filterPlaceholder={filterPlaceholder}
 						onSelect={handleSelect}
+						onFilter={handleInputChange}
 					/>
 				}
 			>
@@ -151,22 +165,27 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 				>
 					{prepend}
 
-					<input type='hidden' ref={ref} value={val} {...rest} />
+					<input ref={ref} type='hidden' value={val} {...restProps} />
 
-					{hasValue && !filter ? (
-						<div className='i-input i-select'>
-							{multiple ? (
-								<></>
-							) : (
-								(activeOption as TOption)?.label
-							)}
+					{hasValue ? (
+						<div
+							className={classNames("i-input i-select", {
+								"i-select-multiple": multiple,
+							})}
+						>
+							{displayValue({
+								options: formattedOptions,
+								value: val,
+								multiple,
+								maxDisplay,
+								onSelect: handleSelect,
+							})}
 						</div>
 					) : (
 						<input
 							className='i-input i-select'
 							placeholder={placeholder}
-							readOnly={!filter}
-							onChange={handleChange}
+							readOnly
 						/>
 					)}
 

@@ -152,36 +152,43 @@ export default function Popup(props: IPopup) {
 		return events;
 	}, [touchable, trigger]);
 
-	useEffect(() => {
-		if (!watchResize || !contentRef.current) return;
-		const { observe, unobserve } = useResizeObserver();
+	const computePosition = () => {
+		if (!state.show) return;
 
-		observe(contentRef.current, () => {
-			if (!state.show) return;
+		const [left, top, [arrowX, arrowY]] = getPosition(
+			triggerRef.current,
+			contentRef.current,
+			{
+				position,
+				gap,
+				offset,
+				align,
+			}
+		);
 
-			const [left, top, [arrowX, arrowY]] = getPosition(
-				triggerRef.current,
-				contentRef.current,
-				{
-					position,
-					gap,
-					offset,
-					align,
-				}
-			);
-
-			Object.assign(state, {
-				style: { ...state.style, left, top },
-				arrowStyle: { left: arrowX, top: arrowY },
-			});
+		Object.assign(state, {
+			style: { ...state.style, left, top },
+			arrowStyle: { left: arrowX, top: arrowY },
 		});
+	};
+
+	useEffect(() => {
+		const { observe, unobserve, disconnect } = useResizeObserver();
+
+		triggerRef.current && observe(triggerRef.current, computePosition);
+
+		if (!watchResize || !contentRef.current) return;
+
+		observe(contentRef.current, computePosition);
 
 		return () => {
 			if (!watchResize || !contentRef.current) return;
 
 			unobserve(contentRef.current);
+			triggerRef.current && unobserve(triggerRef.current);
+			disconnect();
 		};
-	}, [watchResize, contentRef.current]);
+	}, [watchResize, contentRef.current, triggerRef.current]);
 
 	useLayoutEffect(() => {
 		if (!fitSize || !state.show) return;

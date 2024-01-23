@@ -75,7 +75,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		if (type === "password" && !hideVisible) {
 			Object.assign(state, {
 				visible: !state.visible,
-				type: state.visible ? "text" : "password",
+				type: !state.visible ? "text" : "password",
 			});
 			return;
 		}

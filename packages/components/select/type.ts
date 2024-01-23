@@ -1,5 +1,5 @@
 import { BaseInput, TOption, TOptions, TValue } from "@p/type";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface ISelect
 	extends Omit<
@@ -15,17 +15,18 @@ export interface ISelect
 	max?: number;
 	maxDisplay?: number;
 	filter?: boolean | (() => boolean);
+	filterPlaceholder?: string;
 	empty?: ReactNode;
 	onSelect?: (v?: TValue, option?: TOption) => void;
 	onChange?: (v: TValue) => void;
 }
 
-export interface ISelectOptions {
-	multiple?: boolean;
+export interface ISelectOptions
+	extends Pick<
+		ISelect,
+		"multiple" | "empty" | "filter" | "filterPlaceholder" | "onSelect"
+	> {
 	value?: TValue;
 	options: TOption[];
-	maxDisplay?: number;
-	filter?: boolean;
-	empty?: ReactNode;
-	onSelect?: (v: TValue, option: TOption) => void;
+	onFilter?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

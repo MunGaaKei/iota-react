@@ -1,6 +1,6 @@
 import { Icon, List, Tag } from "@p";
 import { TOption, TValue } from "@p/type";
-import { InboxTwotone } from "@ricons/material";
+import { InboxTwotone, ManageSearchRound } from "@ricons/material";
 import { ISelectOptions } from "./type";
 
 export const Options = (props: ISelectOptions) => {
@@ -8,48 +8,37 @@ export const Options = (props: ISelectOptions) => {
 		value: val,
 		options,
 		filter,
-		maxDisplay = 2,
+		filterPlaceholder,
 		multiple,
-		empty,
+		empty = (
+			<div className='i-select-options-empty'>
+				<Icon icon={<InboxTwotone />} size='2.5em' />
+			</div>
+		),
 		onSelect,
+		onFilter,
 	} = props;
-
-	if (!options.length) {
-		return (
-			empty || (
-				<div className='i-select-options-empty'>
-					<Icon icon={<InboxTwotone />} size='2.5em' />
-				</div>
-			)
-		);
-	}
 
 	return (
 		<div className='i-select-options'>
-			{filter && multiple && (
-				<div className='i-select-options-header'>
-					{activeOptions(options, val as TValue[], maxDisplay).map(
-						(opt, i) => {
-							if (typeof opt === "number")
-								return <Tag key={i}>+{opt}</Tag>;
-
-							const { label, value } = opt;
-
-							return (
-								<Tag
-									key={value as string}
-									onClose={(e) => {
-										e?.stopPropagation();
-										onSelect?.(value, opt);
-									}}
-								>
-									{label}
-								</Tag>
-							);
-						}
-					)}
+			{filter && (
+				<div className='i-select-filter'>
+					<input
+						type='text'
+						className='i-input'
+						placeholder={filterPlaceholder}
+						onChange={onFilter}
+					/>
+					<Icon
+						icon={<ManageSearchRound />}
+						className='color-8 mr-8 my-auto'
+						size='1.2em'
+					/>
 				</div>
 			)}
+
+			{options.length === 0 && empty}
+
 			{options.map((option, i) => {
 				const { label, value, disabled } = option;
 				const isActive = multiple
@@ -75,7 +64,7 @@ export const Options = (props: ISelectOptions) => {
 export const activeOptions = (
 	options: TOption[] = [],
 	value: TValue[] = [],
-	max = 6
+	max = 3
 ) => {
 	const total = options.flatMap((opt) =>
 		value.includes(opt.value) ? [opt] : []
@@ -88,4 +77,32 @@ export const activeOptions = (
 	after.push(rest as any);
 
 	return after;
+};
+
+export const displayValue = (config) => {
+	const { options, value, maxDisplay, multiple, onSelect } = config;
+
+	if (multiple) {
+		return activeOptions(options, value as TValue[], maxDisplay).map(
+			(opt, i) => {
+				if (typeof opt === "number") return <Tag key={i}>+{opt}</Tag>;
+
+				const { label, value } = opt;
+
+				return (
+					<Tag
+						key={value as string}
+						onClose={(e) => {
+							e?.stopPropagation();
+							onSelect?.(value, opt);
+						}}
+					>
+						{label}
+					</Tag>
+				);
+			}
+		);
+	}
+
+	return options.find((opt) => opt.value === value)?.label;
 };
