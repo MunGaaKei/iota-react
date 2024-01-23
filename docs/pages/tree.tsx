@@ -9,10 +9,22 @@ export default function Page() {
 						title: "A",
 						children: [
 							{
-								title: "A-1",
+								title: "A-0",
 							},
 							{
-								title: "A-2",
+								title: "A-1",
+								expanded: true,
+								children: [
+									{
+										title: "A-1-0",
+									},
+									{
+										title: "A-1-1",
+									},
+									{
+										title: "A-1-2",
+									},
+								],
 							},
 						],
 						expanded: true,
@@ -21,13 +33,21 @@ export default function Page() {
 						title: "B",
 						children: [
 							{
+								title: "B-0",
+								children: [
+									{
+										title: "B-0-0",
+									},
+									{
+										title: "B-0-1",
+									},
+								],
+							},
+							{
 								title: "B-1",
 							},
 							{
 								title: "B-2",
-							},
-							{
-								title: "B-3",
 							},
 						],
 						expanded: true,

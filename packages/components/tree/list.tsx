@@ -5,7 +5,6 @@ import { ITree } from "./type";
 function TreeList(props: ITree) {
 	const {
 		items = [],
-		selectable,
 		depth = 0,
 		keyPrefix,
 		round,
