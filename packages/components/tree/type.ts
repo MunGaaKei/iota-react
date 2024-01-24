@@ -30,6 +30,8 @@ export interface ITreeItem {
 	children?: ITreeItem[];
 	expanded?: boolean;
 	disabled?: boolean;
+	parentKey?: string;
+	path?: readonly string[];
 }
 
 export interface PropsTreeItem extends Omit<ITree, "items"> {
@@ -40,7 +42,7 @@ export interface PropsTreeItem extends Omit<ITree, "items"> {
 export interface ITree {
 	items: ITreeItem[];
 	depth?: number;
-	keyPrefix?: string;
+	parentKey?: string;
 	keyProp?: string;
 	selectable?: boolean;
 	selected?: string;

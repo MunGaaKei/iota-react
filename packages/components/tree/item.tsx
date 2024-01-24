@@ -33,7 +33,6 @@ export const TreeItem = (props: PropsTreeItem) => {
 	const {
 		item,
 		depth = 0,
-		keyPrefix = "0",
 		index,
 		selected,
 		checked = [],
@@ -47,7 +46,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 
 	const {
 		as,
-		key,
+		key = "",
 		href,
 		icon,
 		title,
@@ -57,13 +56,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 	} = item;
 
 	const [expand, setExpand] = useState(expanded);
-	const itemKey = key || (keyProp && item[keyProp]) || keyPrefix;
-	item.key = itemKey;
 	const partof = false;
-
-	if (checkable) {
-		console.log(itemKey);
-	}
 
 	const handleExpand = useMemoizedFn(
 		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
@@ -87,7 +80,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 
 		handleExpand(e);
 		onItemClick?.(item, e);
-		onItemSelect?.(itemKey);
+		onItemSelect?.(key);
 	});
 
 	const handleItemCheck = (checked, e) => {
@@ -104,13 +97,14 @@ export const TreeItem = (props: PropsTreeItem) => {
 				as={as}
 				href={href}
 				style={{ paddingLeft: `${depth * 1.5 + 0.5}em` }}
-				selected={selected === itemKey}
+				selected={selected === key}
 				onClick={handleItemClick}
 			>
 				{checkable && (
 					<Checkbox.Item
-						value={checked.includes(itemKey)}
+						value={checked.includes(key)}
 						partof={partof}
+						className='i-tree-checkbox'
 						onChange={handleItemCheck}
 						onClick={(e) => e.stopPropagation()}
 					/>
@@ -134,9 +128,9 @@ export const TreeItem = (props: PropsTreeItem) => {
 					<TreeList
 						items={children}
 						depth={depth + 1}
-						keyPrefix={keyPrefix}
 						selected={selected}
 						keyProp={keyProp}
+						parentKey={key}
 						checkable={checkable}
 						onItemClick={onItemClick}
 						onItemSelect={onItemSelect}

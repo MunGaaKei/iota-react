@@ -1,6 +1,6 @@
 import { Icon, List, Tag } from "@p";
 import { TOption, TValue } from "@p/type";
-import { InboxTwotone, ManageSearchRound } from "@ricons/material";
+import { InboxTwotone, SearchRound } from "@ricons/material";
 import { ISelectOptions } from "./type";
 
 export const Options = (props: ISelectOptions) => {
@@ -23,16 +23,16 @@ export const Options = (props: ISelectOptions) => {
 		<div className='i-select-options'>
 			{filter && (
 				<div className='i-select-filter'>
+					<Icon
+						icon={<SearchRound />}
+						className='color-8 ml-8 my-auto'
+						size='1.2em'
+					/>
 					<input
 						type='text'
 						className='i-input'
 						placeholder={filterPlaceholder}
 						onChange={onFilter}
-					/>
-					<Icon
-						icon={<ManageSearchRound />}
-						className='color-8 mr-8 my-auto'
-						size='1.2em'
 					/>
 				</div>
 			)}

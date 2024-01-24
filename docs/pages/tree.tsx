@@ -1,8 +1,13 @@
 import { Tree } from "@p";
+import { useState } from "react";
 
 export default function Page() {
+	const [selected, setSelected] = useState("");
+	const [checked, setChecked] = useState([]);
+
 	return (
 		<>
+			<p>selected: {selected}</p>
 			<Tree
 				items={[
 					{
@@ -54,6 +59,8 @@ export default function Page() {
 					},
 				]}
 				checkable
+				selectable
+				onItemSelect={setSelected}
 			/>
 		</>
 	);

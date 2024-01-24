@@ -61,7 +61,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 
 	const handleDateClick = (date: Dayjs) => {
 		handleChange(date.format(format));
-		setActive(false);
 	};
 
 	const handleChange = (v) => {

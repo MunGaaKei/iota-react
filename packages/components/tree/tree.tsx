@@ -35,8 +35,6 @@ function Tree(props: ITree) {
 		} else if (i < 0 && checked) {
 			state.checked.push(item.key as string);
 		}
-
-		console.log(state.checked);
 	};
 
 	useEffect(() => {
