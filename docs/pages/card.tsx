@@ -6,7 +6,7 @@ import { CloseRound, FavoriteTwotone, MoreVertRound } from "@ricons/material";
 export default function Page() {
 	return (
 		<>
-			<Flex columns='repeat(auto-fill, minmax(200px, 1fr))' gap='20px'>
+			<Flex columns='repeat(auto-fill, minmax(160px, 1fr))' gap='20px'>
 				<Card>
 					<Card.Header className='items-center'>
 						<h4>UCHIHA SASUKE</h4>

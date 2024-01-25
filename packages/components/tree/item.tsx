@@ -81,7 +81,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 		onItemSelect?.(key, item);
 	});
 
-	const handleItemCheck = (checked, e) => onItemCheck?.(item, checked, e);
+	const handleItemCheck = (checked) => onItemCheck?.(item, checked);
 
 	return (
 		<div

@@ -1,6 +1,5 @@
 import {
 	CSSProperties,
-	ChangeEvent,
 	ForwardRefExoticComponent,
 	MouseEvent,
 	ReactNode,
@@ -30,6 +29,7 @@ export interface ITreeItem {
 	children?: ITreeItem[];
 	expanded?: boolean;
 	disabled?: boolean;
+	checked?: boolean;
 	parent?: ITreeItem;
 }
 
@@ -56,6 +56,6 @@ export interface ITree {
 	onItemCheck?: (
 		item: ITreeItem,
 		checked: boolean,
-		e?: ChangeEvent<HTMLInputElement>
+		checkedKeys?: string[]
 	) => void;
 }

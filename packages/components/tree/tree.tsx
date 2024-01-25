@@ -18,6 +18,11 @@ function Tree(props: ITree) {
 	});
 
 	const checkItem = useMemoizedFn((item: ITreeItem, checked: boolean) => {
+		if (item.checked === checked) return;
+
+		const { key, parent } = item;
+		item.checked = checked;
+
 		if (checked) {
 			return;
 		}
@@ -34,18 +39,7 @@ function Tree(props: ITree) {
 	};
 
 	const handleCheck = (item: ITreeItem, checked: boolean) => {
-		if (!props.checkable) return;
-
-		const i = state.checked.findIndex((key) => item.key === key);
-
-		if (i > -1 && !checked) {
-			state.checked.splice(i, 1);
-		} else if (i < 0 && checked) {
-			state.checked.push(item.key as string);
-		}
-
 		checkItem(item, checked);
-		onItemCheck?.(item, checked);
 	};
 
 	useEffect(() => {
