@@ -36,7 +36,6 @@ export const TreeItem = (props: PropsTreeItem) => {
 		index,
 		selected,
 		checked = [],
-		keyProp,
 		checkable,
 		onItemClick,
 		onItemSelect,
@@ -50,13 +49,12 @@ export const TreeItem = (props: PropsTreeItem) => {
 		href,
 		icon,
 		title,
-		children = [],
+		children,
 		expanded,
 		disabled,
 	} = item;
 
 	const [expand, setExpand] = useState(expanded);
-	const partof = false;
 
 	const handleExpand = useMemoizedFn(
 		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
@@ -65,7 +63,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 				e.stopPropagation();
 			}
 
-			if (disabled || !children.length) return;
+			if (disabled || !children?.length) return;
 
 			setExpand((v) => !v);
 		}
@@ -80,12 +78,10 @@ export const TreeItem = (props: PropsTreeItem) => {
 
 		handleExpand(e);
 		onItemClick?.(item, e);
-		onItemSelect?.(key);
+		onItemSelect?.(key, item);
 	});
 
-	const handleItemCheck = (checked, e) => {
-		onItemCheck?.(item, checked, e);
-	};
+	const handleItemCheck = (checked, e) => onItemCheck?.(item, checked, e);
 
 	return (
 		<div
@@ -103,7 +99,6 @@ export const TreeItem = (props: PropsTreeItem) => {
 				{checkable && (
 					<Checkbox.Item
 						value={checked.includes(key)}
-						partof={partof}
 						className='i-tree-checkbox'
 						onChange={handleItemCheck}
 						onClick={(e) => e.stopPropagation()}
@@ -114,7 +109,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 
 				<span className='i-tree-item-title'>{title}</span>
 
-				{children.length > 0 && (
+				{children && (
 					<Icon
 						icon={<KeyboardArrowDownRound />}
 						className='i-tree-toggle'
@@ -123,15 +118,14 @@ export const TreeItem = (props: PropsTreeItem) => {
 				)}
 			</Header>
 
-			{children?.length > 0 && (
+			{children?.length && (
 				<div className='i-tree-item-content'>
 					<TreeList
 						items={children}
 						depth={depth + 1}
 						selected={selected}
-						keyProp={keyProp}
-						parentKey={key}
 						checkable={checkable}
+						parent={item}
 						onItemClick={onItemClick}
 						onItemSelect={onItemSelect}
 						onItemCheck={onItemCheck}

@@ -1,4 +1,4 @@
-import { useReactive } from "ahooks";
+import { useMemoizedFn, useReactive } from "ahooks";
 import { useEffect } from "react";
 import "./index.scss";
 import TreeList from "./list";
@@ -8,8 +8,6 @@ function Tree(props: ITree) {
 	const {
 		selected,
 		checked = [],
-		checkable,
-		selectable,
 		onItemSelect,
 		onItemCheck,
 		...restProps
@@ -19,14 +17,24 @@ function Tree(props: ITree) {
 		checked,
 	});
 
-	const handleSelect = (key: string) => {
-		if (!selectable) return;
+	const checkItem = useMemoizedFn((item: ITreeItem, checked: boolean) => {
+		if (checked) {
+			return;
+		}
+
+		if (item.children) {
+		}
+	});
+
+	const handleSelect = (key: string, item: ITreeItem) => {
+		if (!props.selectable) return;
 
 		state.selected = key;
+		onItemSelect?.(key, item);
 	};
 
 	const handleCheck = (item: ITreeItem, checked: boolean) => {
-		if (!checkable) return;
+		if (!props.checkable) return;
 
 		const i = state.checked.findIndex((key) => item.key === key);
 
@@ -35,16 +43,19 @@ function Tree(props: ITree) {
 		} else if (i < 0 && checked) {
 			state.checked.push(item.key as string);
 		}
+
+		checkItem(item, checked);
+		onItemCheck?.(item, checked);
 	};
 
 	useEffect(() => {
+		if (selected === undefined) return;
+
 		state.selected = selected;
 	}, [selected]);
 
 	return (
 		<TreeList
-			checkable={checkable}
-			selectable={selectable}
 			selected={state.selected}
 			checked={state.checked}
 			onItemCheck={handleCheck}

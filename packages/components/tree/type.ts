@@ -30,8 +30,7 @@ export interface ITreeItem {
 	children?: ITreeItem[];
 	expanded?: boolean;
 	disabled?: boolean;
-	parentKey?: string;
-	path?: readonly string[];
+	parent?: ITreeItem;
 }
 
 export interface PropsTreeItem extends Omit<ITree, "items"> {
@@ -41,8 +40,8 @@ export interface PropsTreeItem extends Omit<ITree, "items"> {
 
 export interface ITree {
 	items: ITreeItem[];
+	parent?: ITreeItem;
 	depth?: number;
-	parentKey?: string;
 	keyProp?: string;
 	selectable?: boolean;
 	selected?: string;
@@ -53,7 +52,7 @@ export interface ITree {
 	style?: CSSProperties;
 	className?: string;
 	onItemClick?: (item: ITreeItem, e: MouseEvent<HTMLElement>) => void;
-	onItemSelect?: (key: string) => void;
+	onItemSelect?: (key: string, item: ITreeItem) => void;
 	onItemCheck?: (
 		item: ITreeItem,
 		checked: boolean,
