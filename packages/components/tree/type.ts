@@ -56,6 +56,6 @@ export interface ITree {
 	onItemCheck?: (
 		item: ITreeItem,
 		checked: boolean,
-		checkedKeys?: string[]
+		checkedKeys: string[]
 	) => void;
 }

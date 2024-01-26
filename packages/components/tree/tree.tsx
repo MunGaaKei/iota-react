@@ -17,19 +17,43 @@ function Tree(props: ITree) {
 		checked,
 	});
 
-	const checkItem = useMemoizedFn((item: ITreeItem, checked: boolean) => {
-		if (item.checked === checked) return;
+	const isChecked = (key?: string) => state.checked.includes(key || "");
 
-		const { key, parent } = item;
-		item.checked = checked;
+	const checkItem = useMemoizedFn(
+		(item: ITreeItem, checked: boolean, direction?: "root" | "leaf") => {
+			const { key, parent, children } = item;
+			const result = [key as string];
 
-		if (checked) {
-			return;
+			if (checked) {
+				if (parent && !isChecked(parent.key) && direction !== "leaf") {
+					const unchecked = parent.children?.some(
+						(o) => o.key !== key && !isChecked(o.key)
+					);
+
+					!unchecked &&
+						result.push(...checkItem(parent, true, "root"));
+				}
+				if (children?.length && direction !== "root") {
+					children.map((o) => {
+						!isChecked(o.key) &&
+							result.push(...checkItem(o, true, "leaf"));
+					});
+				}
+				return result;
+			}
+
+			if (parent && isChecked(parent?.key) && direction !== "leaf") {
+				result.push(...checkItem(parent, false, "root"));
+			}
+			if (children?.length && direction !== "root") {
+				children.map((o) => {
+					isChecked(o.key) &&
+						result.push(...checkItem(o, false, "leaf"));
+				});
+			}
+			return result;
 		}
-
-		if (item.children) {
-		}
-	});
+	);
 
 	const handleSelect = (key: string, item: ITreeItem) => {
 		if (!props.selectable) return;
@@ -39,7 +63,13 @@ function Tree(props: ITree) {
 	};
 
 	const handleCheck = (item: ITreeItem, checked: boolean) => {
-		checkItem(item, checked);
+		const result = checkItem(item, checked);
+
+		state.checked = checked
+			? Array.from(new Set([...state.checked, ...result]))
+			: state.checked.filter((k) => !result.includes(k));
+
+		onItemCheck?.(item, checked, state.checked);
 	};
 
 	useEffect(() => {

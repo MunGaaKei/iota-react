@@ -1,14 +1,23 @@
-import { Tree } from "@p";
+import { Flex, Tag, Tree } from "@p";
 import { useState } from "react";
 
 export default function Page() {
 	const [selected, setSelected] = useState("");
-	const [checked, setChecked] = useState([]);
+	const [checked, setChecked] = useState<string[]>([]);
 
 	return (
 		<>
 			<p>selected: {selected}</p>
+			<div className='mb-12'>
+				<Flex gap={10} wrap>
+					<span className='py-4'>checked:</span>
+					{checked.map((k) => (
+						<Tag key={k}>{k}</Tag>
+					))}
+				</Flex>
+			</div>
 			<Tree
+				keyProp='title'
 				items={[
 					{
 						title: "A",
@@ -61,6 +70,9 @@ export default function Page() {
 				checkable
 				selectable
 				onItemSelect={setSelected}
+				onItemCheck={(item, checked, list) => {
+					setChecked(list);
+				}}
 			/>
 		</>
 	);

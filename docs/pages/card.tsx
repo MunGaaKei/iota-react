@@ -6,8 +6,11 @@ import { CloseRound, FavoriteTwotone, MoreVertRound } from "@ricons/material";
 export default function Page() {
 	return (
 		<>
-			<Flex columns='repeat(auto-fill, minmax(160px, 1fr))' gap='20px'>
+			<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
 				<Card>
+					<Card.Banner>
+						<Image src={sasuke} />
+					</Card.Banner>
 					<Card.Header className='items-center'>
 						<h4>UCHIHA SASUKE</h4>
 						<Button size='small' square flat className='ml-auto'>
@@ -15,9 +18,6 @@ export default function Page() {
 						</Button>
 					</Card.Header>
 					SHIDORI
-					<Card.Banner>
-						<Image src={sasuke} />
-					</Card.Banner>
 				</Card>
 				<Card>
 					<Card.Header>

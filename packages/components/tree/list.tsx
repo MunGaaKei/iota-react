@@ -18,8 +18,8 @@ function TreeList(props: ITree) {
 		const itemKey =
 			key ||
 			(props.keyProp && item[props.keyProp]) ||
-			(parent?.key !== undefined ? `${parent.key}-${i}` : i);
-		if (!key) item.key = itemKey;
+			(parent?.key !== undefined ? `${parent.key}-${i}` : `${i}`);
+		item.key = itemKey;
 		item.parent = parent;
 
 		if (type === "title") {
