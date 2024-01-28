@@ -31,7 +31,7 @@ const Flex = (props: IFlex): JSX.Element => {
 				justifyContent: justify,
 				gap,
 				flexDirection: direction,
-				flexWrap: wrap,
+				flexWrap: wrap === true ? "wrap" : wrap,
 				gridTemplateColumns: gridColumns as any,
 			}}
 			className={classNames(className, {

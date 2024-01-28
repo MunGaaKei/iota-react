@@ -47,6 +47,7 @@ export interface ITree {
 	selected?: string;
 	checkable?: boolean;
 	checked?: string[];
+	partofs?: Record<string, boolean>;
 	round?: boolean;
 	ripple?: boolean;
 	style?: CSSProperties;

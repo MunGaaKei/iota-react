@@ -79,7 +79,7 @@
 .i-checkbox-default:after,
 .i-checkbox-switch:before,
 .i-checkbox-switch:after,
-.i-checkbox-partof:before {
+.i-checkbox-partof:after {
 	content: "\20";
 	position: absolute;
 	transition: var(--transition);
@@ -150,8 +150,9 @@
 	}
 }
 .i-checkbox-partof {
+	border-radius: 2px;
 	background: var(--color-main);
-	&:before {
+	&:after {
 		background: var(--color-main-reverse);
 		height: 2px;
 		width: 0.5em;

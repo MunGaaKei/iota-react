@@ -9,8 +9,8 @@ export default function Page() {
 		<>
 			<p>selected: {selected}</p>
 			<div className='mb-12'>
-				<Flex gap={10} wrap>
-					<span className='py-4'>checked:</span>
+				<Flex gap={4} wrap>
+					<span>checked:</span>
 					{checked.map((k) => (
 						<Tag key={k}>{k}</Tag>
 					))}

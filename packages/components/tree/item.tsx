@@ -1,7 +1,7 @@
 import { KeyboardArrowDownRound } from "@ricons/material";
 import { useMemoizedFn } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent, useLayoutEffect, useState } from "react";
+import { MouseEvent, useState } from "react";
 import Checkbox from "../checkbox";
 import Icon from "../icon";
 import TreeList from "./list";
@@ -36,6 +36,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 		index,
 		selected,
 		checked = [],
+		partofs = {},
 		checkable,
 		onItemClick,
 		onItemSelect,
@@ -52,11 +53,9 @@ export const TreeItem = (props: PropsTreeItem) => {
 		children,
 		expanded,
 		disabled,
-		parent,
 	} = item;
 
 	const [expand, setExpand] = useState(expanded);
-	const [partof, setPartof] = useState(false);
 
 	const handleExpand = useMemoizedFn(
 		(e: MouseEvent<HTMLElement>, fromToggle?: boolean) => {
@@ -86,12 +85,6 @@ export const TreeItem = (props: PropsTreeItem) => {
 	const handleItemCheck = (checked) => onItemCheck?.(item, checked, []);
 	const itemChecked = checked.includes(key);
 
-	useLayoutEffect(() => {
-		if (!checkable || !children) return;
-
-		console.log(item, checked);
-	}, [item, checkable]);
-
 	return (
 		<div
 			className={classNames("i-tree-item", {
@@ -108,7 +101,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 				{checkable && (
 					<Checkbox.Item
 						value={itemChecked}
-						partof={partof && !itemChecked}
+						partof={!itemChecked && partofs[key]}
 						className='i-tree-checkbox'
 						onChange={handleItemCheck}
 						onClick={(e) => e.stopPropagation()}
@@ -136,6 +129,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 						selected={selected}
 						checkable={checkable}
 						parent={item}
+						partofs={partofs}
 						checked={checked}
 						onItemClick={onItemClick}
 						onItemSelect={onItemSelect}

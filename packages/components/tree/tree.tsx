@@ -15,61 +15,91 @@ function Tree(props: ITree) {
 	const state = useReactive({
 		selected,
 		checked,
+		partofs: {} as Record<string, boolean>,
 	});
 
 	const isChecked = (key?: string) => state.checked.includes(key || "");
 
 	const checkItem = useMemoizedFn(
 		(item: ITreeItem, checked: boolean, direction?: "root" | "leaf") => {
-			const { key, parent, children } = item;
-			const result = [key as string];
+			const { key = "", parent, children } = item;
+			const shouldChanged: Record<string, boolean> = { [key]: checked };
+			const partofs: Record<string, boolean> = {};
 
 			if (checked) {
-				if (parent && !isChecked(parent.key) && direction !== "leaf") {
-					const unchecked = parent.children?.some(
+				if (parent && direction !== "leaf") {
+					const hasUnchecked = parent.children?.some(
 						(o) => o.key !== key && !isChecked(o.key)
 					);
 
-					!unchecked &&
-						result.push(...checkItem(parent, true, "root"));
-				}
-				if (children?.length && direction !== "root") {
-					children.map((o) => {
-						!isChecked(o.key) &&
-							result.push(...checkItem(o, true, "leaf"));
+					const [changes, parts] = checkItem(parent, true, "root");
+
+					if (!hasUnchecked) {
+						Object.assign(shouldChanged, changes);
+					}
+
+					Object.assign(partofs, parts, {
+						[parent.key as string]: hasUnchecked,
 					});
 				}
-				return result;
+
+				if (children?.length && direction !== "root") {
+					children.map((o) => {
+						if (isChecked(o.key)) return;
+
+						const [changes] = checkItem(o, true, "leaf");
+
+						Object.assign(shouldChanged, changes);
+					});
+				}
+
+				return [shouldChanged, partofs];
 			}
 
-			if (parent && isChecked(parent?.key) && direction !== "leaf") {
-				result.push(...checkItem(parent, false, "root"));
+			if (parent && direction !== "leaf") {
+				const [changes, parts] = checkItem(parent, false, "root");
+
+				Object.assign(shouldChanged, changes);
+
+				const hasChecked = parent.children?.some(
+					(o) => isChecked(o.key) && o.key !== key
+				);
+
+				Object.assign(partofs, parts, {
+					[parent.key as string]: hasChecked,
+				});
 			}
 			if (children?.length && direction !== "root") {
 				children.map((o) => {
-					isChecked(o.key) &&
-						result.push(...checkItem(o, false, "leaf"));
+					const [changes] = checkItem(o, false, "leaf");
+
+					if (!isChecked(o.key)) return;
+
+					Object.assign(shouldChanged, changes);
 				});
 			}
-			return result;
+			return [shouldChanged, partofs];
 		}
 	);
+
+	const handleCheck = (item: ITreeItem, checked: boolean) => {
+		const [shouldChanged, partofs] = checkItem(item, checked);
+		const changedKeys = Object.keys(shouldChanged);
+
+		state.checked = checked
+			? Array.from(new Set([...state.checked, ...changedKeys]))
+			: state.checked.filter((k) => !changedKeys.includes(k));
+
+		Object.assign(state.partofs, partofs);
+
+		onItemCheck?.(item, checked, state.checked);
+	};
 
 	const handleSelect = (key: string, item: ITreeItem) => {
 		if (!props.selectable) return;
 
 		state.selected = key;
 		onItemSelect?.(key, item);
-	};
-
-	const handleCheck = (item: ITreeItem, checked: boolean) => {
-		const result = checkItem(item, checked);
-
-		state.checked = checked
-			? Array.from(new Set([...state.checked, ...result]))
-			: state.checked.filter((k) => !result.includes(k));
-
-		onItemCheck?.(item, checked, state.checked);
 	};
 
 	useEffect(() => {
@@ -82,6 +112,7 @@ function Tree(props: ITree) {
 		<TreeList
 			selected={state.selected}
 			checked={state.checked}
+			partofs={state.partofs}
 			onItemCheck={handleCheck}
 			onItemSelect={handleSelect}
 			{...restProps}
