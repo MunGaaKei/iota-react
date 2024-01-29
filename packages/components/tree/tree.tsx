@@ -23,8 +23,8 @@ function Tree(props: ITree) {
 	const checkItem = useMemoizedFn(
 		(item: ITreeItem, checked: boolean, direction?: "root" | "leaf") => {
 			const { key = "", parent, children } = item;
-			const shouldChanged: Record<string, boolean> = { [key]: checked };
-			const partofs: Record<string, boolean> = {};
+			const shouldChanged = { [key]: checked };
+			const partofs = { [key]: false };
 
 			if (checked) {
 				if (parent && direction !== "leaf") {
@@ -38,8 +38,8 @@ function Tree(props: ITree) {
 						Object.assign(shouldChanged, changes);
 					}
 
-					Object.assign(partofs, parts, {
-						[parent.key as string]: hasUnchecked,
+					Object.assign(partofs, hasUnchecked ? parts : {}, {
+						[parent.key as string]: true,
 					});
 				}
 
@@ -50,6 +50,7 @@ function Tree(props: ITree) {
 						const [changes] = checkItem(o, true, "leaf");
 
 						Object.assign(shouldChanged, changes);
+						partofs[o.key as string] = false;
 					});
 				}
 
@@ -65,8 +66,9 @@ function Tree(props: ITree) {
 					(o) => isChecked(o.key) && o.key !== key
 				);
 
-				Object.assign(partofs, parts, {
+				Object.assign(partofs, hasChecked ? {} : parts, {
 					[parent.key as string]: hasChecked,
+					[key]: false,
 				});
 			}
 			if (children?.length && direction !== "root") {
@@ -76,8 +78,10 @@ function Tree(props: ITree) {
 					if (!isChecked(o.key)) return;
 
 					Object.assign(shouldChanged, changes);
+					partofs[o.key as string] = false;
 				});
 			}
+
 			return [shouldChanged, partofs];
 		}
 	);

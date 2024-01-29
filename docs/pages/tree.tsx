@@ -9,7 +9,7 @@ export default function Page() {
 		<>
 			<p>selected: {selected}</p>
 			<div className='mb-12'>
-				<Flex gap={4} wrap>
+				<Flex gap={2} wrap>
 					<span>checked:</span>
 					{checked.map((k) => (
 						<Tag key={k}>{k}</Tag>
@@ -37,6 +37,15 @@ export default function Page() {
 									},
 									{
 										title: "A-1-2",
+										expanded: true,
+										children: [
+											{
+												title: "A-1-2-0",
+											},
+											{
+												title: "A-1-2-1",
+											},
+										],
 									},
 								],
 							},
