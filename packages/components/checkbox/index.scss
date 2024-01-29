@@ -40,6 +40,9 @@
 	user-select: none;
 	border-radius: inherit;
 	color: var(--color-3);
+	&:empty {
+		display: none;
+	}
 }
 
 .i-checkbox-input {

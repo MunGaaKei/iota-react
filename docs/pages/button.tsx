@@ -20,7 +20,6 @@ export default function button(): JSX.Element {
 			<Button loading>加载</Button>
 			<Flex gap={12}>
 				<Button className='bg-grey'>你好</Button>
-				<Button className='bg-grey'>你好</Button>
 				<Button className='bg-blue'>你好</Button>
 				<Button className='bg-red'>你好</Button>
 				<Button className='bg-yellow'>你好</Button>

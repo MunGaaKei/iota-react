@@ -1,6 +1,7 @@
 import classNames from "classnames";
+import { IAreaItem } from "./type";
 
-function Area(props) {
+function Item(props: IAreaItem) {
 	const { name = "content", style, className, children } = props;
 
 	return (
@@ -13,4 +14,4 @@ function Area(props) {
 	);
 }
 
-export default Area;
+export default Item;

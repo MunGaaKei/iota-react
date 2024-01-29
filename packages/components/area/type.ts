@@ -8,11 +8,22 @@ import Item from "./item";
 
 export interface IArea {
 	layout?: "naruto" | "sasuke" | "goku";
-	gap?: number | string;
+	configs?: {
+		headerHeight?: string;
+		contentWidth?: string;
+		gap?: string | number;
+	};
 	style?: CSSProperties;
 	className?: string;
 	children?: ReactNode;
 	onToggle?: (collapsed?: boolean) => void;
+}
+
+export interface IAreaItem {
+	name?: string;
+	style?: CSSProperties;
+	className?: string;
+	children?: ReactNode;
 }
 
 export interface CompositionArea

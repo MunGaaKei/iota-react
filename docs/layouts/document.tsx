@@ -24,11 +24,15 @@ export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
 
 	return (
-		<Area>
-			<Area.Item name='header' className='px-12'>
+		<Area
+			layout='naruto'
+			configs={{ headerHeight: "50px", contentWidth: "1000px" }}
+		>
+			<Area.Item name='header' className='px-8'>
 				<h2>R</h2>
 			</Area.Item>
-			<Area.Item name='sider' className='px-12 pb-12'>
+
+			<Area.Item name='sider' className='pd-8'>
 				<Tree
 					items={menu}
 					selected={`/docs/${name}`}
@@ -36,10 +40,9 @@ export default function Document(): JSX.Element {
 					style={{ minWidth: 240 }}
 				/>
 			</Area.Item>
-			<Area.Item>
-				<div className='pd-12'>
-					<DynamicPage name={name}></DynamicPage>
-				</div>
+
+			<Area.Item name='content' className='pd-8'>
+				<DynamicPage name={name}></DynamicPage>
 			</Area.Item>
 		</Area>
 	);

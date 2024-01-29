@@ -1,16 +1,31 @@
 import classNames from "classnames";
-import { forwardRef } from "react";
+import { CSSProperties, forwardRef } from "react";
 import "./area.scss";
 import Item from "./item";
 import { CompositionArea, IArea } from "./type";
 
 const Area = forwardRef<HTMLDivElement, IArea>((props, ref): JSX.Element => {
-	const { layout = "naruto", gap, style, className, children } = props;
+	const {
+		layout = "naruto",
+		configs = {},
+		style,
+		className,
+		children,
+	} = props;
+
+	const { headerHeight, contentWidth, gap } = configs;
 
 	return (
 		<div
 			ref={ref}
-			style={{ gap, ...style }}
+			style={
+				{
+					["--header-height"]: headerHeight,
+					["--content-width"]: contentWidth,
+					gap,
+					...style,
+				} as CSSProperties
+			}
 			className={classNames("i-area", `i-area-${layout}`, className)}
 		>
 			{children}
