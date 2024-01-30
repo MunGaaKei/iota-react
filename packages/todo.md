@@ -1,4 +1,3 @@
-cascade select
 depth menu
 audio
 context menu
@@ -7,3 +6,4 @@ form
 usereactive
 virtual list
 radio button
+loading tree

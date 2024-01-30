@@ -17,7 +17,7 @@ export type BaseElement = {
 
 export type TOption = {
 	label: ReactNode;
-	value: TValue;
+	value: any;
 	disabled?: boolean;
 };
 
@@ -30,12 +30,12 @@ export type TValidate = {
 
 export interface BaseInput extends TValidate {
 	label?: ReactNode;
-	value?: TValue;
+	value?: any;
 	labelInline?: boolean;
 	form?: string;
 	clear?: boolean;
 	onChange?: (
-		value?: TValue,
+		value?: any,
 		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => void;
 	onEnter?: () => void;

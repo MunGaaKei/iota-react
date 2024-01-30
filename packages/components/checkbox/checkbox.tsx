@@ -1,6 +1,6 @@
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
-import { TStatus, TValue } from "@p/type";
+import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ReactNode, useMemo } from "react";
@@ -28,7 +28,7 @@ function Checkbox(props: ICheckbox) {
 	} = props;
 
 	const state = useReactive<{
-		value: TValue[];
+		value: any[];
 		status?: TStatus;
 		message?: ReactNode;
 	}>({

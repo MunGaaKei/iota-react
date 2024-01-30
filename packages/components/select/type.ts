@@ -1,10 +1,10 @@
-import { BaseInput, TOption, TOptions, TValue } from "@p/type";
+import { BaseInput, TOption, TOptions } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface ISelect
 	extends Omit<
 			InputHTMLAttributes<HTMLInputElement>,
-			"onSelect" | "onChange"
+			"value" | "onSelect" | "onChange"
 		>,
 		BaseInput {
 	options: TOptions;
@@ -17,8 +17,8 @@ export interface ISelect
 	filter?: boolean | (() => boolean);
 	filterPlaceholder?: string;
 	empty?: ReactNode;
-	onSelect?: (v?: TValue, option?: TOption) => void;
-	onChange?: (v: TValue) => void;
+	onSelect?: (v?: any, option?: TOption) => void;
+	onChange?: (v: any) => void;
 }
 
 export interface ISelectOptions
@@ -26,7 +26,7 @@ export interface ISelectOptions
 		ISelect,
 		"multiple" | "empty" | "filter" | "filterPlaceholder" | "onSelect"
 	> {
-	value?: TValue;
+	value?: any;
 	options: TOption[];
 	onFilter?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

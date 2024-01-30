@@ -1,5 +1,5 @@
 import { Icon, List, Tag } from "@p";
-import { TOption, TValue } from "@p/type";
+import { TOption } from "@p/type";
 import { InboxTwotone, SearchRound } from "@ricons/material";
 import { ISelectOptions } from "./type";
 
@@ -42,7 +42,7 @@ export const Options = (props: ISelectOptions) => {
 			{options.map((option, i) => {
 				const { label, value, disabled } = option;
 				const isActive = multiple
-					? (val as TValue[])?.includes(value)
+					? val?.includes(value)
 					: val === value;
 
 				return (
@@ -63,7 +63,7 @@ export const Options = (props: ISelectOptions) => {
 
 export const activeOptions = (
 	options: TOption[] = [],
-	value: TValue[] = [],
+	value: any[] = [],
 	max = 3
 ) => {
 	const total = options.flatMap((opt) =>
@@ -83,25 +83,23 @@ export const displayValue = (config) => {
 	const { options, value, maxDisplay, multiple, onSelect } = config;
 
 	if (multiple) {
-		return activeOptions(options, value as TValue[], maxDisplay).map(
-			(opt, i) => {
-				if (typeof opt === "number") return <Tag key={i}>+{opt}</Tag>;
+		return activeOptions(options, value, maxDisplay).map((opt, i) => {
+			if (typeof opt === "number") return <Tag key={i}>+{opt}</Tag>;
 
-				const { label, value } = opt;
+			const { label, value } = opt;
 
-				return (
-					<Tag
-						key={value as string}
-						onClose={(e) => {
-							e?.stopPropagation();
-							onSelect?.(value, opt);
-						}}
-					>
-						{label}
-					</Tag>
-				);
-			}
-		);
+			return (
+				<Tag
+					key={value as string}
+					onClose={(e) => {
+						e?.stopPropagation();
+						onSelect?.(value, opt);
+					}}
+				>
+					{label}
+				</Tag>
+			);
+		});
 	}
 
 	return options.find((opt) => opt.value === value)?.label;

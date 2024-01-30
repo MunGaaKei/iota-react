@@ -22,7 +22,7 @@ export interface IInputContainer {
 
 export interface IInput
 	extends BaseInput,
-		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+		Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
 	prepend?: ReactNode;
 	append?: ReactNode;
 	hideVisible?: boolean;
@@ -30,7 +30,10 @@ export interface IInput
 
 export interface ITextarea
 	extends BaseInput,
-		Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, "onChange"> {}
+		Omit<
+			TextareaHTMLAttributes<HTMLTextAreaElement>,
+			"value" | "onChange"
+		> {}
 
 export interface IInputNumber
 	extends BaseInput,

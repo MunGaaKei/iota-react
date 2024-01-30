@@ -52,6 +52,7 @@ export interface ITree {
 	ripple?: boolean;
 	style?: CSSProperties;
 	className?: string;
+	renderExtra?: (item: ITreeItem) => ReactNode;
 	onItemClick?: (item: ITreeItem, e: MouseEvent<HTMLElement>) => void;
 	onItemSelect?: (key: string, item: ITreeItem) => void;
 	onItemCheck?: (

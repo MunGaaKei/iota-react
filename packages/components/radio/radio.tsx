@@ -1,6 +1,6 @@
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
-import { TStatus, TValue } from "@p/type";
+import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { useMemo } from "react";
@@ -27,7 +27,7 @@ function Radio(props: IRadio) {
 	} = props;
 
 	const state = useReactive<{
-		value: TValue;
+		value: any;
 		status?: TStatus;
 		message?: string;
 	}>({

@@ -1,4 +1,4 @@
-import type { TOption, TValidate, TValue } from "@p/type";
+import type { TOption, TValidate } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface ICheckbox
@@ -12,7 +12,7 @@ export interface ICheckbox
 	form?: string;
 	className?: string;
 	onChange?: (
-		value?: TValue[],
+		value?: any[],
 		option?: TOption,
 		e?: ChangeEvent<HTMLInputElement>
 	) => void;

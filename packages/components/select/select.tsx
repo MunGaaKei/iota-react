@@ -1,7 +1,7 @@
 import { Popup } from "@p";
 import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
-import { TOption, TValue } from "@p/type";
+import { TOption } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
@@ -77,7 +77,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		return formattedOptions.filter(filterFn);
 	}, [formattedOptions, filter, state.filterValue]);
 
-	const changeValue = (v: TValue) => {
+	const changeValue = (v: any) => {
 		Object.assign(state, {
 			value: v,
 			status: "normal",
@@ -88,15 +88,15 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		emitForm?.(v);
 	};
 
-	const handleSelect = useCallback((value: TValue, option?: TOption) => {
+	const handleSelect = useCallback((value: any, option?: TOption) => {
 		onSelect?.(value, option);
 
 		if (multiple) {
-			const values = [...(state.value as TValue[])];
+			const values = [...(state.value as any[])];
 			const i = values.findIndex((v) => v === value);
 
 			i > -1 ? values.splice(i, 1) : values.push(value);
-			changeValue(values as TValue);
+			changeValue(values as any);
 
 			return;
 		}
@@ -126,7 +126,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	);
 
 	const { value: val, message: msg, status: sts } = state;
-	const hasValue = multiple ? (val as TValue[]).length > 0 : !!val;
+	const hasValue = multiple ? (val as any[]).length > 0 : !!val;
 	const clearable = !hideClear && active && hasValue;
 
 	return (

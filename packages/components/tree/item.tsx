@@ -38,6 +38,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 		checked = [],
 		partofs = {},
 		checkable,
+		renderExtra,
 		onItemClick,
 		onItemSelect,
 		onItemCheck,
@@ -112,6 +113,8 @@ export const TreeItem = (props: PropsTreeItem) => {
 
 				<span className='i-tree-item-title'>{title}</span>
 
+				{renderExtra?.(item)}
+
 				{children && (
 					<Icon
 						icon={<KeyboardArrowDownRound />}
@@ -131,6 +134,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 						parent={item}
 						partofs={partofs}
 						checked={checked}
+						renderExtra={renderExtra}
 						onItemClick={onItemClick}
 						onItemSelect={onItemSelect}
 						onItemCheck={onItemCheck}

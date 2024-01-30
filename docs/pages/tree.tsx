@@ -78,6 +78,11 @@ export default function Page() {
 				]}
 				checkable
 				selectable
+				renderExtra={(item) => (
+					<Tag className='bg-pink-0' size='small' dot>
+						fail
+					</Tag>
+				)}
 				onItemSelect={setSelected}
 				onItemCheck={(item, checked, list) => {
 					setChecked(list);
