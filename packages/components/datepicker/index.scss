@@ -1,5 +1,5 @@
 .i-datepicker {
-	padding: 1em;
+	padding: 8px;
 	.i-datepicker-item {
 		cursor: pointer;
 	}
@@ -35,6 +35,9 @@
 	&.i-datepicker-same-month {
 		opacity: 0.8;
 	}
+	&.i-datepicker-today {
+		--background: var(--color-main-0);
+	}
 
 	&.i-datepicker-active {
 		--background: var(--color-main);
@@ -61,7 +64,7 @@
 	border-radius: var(--radius);
 	> span {
 		color: var(--color);
-		font-size: 1.25em;
+		font-size: 1.15em;
 	}
 	&:hover {
 		background: var(--color-main-0);
@@ -69,7 +72,7 @@
 }
 
 .i-datepicker-icon {
-	margin-right: 0.5em;
+	margin-left: 0.5em;
 	opacity: 0.5;
 	pointer-events: none;
 }
@@ -78,7 +81,7 @@
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	padding: 0.5em;
+	padding: 8px;
 	gap: 0.5em;
 	background: var(--background-opacity);
 	backdrop-filter: var(--blur);

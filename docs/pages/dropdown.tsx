@@ -1,4 +1,4 @@
-import { Button, Dropdown, Icon, List } from "@p";
+import { Button, Dropdown, Icon, List, Tag } from "@p";
 import {
 	KeyboardArrowDownRound,
 	KeyboardCommandKeyRound,
@@ -10,25 +10,19 @@ export default function Page() {
 
 	const Dropmenu = (
 		<>
-			<List.Item
-				type='option'
-				shortcut={
-					<>
-						<Icon icon={<KeyboardCommandKeyRound />} size='1em' />c
-					</>
-				}
-			>
-				复制
+			<List.Item type='option'>
+				<span>复制</span>
+				<Tag size='small' className='bg-blue-0'>
+					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
+					<span>C</span>
+				</Tag>
 			</List.Item>
-			<List.Item
-				type='option'
-				shortcut={
-					<>
-						<Icon icon={<KeyboardCommandKeyRound />} size='1em' />v
-					</>
-				}
-			>
-				粘贴
+			<List.Item type='option'>
+				<span>粘贴</span>
+				<Tag size='small' className='bg-blue-0'>
+					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
+					<span>V</span>
+				</Tag>
 			</List.Item>
 			<Button
 				className='bg-grey mt-12'

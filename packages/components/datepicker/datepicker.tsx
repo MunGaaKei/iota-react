@@ -7,8 +7,8 @@ import { useMemo, useState } from "react";
 import Icon from "../icon";
 import Input from "../input";
 import Popup from "../popup";
-import { Panel } from "./dates";
 import "./index.scss";
+import Panel from "./panel";
 import { IDatePicker } from "./type";
 
 dayjs.extend(customParseFormat);
@@ -109,13 +109,14 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 				/>
 			}
 			{...popupProps}
+			watchResize
 			onVisibleChange={setActive}
 		>
 			<Input
 				value={val}
 				message={msg}
 				status={sts}
-				append={
+				prepend={
 					<Icon
 						icon={<CalendarMonthTwotone />}
 						className='i-datepicker-icon'

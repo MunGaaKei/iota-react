@@ -5,8 +5,9 @@ function Item(props: IListItem) {
 	const {
 		active,
 		type,
+		align,
 		disabled,
-		shortcut,
+		style = {},
 		className,
 		children,
 		...restProps
@@ -19,13 +20,10 @@ function Item(props: IListItem) {
 				"i-list-option": type === "option",
 				disabled,
 			})}
+			style={{ alignItems: align, ...style }}
 			{...restProps}
 		>
 			{children}
-
-			{shortcut && (
-				<div className='i-list-option-shortcut'>{shortcut}</div>
-			)}
 		</li>
 	);
 }

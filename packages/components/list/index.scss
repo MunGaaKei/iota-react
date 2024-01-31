@@ -1,6 +1,10 @@
+.i-list {
+	overflow: auto;
+}
+
 .i-list-item {
 	display: flex;
-	align-items: center;
+	gap: 0.5em;
 	padding: 0.32em 0.4em;
 	transition: var(--transition);
 	border-radius: var(--radius);
@@ -13,23 +17,8 @@
 	white-space: nowrap;
 	&:hover {
 		background: var(--background-opacity-1);
-		.i-list-option-shortcut {
-			opacity: 1;
-			background: var(--background-opacity);
-		}
 	}
 	&.disabled {
 		order: 2;
 	}
-}
-
-.i-list-option-shortcut {
-	display: flex;
-	align-items: center;
-	padding: 0 0.5em;
-	font-size: 0.9em;
-	opacity: 0.5;
-	border-radius: inherit;
-	background: var(--background-opacity-1);
-	transition: var(--transition);
 }

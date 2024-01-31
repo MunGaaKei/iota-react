@@ -27,8 +27,13 @@ export default function button(): JSX.Element {
 				<Button className='bg-black'>你好</Button>
 				<Button className='bg-white'>你好</Button>
 			</Flex>
-			<Flex>
-				<Button.Toggle className='bg-aqua'>before</Button.Toggle>
+			<Flex gap={12}>
+				<Button.Toggle className='bg-aqua' after='after'>
+					before
+				</Button.Toggle>
+				<Button.Toggle className='bg-red' activeClass='bg-blue'>
+					切换
+				</Button.Toggle>
 			</Flex>
 		</div>
 	);

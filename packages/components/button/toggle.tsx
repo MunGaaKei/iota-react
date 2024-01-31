@@ -1,6 +1,6 @@
-import { useMemoizedFn, useReactive } from "ahooks";
+import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent, useEffect } from "react";
+import { MouseEvent, useCallback, useEffect } from "react";
 import Button from "./button";
 import { IButtonToggle } from "./type";
 
@@ -8,7 +8,7 @@ export default function Toggle(props: IButtonToggle) {
 	const {
 		active,
 		activeClass,
-		after = "😒",
+		after,
 		disabled,
 		children,
 		className,
@@ -22,17 +22,20 @@ export default function Toggle(props: IButtonToggle) {
 		done: true,
 	});
 
-	const toggle = useMemoizedFn(() => {
+	const toggle = useCallback(() => {
+		const hasAfter = after !== undefined;
+
 		Object.assign(state, {
 			active: !state.active,
-			done: false,
+			done: !hasAfter,
 		});
 		onToggle?.(state.active);
 
-		setTimeout(() => {
-			state.done = true;
-		}, 16);
-	});
+		hasAfter &&
+			setTimeout(() => {
+				state.done = true;
+			}, 16);
+	}, [after]);
 
 	const handleClick = (e: MouseEvent<HTMLElement>) => {
 		onClick?.(e);
@@ -46,7 +49,11 @@ export default function Toggle(props: IButtonToggle) {
 
 	return (
 		<Button
-			className={classNames(className, "i-btn-toggle")}
+			className={classNames(
+				className,
+				{ [activeClass || ""]: state.active },
+				"i-btn-toggle"
+			)}
 			{...restProps}
 			onClick={handleClick}
 		>
@@ -55,7 +62,7 @@ export default function Toggle(props: IButtonToggle) {
 					"i-btn-toggle-active": state.done,
 				})}
 			>
-				{state.active ? after : children}
+				{state.active ? after ?? children : children}
 			</div>
 		</Button>
 	);
