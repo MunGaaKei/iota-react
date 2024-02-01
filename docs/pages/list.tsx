@@ -5,8 +5,8 @@ export default function Page() {
 	return (
 		<>
 			<List style={{ height: 250 }}>
-				{Array.from({ length: 10 }).map((n, i) => (
-					<List.Item key={i}>
+				{Array.from({ length: 100 }).map((n, i) => (
+					<List.Item key={i} className='my-8'>
 						<Icon icon={<PersonRound />} className='color-5' />
 						<div>
 							<p>user {i}</p>

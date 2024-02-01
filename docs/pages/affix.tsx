@@ -12,7 +12,7 @@ export default function Page() {
 				bottom={20}
 				right={20}
 				offset={400}
-				getContainer={() => document.querySelector(".i-area-content")}
+				getContainer={() => document.querySelector(".i-area")}
 			>
 				<Affix.ToTop className='bg-black-0' />
 

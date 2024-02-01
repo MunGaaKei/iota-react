@@ -88,6 +88,9 @@
 	.text-right {
 		text-align: right;
 	}
+	.bordered {
+		border: 1px solid var(--color-7);
+	}
 	.ellipsis {
 		overflow: hidden;
 		white-space: nowrap;

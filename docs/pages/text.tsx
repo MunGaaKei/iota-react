@@ -11,7 +11,9 @@ export default function Page() {
 				sdjflkj slkdfjlksdjf lksdjf lksdjf l;sadjfl;sdka f
 				<span className='mark'>123321</span>
 			</Text> */}
-			<Text.Number count={0} to={1000} size={40} weight='600' />
+			<Text.Number count={0} to={10000} size={40} weight='600' />
+			<br />
+			<Text.Number count={152323000.24444} decimal={4} />
 			<br />
 			<Text.Time time={500} />
 		</>

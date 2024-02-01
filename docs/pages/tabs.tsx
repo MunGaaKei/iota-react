@@ -9,7 +9,7 @@ export default function Page() {
 						{`content ${i}`}
 					</Tabs.Item>
 				))}
-				<Tabs.Item title='Lazyload' keepalive>
+				<Tabs.Item title='cached' keepalive>
 					<Image src='https://via.placeholder.com/150' />
 				</Tabs.Item>
 			</Tabs>

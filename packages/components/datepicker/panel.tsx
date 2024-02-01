@@ -155,7 +155,7 @@ const Panel = (props: IBaseDates) => {
 						ref={$years}
 						hasNext
 						hasPrev
-						initialOffset={30}
+						initialOffset={1}
 						className='i-datepicker-years'
 						onLoadMore={getMoreYears}
 					>

@@ -199,11 +199,19 @@ export function formatNumber(
 ) {
 	const { decimal, thousand } = options;
 
-	let result = value.toFixed(decimal);
+	const result = value.toFixed(decimal);
 
 	if (!thousand) return result;
 
-	return result.replace(/(\d)(?=(?:\d{3})+$)/g, `$1${thousand}`);
+	const points = result.split(".");
+	const integer = points[0].replace(
+		/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g,
+		`$&${thousand}`
+	);
+
+	if (points.length === 1) return integer;
+
+	return `${integer}.${points[1]}`;
 }
 
 export function renderNode(node: ReactNode, container = document.body) {

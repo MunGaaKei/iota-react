@@ -33,7 +33,7 @@
 		position: sticky;
 		z-index: 1;
 		top: var(--header-height);
-		height: calc(100% - var(--header-height));
+		height: calc(100vh - var(--header-height));
 	}
 	.i-area-content {
 		overflow: unset;
