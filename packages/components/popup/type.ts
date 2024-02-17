@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode } from "react";
 export interface IPopup {
 	visible?: boolean;
 	content?: ReactNode;
-	trigger?: "hover" | "click" | "focus" | "none";
+	trigger?: "hover" | "click" | "focus" | "none" | "contextmenu";
 	gap?: number;
 	offset?: number;
 	fixed?: boolean;

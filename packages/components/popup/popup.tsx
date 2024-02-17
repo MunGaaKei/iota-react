@@ -1,10 +1,10 @@
 import { useResizeObserver } from "@p/js/hooks";
-import { getPosition } from "@p/js/utils";
-import { TTimeout } from "@p/type";
+import { getPointPosition, getPosition } from "@p/js/utils";
 import { useClickAway, useCreation, useReactive } from "ahooks";
 import {
 	CSSProperties,
 	Children,
+	MouseEvent,
 	cloneElement,
 	isValidElement,
 	useCallback,
@@ -44,7 +44,7 @@ export default function Popup(props: IPopup) {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const state = useReactive<{
 		show: boolean;
-		toggling: TTimeout | boolean;
+		toggling: any;
 		style: CSSProperties;
 		arrowStyle: CSSProperties;
 	}>({
@@ -58,7 +58,9 @@ export default function Popup(props: IPopup) {
 		const tar = e.target as HTMLElement;
 		const isContain = triggerRef.current?.contains(tar);
 
-		state.show && !isContain && handleToggle(false);
+		if (!state.show) return;
+
+		(!isContain || trigger === "contextmenu") && handleToggle(false);
 	}, contentRef);
 
 	const handleShow = useCallback(() => {
@@ -88,7 +90,7 @@ export default function Popup(props: IPopup) {
 				left: arrowX,
 				top: arrowY,
 			};
-			state.toggling && clearTimeout(state.toggling as TTimeout);
+			state.toggling && clearTimeout(state.toggling);
 			onVisibleChange?.(true);
 		}, showDelay);
 	}, [state.show]);
@@ -104,7 +106,7 @@ export default function Popup(props: IPopup) {
 
 			setTimeout(() => {
 				state.show = false;
-				state.toggling && clearTimeout(state.toggling as TTimeout);
+				state.toggling && clearTimeout(state.toggling);
 				onVisibleChange?.(false);
 			}, 160);
 		}, hideDelay);
@@ -134,6 +136,47 @@ export default function Popup(props: IPopup) {
 			focus: {
 				onFocus: () => handleToggle(true),
 				onBlur: () => handleToggle(false),
+			},
+			contextmenu: {
+				onContextMenu: (e: MouseEvent) => {
+					e.preventDefault();
+					e.stopPropagation();
+
+					if (state.show) {
+						const [left, top] = getPointPosition(
+							e,
+							contentRef.current as HTMLElement
+						);
+						state.style = {
+							...state.style,
+							left,
+							top,
+						};
+						console.log(111);
+
+						return;
+					}
+
+					state.show = true;
+
+					state.toggling = setTimeout(() => {
+						const [left, top] = getPointPosition(
+							e,
+							contentRef.current as HTMLElement
+						);
+
+						state.style = {
+							...state.style,
+							opacity: 1,
+							transform: "none",
+							left,
+							top,
+						};
+
+						state.toggling && clearTimeout(state.toggling);
+						onVisibleChange?.(true);
+					}, showDelay);
+				},
 			},
 			none: {},
 		}),
@@ -173,6 +216,7 @@ export default function Popup(props: IPopup) {
 	};
 
 	useEffect(() => {
+		if (trigger === "contextmenu") return;
 		const { observe, unobserve, disconnect } = useResizeObserver();
 
 		triggerRef.current && observe(triggerRef.current, computePosition);
@@ -225,7 +269,7 @@ export default function Popup(props: IPopup) {
 			{state.show && (
 				<Content
 					ref={contentRef}
-					arrow={arrow}
+					arrow={arrow && trigger !== "contextmenu"}
 					style={{ ...style, ...state.style }}
 					arrowStyle={state.arrowStyle}
 					className={className}

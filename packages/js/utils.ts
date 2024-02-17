@@ -1,6 +1,6 @@
 import { TFileType } from "@p/js/usePreview/type";
 import { TOption, TOptions } from "@p/type";
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
 import type { TRelativeOptions } from "./type";
 
@@ -116,6 +116,17 @@ export function getPosition(
 	}
 
 	return [x, y, [zx, zy]];
+}
+
+export function getPointPosition(e: MouseEvent, content: HTMLElement) {
+	const { pageX: x, pageY: y } = e;
+	const { width: w, height: h } = content.getBoundingClientRect();
+	const { innerHeight: wh, innerWidth: ww } = window;
+
+	const left = x + w >= ww ? (x - w > 0 ? x - w : x) : x;
+	const top = y + h >= wh ? (y - h > 0 ? y - h : y) : y;
+
+	return [left, top];
 }
 
 function computePosition({
