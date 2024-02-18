@@ -9,7 +9,6 @@ export default function Page() {
 				options={Array.from({ length: 50 }).map(
 					(n, i) => `option ${i}`
 				)}
-				filter
 				style={{ width: 300 }}
 			/>
 
@@ -20,7 +19,6 @@ export default function Page() {
 				options={Array.from({ length: 50 }).map(
 					(n, i) => `option ${i}`
 				)}
-				filter
 				className='mt-20'
 				style={{ width: 300 }}
 			/>

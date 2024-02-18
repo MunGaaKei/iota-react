@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
@@ -30,7 +29,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		decimal,
 		type,
 		className,
-		form,
 		status = "normal",
 		append,
 		prepend,
@@ -46,12 +44,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		value,
 		status,
 		message,
-	});
-
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
 	});
 
 	const getRangeNumber = useCallback(
@@ -93,7 +85,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 
 		state.value = getFormatNumber(result);
 
-		emitForm?.(result);
 		onChange?.(result);
 	});
 
@@ -108,7 +99,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 
 		state.value = result ? getFormatNumber(result) : result;
 
-		emitForm?.(result);
 		onChange?.(result);
 	});
 

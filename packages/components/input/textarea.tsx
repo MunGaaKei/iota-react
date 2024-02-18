@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -20,7 +19,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		value = "",
 		labelInline,
 		className = "",
-		form,
 		status = "normal",
 		message,
 		onChange,
@@ -34,12 +32,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		message,
 	});
 
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
-	});
-
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			const v = e.target.value;
@@ -49,7 +41,6 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 				value: v,
 			});
 
-			emitForm?.(v);
 			onChange?.(v, e);
 		},
 		[]

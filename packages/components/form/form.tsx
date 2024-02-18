@@ -1,12 +1,14 @@
 import classNames from "classnames";
 import { useEffect } from "react";
+import Context from "./context";
+import Field from "./field";
 import "./index.scss";
 import { IForm } from "./type";
-import useForm from "./useForm";
+import useForm, { IFormHandler } from "./useForm";
 
 const Form = (props: IForm): JSX.Element => {
 	const {
-		form,
+		form = {} as IFormHandler,
 		rules = {},
 		initialValues = {},
 		style,
@@ -17,23 +19,23 @@ const Form = (props: IForm): JSX.Element => {
 	} = props;
 
 	useEffect(() => {
-		if (!form) return;
-
-		form.rules = rules;
-		form.set(initialValues);
+		form.data = { ...initialValues };
 	}, [form]);
 
 	return (
-		<form
-			style={{ ...style, width }}
-			className={classNames("i-form", className)}
-			{...rest}
-		>
-			{children}
-		</form>
+		<Context.Provider value={form}>
+			<form
+				style={{ ...style, width }}
+				className={classNames("i-form", className)}
+				{...rest}
+			>
+				{children}
+			</form>
+		</Context.Provider>
 	);
 };
 
 Form.useForm = useForm;
+Form.Field = Field;
 
 export default Form;

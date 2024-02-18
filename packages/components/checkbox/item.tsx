@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ChangeEvent, useEffect } from "react";
@@ -11,7 +10,6 @@ export default function CheckboxItem(props: ICheckboxItem) {
 		name,
 		value = false,
 		className,
-		form,
 		status = "normal",
 		message,
 		disabled,
@@ -27,12 +25,6 @@ export default function CheckboxItem(props: ICheckboxItem) {
 		message,
 	});
 
-	const formEmit = useFormRegist({
-		form,
-		name,
-		state,
-	});
-
 	const handleChange = useMemoizedFn((e: ChangeEvent<HTMLInputElement>) => {
 		const checked = e.target.checked;
 
@@ -42,7 +34,6 @@ export default function CheckboxItem(props: ICheckboxItem) {
 			message: "",
 		});
 
-		formEmit?.(checked);
 		onChange?.(checked, e);
 	});
 

@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
@@ -19,7 +18,6 @@ function Checkbox(props: ICheckbox) {
 		optionInline = true,
 		labelInline,
 		disabled,
-		form,
 		status = "normal",
 		message,
 		className,
@@ -35,12 +33,6 @@ function Checkbox(props: ICheckbox) {
 		value: [],
 		status,
 		message,
-	});
-
-	const formEmit = useFormRegist({
-		name,
-		form,
-		state,
 	});
 
 	const formattedOptions = useMemo(() => formatOption(options), [options]);
@@ -61,7 +53,6 @@ function Checkbox(props: ICheckbox) {
 		}
 
 		state.value = group;
-		formEmit?.(group);
 		onChange?.(group, opt, e);
 	});
 

@@ -32,7 +32,6 @@ export interface BaseInput extends TValidate {
 	label?: ReactNode;
 	value?: any;
 	labelInline?: boolean;
-	form?: string;
 	clear?: boolean;
 	onChange?: (
 		value?: any,

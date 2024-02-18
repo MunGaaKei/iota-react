@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import { IFormHandler } from "./useForm";
 
 export interface IForm extends HTMLAttributes<HTMLFormElement> {
@@ -6,4 +6,9 @@ export interface IForm extends HTMLAttributes<HTMLFormElement> {
 	rules?: { [key: string]: (value: any) => string | boolean };
 	initialValues?: any;
 	width?: string | number;
+}
+
+export interface IField {
+	name?: string;
+	children?: ReactNode;
 }

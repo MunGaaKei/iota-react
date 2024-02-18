@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { CalendarMonthTwotone } from "@ricons/material";
 import { useReactive } from "ahooks";
 import dayjs, { Dayjs } from "dayjs";
@@ -23,7 +22,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		message,
 		weeks,
 		format = "YYYY-MM-DD",
-		form,
 		renderDate,
 		renderWeek,
 		renderMonth,
@@ -39,12 +37,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		value,
 		status,
 		message,
-	});
-
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
 	});
 
 	const [active, setActive] = useState<boolean>(false);
@@ -70,7 +62,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 			message: "",
 		});
 
-		emitForm?.(v);
 		onChange?.(v);
 	};
 

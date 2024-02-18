@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { VisibilityOffRound, VisibilityRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
@@ -29,7 +28,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		append,
 		labelInline,
 		className,
-		form,
 		status = "normal",
 		message,
 		clear,
@@ -48,12 +46,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		visible: false,
 	});
 
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
-	});
-
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		const v = e.target.value;
 
@@ -63,7 +55,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 			value: v,
 		});
 
-		emitForm?.(v);
 		onChange?.(v, e);
 	}, []);
 
@@ -81,7 +72,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		}
 
 		const v = "";
-		emitForm?.(v);
 		onChange?.(v);
 	};
 

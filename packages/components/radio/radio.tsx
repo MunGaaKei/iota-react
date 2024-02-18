@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
@@ -16,7 +15,6 @@ function Radio(props: IRadio) {
 		options,
 		value,
 		type = "default",
-		form,
 		status = "normal",
 		message,
 		optionInline = true,
@@ -36,12 +34,6 @@ function Radio(props: IRadio) {
 		message,
 	});
 
-	const formEmit = useFormRegist({
-		name,
-		form,
-		state,
-	});
-
 	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
 	const handleChange = useMemoizedFn((value, e) => {
@@ -51,7 +43,6 @@ function Radio(props: IRadio) {
 		});
 
 		state.value = value;
-		formEmit?.(value);
 		onChange?.(value, e);
 	});
 

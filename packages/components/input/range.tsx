@@ -1,4 +1,3 @@
-import { useFormRegist } from "@p/js/hooks";
 import { formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound, SyncAltRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
@@ -27,7 +26,6 @@ const Range = (props: IInputRange) => {
 		max = Infinity,
 		type,
 		className,
-		form,
 		status = "normal",
 		message,
 		append,
@@ -45,12 +43,6 @@ const Range = (props: IInputRange) => {
 		value,
 		status,
 		message,
-	});
-
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
 	});
 
 	const getRangeNumber = useCallback(
@@ -105,7 +97,6 @@ const Range = (props: IInputRange) => {
 			range[i] = result !== "" ? getFormatNumber(result) : result;
 
 			state.value = range;
-			emitForm?.(range);
 			onChange?.(range);
 		}
 	);
@@ -122,7 +113,6 @@ const Range = (props: IInputRange) => {
 			range[i] = getFormatNumber(result);
 
 			state.value = range;
-			emitForm?.(range);
 			onChange?.(range);
 		}
 	);

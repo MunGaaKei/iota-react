@@ -1,5 +1,4 @@
 import { Popup } from "@p";
-import { useFormRegist } from "@p/js/hooks";
 import { formatOption } from "@p/js/utils";
 import { TOption } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
@@ -34,7 +33,6 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		labelInline,
 		style,
 		className,
-		form,
 		message,
 		status = "normal",
 		hideClear,
@@ -53,12 +51,6 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		status,
 		message,
 		loading: false,
-	});
-
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
 	});
 
 	const [active, setActive] = useState<boolean>(false);
@@ -85,7 +77,6 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		});
 
 		onChange?.(v);
-		emitForm?.(v);
 	};
 
 	const handleSelect = useCallback((value: any, option?: TOption) => {

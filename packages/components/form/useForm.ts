@@ -1,109 +1,58 @@
 import { uniqueId } from "lodash";
-import PubSub from "pubsub-js";
 import { useRef } from "react";
 
 export class IFormHandler {
-	readonly name?: string;
-	state: { [key: string]: any } = {};
+	readonly id?: string;
+	data: { [key: string]: any } = {};
 	rules?: { [key: string]: (val?: any) => boolean | string } = {};
 
 	get(field?: string) {
-		return field ? this.state[field] : this.state;
+		return field ? this.data[field] : this.data;
 	}
 
 	set(field: any, value?: any) {
-		const form = this.name;
-
+		const id = this.id;
 		if (typeof field === "string") {
-			this.state[field] = value;
-			PubSub.publish(`${form}:set:${field}`, value);
+			this.data[field] = value;
+			PubSub.publish(`${id}:set:${field}`, value);
 			return;
 		}
 
 		Object.keys(field).map((name) => {
-			this.state[name] = field[name];
-			PubSub.publish(`${form}:set:${name}`, field[name]);
+			this.data[name] = field[name];
+			PubSub.publish(`${id}:set:${name}`, field[name]);
 		});
 	}
 
 	clear() {
-		Object.keys(this.state).map((name) => {
-			this.state[name] = undefined;
-			PubSub.publish(`${this.name}:set:${name}`, "");
+		Object.keys(this.data).map((name) => {
+			this.data[name] = undefined;
+			PubSub.publish(`${this.id}:set:${name}`, "");
 		});
-	}
-
-	setInvalid(name: string, status: { [key: string]: any }) {
-		const inputStatus =
-			typeof status === "string"
-				? { message: status, status: "error" }
-				: status;
-		PubSub.publish(`${this.name}:invalid:${name}`, inputStatus);
 	}
 
 	async validate(field?: string) {
-		const { name, rules, state } = this;
-		if (!rules) return state;
-
-		if (field) {
-			const invalidFn = rules[field];
-			const invalidMessage = invalidFn?.(state[field]);
-			if (invalidMessage) {
-				PubSub.publish(`${name}:invalid:${field}`, {
-					message: invalidMessage,
-					status: "error",
-				});
-				return false;
-			}
-
-			return true;
-		}
-
-		let isAllValid = true;
-
-		Object.keys(state).map((field) => {
-			const invalidFn = rules[field];
-			const invalidMessage = invalidFn?.(state[field]);
-
-			if (invalidMessage) {
-				PubSub.publish(`${name}:invalid:${field}`, {
-					message: invalidMessage,
-					status: "error",
-				});
-				isAllValid = false;
-			}
-		});
-
-		return isAllValid ? state : false;
-	}
-
-	init(form: string) {
-		PubSub.subscribe(`${form}:setFormState`, (evt: string, data: any) => {
-			Object.assign(this.state, data);
-		});
+		return {};
 	}
 
 	getInstance() {
-		const name = uniqueId();
-		const { rules, state, get, set, clear, validate, setInvalid } = this;
-
-		this.init(name);
+		const id = uniqueId();
+		const { rules, get, set, clear, validate } = this;
 
 		return {
-			name,
+			id,
 			rules,
-			state,
 			get,
 			set,
 			clear,
 			validate,
-			setInvalid,
 		};
 	}
 }
 
 export default function useForm(form?: IFormHandler) {
 	const formRef = useRef<IFormHandler>();
+
 	if (!formRef.current) {
 		if (form) {
 			formRef.current = form;

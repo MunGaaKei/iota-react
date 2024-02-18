@@ -1,4 +1,4 @@
-import { useFormRegist, useMouseMove, useMouseUp } from "@p/js/hooks";
+import { useMouseMove, useMouseUp } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { MouseEvent, useEffect, useMemo, useRef } from "react";
@@ -10,7 +10,6 @@ import { IProgress } from "./type";
 
 const Progress = (props: IProgress): JSX.Element => {
 	const {
-		name,
 		value = 0,
 		size = 8,
 		height = 40,
@@ -21,7 +20,6 @@ const Progress = (props: IProgress): JSX.Element => {
 		barClass,
 		label,
 		labelInline,
-		form,
 		className,
 		cursor,
 		onChange,
@@ -33,12 +31,6 @@ const Progress = (props: IProgress): JSX.Element => {
 		dragging: false,
 		width: 0,
 		start: 0,
-	});
-
-	const emitForm = useFormRegist({
-		form,
-		name,
-		state,
 	});
 
 	const toFixedValue = useMemo(() => {
@@ -77,7 +69,6 @@ const Progress = (props: IProgress): JSX.Element => {
 	const handleMouseUp = useMemoizedFn(() => {
 		if (!state.dragging || !draggable) return;
 
-		emitForm?.(toFixedValue);
 		onChange?.(toFixedValue);
 		state.dragging = false;
 	});
