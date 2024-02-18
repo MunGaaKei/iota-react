@@ -25,7 +25,6 @@ export default function Page() {
 	});
 
 	const handleSetValues = useMemoizedFn(() => {
-		// form.set({ name: "sdfkjsdlfj", hobit: ["篮球"] });
 		form.set("name", "-sd-f");
 	});
 
@@ -35,16 +34,19 @@ export default function Page() {
 
 	const handleValidate = useMemoizedFn(async () => {
 		const data = await form.validate();
-		// console.log(data);
+		console.log(data);
 		// const data = await form.validate("hobit");
 		Message(data ? "校验成功" : "校验失败");
 	});
 
 	return (
 		<>
-			<Form form={form} width={400} className='gap-12'>
+			<Form form={form} rules={rules} width={400} className='gap-12'>
 				<Field name='name'>
 					<Input value={val} onChange={(v) => setVal(v as string)} />
+				</Field>
+				<Field name='weight'>
+					<Input.Range label='体重范围' labelInline min={0} />
 				</Field>
 
 				<Flex className='gap-12'>
@@ -57,13 +59,6 @@ export default function Page() {
 					</Button>
 					<Button onClick={handleClear} className='bg-yellow'>
 						清空
-					</Button>
-					<Button
-						onClick={() => {
-							form?.set("age", 20000);
-						}}
-					>
-						设置AGE的值
 					</Button>
 				</Flex>
 			</Form>

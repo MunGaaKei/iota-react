@@ -19,8 +19,11 @@ const Form = (props: IForm): JSX.Element => {
 	} = props;
 
 	useEffect(() => {
-		form.data = { ...initialValues };
-	}, [form]);
+		Object.assign(form, {
+			data: { ...initialValues },
+			rules: { ...rules },
+		});
+	}, [form, rules]);
 
 	return (
 		<Context.Provider value={form}>
