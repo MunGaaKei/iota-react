@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 
 export default function Page() {
-	const [visible, setVisible] = useState(true);
+	const [visible, setVisible] = useState(false);
 
 	const Dropmenu = (
 		<>

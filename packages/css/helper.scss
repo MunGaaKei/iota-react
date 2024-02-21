@@ -244,11 +244,6 @@
 			transform: rotate(360deg);
 		}
 	}
-	@keyframes loading {
-		50% {
-			transform: scale(1);
-		}
-	}
 	@keyframes bounce {
 		20% {
 			transform: translate(12px, 0);

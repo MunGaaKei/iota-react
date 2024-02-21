@@ -21,7 +21,7 @@ export const Options = (props: ISelectOptions) => {
 
 	return (
 		<div className='i-select-options'>
-			{filter && (
+			{filter && multiple && (
 				<div className='i-select-filter'>
 					<Icon
 						icon={<SearchRound />}

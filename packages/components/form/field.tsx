@@ -1,3 +1,4 @@
+import { useReactive } from "ahooks";
 import PubSub from "pubsub-js";
 import {
 	Children,
@@ -7,14 +8,18 @@ import {
 	useContext,
 	useEffect,
 	useMemo,
-	useState,
 } from "react";
 import Context from "./context";
 import { IField } from "./type";
 
 export default function Field(props: IField) {
 	const { name, children } = props;
-	const [value, setValue] = useState<any>();
+	const state = useReactive({
+		value: undefined,
+		status: "normal",
+		message: "",
+		update: 0,
+	});
 	const form = useContext(Context);
 	const { id } = form;
 
@@ -23,36 +28,50 @@ export default function Field(props: IField) {
 			if (!name) return;
 
 			form.data[name] = v;
-			setValue(v);
+			state.value = v;
 		},
 		[name]
 	);
 
-	const clonedChildren = useMemo(() => {
+	const hijackChildren = useMemo(() => {
 		return Children.map(children, (node) => {
 			if (!isValidElement(node)) return null;
 
 			const { onChange } = node.props as any;
+			const { value, status, message } = state;
 
 			return cloneElement(node, {
 				value,
+				status,
+				message,
 				onChange: (...args) => {
 					handleChange(args[0]);
 					onChange?.(...args);
 				},
 			} as any);
 		});
-	}, [children, value]);
+	}, [children, state.update]);
 
 	useEffect(() => {
-		PubSub.subscribe(`${id}:set:${name}`, (evt, v) => setValue(v));
+		if (!name) return;
+
+		PubSub.subscribe(`${id}:set:${name}`, (evt, v) => (state.value = v));
+		PubSub.subscribe(`${id}:invalid:${name}`, (evt, v) => {
+			Object.assign(state, v);
+			state.update += 1;
+		});
+
+		setTimeout(() => {
+			form.data[name] = form.data[name] ?? undefined;
+		}, 0);
 
 		return () => {
 			PubSub.unsubscribe(`${id}:set:${name}`);
+			PubSub.unsubscribe(`${id}:invalid:${name}`);
 		};
 	}, [name]);
 
 	if (!name) return children;
 
-	return clonedChildren;
+	return hijackChildren;
 }

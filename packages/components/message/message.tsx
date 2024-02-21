@@ -37,13 +37,15 @@ const handler = {
 createRoot(container).render(<Messages />);
 
 const MessageItem = forwardRef<HTMLDivElement, IMessageItem>(function (
-	{ active, content, top, onClick },
+	{ active, content, top, className, onClick },
 	ref
 ) {
 	return (
 		<div
 			ref={ref}
-			className={classNames("i-message", { active })}
+			className={classNames("i-message", className, {
+				"i-message-active": active,
+			})}
 			style={{
 				top,
 			}}
@@ -103,7 +105,7 @@ function Messages() {
 			{items.map((item, i) => {
 				if (!item) return <></>;
 
-				const { id, active, content } = item;
+				const { id, active, content, className } = item;
 				offsetTop += tops[i - 1] || 0;
 				const top = GlobalConfig.gap * i + offsetTop;
 
@@ -114,6 +116,7 @@ function Messages() {
 						active={active}
 						content={content}
 						top={top}
+						className={className}
 						onClick={handler.close.bind(item)}
 					/>
 				);

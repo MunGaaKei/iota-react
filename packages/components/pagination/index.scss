@@ -5,7 +5,7 @@
 }
 
 .i-page {
-	--color: var(--color-5);
+	--color: var(--color-7);
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -22,15 +22,21 @@
 	outline: none;
 	color: var(--color);
 	background: var(--background);
-	.i-ripple-container,
-	.i-loading-container {
+	.i-ripple-container {
 		inset: -2px;
+	}
+	.i-loading-container {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background: var(--background-opacity);
+		backdrop-filter: var(--blur);
 	}
 	&:hover {
 		--background: var(--background-opacity-1);
 	}
 	&.i-page-active {
-		--background: unset;
+		--background: var(--color-main-0);
 		--color: var(--color-main);
 		cursor: default;
 	}

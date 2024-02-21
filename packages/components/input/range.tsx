@@ -70,7 +70,7 @@ const Range = (props: IInputRange) => {
 			const { value } = e.target;
 			const v = formatInputValue(value.replace(/[^\d\.-]/g, ""));
 
-			const range = state.value ?? [];
+			const range = Array.isArray(state.value) ? state.value : [];
 			range[i] = v;
 
 			Object.assign(state, {
@@ -92,7 +92,7 @@ const Range = (props: IInputRange) => {
 
 			const v = +formatInputValue(value);
 			const result = isNaN(v) ? "" : getRangeNumber(v);
-			const range = state.value ?? [];
+			const range = Array.isArray(state.value) ? state.value : [];
 
 			range[i] = result !== "" ? getFormatNumber(result) : result;
 
@@ -106,7 +106,7 @@ const Range = (props: IInputRange) => {
 			e.preventDefault();
 			e.stopPropagation();
 
-			const range = state.value ?? [];
+			const range = Array.isArray(state.value) ? state.value : [];
 			const value = formatInputValue(range[i]) ?? 0;
 			const result = getRangeNumber(+value + param);
 

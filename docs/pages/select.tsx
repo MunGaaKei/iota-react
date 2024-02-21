@@ -6,6 +6,7 @@ export default function Page() {
 			<Select
 				multiple
 				placeholder='placeholder'
+				filter
 				options={Array.from({ length: 50 }).map(
 					(n, i) => `option ${i}`
 				)}
@@ -16,6 +17,7 @@ export default function Page() {
 
 			<Select
 				placeholder='placeholder'
+				filter
 				options={Array.from({ length: 50 }).map(
 					(n, i) => `option ${i}`
 				)}

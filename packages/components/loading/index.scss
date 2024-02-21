@@ -1,41 +1,16 @@
 .i-loading-container {
-	position: absolute;
-	inset: 0;
-	z-index: 100;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 1em;
 	font-size: inherit;
-	background: var(--background-opacity);
-	backdrop-filter: var(--blur);
+	transform: translateZ(0);
 }
-.i-loading-static {
-	position: static;
-}
+
 .i-loading-icon {
-	display: flex;
-	justify-content: center;
-	background: inherit;
-	color: var(--color);
-	border-radius: inherit;
-	background: transparent;
-}
-.i-loading-icon:before,
-.i-loading-icon:after {
-	content: "●";
-	font-size: 1.5em;
-	line-height: 1;
-	transform: scale(0);
-	transition: var(--transition);
-}
-.i-loading-icon:before {
-	margin: auto -0.5em auto 0;
-	animation: loading 1s linear infinite;
-}
-.i-loading-icon:after {
-	margin: auto 0 auto -0.5em;
-	opacity: 0.5;
-	animation: loading 1s linear 0.15s infinite;
+	stroke: var(--color);
+	width: 1em;
+	height: 1em;
+	animation: rotate 1s linear 0.15s infinite;
 }

@@ -12,11 +12,13 @@ export interface IMessage {
 	fromStart?: boolean;
 	closable?: boolean;
 	timer?: ReturnType<typeof setTimeout>;
+	className?: string;
 }
 
 export interface IMessageItem {
 	active?: boolean;
 	content?: ReactNode;
 	top?: number;
+	className?: string;
 	onClick?: () => void;
 }

@@ -1,7 +1,12 @@
 import pain from "@d/assets/pain.jpg";
 import sasuke from "@d/assets/sasuke.jpg";
 import { Button, Card, Flex, Icon, Image, Text } from "@p";
-import { CloseRound, FavoriteTwotone, MoreVertRound } from "@ricons/material";
+import {
+	CloseRound,
+	FavoriteRound,
+	FavoriteTwotone,
+	MoreVertRound,
+} from "@ricons/material";
 
 export default function Page() {
 	return (
@@ -23,7 +28,7 @@ export default function Page() {
 					<Card.Header>
 						<Flex gap={8} align='center'>
 							<a>
-								<Image className='bg-red' size={32} round />
+								<Image className='bg-black' size={32} round />
 							</a>
 							<div>
 								<h4>PAIN</h4>
@@ -32,9 +37,20 @@ export default function Page() {
 								</Text>
 							</div>
 						</Flex>
-						<Button size='small' square flat className='ml-auto'>
+						<Button.Toggle
+							size='small'
+							square
+							flat
+							className='ml-auto'
+							after={
+								<Icon
+									icon={<FavoriteRound />}
+									className='red'
+								/>
+							}
+						>
 							<Icon icon={<FavoriteTwotone />} />
-						</Button>
+						</Button.Toggle>
 						<Button size='small' square flat>
 							<Icon icon={<CloseRound />} />
 						</Button>

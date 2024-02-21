@@ -25,7 +25,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		name,
 		label,
 		value = "",
-		placeholder = " ",
+		placeholder,
 		options = [],
 		multiple,
 		prepend,
@@ -96,25 +96,30 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		changeValue(value);
 	}, []);
 
-	const handleOpen = () => {
-		if (filter) state.filterValue = "";
+	const handleVisibleChange = (visible: boolean) => {
+		setActive(visible);
 
-		setActive(true);
+		if (!filter) return;
+
+		state.filterValue = "";
 	};
 
 	const handleHelperClick = (e: MouseEvent) => {
 		if (!active) return;
-		e.stopPropagation();
 
 		changeValue(multiple ? [] : "");
 	};
 
-	const handleInputChange = useMemoizedFn(
+	const handleFilterChange = useMemoizedFn(
 		debounce((e: ChangeEvent<HTMLInputElement>) => {
 			const v = e.target.value;
 			state.filterValue = v;
-		}, 500)
+		}, 400)
 	);
+
+	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+		state.filterValue = e.target.value;
+	};
 
 	const { value: val, message: msg, status: sts } = state;
 	const hasValue = multiple ? (val as any[]).length > 0 : !!val;
@@ -135,7 +140,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 				position='bottom'
 				arrow={false}
 				fitSize
-				onVisibleChange={setActive}
+				onVisibleChange={handleVisibleChange}
 				content={
 					<Options
 						options={filterOptions}
@@ -144,7 +149,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 						filter={!!filter}
 						filterPlaceholder={filterPlaceholder}
 						onSelect={handleSelect}
-						onFilter={handleInputChange}
+						onFilter={handleFilterChange}
 					/>
 				}
 			>
@@ -152,31 +157,46 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 					className={classNames("i-input-item", {
 						[`i-input-${sts}`]: sts !== "normal",
 					})}
-					onClick={handleOpen}
+					onClick={(e) => {
+						e.stopPropagation();
+						setActive(true);
+					}}
 				>
 					{prepend}
 
 					<input ref={ref} type='hidden' value={val} {...restProps} />
 
-					{hasValue ? (
-						<div
-							className={classNames("i-input i-select", {
-								"i-select-multiple": multiple,
-							})}
-						>
-							{displayValue({
-								options: formattedOptions,
-								value: val,
-								multiple,
-								maxDisplay,
-								onSelect: handleSelect,
-							})}
-						</div>
-					) : (
+					{multiple ? (
+						hasValue ? (
+							<div
+								className={classNames("i-input i-select", {
+									"i-select-multiple": multiple,
+								})}
+							>
+								{displayValue({
+									options: formattedOptions,
+									value: val,
+									multiple,
+									maxDisplay,
+									onSelect: handleSelect,
+								})}
+							</div>
+						) : (
+							<input
+								className='i-input i-select'
+								placeholder={placeholder}
+								readOnly
+							/>
+						)
+					) : null}
+
+					{!multiple && (
 						<input
+							value={active ? state.filterValue : val}
 							className='i-input i-select'
-							placeholder={placeholder}
-							readOnly
+							placeholder={val || placeholder}
+							onChange={handleInputChange}
+							readOnly={!filter}
 						/>
 					)}
 

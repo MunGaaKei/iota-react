@@ -7,4 +7,5 @@ export interface IHelperIcon {
 	className?: string;
 	style?: CSSProperties;
 	onClick?: (e: MouseEvent) => void;
+	onMouseUp?: (e: MouseEvent) => void;
 }

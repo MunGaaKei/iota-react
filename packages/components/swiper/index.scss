@@ -71,8 +71,6 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: var(--radius);
-	background: var(--background-opacity);
-	backdrop-filter: var(--blur);
 	transform: translate(0, -50%);
 	transition: var(--transition);
 	opacity: 0;

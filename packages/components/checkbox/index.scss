@@ -67,7 +67,7 @@
 	background: var(--color-9);
 	&:hover {
 		&:after {
-			box-shadow: 0 0 0 3px var(--color-5);
+			box-shadow: 0 0 0 3px var(--color-7);
 			background-color: var(--color-main-0);
 		}
 	}
@@ -111,10 +111,10 @@
 	}
 	&:active {
 		&:after {
-			width: 100%;
+			width: 1.5em;
 		}
 		&:checked:after {
-			left: -1.4em;
+			left: -0.5em;
 		}
 	}
 }

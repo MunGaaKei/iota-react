@@ -87,13 +87,3 @@
 .i-btn-content {
 	display: contents;
 }
-.i-btn-loading {
-	color: transparent !important;
-	pointer-events: none;
-	> .i-loading-icon {
-		position: absolute;
-		inset: 0;
-		opacity: 1;
-		animation: loading 1s linear infinite;
-	}
-}

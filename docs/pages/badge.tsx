@@ -6,6 +6,7 @@ export default function Page() {
 
 	return (
 		<>
+			<h3 className='mb-12'>使用</h3>
 			<Badge visible={count !== 0} content={count} contentClass='bg-red'>
 				<Button onClick={() => setCount((n) => n + 1)}>badge</Button>
 			</Badge>

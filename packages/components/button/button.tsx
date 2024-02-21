@@ -1,6 +1,7 @@
 import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
 import { createElement, forwardRef } from "react";
+import Loading from "../loading";
 import "./index.scss";
 import Toggle from "./toggle";
 import { CompositionButton, IButton } from "./type";
@@ -47,11 +48,7 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 	ripple && useRipple();
 
 	const childNodes = [
-		loading &&
-			createElement("span", {
-				key: "loading",
-				className: "i-loading-icon",
-			}),
+		loading && <Loading key='loading' />,
 		createElement(
 			"span",
 			{ key: "content", className: "i-btn-content" },

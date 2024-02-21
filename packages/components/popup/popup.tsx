@@ -101,7 +101,7 @@ export default function Popup(props: IPopup) {
 			state.style = {
 				...state.style,
 				opacity: 0,
-				transform: "translate(0, 4px)",
+				transform: "translate(0, 2px)",
 			};
 
 			setTimeout(() => {
