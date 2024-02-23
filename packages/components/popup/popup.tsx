@@ -46,12 +46,12 @@ export default function Popup(props: IPopup) {
 		show: boolean;
 		toggling: any;
 		style: CSSProperties;
-		arrowStyle: CSSProperties;
+		arrowProps: Record<string, any>;
 	}>({
 		show: false,
 		toggling: false,
 		style: { position: fixed ? "fixed" : "absolute" },
-		arrowStyle: {},
+		arrowProps: {},
 	});
 
 	useClickAway((e: Event) => {
@@ -64,11 +64,17 @@ export default function Popup(props: IPopup) {
 	}, contentRef);
 
 	const handleShow = useCallback(() => {
-		if (state.show) return;
+		if (state.show) {
+			if (trigger !== "hover" || (trigger === "hover" && !touchable)) {
+				return;
+			}
+		}
+
 		state.show = true;
 
+		state.toggling && clearTimeout(state.toggling);
 		state.toggling = setTimeout(() => {
-			const [left, top, [arrowX, arrowY]] = getPosition(
+			const [left, top, { arrowX, arrowY, arrowPos }] = getPosition(
 				triggerRef.current,
 				contentRef.current,
 				{
@@ -86,9 +92,10 @@ export default function Popup(props: IPopup) {
 				left,
 				top,
 			};
-			state.arrowStyle = {
+			state.arrowProps = {
 				left: arrowX,
 				top: arrowY,
+				pos: arrowPos,
 			};
 			state.toggling && clearTimeout(state.toggling);
 			onVisibleChange?.(true);
@@ -152,7 +159,6 @@ export default function Popup(props: IPopup) {
 							left,
 							top,
 						};
-						console.log(111);
 
 						return;
 					}
@@ -198,7 +204,7 @@ export default function Popup(props: IPopup) {
 	const computePosition = () => {
 		if (!state.show) return;
 
-		const [left, top, [arrowX, arrowY]] = getPosition(
+		const [left, top, { arrowX, arrowY, arrowPos }] = getPosition(
 			triggerRef.current,
 			contentRef.current,
 			{
@@ -211,7 +217,7 @@ export default function Popup(props: IPopup) {
 
 		Object.assign(state, {
 			style: { ...state.style, left, top },
-			arrowStyle: { left: arrowX, top: arrowY },
+			arrowProps: { left: arrowX, top: arrowY, pos: arrowPos },
 		});
 	};
 
@@ -271,7 +277,7 @@ export default function Popup(props: IPopup) {
 					ref={contentRef}
 					arrow={arrow && trigger !== "contextmenu"}
 					style={{ ...style, ...state.style }}
-					arrowStyle={state.arrowStyle}
+					arrowProps={state.arrowProps}
 					className={className}
 					{...contentTouch}
 					getContainer={getContainer}

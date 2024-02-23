@@ -17,7 +17,15 @@ export function getPosition(
 	$source?: HTMLElement | null,
 	$popup?: HTMLElement | null,
 	options: TRelativeOptions = {}
-): [x: number, y: number, z: [x: number, y: number]] {
+): [
+	x: number,
+	y: number,
+	z: {
+		arrowX: number;
+		arrowY: number;
+		arrowPos: string;
+	}
+] {
 	const {
 		refWindow = true,
 		gap = 0,
@@ -26,7 +34,16 @@ export function getPosition(
 		align,
 	} = options;
 
-	if (!$source || !$popup) return [0, 0, [0, 0]];
+	if (!$source || !$popup)
+		return [
+			0,
+			0,
+			{
+				arrowX: 0,
+				arrowY: 0,
+				arrowPos: "bottom",
+			},
+		];
 
 	const rectT = $source.getBoundingClientRect();
 	const rectC = $popup.getBoundingClientRect();
@@ -56,8 +73,9 @@ export function getPosition(
 
 	let y = 0;
 	let x = 0;
-	let zx = 0;
-	let zy = 0;
+	let arrowX = 0;
+	let arrowY = 0;
+	let arrowPos = "bottom";
 
 	switch (position) {
 		case "left":
@@ -73,16 +91,18 @@ export function getPosition(
 							align,
 					  })
 					: tt;
-			zy = y < tt ? tt - y + th / 2 : th / 2;
+			arrowY = y < tt ? tt - y + th / 2 : th / 2;
 
 			const xl = tl - offset - cw;
 			const xr = tr + offset + cw;
 			if (position === "left") {
 				x = xl < 0 ? tr + offset : xl;
-				zx = xl < 0 ? 0 : cw;
+				arrowX = xl < 0 ? 0 : cw;
+				arrowPos = xl < 0 ? "left" : "right";
 			} else {
 				x = w > xr ? tr + offset : xl;
-				zx = w > xr ? 0 : cw;
+				arrowX = w > xr ? 0 : cw;
+				arrowPos = w > xr ? "left" : "right";
 			}
 
 			break;
@@ -99,23 +119,33 @@ export function getPosition(
 							align,
 					  })
 					: tl;
-			zx = x > tl ? cw / 2 : tl - x + tw / 2;
+			arrowX = x > tl ? cw / 2 : tl - x + tw / 2;
 
 			const yt = tt - offset - ch;
 			const yb = tb + offset + ch;
 			if (position === "top") {
 				y = yt < 0 ? tb + offset : yt;
-				zy = yt < 0 ? 0 : ch;
+				arrowY = yt < 0 ? 0 : ch;
+				arrowPos = yt < 0 ? "top" : "bottom";
 			} else {
 				y = h > yb ? tb + offset : yt;
-				zy = h > yb ? 0 : ch;
+				arrowY = h > yb ? 0 : ch;
+				arrowPos = h > yb ? "top" : "bottom";
 			}
 			break;
 		default:
 			break;
 	}
 
-	return [x, y, [zx, zy]];
+	return [
+		x,
+		y,
+		{
+			arrowX,
+			arrowY,
+			arrowPos,
+		},
+	];
 }
 
 export function getPointPosition(e: MouseEvent, content: HTMLElement) {

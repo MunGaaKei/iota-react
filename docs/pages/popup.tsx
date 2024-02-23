@@ -41,8 +41,8 @@ export default function Page() {
 
 			<Popup
 				content={<div style={{ width: 120, height: 120 }}></div>}
-				className='bg-pink-0'
-				position='bottom'
+				className='bg-brown-0'
+				position='left'
 				touchable
 			>
 				<Button className='mx-auto'>Popup</Button>

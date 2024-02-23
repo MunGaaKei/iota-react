@@ -12,10 +12,8 @@
 
 .i-popup-arrow {
 	position: absolute;
-	height: 8px;
 	width: 8px;
-	background: var(--background);
-	transform: translate(-50%, -50%) rotate(45deg);
-	border-radius: 2px;
+	height: 24px;
 	pointer-events: none;
+	color: unset;
 }

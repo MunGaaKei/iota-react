@@ -28,5 +28,5 @@ export interface IPopupContent
 		IPopup,
 		"getContainer" | "arrow" | "className" | "style" | "children"
 	> {
-	arrowStyle?: CSSProperties;
+	arrowProps?: Record<string, any>;
 }
