@@ -47,6 +47,7 @@ const Panel = (props: IBaseDates) => {
 		renderWeek,
 		renderMonth = (m: ReactNode) => m,
 		renderYear = (y: ReactNode) => y,
+		disabledDate,
 		onDateClick,
 	} = props;
 
@@ -198,6 +199,7 @@ const Panel = (props: IBaseDates) => {
 			<Dates
 				value={state.today}
 				month={state.month}
+				disabledDate={disabledDate}
 				onDateClick={handleChangeDate}
 				renderDate={renderDate}
 				renderWeek={renderWeek}

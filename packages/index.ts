@@ -7,7 +7,9 @@ import Button from "./components/button";
 import Card from "./components/card";
 import Checkbox from "./components/checkbox";
 import Collapse from "./components/collapse";
+import Datagrid from "./components/datagrid";
 import Datepicker from "./components/datepicker";
+import Description from "./components/description";
 import Drawer from "./components/drawer";
 import Dropdown from "./components/dropdown";
 import Flex from "./components/flex";
@@ -25,7 +27,6 @@ import Progress from "./components/progress";
 import Radio from "./components/radio";
 import Select from "./components/select";
 import Swiper from "./components/swiper";
-import Table from "./components/table";
 import Tabs from "./components/tabs";
 import Tag from "./components/tag";
 import Text from "./components/text";
@@ -42,7 +43,9 @@ export {
 	Card,
 	Checkbox,
 	Collapse,
+	Datagrid,
 	Datepicker,
+	Description,
 	Drawer,
 	Dropdown,
 	Flex,
@@ -60,7 +63,6 @@ export {
 	Radio,
 	Select,
 	Swiper,
-	Table,
 	Tabs,
 	Tag,
 	Text,

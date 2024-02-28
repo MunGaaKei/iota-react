@@ -1,12 +1,11 @@
-import { Button, Table, Tag } from "@p";
-import { IColumn } from "@p/components/table/type";
+import { Button, Datagrid, Tag } from "@p";
+import { IColumn } from "@p/components/datagrid/type";
 import { mock } from "mockjs";
 
 const columns = [
 	{
 		id: "id",
 		fixed: "left",
-		width: 40,
 	},
 	{
 		id: "name",
@@ -21,7 +20,7 @@ const columns = [
 	{
 		id: "gender",
 		title: "性别",
-		align: "center",
+		justify: "center",
 		sorter: true,
 		render: (value: number) => {
 			return value > 0 ? "男" : "女";
@@ -29,16 +28,14 @@ const columns = [
 	},
 	{
 		id: "birth",
-		width: 160,
 	},
 	{
 		id: "address",
-		width: 200,
 	},
 	{
 		id: "active",
 		fixed: "right",
-		align: "center",
+		justify: "center",
 		render: (value: boolean) => {
 			return value ? (
 				<Tag className='bg-green-0'>是</Tag>
@@ -56,7 +53,7 @@ const columns = [
 	{
 		id: "action",
 		fixed: "right",
-		align: "center",
+		justify: "center",
 		render: () => (
 			<Button className='bg-black-0' size='small'>
 				操作
@@ -84,11 +81,11 @@ export default function Page() {
 
 	return (
 		<>
-			<Table
+			<Datagrid
 				data={list}
 				columns={columns}
 				style={{ height: 400 }}
-				// resizable
+				resizable
 			/>
 		</>
 	);

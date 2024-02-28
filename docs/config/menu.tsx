@@ -3,6 +3,7 @@ import {
 	AccountTreeTwotone,
 	AdsClickRound,
 	ArrowDropDownCircleTwotone,
+	ArtTrackSharp,
 	AssignmentOutlined,
 	AutoAwesomeRound,
 	BubbleChartTwotone,
@@ -108,6 +109,18 @@ export default [
 				href: "/docs/collapse",
 				as: Link,
 				icon: <Icon icon={<ViewDayTwotone />} />,
+			},
+			{
+				title: "Datagrid",
+				href: "/docs/datagrid",
+				as: Link,
+				icon: <Icon icon={<GridOnRound />} />,
+			},
+			{
+				title: "Description",
+				href: "/docs/description",
+				as: Link,
+				icon: <Icon icon={<ArtTrackSharp />} />,
 			},
 			{
 				title: "Drawer",
@@ -242,12 +255,6 @@ export default [
 				href: "/docs/tabs",
 				as: Link,
 				icon: <Icon icon={<PaddingTwotone />} />,
-			},
-			{
-				title: "Table",
-				href: "/docs/table",
-				as: Link,
-				icon: <Icon icon={<GridOnRound />} />,
 			},
 			{
 				title: "Tag",

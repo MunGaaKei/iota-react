@@ -1,3 +1,4 @@
+import { useMemoizedFn } from "ahooks";
 import classNames from "classnames";
 import dayjs, { Dayjs } from "dayjs";
 import { ReactNode, useMemo } from "react";
@@ -14,6 +15,7 @@ const Dates = (
 		weeks = ["一", "二", "三", "四", "五", "六", "日"],
 		renderDate = (date: Dayjs) => date.date(),
 		renderWeek = (w: ReactNode) => w,
+		disabledDate,
 		onDateClick,
 	} = props;
 	const today = dayjs();
@@ -51,6 +53,12 @@ const Dates = (
 		return dates;
 	}, [month]);
 
+	const handleDateClick = useMemoizedFn((date: Dayjs) => {
+		if (disabledDate?.(date)) return;
+
+		onDateClick?.(date);
+	});
+
 	return (
 		<>
 			<div className='i-datepicker-weeks'>
@@ -65,6 +73,7 @@ const Dates = (
 					const active = date.isSame(value, "day");
 					const isSameMonth = date.isSame(month, "month");
 					const isToday = date.isSame(today, "day");
+					const disabled = disabledDate?.(date);
 
 					return (
 						<div
@@ -73,8 +82,9 @@ const Dates = (
 								"i-datepicker-active": active,
 								"i-datepicker-same-month": isSameMonth,
 								"i-datepicker-today": isToday,
+								"i-datepicker-disabled": disabled,
 							})}
-							onClick={() => onDateClick?.(date)}
+							onClick={() => handleDateClick(date)}
 						>
 							{renderDate(date)}
 						</div>

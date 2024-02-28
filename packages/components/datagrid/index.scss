@@ -1,0 +1,69 @@
+.i-datagrid {
+	position: relative;
+	display: grid;
+	contain: content;
+	content-visibility: auto;
+	white-space: nowrap;
+	width: fit-content;
+	grid-template-columns: var(--grid-template-columns);
+	grid-template-rows: var(--grid-template-rows);
+}
+
+.i-datagrid-bordered {
+	--datagrid-border-color: var(--color-8);
+	outline: 1px solid var(--datagrid-border-color);
+	.i-datagrid-cell {
+		outline: 1px solid var(--datagrid-border-color);
+	}
+}
+
+.i-datagrid-striped {
+	.i-datagrid-row {
+		&:nth-child(odd) {
+			--datagrid-cell-background: var(--color-9);
+		}
+	}
+}
+
+.i-datagrid .i-datagrid-row {
+	--datagrid-cell-background: var(--background);
+
+	display: contents;
+	&:hover {
+		--datagrid-cell-background: var(--color-main-0);
+	}
+}
+
+.i-datagrid-cell {
+	position: sticky;
+	display: flex;
+	align-items: center;
+	justify-content: var(--datagrid-justify);
+	gap: 4px;
+	padding: var(--padding);
+	background: var(--datagrid-cell-background);
+	transition: background-color 0.08s;
+}
+.i-datagrid-cell-fixed-right:first-of-type {
+	background: red;
+}
+
+.i-datagrid-header {
+	.i-datagrid-cell {
+		--datagrid-cell-background: var(--color-9);
+		z-index: 2;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+}
+
+.i-datagrid-resizor {
+	position: absolute;
+	inset: 0 0 0 auto;
+	width: 4px;
+	transition: 0.12s;
+	cursor: ew-resize;
+	&:hover {
+		background: var(--color-5);
+	}
+}

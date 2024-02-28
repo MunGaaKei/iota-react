@@ -13,7 +13,7 @@ import { IPagination } from "./type";
 const Pagination = (props: IPagination): JSX.Element => {
 	const {
 		page: defaultPage = 1,
-		size = 5,
+		size = 10,
 		total = 0,
 		sibling = 2,
 		prev = <Icon icon={<KeyboardArrowLeftRound />} />,

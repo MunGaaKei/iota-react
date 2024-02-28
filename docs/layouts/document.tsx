@@ -2,6 +2,7 @@ import menu from "@d/config/menu";
 import { Area, Button, Flex, Icon, Loading, Tree } from "@p";
 import { LightModeTwotone, NightlightTwotone } from "@ricons/material";
 import { Suspense, lazy, memo } from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 import { Link, useParams } from "react-router-dom";
 
 interface DProps {
@@ -30,7 +31,7 @@ export default function Document(): JSX.Element {
 			layout='goku'
 			configs={{ headerHeight: "50px", contentWidth: "1000px" }}
 		>
-			<Area.Item name='header' className='px-8'>
+			<Area.Item name='header' className='px-8 hover-opacity'>
 				<Area.Item name='inner' className='items-center'>
 					<div className='flex flex-1'></div>
 					<h2 className='mx-auto'>
@@ -66,13 +67,19 @@ export default function Document(): JSX.Element {
 			</Area.Item>
 
 			<Area.Item name='inner'>
-				<Area.Item name='sider'>
-					<Tree
-						items={menu}
-						selected={`/docs/${name}`}
-						keyProp='href'
+				<Area.Item name='sider' className='hover-opacity'>
+					<Scrollbars
+						autoHide
+						autoHideTimeout={500}
 						style={{ minWidth: 240 }}
-					/>
+					>
+						<Tree
+							items={menu}
+							selected={`/docs/${name}`}
+							keyProp='href'
+							className='pd-8'
+						/>
+					</Scrollbars>
 				</Area.Item>
 
 				<div className='pd-8 flex-1 overflow-auto'>

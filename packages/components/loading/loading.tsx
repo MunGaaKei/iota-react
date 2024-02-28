@@ -25,7 +25,7 @@ const Loading = (props: ILoading): JSX.Element => {
 						cy='12'
 						r='9.5'
 						fill='none'
-						strokeWidth='4'
+						strokeWidth='3'
 						strokeLinecap='round'
 						strokeDasharray={40}
 						strokeDashoffset={0}

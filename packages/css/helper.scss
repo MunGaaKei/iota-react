@@ -158,6 +158,13 @@
 	.no-transition {
 		transition: none;
 	}
+	.hover-opacity {
+		opacity: 0;
+		transition: var(--transition);
+		&:hover {
+			opacity: 1;
+		}
+	}
 
 	.mg-auto {
 		margin: auto;

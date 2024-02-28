@@ -27,6 +27,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		renderMonth,
 		renderYear,
 		popupProps,
+		disabledDate,
 		onDateClick,
 		onChange,
 		onBlur,
@@ -96,6 +97,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 					renderWeek={renderWeek}
 					renderMonth={renderMonth}
 					renderYear={renderYear}
+					disabledDate={disabledDate}
 					onDateClick={handleDateClick}
 				/>
 			}

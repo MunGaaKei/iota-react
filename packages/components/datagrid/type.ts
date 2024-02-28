@@ -1,32 +1,30 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type IData = Record<string, any>;
-
-export type TWidth = {
-	width?: string;
-	fixed?: "left" | "right";
-};
 
 export type IColumn = {
 	id: string;
 	title?: ReactNode;
 	sorter?: boolean;
-	align?: string;
+	justify?: string;
 	rowSpan?: number;
 	colSpan?: number;
+	width?: string;
+	fixed?: "left" | "right";
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
 	renderHeader?: (column?: IColumn, index?: number) => ReactNode;
-} & TWidth;
+};
 
-export interface ITable
-	extends Pick<HTMLAttributes<HTMLDivElement>, "style" | "className"> {
+export interface IDatagrid {
 	data: IData[];
 	columns?: IColumn[];
 	border?: boolean;
 	striped?: boolean;
 	header?: boolean;
 	resizable?: boolean;
-	padding?: string | number;
+	cellPadding?: string | number;
+	style?: CSSProperties;
+	className?: string;
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,
@@ -36,22 +34,20 @@ export interface ITable
 	) => void;
 }
 
-export interface IRow extends Pick<ITable, "onCellClick" | "onRowClick"> {
+export interface IRow extends Pick<IDatagrid, "onCellClick" | "onRowClick"> {
 	data: IData;
 	columns: IColumn[];
 	row: number;
 }
 
-export interface ICol extends Pick<ITable, "onCellClick"> {
+export interface ICell extends Pick<IDatagrid, "onCellClick"> {
 	column: IColumn;
 	data: IData;
 	row: number;
 	col: number;
 }
 
-export interface IHeader extends Omit<IRow, "data" | "row"> {}
-
-export interface IResize {
-	widths: TWidth[];
-	onWidthChange: (index: number, width: number) => void;
+export interface IHeader extends Omit<IRow, "data" | "row"> {
+	resizable?: boolean;
+	onWidthChange: (i: number, width: number) => void;
 }

@@ -12,6 +12,7 @@ export default function Page() {
 				value={state.date}
 				onChange={(v: any) => (state.date = v)}
 				style={{ width: 240 }}
+				placeholder='请选择日期'
 			/>
 		</>
 	);

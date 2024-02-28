@@ -23,4 +23,5 @@ export interface IBaseDates {
 	renderMonth?: (month?: number) => ReactNode;
 	renderYear?: (year?: number) => ReactNode;
 	onDateClick?: (date: Dayjs) => void;
+	disabledDate?: (date: Dayjs) => boolean;
 }
