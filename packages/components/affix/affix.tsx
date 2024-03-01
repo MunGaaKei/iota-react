@@ -31,7 +31,7 @@ const Affix = (props: IAffix): JSX.Element => {
 	const hijackChildren = useMemo(
 		() =>
 			Children.map(children, (node: any) => {
-				if (node.type?.iotaname === "AffixToTop") {
+				if (node.type === ToTop) {
 					const { onClick } = node.props;
 
 					return cloneElement(node, {

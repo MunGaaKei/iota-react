@@ -19,6 +19,4 @@ function ToTop(props: IToTop) {
 	);
 }
 
-ToTop.iotaname = "AffixToTop";
-
 export default ToTop;

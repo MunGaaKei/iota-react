@@ -43,6 +43,4 @@ function Item(props: ISwiperItem) {
 	);
 }
 
-Item.iotaname = "SwiperItem";
-
 export default Item;

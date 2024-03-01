@@ -11,19 +11,19 @@ const Card = (props: ICard): JSX.Element => {
 		const nodes = {};
 
 		Children.map(children, (child: any) => {
-			const name = child.type?.iotaName;
+			const type = child.type;
 
-			switch (name) {
-				case "CardHeader":
+			switch (type) {
+				case Header:
 					nodes["header"] = child;
 					break;
-				case "CardFooter":
+				case Footer:
 					nodes["footer"] = child;
 					break;
-				case "CardBanner":
+				case Banner:
 					nodes["banner"] = child;
 					break;
-				case "CardTailer":
+				case Tailer:
 					nodes["tailer"] = child;
 					break;
 				default:

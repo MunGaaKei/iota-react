@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { CSSProperties } from "react";
+import { CSSProperties, Fragment } from "react";
 import "./index.scss";
 import { IDescription } from "./type";
 
@@ -9,8 +9,11 @@ const Description = (props: IDescription): JSX.Element => {
 		colon,
 		columns = 3,
 		gap = ".5em",
+		align,
 		labelWidth,
+		labelAlign,
 		vertical,
+		equally,
 		style,
 		className,
 	} = props;
@@ -21,14 +24,26 @@ const Description = (props: IDescription): JSX.Element => {
 			style={
 				{
 					["--description-label-width"]: labelWidth,
-					gridTemplateColumns: `repeat(${columns}, auto)`,
+					gridTemplateColumns: `repeat(${columns}, ${
+						equally ? "1fr" : "auto"
+					})`,
 					gap,
+					textAlign: align,
 					...style,
 				} as CSSProperties
 			}
 		>
 			{data.map((item, i) => {
-				const { label, value, style, rowSpan = 1, colSpan = 1 } = item;
+				const {
+					label,
+					value,
+					style,
+					hidden,
+					rowSpan = 1,
+					colSpan = 1,
+				} = item;
+
+				if (hidden) return <Fragment key={i} />;
 
 				return (
 					<div
@@ -42,10 +57,15 @@ const Description = (props: IDescription): JSX.Element => {
 							...style,
 						}}
 					>
-						<div className='i-description-label'>
-							{label}
-							{colon}
-						</div>
+						{label && (
+							<div
+								className='i-description-label'
+								style={{ textAlign: labelAlign }}
+							>
+								{label}
+								{colon}
+							</div>
+						)}
 						<div className='i-description-value'>{value}</div>
 					</div>
 				);

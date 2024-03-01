@@ -14,9 +14,11 @@ export interface IDescription {
 	align?: string;
 	colon?: ReactNode;
 	gap?: string | number;
+	equally?: boolean;
 	columns?: number;
 	vertical?: boolean;
 	labelWidth?: string | number;
+	labelAlign?: "left" | "right" | "center" | "justify";
 	style?: CSSProperties;
 	className?: string;
 }

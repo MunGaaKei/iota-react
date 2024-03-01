@@ -1,0 +1,14 @@
+.i-step {
+	display: flex;
+	justify-content: space-between;
+	gap: 1em;
+}
+
+.i-step-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.i-step-divider {
+	align-self: center;
+}

@@ -59,7 +59,7 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 
 	const items = useMemo(() => {
 		return Children.map(children, (node: any) => {
-			if (node.type?.iotaname !== "SwiperItem") return;
+			if (node.type !== Item) return;
 
 			return node;
 		});

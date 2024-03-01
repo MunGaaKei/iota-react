@@ -15,9 +15,4 @@ const Footer = Area("footer") as any;
 const Banner = Area("banner") as any;
 const Tailer = Area("tail") as any;
 
-Header.iotaName = "CardHeader";
-Footer.iotaName = "CardFooter";
-Banner.iotaName = "CardBanner";
-Tailer.iotaName = "CardTailer";
-
 export { Banner, Footer, Header, Tailer };

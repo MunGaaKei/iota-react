@@ -26,6 +26,7 @@ import Popup from "./components/popup";
 import Progress from "./components/progress";
 import Radio from "./components/radio";
 import Select from "./components/select";
+import Step from "./components/step";
 import Swiper from "./components/swiper";
 import Tabs from "./components/tabs";
 import Tag from "./components/tag";
@@ -62,6 +63,7 @@ export {
 	Progress,
 	Radio,
 	Select,
+	Step,
 	Swiper,
 	Tabs,
 	Tag,
