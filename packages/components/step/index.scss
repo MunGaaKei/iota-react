@@ -1,14 +1,47 @@
 .i-step {
 	display: flex;
-	justify-content: space-between;
 	gap: 1em;
+}
+.i-step-vertical {
+	.i-step-item {
+		flex-direction: row;
+	}
 }
 
 .i-step-item {
 	display: flex;
 	flex-direction: column;
+	gap: 0.5em;
+	flex: 1;
+	transition: var(--transition);
+	&:last-child {
+		flex: unset;
+		.i-step-divider {
+			display: none;
+		}
+	}
+	&.i-step-item-finished {
+		opacity: 0.4;
+		.i-step-divider {
+			border-style: solid;
+		}
+	}
+	&.i-step-item-pending {
+		opacity: 0.4;
+	}
+	&:hover {
+		opacity: 1;
+	}
 }
 
 .i-step-divider {
+	flex: 1;
 	align-self: center;
+	border: 1px dashed var(--color-7);
+}
+
+.i-step-item-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
 }

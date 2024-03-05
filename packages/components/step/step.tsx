@@ -1,23 +1,17 @@
 import classNames from "classnames";
 import { Children, ReactNode, useMemo } from "react";
-import Divider from "./divider";
 import "./index.scss";
 import Item from "./item";
 import { IStep } from "./type";
 
 const Step = (props: IStep): JSX.Element => {
-	const {
-		active = 0,
-		divider = <Divider />,
-		style,
-		className,
-		children,
-	} = props;
+	const { active = 0, vertical, style, className, children } = props;
 
 	const steps = useMemo(() => {
 		const nodes: ReactNode[] = [];
+		let index = 0;
 
-		Children.map(children, (el: any, i) => {
+		Children.map(children, (el: any) => {
 			if (!el || el.type !== Item) return;
 
 			const { props: elProps } = el;
@@ -26,7 +20,8 @@ const Step = (props: IStep): JSX.Element => {
 				...el,
 				props: {
 					...elProps,
-					active: active === i,
+					active,
+					index: index++,
 				},
 			});
 		});
@@ -35,7 +30,14 @@ const Step = (props: IStep): JSX.Element => {
 	}, [active, children]);
 
 	return (
-		<div className={classNames("i-step", className)} style={style}>
+		<div
+			className={classNames(
+				"i-step",
+				{ "i-step-vertical": vertical },
+				className
+			)}
+			style={style}
+		>
 			{steps}
 		</div>
 	);

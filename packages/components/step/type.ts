@@ -1,19 +1,19 @@
 import { CSSProperties, ReactNode } from "react";
 
-export interface IStep {
+type TStepProp = {
 	active?: number;
-	vertical?: boolean;
-	divider?: ReactNode;
+	icon?: (i: number, status?: string) => ReactNode;
 	style?: CSSProperties;
 	className?: string;
 	children?: ReactNode;
-	onChange?: (i?: number) => void;
+};
+
+export interface IStep extends TStepProp {
+	vertical?: boolean;
 }
 
-export interface IStepItem {
-	active?: boolean;
-	icon?: (i: number, active: boolean) => ReactNode;
-	style?: CSSProperties;
-	className?: string;
-	children?: ReactNode;
+export interface IStepItem extends TStepProp {
+	index?: number;
+	title?: ReactNode;
+	divider?: ReactNode;
 }
