@@ -1,18 +1,32 @@
 import { Step } from "@p";
+import { useState } from "react";
 
 export default function Page() {
+	const [active, setActive] = useState(0);
+
 	return (
 		<>
-			<Step active={1}>
+			<Step vertical active={active} onClick={setActive}>
 				<Step.Item title={<h4>提交</h4>}>
-					<p className='color-5'>填写表单</p>
+					<p className='color-5'>已提交成功 ✌️</p>
 				</Step.Item>
-				<p>123</p>
 				<Step.Item title={<h4>审核中</h4>}>
-					<p className='color-5'>待主管审核</p>
+					<p className='color-5'>还在审核中 😊</p>
 				</Step.Item>
 				<Step.Item title={<h4>通过</h4>}>
-					<p className='color-5'>已完成</p>
+					<p className='color-5'>通过啦 👌</p>
+				</Step.Item>
+			</Step>
+
+			<Step active={active} onClick={setActive} className='mt-40'>
+				<Step.Item title={<h4>提交</h4>}>
+					<p className='color-5'>已提交成功 ✌️</p>
+				</Step.Item>
+				<Step.Item title={<h4>审核中</h4>}>
+					<p className='color-5'>还在审核中 😊</p>
+				</Step.Item>
+				<Step.Item title={<h4>通过</h4>}>
+					<p className='color-5'>通过啦 👌</p>
 				</Step.Item>
 			</Step>
 		</>

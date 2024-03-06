@@ -6,6 +6,6 @@ autocomplete
 theme
 background opacity
 resize
-step
 table sortable
 text: countdown highlight
+transfer

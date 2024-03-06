@@ -5,7 +5,16 @@ import Item from "./item";
 import { IStep } from "./type";
 
 const Step = (props: IStep): JSX.Element => {
-	const { active = 0, vertical, style, className, children } = props;
+	const {
+		active = 0,
+		vertical,
+		icon,
+		divider,
+		style,
+		className,
+		children,
+		onClick,
+	} = props;
 
 	const steps = useMemo(() => {
 		const nodes: ReactNode[] = [];
@@ -19,7 +28,11 @@ const Step = (props: IStep): JSX.Element => {
 			nodes.push({
 				...el,
 				props: {
+					icon,
+					divider,
+					onClick,
 					...elProps,
+					vertical,
 					active,
 					index: index++,
 				},

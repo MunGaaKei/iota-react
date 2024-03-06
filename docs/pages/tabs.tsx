@@ -6,7 +6,7 @@ export default function Page() {
 			<Tabs active='1'>
 				{[...new Array(12).keys()].map((i) => (
 					<Tabs.Item key={i} title={`title ${i}`}>
-						{`content ${i}`}
+						<div className='pd-8'>{`content ${i}`}</div>
 					</Tabs.Item>
 				))}
 				<Tabs.Item title='cached' keepalive>
