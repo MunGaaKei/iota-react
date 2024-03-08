@@ -2,6 +2,11 @@ import { CSSProperties, ReactNode } from "react";
 
 export type IData = Record<string, any>;
 
+type TOrder = {
+	orderBy: string;
+	orderType: string;
+};
+
 export type IColumn = {
 	id: string;
 	title?: ReactNode;
@@ -30,11 +35,15 @@ export interface IDatagrid {
 		data?: IData,
 		id?: string,
 		row?: number,
-		col?: number
+		col?: number,
+		column?: IColumn
 	) => void;
+	onHeaderClick?: (id?: string, col?: number) => void;
+	onSort?: () => void;
 }
 
-export interface IRow extends Pick<IDatagrid, "onCellClick" | "onRowClick"> {
+export interface IRow
+	extends Pick<IDatagrid, "onCellClick" | "onRowClick" | "onHeaderClick"> {
 	data: IData;
 	columns: IColumn[];
 	row: number;
@@ -47,7 +56,15 @@ export interface ICell extends Pick<IDatagrid, "onCellClick"> {
 	col: number;
 }
 
-export interface IHeader extends Omit<IRow, "data" | "row"> {
+export interface IHeader extends Omit<IRow, "data" | "row">, TOrder {
 	resizable?: boolean;
 	onWidthChange: (i: number, width: number) => void;
 }
+
+export type TDatagridState = {
+	widths: number[];
+} & TOrder;
+
+export type TSorter = {
+	type: string;
+};

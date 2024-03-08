@@ -6,6 +6,7 @@ const columns = [
 	{
 		id: "id",
 		fixed: "left",
+		sorter: true,
 	},
 	{
 		id: "name",
@@ -16,6 +17,7 @@ const columns = [
 	},
 	{
 		id: "phone",
+		title: "手机",
 	},
 	{
 		id: "gender",
@@ -28,9 +30,11 @@ const columns = [
 	},
 	{
 		id: "birth",
+		title: "生日",
 	},
 	{
 		id: "address",
+		title: "地址",
 	},
 	{
 		id: "active",

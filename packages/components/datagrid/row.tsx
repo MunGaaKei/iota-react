@@ -1,5 +1,7 @@
+import classNames from "classnames";
 import { Cell, getCellStyle } from "./cell";
 import Resize from "./resize";
+import Sorter from "./sorter";
 import { IHeader, IRow } from "./type";
 
 export default function Row(props: IRow) {
@@ -22,7 +24,16 @@ export default function Row(props: IRow) {
 }
 
 export function Header(props: IHeader) {
-	const { columns, resizable, onWidthChange } = props;
+	const {
+		columns,
+		resizable,
+		orderBy,
+		orderType,
+		onWidthChange,
+		onHeaderClick,
+	} = props;
+
+	const handleHeaderClick = () => {};
 
 	return (
 		<div className='i-datagrid-header i-datagrid-row'>
@@ -45,14 +56,21 @@ export function Header(props: IHeader) {
 					isHeader: true,
 				});
 
+				const sortType = orderBy === id ? orderType : "";
+
 				return (
 					<div
 						key={col}
 						data-col={id}
-						className='i-datagrid-cell'
+						className={classNames("i-datagrid-cell", {
+							"i-datagrid-has-sorter": sorter,
+						})}
 						style={{ ...style, insetBlockStart: 0 }}
+						onClick={handleHeaderClick}
 					>
 						{renderHeader?.(column, col) || title || id}
+
+						{sorter && <Sorter type={sortType} />}
 
 						{resizable && (
 							<Resize index={col} onWidthChange={onWidthChange} />

@@ -1,9 +1,10 @@
+import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import ScrollArea from "react-custom-scrollbars";
 import "./index.scss";
 import Row, { Header } from "./row";
-import type { IDatagrid } from "./type";
+import type { IDatagrid, TDatagridState } from "./type";
 
 const Datagrid = (props: IDatagrid): JSX.Element => {
 	const {
@@ -13,17 +14,22 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 		striped,
 		header = true,
 		resizable,
-		cellPadding = ".25em .5em",
+		cellPadding = ".5em .5em",
 		style = {},
 		className,
 		onCellClick,
 		onRowClick,
 	} = props;
 
-	const [widths, setWidths] = useState<number[]>([]);
 	const container = useRef<HTMLDivElement>(null);
+	const state = useReactive<TDatagridState>({
+		widths: [],
+		orderBy: "",
+		orderType: "",
+	});
 
 	const styles = useMemo(() => {
+		const { widths } = state;
 		if (!widths.length) return {};
 
 		const o = {
@@ -56,20 +62,22 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 		}
 
 		return Object.assign(o, style);
-	}, [widths, resizable]);
+	}, [state.widths, resizable]);
 
 	const handleWidthChange = useCallback(
 		(i: number, w: number) => {
 			if (!resizable) return;
 
-			setWidths((ws) => {
-				const after = [...ws];
-				after[i] = w;
-				return after;
-			});
+			const [...ws] = state.widths;
+			ws[i] = w;
+			state.widths = ws;
 		},
 		[resizable]
 	);
+
+	const rows = useMemo(() => {
+		return data;
+	}, [data]);
 
 	useEffect(() => {
 		if (!container.current || !resizable) return;
@@ -79,7 +87,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 
 		if (!tds?.length) return;
 
-		setWidths(Array.from(tds).map((node: any) => node.offsetWidth));
+		state.widths = Array.from(tds).map((node: any) => node.offsetWidth);
 	}, [columns, resizable]);
 
 	return (
@@ -99,11 +107,13 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 					<Header
 						columns={columns}
 						resizable={resizable}
+						orderType={state.orderType}
+						orderBy={state.orderBy}
 						onWidthChange={handleWidthChange}
 					/>
 				)}
 
-				{data.map((row, i) => (
+				{rows.map((row, i) => (
 					<Row
 						key={i}
 						row={i + (header ? 1 : 0)}

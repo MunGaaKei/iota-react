@@ -14,12 +14,16 @@ import { useState } from "react";
 const { Field } = Form;
 
 const rules = {
-	name: (value) => {
-		if (!value) return "不能为空";
+	name: (v) => {
+		if (!v) return "不能为空";
 		return false;
 	},
-	password: (value) => {
-		if (!value) return "不能为空";
+	password: (v) => {
+		if (!v) return "不能为空";
+		return false;
+	},
+	age: (v) => {
+		if (v < 10) return "小于10岁";
 		return false;
 	},
 };
@@ -54,12 +58,13 @@ export default function Page() {
 		<>
 			<Form form={form} rules={rules} width={420} className='gap-12'>
 				<Field name='name'>
-					<Input label='名字' />
+					<Input labelInline required label='名字' />
 				</Field>
 				<Field name='password'>
 					<Input
 						type='password'
 						label='密码'
+						required
 						append={
 							<Button
 								className='bg-blue'
