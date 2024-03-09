@@ -77,10 +77,12 @@ $colors: (
 	@for $i from 1 to 10 {
 		--color-#{$i}: #{lighten(#000, (10.5% * $i))};
 		.color-#{$i} {
-			color: var(--color-#{$i});
+			--color: var(--color-#{$i});
+			color: var(--color);
 		}
 		.bg-#{$i} {
-			background: var(--color-#{$i});
+			--background: var(--color-#{$i});
+			background: var(--background);
 			@if ($i < 5) {
 				color: var(--white);
 			}

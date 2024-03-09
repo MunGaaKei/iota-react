@@ -27,13 +27,11 @@ export function Header(props: IHeader) {
 	const {
 		columns,
 		resizable,
-		orderBy,
-		orderType,
+		sortBy,
+		sortType,
 		onWidthChange,
 		onHeaderClick,
 	} = props;
-
-	const handleHeaderClick = () => {};
 
 	return (
 		<div className='i-datagrid-header i-datagrid-row'>
@@ -56,7 +54,7 @@ export function Header(props: IHeader) {
 					isHeader: true,
 				});
 
-				const sortType = orderBy === id ? orderType : "";
+				const order = sortBy === id ? sortType : "";
 
 				return (
 					<div
@@ -66,11 +64,11 @@ export function Header(props: IHeader) {
 							"i-datagrid-has-sorter": sorter,
 						})}
 						style={{ ...style, insetBlockStart: 0 }}
-						onClick={handleHeaderClick}
+						onClick={(e) => onHeaderClick?.(column, e)}
 					>
 						{renderHeader?.(column, col) || title || id}
 
-						{sorter && <Sorter type={sortType} />}
+						{sorter && <Sorter type={order} />}
 
 						{resizable && (
 							<Resize index={col} onWidthChange={onWidthChange} />

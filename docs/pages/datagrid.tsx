@@ -1,12 +1,12 @@
-import { Button, Datagrid, Tag } from "@p";
+import { Button, Datagrid, Flex, Tag } from "@p";
 import { IColumn } from "@p/components/datagrid/type";
 import { mock } from "mockjs";
+import { useState } from "react";
 
 const columns = [
 	{
 		id: "id",
 		fixed: "left",
-		sorter: true,
 	},
 	{
 		id: "name",
@@ -31,6 +31,8 @@ const columns = [
 	{
 		id: "birth",
 		title: "生日",
+		sorter: (a, b) =>
+			new Date(b.birth).getTime() - new Date(a.birth).getTime(),
 	},
 	{
 		id: "address",
@@ -82,6 +84,7 @@ export default function Page() {
 			},
 		],
 	});
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<>
@@ -89,8 +92,13 @@ export default function Page() {
 				data={list}
 				columns={columns}
 				style={{ height: 400 }}
+				loading={loading}
 				resizable
 			/>
+
+			<Flex className='mt-20' gap={8}>
+				<Button onClick={() => setLoading(!loading)}>加载</Button>
+			</Flex>
 		</>
 	);
 }

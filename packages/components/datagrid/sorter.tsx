@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { TSorter } from "./type";
 
 const Arrow = (props) => (
 	<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' {...props}>
@@ -12,7 +11,7 @@ const Arrow = (props) => (
 	</svg>
 );
 
-export default function Sorter(props: TSorter) {
+export default function Sorter(props) {
 	const { type } = props;
 
 	return (

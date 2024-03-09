@@ -35,7 +35,7 @@ export function Cell(props: ICell) {
 	const style = getCellStyle({ justify, fixed, col, row, rowSpan });
 
 	const handleCellClick = () => {
-		onCellClick?.(data, id, row, col);
+		onCellClick?.(data, column, row, col);
 	};
 
 	return (

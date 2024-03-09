@@ -1,5 +1,21 @@
+.i-datagrid-loading {
+	overflow: hidden !important;
+	user-select: none;
+
+	.i-datagrid {
+		max-height: 100%;
+		max-width: 100%;
+		overflow: hidden;
+	}
+	.i-loading-container {
+		position: absolute;
+		inset: 0;
+		z-index: 10;
+		background: var(--background-opacity);
+	}
+}
+
 .i-datagrid {
-	position: relative;
 	display: grid;
 	contain: content;
 	content-visibility: auto;
@@ -7,6 +23,10 @@
 	width: fit-content;
 	grid-template-columns: var(--grid-template-columns);
 	grid-template-rows: var(--grid-template-rows);
+	.i-empty {
+		margin: 1em auto;
+		grid-column: 1 / -1;
+	}
 }
 
 .i-datagrid-bordered {
@@ -63,6 +83,7 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		line-height: 1;
+		user-select: none;
 	}
 }
 

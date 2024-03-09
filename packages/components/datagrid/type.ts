@@ -1,10 +1,10 @@
-import { CSSProperties, ReactNode } from "react";
+import { CSSProperties, MouseEvent, ReactNode } from "react";
 
 export type IData = Record<string, any>;
 
-type TOrder = {
-	orderBy: string;
-	orderType: string;
+type TSort = {
+	sortBy: string;
+	sortType: string;
 };
 
 export type IColumn = {
@@ -27,19 +27,20 @@ export interface IDatagrid {
 	striped?: boolean;
 	header?: boolean;
 	resizable?: boolean;
+	loading?: boolean;
+	empty?: ReactNode;
 	cellPadding?: string | number;
 	style?: CSSProperties;
 	className?: string;
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,
-		id?: string,
+		column?: IColumn,
 		row?: number,
-		col?: number,
-		column?: IColumn
+		col?: number
 	) => void;
-	onHeaderClick?: (id?: string, col?: number) => void;
-	onSort?: () => void;
+	onHeaderClick?: (column?: IColumn, e?: MouseEvent) => void;
+	onSort?: (sortBy: string, sortType: string) => void;
 }
 
 export interface IRow
@@ -56,15 +57,12 @@ export interface ICell extends Pick<IDatagrid, "onCellClick"> {
 	col: number;
 }
 
-export interface IHeader extends Omit<IRow, "data" | "row">, TOrder {
+export interface IHeader extends Omit<IRow, "data" | "row">, TSort {
 	resizable?: boolean;
 	onWidthChange: (i: number, width: number) => void;
 }
 
 export type TDatagridState = {
+	rows: IData[];
 	widths: number[];
-} & TOrder;
-
-export type TSorter = {
-	type: string;
-};
+} & TSort;

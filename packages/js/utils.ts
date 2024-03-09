@@ -319,3 +319,21 @@ export function formatTime(
 
 	return result.join("");
 }
+
+export function getNextSorter(
+	prevSortBy: string,
+	prevSortType: string,
+	sortBy: string
+): [sortBy: string, sortType: string] {
+	const types = ["desc", "asc"];
+
+	if (prevSortBy === sortBy) {
+		const i = types.findIndex((t) => t === prevSortType) + 1;
+		const type = types[i] || "";
+		const by = type === "" ? "" : sortBy;
+
+		return [by, type];
+	}
+
+	return [sortBy, "desc"];
+}

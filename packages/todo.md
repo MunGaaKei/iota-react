@@ -7,6 +7,6 @@ theme
 form validate
 background opacity
 resize
-table sortable
 text: countdown highlight
 transfer
+loading smooth
