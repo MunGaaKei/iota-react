@@ -1,6 +1,7 @@
 import { Icon, List, Tag } from "@p";
 import { TOption } from "@p/type";
-import { InboxTwotone, SearchRound } from "@ricons/material";
+import { SearchRound } from "@ricons/material";
+import Empty from "../utils/empty";
 import { ISelectOptions } from "./type";
 
 export const Options = (props: ISelectOptions) => {
@@ -10,11 +11,7 @@ export const Options = (props: ISelectOptions) => {
 		filter,
 		filterPlaceholder,
 		multiple,
-		empty = (
-			<div className='i-select-options-empty'>
-				<Icon icon={<InboxTwotone />} size='2.5em' />
-			</div>
-		),
+		empty = <Empty />,
 		onSelect,
 		onFilter,
 	} = props;
