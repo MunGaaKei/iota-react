@@ -1,13 +1,14 @@
 import classNames from "classnames";
+import { forwardRef } from "react";
 import { IListItem } from "./type";
 
-function Item(props: IListItem) {
+const Item = forwardRef<HTMLLIElement, IListItem>((props, ref) => {
 	const {
 		active,
 		type,
 		align,
 		disabled,
-		style = {},
+		style,
 		className,
 		children,
 		...restProps
@@ -15,6 +16,7 @@ function Item(props: IListItem) {
 
 	return (
 		<li
+			ref={ref}
 			className={classNames("i-list-item", className, {
 				"i-list-item-active": active,
 				"i-list-option": type === "option",
@@ -26,6 +28,6 @@ function Item(props: IListItem) {
 			{children}
 		</li>
 	);
-}
+});
 
 export default Item;

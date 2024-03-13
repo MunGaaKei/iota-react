@@ -9,4 +9,3 @@ background opacity
 resize
 text: countdown highlight
 transfer
-loading smooth

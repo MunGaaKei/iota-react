@@ -1,5 +1,6 @@
 import { List, Popup } from "@p";
 import "./index.scss";
+import Item from "./item";
 import { IDropdown } from "./type";
 
 const Dropdown = (props: IDropdown): JSX.Element => {
@@ -30,5 +31,7 @@ const Dropdown = (props: IDropdown): JSX.Element => {
 		</Popup>
 	);
 };
+
+Dropdown.Item = Item;
 
 export default Dropdown;
