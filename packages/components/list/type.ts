@@ -1,10 +1,7 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { HTMLAttributes } from "react";
 
-export interface IList {
+export interface IList extends HTMLAttributes<HTMLUListElement> {
 	virtual?: {};
-	className?: string;
-	style?: CSSProperties;
-	children?: ReactNode;
 }
 
 export interface IListItem extends HTMLAttributes<HTMLLIElement> {

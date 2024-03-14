@@ -1,7 +1,7 @@
 import menu from "@d/config/menu";
 import { Area, Button, Flex, Icon, Loading, Tree } from "@p";
 import { LightModeTwotone, NightlightTwotone } from "@ricons/material";
-import { Suspense, lazy, memo } from "react";
+import { Suspense, lazy, memo, useEffect, useState } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { Link, useParams } from "react-router-dom";
 
@@ -25,6 +25,11 @@ const DynamicPage = memo(
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
+	const [dark, setDark] = useState<any>(true);
+
+	useEffect(() => {
+		document.body.classList[dark ? "add" : "remove"]("theme-dark");
+	}, [dark]);
 
 	return (
 		<Area
@@ -43,6 +48,7 @@ export default function Document(): JSX.Element {
 							size='small'
 							flat
 							after={<Icon icon={<NightlightTwotone />} />}
+							onToggle={setDark}
 						>
 							<Icon icon={<LightModeTwotone />} />
 						</Button.Toggle>

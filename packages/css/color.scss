@@ -67,6 +67,8 @@ $colors: (
 	--color-main-2: #5a5a5a;
 	--color-main-reverse: #fafafa;
 
+	--dim: rgba(0, 0, 0, 0.15);
+
 	.color-main {
 		color: var(--color-main);
 	}
@@ -158,17 +160,18 @@ $colors: (
 }
 
 @mixin themeDark() {
-	--background: #2a2a2a;
-	--color: var(--color-1);
-	--background-opacity: #2a2a2acc;
-	--background-opacity-1: #5e5e5e66;
-	--blur: blur(12px);
+	--background: #313131;
+	--background-opacity: #313131a6;
+	--background-opacity-1: #31313199;
 
-	--color-main: #faf2d9;
-	--color-main-0: #67645d;
-	--color-main-1: #f6eac5;
-	--color-main-2: #e8debf;
+	--color: #fff;
+	--color-main: #9e9bfb;
+	--color-main-0: #48485b;
+	--color-main-1: #9692ff;
+	--color-main-2: #817ee0;
 	--color-main-reverse: #212121;
+
+	--dim: rgba(255, 255, 255, 0.15);
 
 	background: var(--background);
 	color: var(--color);

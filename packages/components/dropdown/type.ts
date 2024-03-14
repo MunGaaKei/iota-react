@@ -8,4 +8,5 @@ export interface IDropdown extends IPopup {
 
 export interface IDropItem extends IListItem {
 	more?: ReactNode;
+	moreProps?: IDropdown;
 }
