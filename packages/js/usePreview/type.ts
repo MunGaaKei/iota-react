@@ -30,10 +30,7 @@ export interface IPreview {
 	className?: string;
 	style?: CSSProperties;
 	renderImage?: (file?: TPreviewItem) => ReactNode;
-	renderVideo?: (file?: TPreviewItem) => ReactNode;
-	renderAudio?: (file?: TPreviewItem) => ReactNode;
-	renderPdf?: (file?: TPreviewItem) => ReactNode;
-	renderUnknown?: (file?: TPreviewItem) => ReactNode;
+	renderFile?: (file?: TPreviewItem) => ReactNode;
 	onClose?: () => void;
 	onChange?: (after?: number, before?: number) => void;
 	onZoom?: () => void;

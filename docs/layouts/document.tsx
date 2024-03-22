@@ -34,7 +34,7 @@ export default function Document(): JSX.Element {
 	return (
 		<Area
 			layout='goku'
-			configs={{ headerHeight: "50px", contentWidth: "1000px" }}
+			configs={{ headerHeight: "50px", contentWidth: "1200px" }}
 		>
 			<Area.Item name='header' className='px-8 hover-opacity'>
 				<Area.Item name='inner' className='items-center'>
@@ -48,6 +48,7 @@ export default function Document(): JSX.Element {
 							size='small'
 							flat
 							after={<Icon icon={<NightlightTwotone />} />}
+							active={dark}
 							onToggle={setDark}
 						>
 							<Icon icon={<LightModeTwotone />} />

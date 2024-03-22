@@ -1,0 +1,52 @@
+.i-input-label-file {
+	display: inline-flex;
+	width: unset;
+}
+
+.i-input-file-hidden {
+	display: none;
+}
+
+.i-upload-inner {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+}
+
+.i-upload-list {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: inherit;
+	&:empty {
+		display: none;
+	}
+}
+
+.i-upload-btn {
+	align-self: center;
+}
+
+.i-upload-item {
+	display: flex;
+	align-items: center;
+	gap: inherit;
+	padding: 0.5em;
+	border-radius: var(--radius);
+	border: 2px solid var(--dim);
+	background: var(--background-opacity);
+	transition: var(--transition);
+	.i-helpericon {
+		margin: 0 0 0 auto;
+	}
+	&:hover {
+		background: var(--background-opacity-1);
+	}
+}
+
+.i-upload-size {
+	font-size: 0.8em;
+	align-self: flex-end;
+	color: var(--color-6);
+}

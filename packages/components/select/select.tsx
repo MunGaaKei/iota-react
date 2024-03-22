@@ -157,10 +157,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 					className={classNames("i-input-item", {
 						[`i-input-${sts}`]: sts !== "normal",
 					})}
-					onClick={(e) => {
-						e.stopPropagation();
-						setActive(true);
-					}}
+					onClick={() => setActive(true)}
 				>
 					{prepend}
 

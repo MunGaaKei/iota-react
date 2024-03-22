@@ -42,9 +42,9 @@ const columns = [
 		justify: "center",
 		render: (value: boolean) => {
 			return value ? (
-				<Tag className='bg-green-0'>是</Tag>
+				<Tag className='bg-green'>是</Tag>
 			) : (
-				<Tag className='bg-red-0'>否</Tag>
+				<Tag className='bg-error'>否</Tag>
 			);
 		},
 	},
@@ -59,7 +59,7 @@ const columns = [
 		fixed: "right",
 		justify: "center",
 		render: () => (
-			<Button className='bg-black-0' size='small'>
+			<Button className='bg-grey' size='small'>
 				操作
 			</Button>
 		),

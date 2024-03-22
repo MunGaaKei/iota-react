@@ -2,7 +2,6 @@ import { Button, Icon, Image } from "@p";
 import { getFileTypeBySuffix, getSuffixByUrl } from "@p/js/utils";
 import {
 	CloseRound,
-	FeedOutlined,
 	FileDownloadOutlined,
 	KeyboardArrowLeftRound,
 	KeyboardArrowRightRound,
@@ -11,7 +10,8 @@ import {
 	RotateRightRound,
 } from "@ricons/material";
 import { useReactive } from "ahooks";
-import { ReactNode, useMemo } from "react";
+import { useMemo } from "react";
+import DefaultRenderFile from "./renderFile";
 import { IPreview, TFileType, TPreviewItem } from "./type";
 
 export default function Content(props: IPreview) {
@@ -19,6 +19,7 @@ export default function Content(props: IPreview) {
 		items = [],
 		initial = 0,
 		renderImage,
+		renderFile = DefaultRenderFile,
 		onRotate,
 		onChange,
 		onClose,
@@ -51,12 +52,7 @@ export default function Content(props: IPreview) {
 	const { file, content } = useMemo(() => {
 		const file = files[state.current];
 		const { type } = file;
-		let content: ReactNode = (
-			<div className='i-preview-unknown'>
-				<Icon icon={<FeedOutlined />} size='3em' />
-				<h5 className='mt-4'>.{file.suffix}</h5>
-			</div>
-		);
+		let content = renderFile(file);
 
 		switch (type) {
 			case TFileType.IMAGE:

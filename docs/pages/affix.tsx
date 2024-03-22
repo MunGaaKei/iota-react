@@ -1,5 +1,5 @@
 import { Affix, Button, Icon } from "@p";
-import { MicTwotone } from "@ricons/material";
+import { AddIcCallRound } from "@ricons/material";
 
 export default function Page() {
 	return (
@@ -14,10 +14,10 @@ export default function Page() {
 				offset={400}
 				getContainer={() => document.querySelector(".i-area")}
 			>
-				<Affix.ToTop className='bg-black-0' />
+				<Affix.ToTop className='bg-grey' />
 
-				<Button square className='bg-black-0'>
-					<Icon icon={<MicTwotone />} />
+				<Button square className='bg-grey'>
+					<Icon icon={<AddIcCallRound />} />
 				</Button>
 			</Affix>
 		</>

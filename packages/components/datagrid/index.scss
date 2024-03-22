@@ -46,7 +46,7 @@
 }
 
 .i-datagrid .i-datagrid-row {
-	--datagrid-cell-background: var(--background);
+	--datagrid-cell-background: var(--background-1);
 
 	display: contents;
 	&:hover {
@@ -71,9 +71,6 @@
 		border-top-right-radius: var(--radius);
 		border-bottom-right-radius: var(--radius);
 	}
-}
-.i-datagrid-cell-fixed-right:first-of-type {
-	background: red;
 }
 
 .i-datagrid-header {

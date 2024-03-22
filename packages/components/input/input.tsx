@@ -35,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		onChange,
 		onEnter,
 		style,
-		...rest
+		...restProps
 	} = props;
 
 	const state = useReactive({
@@ -103,7 +103,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		className: classNames("i-input", `i-input-${type}`),
 		onChange: handleChange,
 		onKeyDown: handleKeydown,
-		...rest,
+		...restProps,
 	};
 
 	const clearable = clear && v;

@@ -4,7 +4,7 @@ export default function Page() {
 	return (
 		<>
 			<div style={{ height: 2000 }}>
-				<Button className='bg-blue'>BLUE</Button>
+				<Button className='bg-warning-0'>BLUE</Button>
 			</div>
 		</>
 	);

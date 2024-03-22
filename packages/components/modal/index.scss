@@ -3,7 +3,7 @@
 	inset: 0;
 	z-index: 100;
 	pointer-events: none;
-	background: rgba(0, 0, 0, 0.6);
+	background: var(--dim);
 	backdrop-filter: blur(8px);
 	transition: var(--transition);
 	opacity: 0;

@@ -1,9 +1,10 @@
 theme
-audio
+popconfirm
+upload
 virtual list
 loading tree
 autocomplete
-background opacity
 resize
 text: countdown highlight
 transfer
+audio

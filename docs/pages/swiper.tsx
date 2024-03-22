@@ -1,11 +1,10 @@
 import { Button, Flex, Swiper } from "@p";
-import { ISwiper } from "@p/components/swiper/type";
 import { CSSProperties, useRef } from "react";
 
 export default function Page() {
 	const itemStyle = {
 		backgroundImage:
-			"linear-gradient(135deg, rgb(245, 247, 250) 0%, rgb(195, 207, 226) 100%)",
+			"linear-gradient(135deg, var(--color-5) 0%, var(--color-7) 100%)",
 		fontSize: "4em",
 		display: "flex",
 		alignItems: "center",
@@ -15,7 +14,7 @@ export default function Page() {
 		textAlign: "center",
 		borderRadius: "var(--radius)",
 	} as CSSProperties;
-	const ref = useRef<ISwiper>();
+	const ref = useRef<any>();
 
 	return (
 		<>
