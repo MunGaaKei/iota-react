@@ -1,8 +1,7 @@
-import { formatNumber } from "@p/js/utils";
+import { clamp, formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { clamp } from "lodash";
 import {
 	ChangeEvent,
 	FocusEvent,
@@ -71,8 +70,8 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		const v = formatInputValue(value.replace(/[^\d\.-]/g, ""));
 
 		Object.assign(state, {
-			status: "normal",
-			message: "",
+			status,
+			message,
 			value: v,
 		});
 

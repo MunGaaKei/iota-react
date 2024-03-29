@@ -4,7 +4,7 @@ import { TOption } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { debounce } from "lodash";
+import { debounce } from "radash";
 import {
 	ChangeEvent,
 	MouseEvent,
@@ -72,8 +72,8 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	const changeValue = (v: any) => {
 		Object.assign(state, {
 			value: v,
-			status: "normal",
-			message: "",
+			status,
+			message,
 		});
 
 		onChange?.(v);
@@ -111,10 +111,10 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	};
 
 	const handleFilterChange = useMemoizedFn(
-		debounce((e: ChangeEvent<HTMLInputElement>) => {
+		debounce({ delay: 400 }, (e: ChangeEvent<HTMLInputElement>) => {
 			const v = e.target.value;
 			state.filterValue = v;
-		}, 400)
+		})
 	);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

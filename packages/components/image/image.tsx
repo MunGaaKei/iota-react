@@ -18,6 +18,7 @@ const Image = (props: IImage): JSX.Element => {
 		fallback = (
 			<Icon icon={<HideImageTwotone />} size='2em' className='color-5' />
 		),
+		fit,
 		style,
 		className,
 		children,
@@ -83,6 +84,7 @@ const Image = (props: IImage): JSX.Element => {
 					{src && (
 						<img
 							ref={ref}
+							style={{ objectFit: fit }}
 							{...rest}
 							onLoad={handleLoad}
 							onError={handleError}

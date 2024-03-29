@@ -1,4 +1,4 @@
-import { Button, Icon, Image } from "@p";
+import { Button, Icon } from "@p";
 import { getFileTypeBySuffix, getSuffixByUrl } from "@p/js/utils";
 import {
 	CloseRound,
@@ -12,13 +12,12 @@ import {
 import { useReactive } from "ahooks";
 import { useMemo } from "react";
 import DefaultRenderFile from "./renderFile";
-import { IPreview, TFileType, TPreviewItem } from "./type";
+import { IPreview, TPreviewItem } from "./type";
 
 export default function Content(props: IPreview) {
 	const {
 		items = [],
 		initial = 0,
-		renderImage,
 		renderFile = DefaultRenderFile,
 		onRotate,
 		onChange,
@@ -51,16 +50,7 @@ export default function Content(props: IPreview) {
 
 	const { file, content } = useMemo(() => {
 		const file = files[state.current];
-		const { type } = file;
-		let content = renderFile(file);
-
-		switch (type) {
-			case TFileType.IMAGE:
-				content = renderImage?.(file) ?? <Image {...file} lazyload />;
-				break;
-			default:
-				break;
-		}
+		const content = renderFile(file);
 
 		return {
 			file,

@@ -7,6 +7,7 @@ export interface IImage extends HTMLAttributes<HTMLImageElement> {
 	size?: string | number;
 	lazyload?: boolean;
 	fallback?: ReactNode;
+	fit?: any;
 }
 
 export interface IImageList {

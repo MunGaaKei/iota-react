@@ -1,112 +1,222 @@
-import { DriveFolderUploadTwotone } from "@ricons/material";
+import { CloudUploadTwotone, PlusSharp } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { ChangeEvent, forwardRef, useEffect } from "react";
+import { uid } from "radash";
+import {
+	CSSProperties,
+	ChangeEvent,
+	Fragment,
+	forwardRef,
+	useEffect,
+	useImperativeHandle,
+	useMemo,
+	useRef,
+} from "react";
 import Button from "../button";
 import Icon from "../icon";
 import InputContainer from "../input/container";
-import File from "./file";
 import "./index.scss";
-import { IUpload } from "./type";
+import renderFile from "./renderFile";
+import { IFile, IUpload, RefUpload } from "./type";
 
-const Upload = forwardRef<HTMLInputElement, IUpload>(
-	(props, ref): JSX.Element => {
-		const {
-			label,
-			labelInline,
-			name,
-			value,
-			placeholder,
-			status,
-			message,
-			className,
-			style,
-			children,
-			renderButton,
-			renderItem,
-			onChange,
-			...restProps
-		} = props;
+const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
+	const {
+		label,
+		labelInline,
+		value,
+		files = [],
+		placeholder,
+		status = "normal",
+		message,
+		className,
+		style,
+		children,
+		mode = "default",
+		cardSize = "4em",
+		disabled,
+		renderItem = renderFile,
+		shouldUpload = () => true,
+		uploader,
+		onChange,
+		onFilesChange,
+		onUpload,
+		...restProps
+	} = props;
 
-		const state = useReactive({
-			value,
+	const state = useReactive({
+		files,
+		value,
+		status,
+		message,
+		update: 0,
+	});
+	const inputRef = useRef<HTMLInputElement>(null);
+	const reader = useRef(new FileReader());
+
+	const trigger = useMemo(() => {
+		if (children) return children;
+
+		switch (mode) {
+			case "card":
+				return (
+					<Button
+						className='i-upload-card-btn color-5'
+						square
+						flat
+						outline
+						disabled={disabled}
+					>
+						<Icon icon={<PlusSharp />} />
+					</Button>
+				);
+			default:
+				return (
+					<Button className='i-upload-btn' disabled={disabled}>
+						<Icon icon={<CloudUploadTwotone />} /> Upload
+					</Button>
+				);
+		}
+	}, [mode, children]);
+
+	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const files = Array.from(e.target.files || []) as IFile[];
+		const { files: before } = state;
+		const changed: IFile[] = [];
+
+		files.map((f) => {
+			const { name, size, type } = f;
+			const same = before.find((pf) => {
+				const { name: n, size: s, type: t } = pf;
+				return n === name && s === size && t === type;
+			});
+
+			if (
+				mode === "card" &&
+				type.startsWith("image/") &&
+				reader.current
+			) {
+				reader.current.addEventListener(
+					"load",
+					(e) => {
+						f.src = e.target?.result;
+						state.update += 1;
+					},
+					{ once: true }
+				);
+				reader.current.readAsDataURL(f);
+			}
+
+			f.uid = uid(7);
+			!same && changed.push(f);
+		});
+
+		Object.assign(state, {
+			files: [...before, ...changed],
 			status,
 			message,
 		});
 
-		const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-			const files = Array.from(e.target.files || []);
+		onFilesChange?.(state.files, changed, e);
+		onChange?.(state.files, e);
 
-			Object.assign(state, {
-				status: "normal",
-				message: "",
-				value: files,
-			});
+		handleUpload(changed);
+		inputRef.current && (inputRef.current.value = "");
+	};
 
-			onChange?.(files, e);
-		};
+	const handleRemove = (i: number) => {
+		const [...files] = state.files;
 
-		useEffect(() => {
-			Object.assign(state, {
-				status,
-				message,
-			});
-		}, [status, message]);
+		const changed = files.splice(i, 1);
 
-		useEffect(() => {
-			state.value = value;
-		}, [value]);
+		state.files = files;
+		onFilesChange?.(files, changed);
+		onChange?.(files);
 
-		const { status: sts, message: msg, value: files } = state;
-		const inputProps = {
-			ref,
-			name,
-			// value: files,
-			onChange: handleChange,
-			...restProps,
-		};
+		inputRef.current && (inputRef.current.value = "");
+	};
 
-		console.log(files);
+	const handleUpload = async (files: IFile[]) => {
+		if (!uploader) return;
 
-		return (
-			<InputContainer
-				label={label}
-				labelInline={labelInline}
-				className={classNames("i-input-label-file", className)}
-				style={style}
+		files.forEach(async (file) => {
+			if (!shouldUpload(file)) return;
+
+			const result = await uploader(file);
+			const i = state.files.findIndex((f) => f.uid === result.uid);
+			i > -1 && (state.files[i] = result);
+
+			result?.status === "completed" && onUpload?.(result);
+		});
+	};
+
+	useEffect(() => {
+		Object.assign(state, {
+			status,
+			message,
+		});
+	}, [status, message]);
+
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
+
+	useImperativeHandle(
+		ref,
+		() => ({
+			getFileList: () => state.files,
+		}),
+		[]
+	);
+
+	const { message: msg, files: currentFiles } = state;
+
+	return (
+		<InputContainer
+			label={label}
+			labelInline={labelInline}
+			className={classNames("i-input-label-file", className)}
+			style={style}
+		>
+			<input
+				{...restProps}
+				disabled={disabled}
+				ref={inputRef}
+				type='file'
+				className='i-input-file-hidden'
+				onChange={handleChange}
+			/>
+
+			<div
+				className={classNames("i-upload-inner", {
+					[`i-upload-${mode}`]: mode !== "default",
+				})}
+				style={{ ["--upload-card-size"]: cardSize } as CSSProperties}
 			>
-				<input
-					{...inputProps}
-					type='file'
-					className='i-input-file-hidden'
-					onChange={handleChange}
-				/>
-
-				<div className='i-upload-inner'>
-					<div
-						className='i-upload-list'
-						onClick={(e) => {
-							e.stopPropagation();
-							e.preventDefault();
-						}}
-					>
-						{files?.map((file: File, i: number) => (
-							<File key={i} file={file} />
-						))}
-					</div>
-
-					{children ?? (
-						<Button className='i-upload-btn'>
-							<Icon icon={<DriveFolderUploadTwotone />}></Icon>{" "}
-							Upload
-						</Button>
-					)}
-
-					{msg && <span className='i-input-message'>{msg}</span>}
+				<div
+					className='i-upload-list'
+					onClick={(e) => {
+						e.stopPropagation();
+						e.preventDefault();
+					}}
+				>
+					{currentFiles?.map((file: File, i: number) => (
+						<Fragment key={i}>
+							{renderFile({
+								index: i,
+								file,
+								mode,
+								onRemove: handleRemove,
+							})}
+						</Fragment>
+					))}
 				</div>
-			</InputContainer>
-		);
-	}
-);
+
+				{msg && <span className='i-upload-message'>{msg}</span>}
+
+				{trigger}
+			</div>
+		</InputContainer>
+	);
+});
 
 export default Upload;

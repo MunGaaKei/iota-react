@@ -39,8 +39,8 @@ function Checkbox(props: ICheckbox) {
 
 	const handleChange = useMemoizedFn((checked, opt, e) => {
 		Object.assign(state, {
-			status: "normal",
-			message: "",
+			status,
+			message,
 		});
 
 		const group = [...state.value];

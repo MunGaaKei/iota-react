@@ -1,4 +1,4 @@
-import { uniqueId } from "lodash";
+import { uid } from "radash";
 import { useRef } from "react";
 import { Tvalidator } from "./type";
 
@@ -8,7 +8,7 @@ export class IFormHandler {
 	rules?: { [key: string]: Tvalidator } = {};
 
 	constructor() {
-		this.id = uniqueId();
+		this.id = uid(8);
 		this.data = {};
 	}
 

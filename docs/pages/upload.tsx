@@ -3,7 +3,7 @@ import { Upload } from "@p";
 export default function Page() {
 	return (
 		<>
-			<Upload label='上传' multiple />
+			<Upload label='上传' multiple mode='card' />
 		</>
 	);
 }

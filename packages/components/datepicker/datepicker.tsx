@@ -59,8 +59,8 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 	const handleChange = (v) => {
 		Object.assign(state, {
 			value: v,
-			status: "normal",
-			message: "",
+			status,
+			message,
 		});
 
 		onChange?.(v);

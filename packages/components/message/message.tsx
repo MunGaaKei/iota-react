@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { uniqueId } from "lodash";
+import { uid } from "radash";
 import {
 	ReactNode,
 	forwardRef,
@@ -138,7 +138,7 @@ export default function message(config: IMessage | ReactNode) {
 	}
 
 	Object.assign(config as IMessage, ItemConfig, {
-		id: uniqueId("message-"),
+		id: uid(7),
 	});
 
 	handler.callout(config as IMessage);

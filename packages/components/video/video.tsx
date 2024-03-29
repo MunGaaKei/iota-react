@@ -29,10 +29,10 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 		width,
 		useOriginControls,
 		timeProgressProps = {
-			barClass: "bg-black",
+			barClass: "bg-2",
 		},
 		volumeProgressProps = {
-			barClass: "bg-black",
+			barClass: "bg-1",
 		},
 		className,
 		...restProps

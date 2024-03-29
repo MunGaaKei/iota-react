@@ -1,11 +1,11 @@
 import { useMouseMove, useMouseUp } from "@p/js/hooks";
+import { clamp } from "@p/js/utils";
 import {
 	KeyboardArrowLeftRound,
 	KeyboardArrowRightRound,
 } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { clamp } from "lodash";
 import {
 	Children,
 	MouseEvent,

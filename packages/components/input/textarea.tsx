@@ -36,8 +36,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			const v = e.target.value;
 			Object.assign(state, {
-				status: "normal",
-				message: "",
+				status,
+				message,
 				value: v,
 			});
 

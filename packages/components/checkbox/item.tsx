@@ -30,8 +30,8 @@ export default function CheckboxItem(props: ICheckboxItem) {
 
 		Object.assign(state, {
 			value: checked,
-			status: "normal",
-			message: "",
+			status,
+			message,
 		});
 
 		onChange?.(checked, e);

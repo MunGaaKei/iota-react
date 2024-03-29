@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { debounce } from "lodash";
+import { debounce } from "radash";
 import {
 	Children,
 	MouseEvent,
@@ -59,10 +59,10 @@ const Affix = (props: IAffix): JSX.Element => {
 		const container = getContainer();
 		if (!offset || !container) return;
 
-		const listener = debounce(() => {
+		const listener = debounce({ delay: 160 }, () => {
 			const top = container.scrollTop;
 			setHidden(top < offset);
-		}, 160);
+		});
 		listener();
 
 		container.addEventListener("scroll", listener);

@@ -38,8 +38,8 @@ function Radio(props: IRadio) {
 
 	const handleChange = useMemoizedFn((value, e) => {
 		Object.assign(state, {
-			status: "normal",
-			message: "",
+			status,
+			message,
 		});
 
 		state.value = value;
