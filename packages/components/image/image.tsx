@@ -31,6 +31,7 @@ const Image = (props: IImage): JSX.Element => {
 		status: "loading",
 	});
 	const ref = useRef<HTMLImageElement>(null);
+	const wh = fit ? "100%" : undefined;
 
 	const { observe, unobserve } = useIntersectionObserver();
 
@@ -84,7 +85,7 @@ const Image = (props: IImage): JSX.Element => {
 					{src && (
 						<img
 							ref={ref}
-							style={{ objectFit: fit }}
+							style={{ objectFit: fit, width: wh, height: wh }}
 							{...rest}
 							onLoad={handleLoad}
 							onError={handleError}

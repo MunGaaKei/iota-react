@@ -5,37 +5,47 @@ import Helpericon from "../utils/helpericon";
 import { IUploadItem } from "./type";
 
 export default function RenderFile(props: IUploadItem) {
-	const { mode, index, file, onRemove } = props;
+	const { mode, index, file, onRemove, onPreview } = props;
 
 	if (!file) return <></>;
 	const { name, size, url, src } = file;
+
+	const CloseBtn = (
+		<Helpericon
+			active
+			onClick={(e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				onRemove(index);
+			}}
+		/>
+	);
 
 	switch (mode) {
 		case "card":
 			return (
 				<Popup content={<div className='pd-8'>{name}</div>} offset={8}>
-					<div className='i-upload-item-card'>
-						<Image lazyload src={url || src} />
-						<Helpericon
-							active
-							className='red'
-							onClick={(e) => {
-								e.stopPropagation();
-								e.preventDefault();
-								onRemove(index);
-							}}
-						/>
+					<div
+						className='i-upload-item-card'
+						onClick={() => onPreview?.(index)}
+					>
+						<Image lazyload src={url || src} fit='cover' />
+
+						{CloseBtn}
 					</div>
 				</Popup>
 			);
 		default:
 			return (
-				<div className='i-upload-item'>
+				<div
+					className='i-upload-item'
+					onClick={() => onPreview?.(index)}
+				>
 					<span>{name}</span>
 
 					<i className='i-upload-size'>{formatBytes(size ?? 0)}</i>
 
-					<Helpericon active onClick={() => onRemove(index)} />
+					{CloseBtn}
 				</div>
 			);
 	}

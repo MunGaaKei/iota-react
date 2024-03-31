@@ -1,3 +1,5 @@
+import usePreview from "@p/js/usePreview";
+import { TPreviewItem } from "@p/js/usePreview/type";
 import { CloudUploadTwotone, PlusSharp } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
@@ -52,6 +54,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 	});
 	const inputRef = useRef<HTMLInputElement>(null);
 	const reader = useRef(new FileReader());
+	const preview = usePreview();
 
 	const trigger = useMemo(() => {
 		if (children) return children;
@@ -98,7 +101,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 				reader.current.addEventListener(
 					"load",
 					(e) => {
-						f.src = e.target?.result;
+						f.src = e.target?.result as string;
 						state.update += 1;
 					},
 					{ once: true }
@@ -106,7 +109,10 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 				reader.current.readAsDataURL(f);
 			}
 
-			f.uid = uid(7);
+			Object.assign(f, {
+				uid: uid(7),
+				src: f.url || "",
+			});
 			!same && changed.push(f);
 		});
 
@@ -147,6 +153,10 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 
 			result?.status === "completed" && onUpload?.(result);
 		});
+	};
+
+	const handlePreview = (i: number) => {
+		preview({ items: state.files as TPreviewItem[], initial: i });
 	};
 
 	useEffect(() => {
@@ -206,6 +216,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 								file,
 								mode,
 								onRemove: handleRemove,
+								onPreview: handlePreview,
 							})}
 						</Fragment>
 					))}

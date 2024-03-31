@@ -28,6 +28,7 @@ export interface IUpload
 export interface IFile extends File {
 	uid?: string;
 	instance?: File;
+	src?: string;
 	[key: string]: any;
 }
 
@@ -36,6 +37,7 @@ export interface IUploadItem extends Pick<IUpload, "mode"> {
 	index: number;
 	status?: string;
 	onRemove: (i: number) => void;
+	onPreview?: (i: number) => void;
 }
 
 export interface RefUpload {
