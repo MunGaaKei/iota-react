@@ -1,9 +1,11 @@
+import { GlobalContext } from "@d/config/context";
 import menu from "@d/config/menu";
 import { Area, Button, Flex, Icon, Loading, Tree } from "@p";
 import { LightModeTwotone, NightlightTwotone } from "@ricons/material";
-import { Suspense, lazy, memo, useEffect, useState } from "react";
+import { Suspense, lazy, memo, useContext } from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { Link, useParams } from "react-router-dom";
+import "./global.css";
 
 interface DProps {
 	name?: string;
@@ -25,11 +27,7 @@ const DynamicPage = memo(
 
 export default function Document(): JSX.Element {
 	const { name } = useParams<{ [key: string]: string }>();
-	const [dark, setDark] = useState<any>(true);
-
-	useEffect(() => {
-		document.body.classList[dark ? "add" : "remove"]("theme-dark");
-	}, [dark]);
+	const global = useContext(GlobalContext);
 
 	return (
 		<Area
@@ -48,8 +46,10 @@ export default function Document(): JSX.Element {
 							size='small'
 							flat
 							after={<Icon icon={<NightlightTwotone />} />}
-							active={dark}
-							onToggle={setDark}
+							active={global.theme === "theme-dark"}
+							onToggle={(v) =>
+								global.setTheme(v ? "theme-dark" : "theme-none")
+							}
 						>
 							<Icon icon={<LightModeTwotone />} />
 						</Button.Toggle>

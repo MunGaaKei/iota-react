@@ -15,6 +15,7 @@ const formatClass = ({
 	block,
 	round,
 	square,
+	secondary,
 	className,
 }: IButton) =>
 	classnames("i-btn", className, {
@@ -23,6 +24,7 @@ const formatClass = ({
 		"i-btn-block": block,
 		"i-btn-loading": loading,
 		"i-btn-square": square,
+		"i-btn-secondary": secondary,
 		[`i-btn-${size}`]: size !== "normal",
 		round,
 		disabled,
@@ -37,10 +39,11 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 		flat,
 		outline,
 		square,
+		secondary,
 		size,
 		href,
 		ripple = true,
-		...rest
+		...restProps
 	} = props;
 
 	if (!children) return <></>;
@@ -68,7 +71,7 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 				ref,
 				href,
 				...attrs,
-				...rest,
+				...restProps,
 			},
 			childNodes
 		);
@@ -79,7 +82,7 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 		{
 			to: href || "",
 			...attrs,
-			...rest,
+			...restProps,
 		},
 		childNodes
 	);

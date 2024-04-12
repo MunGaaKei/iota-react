@@ -1,6 +1,4 @@
-theme
-popconfirm
-upload
+props
 virtual list
 loading tree
 autocomplete

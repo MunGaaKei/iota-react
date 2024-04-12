@@ -12,7 +12,7 @@ export interface IPagination
 	simple?: boolean;
 	jumper?: boolean;
 	renderPage?: (i: number) => ReactNode;
-	onChange?: (page?: number) => void;
+	onChange?: (page?: number) => Promise<void> | void;
 }
 
 export interface IPageItem

@@ -7,7 +7,6 @@ import {
 	MouseEvent,
 	cloneElement,
 	isValidElement,
-	useCallback,
 	useEffect,
 	useLayoutEffect,
 	useMemo,
@@ -33,6 +32,8 @@ export default function Popup(props: IPopup) {
 		align,
 		fitSize,
 		watchResize,
+		clickoutside = true,
+		disabled,
 		style,
 		className,
 		getContainer,
@@ -55,6 +56,8 @@ export default function Popup(props: IPopup) {
 	});
 
 	useClickAway((e: Event) => {
+		if (!clickoutside) return;
+
 		const tar = e.target as HTMLElement;
 		const isContain = triggerRef.current?.contains(tar);
 
@@ -63,7 +66,8 @@ export default function Popup(props: IPopup) {
 		(!isContain || trigger === "contextmenu") && handleToggle(false);
 	}, contentRef);
 
-	const handleShow = useCallback(() => {
+	const handleShow = () => {
+		if (disabled) return;
 		if (state.show) {
 			if (trigger !== "hover" || (trigger === "hover" && !touchable)) {
 				return;
@@ -100,9 +104,9 @@ export default function Popup(props: IPopup) {
 			state.toggling && clearTimeout(state.toggling);
 			onVisibleChange?.(true);
 		}, showDelay);
-	}, [state.show]);
+	};
 
-	const handleHide = useCallback(() => {
+	const handleHide = () => {
 		if (!state.show) return;
 		state.toggling = setTimeout(() => {
 			state.style = {
@@ -117,20 +121,16 @@ export default function Popup(props: IPopup) {
 				onVisibleChange?.(false);
 			}, 160);
 		}, hideDelay);
-	}, []);
+	};
 
-	const handleToggle = useCallback(
-		(action?: boolean) => {
-			if (action !== undefined) {
-				action ? handleShow() : handleHide();
-				return;
-			}
+	const handleToggle = (action?: boolean) => {
+		if (action !== undefined) {
+			action ? handleShow() : handleHide();
+			return;
+		}
 
-			state.show ? handleHide() : handleShow();
-		},
-		[state.show]
-	);
-
+		state.show ? handleHide() : handleShow();
+	};
 	const eventMaps = useCreation(
 		() => ({
 			click: {

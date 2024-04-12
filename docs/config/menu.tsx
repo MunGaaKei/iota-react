@@ -2,10 +2,10 @@ import { Icon } from "@p";
 import {
 	AccountTreeTwotone,
 	AdsClickRound,
+	AnnouncementTwotone,
 	ArrowDropDownCircleTwotone,
 	ArtTrackSharp,
 	AssignmentOutlined,
-	AutoAwesomeRound,
 	BubbleChartTwotone,
 	BuildCircleTwotone,
 	CalendarMonthTwotone,
@@ -14,6 +14,7 @@ import {
 	CloudUploadTwotone,
 	ColorLensTwotone,
 	Crop75Round,
+	CrueltyFreeRound,
 	DashboardTwotone,
 	DataUsageRound,
 	FormatListNumberedRound,
@@ -201,7 +202,7 @@ export default [
 				title: "Icon",
 				href: "/docs/icon",
 				as: Link,
-				icon: <Icon icon={<AutoAwesomeRound />} />,
+				icon: <Icon icon={<CrueltyFreeRound />} />,
 			},
 			{
 				title: "Image",
@@ -232,6 +233,12 @@ export default [
 				href: "/docs/pagination",
 				as: Link,
 				icon: <Icon icon={<LooksOneOutlined />} />,
+			},
+			{
+				title: "Popconfirm",
+				href: "/docs/popconfirm",
+				as: Link,
+				icon: <Icon icon={<AnnouncementTwotone />} />,
 			},
 			{
 				title: "Popup",

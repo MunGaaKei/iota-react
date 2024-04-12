@@ -4,8 +4,8 @@ $colors: (
 	"white-2": #ebebeb,
 	"white": white,
 	"black-0": #dbdbdb,
-	"black-1": #272727,
-	"black-2": #3b3b3b,
+	"black-1": #212121,
+	"black-2": #313131,
 	"black": black,
 	"red-0": #fcdfe4,
 	"red-1": #dc143c,
@@ -48,10 +48,16 @@ $colors: (
 	"orange-2": #e66a12,
 	"orange": #fb812a,
 	"warning-0": #fff0bf,
+	"warning-1": #e4b415,
+	"warning-2": #d8a707,
 	"warning": #f3c327,
 	"error-0": #ffdbdb,
+	"error-1": #f13636,
+	"error-2": #db1e1e,
 	"error": #ff4545,
 	"success-0": #acf899,
+	"success-1": #2fb10e,
+	"success-2": #2cb809,
 	"success": #38be17,
 );
 
@@ -138,6 +144,11 @@ $colors: (
 				color: var(--color-hover);
 			}
 		}
+	}
+
+	@each $name, $value in $colors {
+		$number: str-slice($name, -1);
+		$enhanced: str-index(("012"), $number);
 
 		.#{$name} {
 			--color: var(--#{$name});
@@ -167,10 +178,10 @@ $colors: (
 	--background-opacity-1: #3a3a3aaa;
 
 	--color: #fff;
-	--color-main: #9e9bfb;
-	--color-main-0: #48485b;
-	--color-main-1: #9692ff;
-	--color-main-2: #817ee0;
+	--color-main: #6cc73b;
+	--color-main-0: #313d2b;
+	--color-main-1: #69d62f;
+	--color-main-2: #53b320;
 	--color-main-reverse: #212121;
 
 	--dim: #ffffff26;

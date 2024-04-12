@@ -4,7 +4,7 @@
 	opacity: 0;
 	transition: opacity 0.12s, transform 0.12s;
 	border-radius: var(--radius);
-	background: var(--background);
+	background: var(--background-opacity);
 	backdrop-filter: var(--blur);
 	box-shadow: var(--shadow);
 	transform: translate(0, 2px);

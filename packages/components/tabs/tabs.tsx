@@ -40,6 +40,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		toggable,
 		maxCache = 13,
 		bar = true,
+		barStyle = {},
 		onTabChange,
 		...rest
 	} = props;
@@ -49,7 +50,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const navsRef = useRef<HTMLDivElement>(null);
 	const state = useReactive<TState>({
 		active,
-		barStyle: {},
+		barStyle,
 		cache: [],
 		overflow: false,
 		more: [],
@@ -58,24 +59,24 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		useIntersectionObserver();
 	const { observe: ROobserve, unobserve: ROunobserve } = useResizeObserver();
 
-	const tabs: ITabItem[] = useMemo(
-		() =>
-			Children.map(children, (node, i) => {
-				const { key, props: nodeProps } = node as {
-					key?: TTabKey;
-					props?: any;
-				};
-				const { title, children, content, keepalive } = nodeProps;
+	const tabs: ITabItem[] = useMemo(() => {
+		if (!children) return [];
 
-				return {
-					key: key || String(i),
-					title,
-					content: children || content,
-					keepalive,
-				};
-			}) as ITabItem[],
-		[children]
-	);
+		return Children.map(children, (node, i) => {
+			const { key, props: nodeProps } = node as {
+				key?: TTabKey;
+				props?: any;
+			};
+			const { title, children, content, keepalive } = nodeProps;
+
+			return {
+				key: key || String(i),
+				title,
+				content: children || content,
+				keepalive,
+			};
+		}) as ITabItem[];
+	}, [children]);
 
 	const open = useCallback((key: TTabKey) => {
 		if (key === state.active) {
@@ -140,6 +141,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 			height: offsetHeight,
 			width: offsetWidth,
 			transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
+			...barStyle,
 		};
 	}, [state.active, bar]);
 

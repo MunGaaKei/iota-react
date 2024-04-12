@@ -1,4 +1,5 @@
 import {
+	CSSProperties,
 	ForwardRefExoticComponent,
 	HTMLAttributes,
 	ReactNode,
@@ -24,6 +25,7 @@ export interface ITabs extends HTMLAttributes<HTMLDivElement> {
 	append?: ReactNode;
 	vertical?: boolean;
 	bar?: boolean;
+	barStyle?: CSSProperties;
 	toggable?: boolean;
 	maxCache?: number;
 	onTabChange?: (to?: TTabKey, from?: TTabKey) => void;

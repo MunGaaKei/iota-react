@@ -275,11 +275,12 @@ export function getSuffixByUrl(url: string) {
 	return url.match(/\.([^\./\?]+)($|\?)/)?.[1];
 }
 
-export function getFileTypeBySuffix(suffix: string): TFileType {
+export function getFileType(suffix: string, type?: string): TFileType {
 	switch (true) {
-		case ["jpg", "jpeg", "png", "webp", "svg"].includes(suffix):
+		case ["jpg", "jpeg", "png", "webp", "svg"].includes(suffix) ||
+			type?.startsWith("image/"):
 			return TFileType["IMAGE"];
-		case ["mp4", "avi"].includes(suffix):
+		case ["mp4", "avi"].includes(suffix) || type?.startsWith("video/"):
 			return TFileType["VIDEO"];
 		default:
 			return TFileType["UNKNOWN"];

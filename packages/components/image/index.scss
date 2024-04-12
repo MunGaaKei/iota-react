@@ -1,6 +1,8 @@
 .i-image {
 	position: relative;
 	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	align-self: center;
 	border-radius: var(--radius);
 	overflow: hidden;

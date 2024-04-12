@@ -17,6 +17,9 @@
 	gap: 0.5em;
 }
 .i-upload-card {
+	&:has(.i-upload-list:not(:empty)) {
+		align-self: flex-start;
+	}
 	.i-upload-list {
 		display: contents;
 	}
@@ -40,6 +43,7 @@
 	width: var(--upload-card-size);
 	height: var(--upload-card-size);
 	opacity: 0.6;
+	font-size: 1em;
 	&:hover {
 		opacity: 1;
 	}
@@ -64,6 +68,11 @@
 
 .i-upload-item-card {
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.25em;
 	width: var(--upload-card-size);
 	height: var(--upload-card-size);
 	border-radius: var(--radius);
@@ -76,9 +85,19 @@
 		right: 4px;
 		top: 4px;
 	}
-	.i-image {
+	.i-image,
+	video {
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
+	}
+	.i-upload-file-name {
+		max-width: 100%;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		font-size: 0.8em;
+		padding-inline: 4px;
 	}
 	&:hover {
 		.i-helpericon {

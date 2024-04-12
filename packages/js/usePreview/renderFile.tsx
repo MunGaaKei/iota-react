@@ -5,7 +5,7 @@ import { FeedOutlined } from "@ricons/material";
 import { TFileType, TPreviewItem } from "./type";
 
 export default function renderFile(props: TPreviewItem) {
-	const { suffix, type } = props;
+	const { name, suffix, type } = props;
 
 	switch (type) {
 		case TFileType.IMAGE:
@@ -16,7 +16,7 @@ export default function renderFile(props: TPreviewItem) {
 			return (
 				<div className='i-preview-unknown'>
 					<Icon icon={<FeedOutlined />} size='3em' />
-					<h5 className='mt-4'>.{suffix}</h5>
+					<h5 className='mt-4'>{name || suffix || "?"}</h5>
 				</div>
 			);
 	}

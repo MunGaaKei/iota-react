@@ -26,6 +26,7 @@ interface BaseButtonProps {
 	block?: boolean;
 	round?: boolean;
 	ripple?: boolean;
+	secondary?: boolean;
 }
 
 export interface IButton

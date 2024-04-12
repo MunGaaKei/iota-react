@@ -1,10 +1,9 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-export default function Empty<FC>(): JSX.Element {
+export default function Empty() {
 	return (
 		<>
-			<Link to="/components/button">button</Link>
+			<Link to='/components/button'>button</Link>
 		</>
 	);
 }

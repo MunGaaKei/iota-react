@@ -1,5 +1,4 @@
 import { Button, Icon } from "@p";
-import { getFileTypeBySuffix, getSuffixByUrl } from "@p/js/utils";
 import {
 	CloseRound,
 	FileDownloadOutlined,
@@ -11,6 +10,7 @@ import {
 } from "@ricons/material";
 import { useReactive } from "ahooks";
 import { useMemo } from "react";
+import { getFileType, getSuffixByUrl } from "../utils";
 import DefaultRenderFile from "./renderFile";
 import { IPreview, TPreviewItem } from "./type";
 
@@ -41,7 +41,7 @@ export default function Content(props: IPreview) {
 				}
 
 				o.suffix = getSuffixByUrl(o.src) || "";
-				o.type = getFileTypeBySuffix(o.suffix);
+				o.type = getFileType(o.suffix, item["type"]);
 
 				return o;
 			}),
@@ -107,20 +107,25 @@ export default function Content(props: IPreview) {
 				<Button square flat onClick={() => handleRotate(-90)}>
 					<Icon icon={<RotateLeftRound />} />
 				</Button>
-				<Button
-					square
-					flat
-					onClick={() => handleSwitch(state.current - 1)}
-				>
-					<Icon icon={<KeyboardArrowLeftRound />} />
-				</Button>
-				<Button
-					square
-					flat
-					onClick={() => handleSwitch(state.current + 1)}
-				>
-					<Icon icon={<KeyboardArrowRightRound />} />
-				</Button>
+
+				{files.length > 1 && (
+					<>
+						<Button
+							square
+							flat
+							onClick={() => handleSwitch(state.current - 1)}
+						>
+							<Icon icon={<KeyboardArrowLeftRound />} />
+						</Button>
+						<Button
+							square
+							flat
+							onClick={() => handleSwitch(state.current + 1)}
+						>
+							<Icon icon={<KeyboardArrowRightRound />} />
+						</Button>
+					</>
+				)}
 			</div>
 		</>
 	);

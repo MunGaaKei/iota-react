@@ -53,7 +53,6 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 		update: 0,
 	});
 	const inputRef = useRef<HTMLInputElement>(null);
-	const reader = useRef(new FileReader());
 	const preview = usePreview();
 
 	const trigger = useMemo(() => {
@@ -93,25 +92,13 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 				return n === name && s === size && t === type;
 			});
 
-			if (
-				mode === "card" &&
-				type.startsWith("image/") &&
-				reader.current
-			) {
-				reader.current.addEventListener(
-					"load",
-					(e) => {
-						f.src = e.target?.result as string;
-						state.update += 1;
-					},
-					{ once: true }
-				);
-				reader.current.readAsDataURL(f);
-			}
+			const src = URL.createObjectURL(f);
+			f.src = src;
+			state.update += 1;
 
 			Object.assign(f, {
 				uid: uid(7),
-				src: f.url || "",
+				src: f.src || f.name,
 			});
 			!same && changed.push(f);
 		});
@@ -133,6 +120,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 		const [...files] = state.files;
 
 		const changed = files.splice(i, 1);
+		URL.revokeObjectURL(changed[0]?.src || "");
 
 		state.files = files;
 		onFilesChange?.(files, changed);

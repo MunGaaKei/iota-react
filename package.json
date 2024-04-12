@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@ricons/material": "^0.12.0",
+		"@types/react-syntax-highlighter": "^15.5.11",
 		"ahooks": "^3.7.8",
 		"dayjs": "^1.11.10",
 		"pubsub-js": "^1.9.4",
@@ -18,7 +19,8 @@
 		"react": "^18.2.0",
 		"react-custom-scrollbars": "^4.2.1",
 		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.9.0"
+		"react-router-dom": "^6.9.0",
+		"react-syntax-highlighter": "^15.5.0"
 	},
 	"devDependencies": {
 		"@types/mockjs": "^1.0.10",

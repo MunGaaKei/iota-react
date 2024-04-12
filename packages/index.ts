@@ -22,6 +22,7 @@ import Loading from "./components/loading";
 import Message from "./components/message";
 import Modal from "./components/modal";
 import Pagination from "./components/pagination";
+import Popconfirm from "./components/popconfirm";
 import Popup from "./components/popup";
 import Progress from "./components/progress";
 import Radio from "./components/radio";
@@ -59,6 +60,7 @@ export {
 	Message,
 	Modal,
 	Pagination,
+	Popconfirm,
 	Popup,
 	Progress,
 	Radio,
