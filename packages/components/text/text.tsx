@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useMemo } from "react";
 import Highlight from "./highlight";
-import "./index.scss";
+import "./index.css";
 import Number from "./number";
 import Time from "./time";
 import { IText } from "./type";

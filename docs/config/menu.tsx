@@ -1,7 +1,6 @@
 import { Icon } from "@p";
 import {
 	AccountTreeTwotone,
-	AdsClickRound,
 	AnnouncementTwotone,
 	ArrowDropDownCircleTwotone,
 	ArtTrackSharp,
@@ -18,6 +17,7 @@ import {
 	DashboardTwotone,
 	DataUsageRound,
 	FormatListNumberedRound,
+	FunctionsRound,
 	GridOnRound,
 	ImageTwotone,
 	LabelTwotone,
@@ -27,7 +27,6 @@ import {
 	MoveToInboxTwotone,
 	NoiseControlOffRound,
 	PaddingTwotone,
-	PanToolAltTwotone,
 	PlayCircleOutlineRound,
 	PowerInputRound,
 	PushPinTwotone,
@@ -298,16 +297,10 @@ export default [
 	},
 	{
 		title: "Hooks",
-		icon: <Icon icon={<PanToolAltTwotone />} />,
+		icon: <Icon icon={<FunctionsRound />} />,
 		children: [
 			{
-				title: "Clickoutside",
-				href: "/docs/clickoutside",
-				as: Link,
-				icon: <Icon icon={<AdsClickRound />} />,
-			},
-			{
-				title: "Ripple",
+				title: "useRipple",
 				href: "/docs/ripple",
 				as: Link,
 				icon: <Icon icon={<BubbleChartTwotone />} />,

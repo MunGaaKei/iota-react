@@ -3,8 +3,8 @@ import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { useMemo } from "react";
-import "../../css/input.scss";
-import "./index.scss";
+import "../../css/input.css";
+import "./index.css";
 import RadioItem from "./item";
 import { IRadio } from "./type";
 

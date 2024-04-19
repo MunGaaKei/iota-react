@@ -1,11 +1,18 @@
 import { getNextSorter } from "@p/js/utils";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
-import { MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
-import ScrollArea from "react-custom-scrollbars";
+import {
+	CSSProperties,
+	MouseEvent,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react";
+import ScrollContainer, { Scrollbars } from "react-custom-scrollbars-2";
 import Loading from "../loading";
 import Empty from "../utils/empty";
-import "./index.scss";
+import "./index.css";
 import Row, { Header } from "./row";
 import type { IColumn, IData, IDatagrid, TDatagridState } from "./type";
 
@@ -20,56 +27,63 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 		cellPadding = ".5em .5em",
 		empty = <Empty />,
 		loading,
+		height = "unset",
 		style,
 		className,
+		renderLoading = () => <Loading size='1.5em' className='color-3' />,
 		onCellClick,
 		onRowClick,
 		onHeaderClick,
 		onSort,
+		onScroll,
 	} = props;
 
 	const container = useRef<HTMLDivElement>(null);
+	const scrollbar = useRef<Scrollbars>(null);
 	const state = useReactive<TDatagridState>({
 		rows: data,
-		widths: [],
+		widths: columns.map((col) => col.width ?? "auto"),
 		sortBy: "",
 		sortType: "",
 	});
 
 	const styles = useMemo(() => {
 		const { widths } = state;
-		if (!widths.length) return {};
 
 		const o = {
-			"--grid-template-columns": widths.map((w) => `${w}px`).join(" "),
+			...style,
+			"--grid-template-columns": widths
+				.map((w) => {
+					return typeof w === "number" ? `${w}px` : w;
+				})
+				.join(" "),
 		};
 
-		if (resizable) {
-			const fws = columns.map((col, i) => {
-				const { fixed } = col;
-				if (!fixed) return 0;
+		if (!resizable) return o;
 
-				return widths[i];
-			});
-			columns.map((col, i) => {
-				const { fixed } = col;
-				if (!fixed) return;
+		const fws = columns.map((col, i) => {
+			const { fixed } = col;
+			if (!fixed) return 0;
+			return widths[i] as number;
+		});
 
-				if (i === 0) {
-					o[`--datagrid-cell-inset-0`] = 0;
-				} else if (i === fws.length - 1) {
-					o[`--datagrid-cell-inset-${fws.length - 1}`] = "auto 0";
-				} else {
-					const isLeft = fixed === "left";
-					const before = isLeft ? fws.slice(0, i) : fws.slice(i + 1);
-					const sum = before.reduce((pre, cur) => pre + cur) + "px";
-					const result = isLeft ? `${sum} auto` : `auto ${sum}`;
-					o[`--datagrid-cell-inset-${i}`] = result;
-				}
-			});
-		}
+		columns.map((col, i) => {
+			const { fixed } = col;
+			if (!fixed) return;
+			if (i === 0) {
+				o[`--datagrid-cell-inset-0`] = 0;
+			} else if (i === fws.length - 1) {
+				o[`--datagrid-cell-inset-${fws.length - 1}`] = "auto 0";
+			} else {
+				const isLeft = fixed === "left";
+				const before = isLeft ? fws.slice(0, i) : fws.slice(i + 1);
+				const sum = before.reduce((pre, cur) => pre + cur) + "px";
+				const result = isLeft ? `${sum} auto` : `auto ${sum}`;
+				o[`--datagrid-cell-inset-${i}`] = result;
+			}
+		});
 
-		return Object.assign(o, style);
+		return o;
 	}, [state.widths, resizable]);
 
 	const handleWidthChange = useCallback(
@@ -123,23 +137,30 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 	}, [data, columns, state.sortBy, state.sortType]);
 
 	useEffect(() => {
-		if (!container.current || !resizable) return;
-
+		if (!container.current) return;
 		const { current: div } = container;
-		const tds = div.querySelector(".i-datagrid-row")?.childNodes;
-
+		const tds = div.querySelector(".i-datagrid-row")?.children;
 		if (!tds?.length) return;
 
 		state.widths = Array.from(tds).map((node: any) => node.offsetWidth);
 	}, [columns, resizable]);
 
+	useEffect(() => {
+		loading && scrollbar.current?.scrollTop(0);
+	}, [loading]);
+
+	const scrollBarStyle = {
+		"--padding": cellPadding,
+		...styles,
+	} as CSSProperties;
+
 	return (
-		<ScrollArea
+		<ScrollContainer
+			ref={scrollbar}
 			autoHide
-			style={{
-				"--padding": cellPadding,
-				...styles,
-			}}
+			autoHeight
+			autoHeightMax={height}
+			style={scrollBarStyle}
 			className={classNames(className, {
 				"i-datagrid-bordered": border,
 				"i-datagrid-striped": striped,
@@ -150,6 +171,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 					className={classNames({ "i-datagrid-loading": loading })}
 				/>
 			)}
+			onScroll={onScroll}
 		>
 			<div ref={container} className='i-datagrid'>
 				{header && (
@@ -176,8 +198,9 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 
 				{rows.length < 1 && empty}
 			</div>
-			{loading && <Loading size='1.5em' className='color-3' />}
-		</ScrollArea>
+
+			{loading && renderLoading()}
+		</ScrollContainer>
 	);
 };
 

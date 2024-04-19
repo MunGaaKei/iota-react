@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import "./index.scss";
+import "./index.css";
 import { ILoading } from "./type";
 
 const Loading = (props: ILoading): JSX.Element => {

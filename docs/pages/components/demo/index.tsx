@@ -1,38 +1,40 @@
-import { Icon, Tabs } from "@p";
-import { CodeRound, GridViewTwotone } from "@ricons/material";
-import classNames from "classnames";
+import { Button, Flex, Icon, Message } from "@p";
+import { CopyAllTwotone } from "@ricons/material";
+import Scrollbars from "react-custom-scrollbars-2";
 import CodeView from "../code";
-import "./index.scss";
+import "./index.css";
 
 export default function Demo(props) {
-	const { source, className, style } = props;
+	const { source, className, inline } = props;
 	const { demo, code, lang } = source;
 
+	const handleCopy = async () => {
+		await navigator.clipboard.writeText(code);
+		Message({
+			content: "复制成功 👌",
+			className: "bg-blue",
+		});
+	};
+
 	return (
-		<Tabs
-			active={"preview"}
-			className={classNames("iota-demo", className)}
-			style={style}
-			barStyle={{ height: 4 }}
+		<Flex
+			className={className}
+			direction={inline ? "row" : "column"}
+			gap={12}
 		>
-			<Tabs.Item
-				title={<Icon icon={<GridViewTwotone />} />}
-				key='preview'
-			>
-				<div className='my-12'>{demo}</div>
-			</Tabs.Item>
-			<Tabs.Item title={<Icon icon={<CodeRound />} />} key='code'>
-				<div
-					className='my-12'
-					style={{
-						maxHeight: 800,
-						overflow: "auto",
-						borderRadius: "var(--radius)",
-					}}
-				>
-					<CodeView lang={lang}>{code}</CodeView>
+			<div className='demo-component'>
+				{typeof demo === "function" ? demo() : demo}
+			</div>
+			<div className='demo-code'>
+				<div className='demo-code-actions'>
+					<Button secondary square size='small' onClick={handleCopy}>
+						<Icon icon={<CopyAllTwotone />} />
+					</Button>
 				</div>
-			</Tabs.Item>
-		</Tabs>
+				<Scrollbars autoHide autoHeight autoHeightMax={400}>
+					<CodeView lang={lang}>{code}</CodeView>
+				</Scrollbars>
+			</div>
+		</Flex>
 	);
 }

@@ -2,9 +2,9 @@ import { SkipPreviousRound } from "@ricons/material";
 import classNames from "classnames";
 import Button from "../button";
 import Icon from "../icon";
-import { IToTop } from "./type";
+import { IAffix } from "./type";
 
-function ToTop(props: IToTop) {
+function ToTop(props: IAffix) {
 	const { style, className, onClick } = props;
 
 	return (

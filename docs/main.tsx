@@ -1,4 +1,5 @@
-import "@d/assets/common.scss";
+import "@d/assets/common.css";
+import useRipple from "@p/js/useRipple";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
@@ -7,6 +8,8 @@ import Router from "./router";
 
 const App = () => {
 	const global = useGlobalValues();
+
+	useRipple();
 
 	return (
 		<React.StrictMode>

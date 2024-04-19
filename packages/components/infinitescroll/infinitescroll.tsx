@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { createRef, forwardRef, useEffect, useRef } from "react";
-import "./index.scss";
+import "./index.css";
 import type { IInfiniteScroll } from "./type";
 
 const InfiniteScroll = forwardRef<HTMLDivElement, IInfiniteScroll>(

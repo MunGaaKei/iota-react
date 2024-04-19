@@ -30,8 +30,10 @@ export interface IDatagrid {
 	loading?: boolean;
 	empty?: ReactNode;
 	cellPadding?: string | number;
+	height?: number | string;
 	style?: CSSProperties;
 	className?: string;
+	renderLoading?: () => ReactNode;
 	onRowClick?: (data?: IData, row?: number) => void;
 	onCellClick?: (
 		data?: IData,
@@ -41,6 +43,7 @@ export interface IDatagrid {
 	) => void;
 	onHeaderClick?: (column?: IColumn, e?: MouseEvent) => void;
 	onSort?: (sortBy: string, sortType: string) => void;
+	onScroll?: (e: MouseEvent) => void;
 }
 
 export interface IRow
@@ -64,5 +67,5 @@ export interface IHeader extends Omit<IRow, "data" | "row">, TSort {
 
 export type TDatagridState = {
 	rows: IData[];
-	widths: number[];
+	widths: (number | string)[];
 } & TSort;

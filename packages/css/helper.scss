@@ -12,6 +12,7 @@
 	.code,
 	code {
 		background: var(--background-2);
+		font-family: unset;
 	}
 	kbd,
 	.kbd {
@@ -139,10 +140,10 @@
 		background: var(--background-opacity);
 		backdrop-filter: var(--blur);
 	}
-	.rounded {
+	.round {
 		border-radius: 50vw;
 	}
-	.rounded-slight {
+	.round-0 {
 		border-radius: var(--radius);
 	}
 	.disabled {

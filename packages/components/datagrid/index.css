@@ -5,13 +5,13 @@
 	.i-datagrid {
 		max-height: 100%;
 		max-width: 100%;
-		overflow: hidden;
 	}
 	.i-loading-container {
 		position: absolute;
 		inset: 0;
 		z-index: 10;
 		background: var(--background-opacity);
+		backdrop-filter: blur(2px);
 	}
 }
 
@@ -23,6 +23,7 @@
 	width: fit-content;
 	grid-template-columns: var(--grid-template-columns);
 	grid-template-rows: var(--grid-template-rows);
+	min-width: 100%;
 	.i-empty {
 		margin: 1em auto;
 		grid-column: 1 / -1;

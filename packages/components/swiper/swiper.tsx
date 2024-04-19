@@ -16,7 +16,7 @@ import {
 	useRef,
 } from "react";
 import Icon from "../icon";
-import "./index.scss";
+import "./index.css";
 import Item from "./item";
 import { CompositionSwiper, ISwiper, RefSwiper } from "./type";
 

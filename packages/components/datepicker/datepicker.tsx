@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import Icon from "../icon";
 import Input from "../input";
 import Popup from "../popup";
-import "./index.scss";
+import "./index.css";
 import Panel from "./panel";
 import { IDatePicker } from "./type";
 

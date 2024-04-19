@@ -17,7 +17,7 @@ import {
 import Button from "../button";
 import Icon from "../icon";
 import InputContainer from "../input/container";
-import "./index.scss";
+import "./index.css";
 import renderFile from "./renderFile";
 import { IFile, IUpload, RefUpload } from "./type";
 

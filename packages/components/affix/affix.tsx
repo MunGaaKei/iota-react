@@ -8,7 +8,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
-import "./index.scss";
+import "./index.css";
 import ToTop from "./totop";
 import { IAffix } from "./type";
 
@@ -23,7 +23,7 @@ const Affix = (props: IAffix): JSX.Element => {
 		style,
 		className,
 		children,
-		getContainer = () => document?.body,
+		getContainer = () => document.body,
 	} = props;
 
 	const [hidden, setHidden] = useState(false);

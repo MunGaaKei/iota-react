@@ -1,8 +1,7 @@
-import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
-import { createElement, forwardRef } from "react";
+import { MouseEvent, createElement, forwardRef } from "react";
 import Loading from "../loading";
-import "./index.scss";
+import "./index.css";
 import Toggle from "./toggle";
 import { CompositionButton, IButton } from "./type";
 
@@ -41,14 +40,23 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 		square,
 		secondary,
 		size,
+		round,
 		href,
 		ripple = true,
+		onClick,
 		...restProps
 	} = props;
 
-	if (!children) return <></>;
+	const handleClick = (e: MouseEvent<HTMLElement>) => {
+		if (loading || restProps.disabled) {
+			e.stopPropagation();
+			return;
+		}
 
-	ripple && useRipple();
+		onClick?.(e);
+	};
+
+	if (!children) return <></>;
 
 	const childNodes = [
 		loading && <Loading key='loading' />,
@@ -62,6 +70,7 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 	const attrs = {
 		className: formatClass(props),
 		["data-ripple"]: ripple,
+		onClick: handleClick,
 	};
 
 	if (typeof As === "string") {

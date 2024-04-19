@@ -9,10 +9,10 @@ import {
 	useEffect,
 	useMemo,
 } from "react";
-import "../../css/input.scss";
+import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
-import "./index.scss";
+import "./index.css";
 import Number from "./number";
 import Range from "./range";
 import Textarea from "./textarea";

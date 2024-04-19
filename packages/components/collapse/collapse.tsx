@@ -3,7 +3,7 @@ import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { Children, useMemo } from "react";
 import Helpericon from "../utils/helpericon";
-import "./index.scss";
+import "./index.css";
 import Item from "./item";
 import { Props, TKey } from "./type";
 

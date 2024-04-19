@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { Children, ReactNode, useMemo } from "react";
-import "./index.scss";
+import "./index.css";
 import Item from "./item";
 import { IStep } from "./type";
 

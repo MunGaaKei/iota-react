@@ -17,7 +17,7 @@ import Button from "../button";
 import Icon from "../icon";
 import List from "../list";
 import Popup from "../popup";
-import "./index.scss";
+import "./index.css";
 import TabItem from "./item";
 import { CompositionTabs, ITabItem, ITabs, RefTabs, TTabKey } from "./type";
 

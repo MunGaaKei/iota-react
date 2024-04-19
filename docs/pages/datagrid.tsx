@@ -6,6 +6,7 @@ import { useState } from "react";
 const columns = [
 	{
 		id: "id",
+		width: 200,
 	},
 	{
 		id: "name",
@@ -36,15 +37,16 @@ const columns = [
 	{
 		id: "address",
 		title: "地址",
+		width: "1fr",
 	},
 	{
 		id: "active",
 		justify: "center",
 		render: (value: boolean) => {
 			return value ? (
-				<Tag className='bg-green'>是</Tag>
+				<Tag className='bg-blue'>是</Tag>
 			) : (
-				<Tag className='bg-error'>否</Tag>
+				<Tag className='bg-black-0'>否</Tag>
 			);
 		},
 	},
@@ -90,9 +92,9 @@ export default function Page() {
 			<Datagrid
 				data={list}
 				columns={columns}
-				style={{ height: 400 }}
 				loading={loading}
 				resizable
+				height={400}
 			/>
 
 			<Flex className='mt-20' gap={8}>

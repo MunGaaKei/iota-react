@@ -9,8 +9,6 @@ export interface ICheckbox
 	type?: "default" | "switch" | "button";
 	optionInline?: boolean;
 	labelInline?: boolean;
-	form?: string;
-	className?: string;
 	onChange?: (
 		value?: any[],
 		option?: TOption,

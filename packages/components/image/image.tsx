@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import Icon from "../icon";
 import Loading from "../loading";
-import "./index.scss";
+import "./index.css";
 import List from "./list";
 import { IImage } from "./type";
 

@@ -1,0 +1,19 @@
+.demo-code {
+	position: relative;
+	border-radius: var(--radius);
+	border: 1px solid var(--color-9);
+	tab-size: 1em;
+	&:hover {
+		.demo-code-actions {
+			opacity: 1;
+		}
+	}
+}
+.demo-code-actions {
+	position: absolute;
+	z-index: 10;
+	right: 8px;
+	top: 4px;
+	opacity: 0;
+	transition: var(--transition);
+}

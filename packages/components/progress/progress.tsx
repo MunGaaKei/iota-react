@@ -2,9 +2,9 @@ import { useMouseMove, useMouseUp } from "@p/js/hooks";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { MouseEvent, useEffect, useMemo, useRef } from "react";
-import "../../css/input.scss";
+import "../../css/input.css";
 import Circle from "./circle";
-import "./index.scss";
+import "./index.css";
 import Line from "./line";
 import { IProgress } from "./type";
 

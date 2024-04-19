@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Helpericon from "../utils/helpericon";
-import "./index.scss";
+import "./index.css";
 import { ITag } from "./type";
 
 const Tag = (props: ITag): JSX.Element => {

@@ -1,5 +1,5 @@
 import { List, Popup } from "@p";
-import "./index.scss";
+import "./index.css";
 import Item from "./item";
 import { IDropdown } from "./type";
 

@@ -9,8 +9,8 @@ import Item from "./item";
 export interface IArea {
 	layout?: "naruto" | "sasuke" | "goku";
 	configs?: {
-		headerHeight?: string;
-		contentWidth?: string;
+		headerHeight?: string | number;
+		contentWidth?: string | number;
 		gap?: string | number;
 	};
 	style?: CSSProperties;

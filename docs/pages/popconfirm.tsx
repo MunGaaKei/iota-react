@@ -17,7 +17,11 @@ export default function Page() {
 						<div>
 							<h5>警告</h5>
 							<p className='my-8 color-5'>描述</p>
-							<Input value={value} onChange={setValue} />
+							<Input
+								value={value}
+								onChange={setValue}
+								autoFocus
+							/>
 						</div>
 					</Flex>
 				}

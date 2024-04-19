@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { Children, useMemo } from "react";
 import { Banner, Footer, Header, Tailer } from "./area";
-import "./index.scss";
+import "./index.css";
 import { ICard } from "./type";
 
 const Card = (props: ICard): JSX.Element => {

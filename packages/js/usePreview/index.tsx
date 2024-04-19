@@ -3,7 +3,7 @@ import { RefHookModal } from "@p/components/modal/type";
 import { useRef } from "react";
 import { renderNode } from "../utils";
 import Content from "./content";
-import "./index.scss";
+import "./index.css";
 import { IPreview } from "./type";
 
 export default function usePreview() {

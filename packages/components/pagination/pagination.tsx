@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../icon";
 import Ellipsis from "./ellipsis";
-import "./index.scss";
+import "./index.css";
 import Page from "./page";
 import { IPagination } from "./type";
 

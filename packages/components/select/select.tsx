@@ -13,9 +13,9 @@ import {
 	useMemo,
 	useState,
 } from "react";
-import "../../css/input.scss";
+import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
-import "./index.scss";
+import "./index.css";
 import { Options, displayValue } from "./options";
 import { ISelect } from "./type";
 

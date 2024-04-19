@@ -3,8 +3,8 @@ import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ReactNode, useMemo } from "react";
-import "../../css/input.scss";
-import "./index.scss";
+import "../../css/input.css";
+import "./index.css";
 import CheckboxItem from "./item";
 import type { ICheckbox } from "./type";
 
@@ -26,11 +26,11 @@ function Checkbox(props: ICheckbox) {
 	} = props;
 
 	const state = useReactive<{
-		value: any[];
+		value: any;
 		status?: TStatus;
 		message?: ReactNode;
 	}>({
-		value: [],
+		value,
 		status,
 		message,
 	});

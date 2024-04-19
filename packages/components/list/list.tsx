@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import "./index.scss";
+import "./index.css";
 import Item from "./item";
 import { IList } from "./type";
 

@@ -13,7 +13,7 @@ import {
 	useRef,
 } from "react";
 import Content from "./content";
-import "./index.scss";
+import "./index.css";
 import { IPopup } from "./type";
 
 export default function Popup(props: IPopup) {

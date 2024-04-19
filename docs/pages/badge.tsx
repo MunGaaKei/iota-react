@@ -1,19 +1,16 @@
-import { Badge, Button } from "@p";
-import { useState } from "react";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PBadge } from "./components/props/badge";
 
 export default function Page() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<>
-			<h3 className='mb-12'>使用</h3>
-			<Badge visible={count !== 0} content={count} contentClass='bg-red'>
-				<Button onClick={() => setCount((n) => n + 1)}>badge</Button>
-			</Badge>
-			<br />
-			<Button onClick={() => setCount(0)} className='bg-blue mt-12'>
-				clear
-			</Button>
+			<h2 className='mb-40'>Badge</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PBadge} />
 		</>
 	);
 }

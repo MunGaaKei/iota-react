@@ -1,66 +1,23 @@
-import pain from "@d/assets/pain.jpg";
-import sasuke from "@d/assets/sasuke.jpg";
-import { Button, Card, Flex, Icon, Image, Text } from "@p";
-import {
-	CloseRound,
-	FavoriteRound,
-	FavoriteTwotone,
-	MoreVertRound,
-} from "@ricons/material";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PCard } from "./components/props/card";
 
 export default function Page() {
 	return (
 		<>
-			<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
-				<Card>
-					<Card.Banner>
-						<Image src={sasuke} />
-					</Card.Banner>
-					<Card.Header className='items-center'>
-						<h4>UCHIHA SASUKE</h4>
-						<Button size='small' square flat className='ml-auto'>
-							<Icon icon={<MoreVertRound />} />
-						</Button>
-					</Card.Header>
-					SHIDORI
-				</Card>
-				<Card>
-					<Card.Header>
-						<Flex gap={8} align='center'>
-							<a>
-								<Image className='bg-black' size={32} round />
-							</a>
-							<div>
-								<h4>PAIN</h4>
-								<Text className='color-6' size={12}>
-									DAWN
-								</Text>
-							</div>
-						</Flex>
-						<Button.Toggle
-							size='small'
-							square
-							flat
-							className='ml-auto'
-							after={
-								<Icon
-									icon={<FavoriteRound />}
-									className='red'
-								/>
-							}
-						>
-							<Icon icon={<FavoriteTwotone />} />
-						</Button.Toggle>
-						<Button size='small' square flat>
-							<Icon icon={<CloseRound />} />
-						</Button>
-					</Card.Header>
-					<Image src={pain} />
-					<Card.Footer>
-						<Button className='bg-red-0'>地爆天星</Button>
-					</Card.Footer>
-				</Card>
-			</Flex>
+			<h2 className='mb-40'>Card</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-20'>Card</h4>
+			<Api apis={PCard} />
+
+			<h3 className='mt-80 mb-12'>Slots</h3>
+			<h4 className='mb-20'>
+				<span className='color-5'>Card.</span>[Banner, Title, Footer,
+				Tailer]
+			</h4>
 		</>
 	);
 }

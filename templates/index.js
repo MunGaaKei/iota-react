@@ -27,7 +27,7 @@ if (!name) {
 		generate(targetDir, tplComponent, name, `${lowername}.tsx`);
 		generate(targetDir, tplExport, name, "index.tsx");
 		generate(targetDir, tplType, name, "type.ts");
-		generate(targetDir, "", name, `index.scss`);
+		generate(targetDir, "", name, `index.css`);
 	}
 }
 

@@ -1,16 +1,11 @@
-import { BaseElement } from "@p/type";
-import { MouseEvent } from "react";
+import { HTMLAttributes } from "react";
 
-export interface IAffix extends BaseElement {
-	position?: "fixed" | "absolute" | "sticky";
+export interface IAffix extends HTMLAttributes<HTMLElement> {
+	position?: "fixed" | "absolute" | "sticky" | "static";
 	left?: string | number;
 	top?: string | number;
 	right?: string | number;
-	offset?: number;
 	bottom?: string | number;
+	offset?: number;
 	getContainer?: () => HTMLElement | null;
-}
-
-export interface IToTop extends BaseElement {
-	onClick?: (e: MouseEvent) => void;
 }

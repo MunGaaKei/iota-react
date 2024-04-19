@@ -1,6 +1,6 @@
 import { useMemoizedFn, useReactive } from "ahooks";
 import { useEffect } from "react";
-import "./index.scss";
+import "./index.css";
 import TreeList from "./list";
 import { ITree, ITreeItem } from "./type";
 

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { CSSProperties, forwardRef } from "react";
-import "./area.scss";
+import "./area.css";
 import Item from "./item";
 import { CompositionArea, IArea } from "./type";
 

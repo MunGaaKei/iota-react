@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import { cloneElement, isValidElement } from "react";
-import "./index.scss";
+import { cloneElement, forwardRef, isValidElement } from "react";
+import "./index.css";
 import { IIcon } from "./type";
 
-const Icon = (props: IIcon) => {
+const Icon = forwardRef((props: IIcon, ref) => {
 	const {
 		icon,
 		size = "1.425em",
@@ -16,6 +16,7 @@ const Icon = (props: IIcon) => {
 	if (!isValidElement(icon)) return icon;
 
 	const elProps = {
+		ref,
 		style: {
 			transform: rotate ? `rotate(${rotate}deg)` : undefined,
 			...style,
@@ -27,6 +28,6 @@ const Icon = (props: IIcon) => {
 	};
 
 	return cloneElement(icon, elProps);
-};
+});
 
 export default Icon;

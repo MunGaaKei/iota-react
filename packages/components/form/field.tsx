@@ -34,8 +34,6 @@ export default function Field(props: IField) {
 	);
 
 	const hijackChildren = useMemo(() => {
-		console.log(state.update);
-
 		return Children.map(children, (node) => {
 			if (!isValidElement(node)) return null;
 

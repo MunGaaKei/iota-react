@@ -4,7 +4,7 @@ import Button from "../button";
 import { IButton } from "../button/type";
 import Flex from "../flex";
 import Popup from "../popup";
-import "./index.scss";
+import "./index.css";
 import { IPopconfirm } from "./type";
 
 const defaultOk = {

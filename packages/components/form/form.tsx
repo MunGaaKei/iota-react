@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useEffect } from "react";
 import Context from "./context";
 import Field from "./field";
-import "./index.scss";
+import "./index.css";
 import { IForm } from "./type";
 import useForm, { IFormHandler } from "./useForm";
 

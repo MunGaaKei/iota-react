@@ -7,9 +7,9 @@ import {
 	useCallback,
 	useEffect,
 } from "react";
-import "../../css/input.scss";
+import "../../css/input.css";
 import InputContainer from "./container";
-import "./index.scss";
+import "./index.css";
 import type { ITextarea } from "./type";
 
 const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {

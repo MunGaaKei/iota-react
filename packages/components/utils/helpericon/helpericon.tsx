@@ -1,7 +1,7 @@
 import { CloseRound } from "@ricons/material";
 import classNames from "classnames";
 import Icon from "../../icon";
-import "./index.scss";
+import "./index.css";
 import { IHelperIcon } from "./type";
 
 const Helpericon = (props: IHelperIcon): JSX.Element => {

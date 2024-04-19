@@ -1,15 +1,15 @@
 import classNames from "classnames";
-import "./index.scss";
+import "./index.css";
 import type { IBadge } from "./type";
 
 const Badge = (props: IBadge): JSX.Element => {
 	const {
-		visible = true,
 		content,
 		contentClass,
 		dot,
 		dotSize,
 		round,
+		disabled,
 		style,
 		className,
 		children,
@@ -25,7 +25,7 @@ const Badge = (props: IBadge): JSX.Element => {
 			<div
 				className={classNames("i-badge-content", contentClass, {
 					"i-badge-dot": dot,
-					"i-badge-hidden": !visible,
+					"i-badge-hidden": disabled,
 				})}
 				style={{ fontSize: dotSize }}
 			>

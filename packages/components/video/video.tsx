@@ -15,7 +15,7 @@ import Button from "../button";
 import Icon from "../icon";
 import Progress from "../progress";
 import Text from "../text";
-import "./index.scss";
+import "./index.css";
 import { IVideo, RefVideo } from "./type";
 
 const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {

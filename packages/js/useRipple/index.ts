@@ -1,4 +1,4 @@
-import "./ripple.scss";
+import "./ripple.css";
 
 const state = {
 	enable: false,

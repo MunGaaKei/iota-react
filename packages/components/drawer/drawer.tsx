@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Helpericon from "../utils/helpericon";
-import "./index.scss";
+import "./index.css";
 import { IDrawer } from "./type";
 
 export default function Drawer(props: IDrawer) {

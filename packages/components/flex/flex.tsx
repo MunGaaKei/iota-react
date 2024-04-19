@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import "./index.scss";
+import "./index.css";
 import { IFlex } from "./type";
 
 const Flex = (props: IFlex): JSX.Element => {
