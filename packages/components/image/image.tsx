@@ -14,6 +14,7 @@ const Image = (props: IImage): JSX.Element => {
 		src,
 		round,
 		size,
+		initSize,
 		lazyload,
 		fallback = (
 			<Icon icon={<HideImageTwotone />} size='2em' className='color-5' />
@@ -65,12 +66,13 @@ const Image = (props: IImage): JSX.Element => {
 	}, [src]);
 
 	rest[lazyload ? "data-src" : "src"] = src;
+	const iSize = state.status === "loading" ? initSize : undefined;
 
 	return (
 		<div
 			style={{
-				width: size,
-				height: size,
+				width: size ?? iSize,
+				height: size ?? iSize,
 				...style,
 			}}
 			className={classNames("i-image", className, {

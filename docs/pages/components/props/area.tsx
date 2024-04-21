@@ -9,22 +9,21 @@ export const DBasic = {
 			<>
 				<Tabs active={layout} onTabChange={setLayout}>
 					<Tabs.Item key='naruto' title='naruto'></Tabs.Item>
-					<Tabs.Item key='sasuke' title='sasuke'></Tabs.Item>
+					<Tabs.Item key='goku' title='goku'></Tabs.Item>
 				</Tabs>
 				<div
 					className='relative mt-4'
 					style={{ height: 240, border: "1px solid var(--color-8)" }}
 				>
-					<Area layout={layout}>
+					<Area>
 						<Area.Item name='header' className='pd-8 bg-opacity'>
 							Header
 						</Area.Item>
-						<Area.Item name='sider' className='pd-8 bg-8'>
-							Sider
-						</Area.Item>
-						<Area.Item className='pd-8 bg-9'>Content</Area.Item>
-						<Area.Item name='footer' className='pd-8 bg-opacity'>
-							Footer
+						<Area.Item name={layout}>
+							<Area.Item name='sider' className='pd-8 bg-8'>
+								Sider
+							</Area.Item>
+							<Area.Item className='pd-8 bg-9'>Content</Area.Item>
 						</Area.Item>
 					</Area>
 				</div>

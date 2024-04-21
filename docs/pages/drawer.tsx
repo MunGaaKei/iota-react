@@ -8,7 +8,6 @@ export default function Page() {
 		<>
 			<Button onClick={() => setVisible(true)}>打开</Button>
 			<Drawer
-				position='right'
 				visible={visible}
 				header={<h4>标题</h4>}
 				onClose={() => setVisible(false)}

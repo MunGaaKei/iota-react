@@ -6,7 +6,6 @@ import { useState } from "react";
 const columns = [
 	{
 		id: "id",
-		width: 200,
 	},
 	{
 		id: "name",
@@ -94,6 +93,7 @@ export default function Page() {
 				columns={columns}
 				loading={loading}
 				resizable
+				border
 				height={400}
 			/>
 

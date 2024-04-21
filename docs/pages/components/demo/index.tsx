@@ -31,7 +31,12 @@ export default function Demo(props) {
 						<Icon icon={<CopyAllTwotone />} />
 					</Button>
 				</div>
-				<Scrollbars autoHide autoHeight autoHeightMax={400}>
+				<Scrollbars
+					autoHide
+					autoHeight
+					autoHeightMax={400}
+					className='flex-1'
+				>
 					<CodeView lang={lang}>{code}</CodeView>
 				</Scrollbars>
 			</div>

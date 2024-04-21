@@ -31,7 +31,7 @@
 }
 
 .i-datagrid-bordered {
-	--datagrid-border-color: var(--color-8);
+	--datagrid-border-color: var(--color-9);
 	outline: 1px solid var(--datagrid-border-color);
 	.i-datagrid-cell {
 		outline: 1px solid var(--datagrid-border-color);
@@ -61,7 +61,7 @@
 	align-items: center;
 	justify-content: var(--datagrid-justify);
 	gap: 4px;
-	padding: var(--padding);
+	padding: 0.4em 0.5em;
 	background: var(--datagrid-cell-background);
 	transition: background-color 0.12s;
 	&:first-child {

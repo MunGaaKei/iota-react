@@ -23,15 +23,14 @@
 	align-items: baseline;
 	transition: var(--transition);
 	border-radius: var(--radius);
-	box-shadow: inset 0 0 0 3px var(--background-opacity-1);
-	/* background: var(--background-opacity); */
+	box-shadow: inset 0 0 0 3px var(--color-8);
 	max-width: 100%;
 	.i-btn {
 		align-self: stretch;
 	}
 	&:hover,
 	&:focus-within {
-		box-shadow: inset 0 0 0 3px var(--color-8);
+		box-shadow: inset 0 0 0 3px var(--color-7);
 	}
 	&.i-input-success {
 		box-shadow: inset 0 0 0 3px var(--green-0);

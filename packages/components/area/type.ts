@@ -1,29 +1,18 @@
 import {
-	CSSProperties,
 	ForwardRefExoticComponent,
-	ReactNode,
+	HTMLAttributes,
 	RefAttributes,
 } from "react";
+import { ScrollbarProps } from "react-custom-scrollbars-2";
 import Item from "./item";
 
-export interface IArea {
+export interface IArea extends ScrollbarProps {
 	layout?: "naruto" | "sasuke" | "goku";
-	configs?: {
-		headerHeight?: string | number;
-		contentWidth?: string | number;
-		gap?: string | number;
-	};
-	style?: CSSProperties;
-	className?: string;
-	children?: ReactNode;
-	onToggle?: (collapsed?: boolean) => void;
+	contentWidth?: string;
 }
 
-export interface IAreaItem {
+export interface IAreaItem extends HTMLAttributes<HTMLElement> {
 	name?: string;
-	style?: CSSProperties;
-	className?: string;
-	children?: ReactNode;
 }
 
 export interface CompositionArea

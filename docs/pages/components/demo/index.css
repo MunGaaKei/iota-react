@@ -3,6 +3,7 @@
 	border-radius: var(--radius);
 	border: 1px solid var(--color-9);
 	tab-size: 1em;
+	flex: 1;
 	&:hover {
 		.demo-code-actions {
 			opacity: 1;

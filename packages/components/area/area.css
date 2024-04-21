@@ -1,50 +1,26 @@
 .i-area {
-	position: absolute;
+	position: absolute !important;
 	inset: 0;
+	--content-width: 1000px;
+	--header-height: unset;
 }
 
 .i-area-naruto {
-	display: grid;
-	grid-template-areas:
-		"header header"
-		"sider content"
-		"footer footer";
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto 1fr auto;
+	display: flex;
 }
 .i-area-sasuke {
-	display: grid;
-	grid-template-areas:
-		"sider header"
-		"sider content"
-		"sider footer";
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto 1fr auto;
-	.i-area-sider {
-		top: 0;
-	}
 }
 .i-area-goku {
-	.i-area-inner {
-		margin: 0 auto;
-		display: flex;
-		max-width: 100%;
-		width: var(--content-width);
-	}
-	.i-area-sider {
-		position: sticky;
-		z-index: 1;
-		top: var(--header-height);
-	}
-	.i-area-content {
-		overflow: unset;
-	}
+	margin: auto;
+	display: flex;
+	width: var(--content-width);
+	max-width: 100%;
 }
 
 .i-area-content {
 	position: relative;
 	flex: 1;
-	overflow-x: hidden;
+	overflow: auto;
 }
 
 .i-area-header,
@@ -53,7 +29,6 @@
 	z-index: 1;
 	display: flex;
 	align-items: center;
-	background: var(--background-opacity);
 	backdrop-filter: var(--blur);
 	&:empty {
 		display: none;
@@ -66,6 +41,9 @@
 	height: var(--header-height);
 }
 .i-area-sider {
+	position: sticky;
+	top: var(--header-height);
 	overflow: auto;
 	flex-shrink: 0;
+	height: calc(var(--container-height) - var(--header-height));
 }

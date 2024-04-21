@@ -1,35 +1,28 @@
 import classNames from "classnames";
 import { CSSProperties, forwardRef } from "react";
+import Scrollbars from "react-custom-scrollbars-2";
 import "./area.css";
 import Item from "./item";
 import { CompositionArea, IArea } from "./type";
 
-const Area = forwardRef<HTMLDivElement, IArea>((props, ref): JSX.Element => {
-	const {
-		layout = "naruto",
-		configs = {},
-		style,
-		className,
-		children,
-	} = props;
-
-	const { headerHeight, contentWidth, gap } = configs;
+const Area = forwardRef<Scrollbars, IArea>((props, ref): JSX.Element => {
+	const { contentWidth, style, className, children, ...restProps } = props;
 
 	return (
-		<div
+		<Scrollbars
 			ref={ref}
+			autoHide
 			style={
 				{
-					["--header-height"]: headerHeight,
 					["--content-width"]: contentWidth,
-					gap,
 					...style,
 				} as CSSProperties
 			}
-			className={classNames("i-area", `i-area-${layout}`, className)}
+			className={classNames("i-area", className)}
+			{...restProps}
 		>
 			{children}
-		</div>
+		</Scrollbars>
 	);
 }) as CompositionArea;
 

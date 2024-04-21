@@ -5,6 +5,7 @@ export interface IImage extends HTMLAttributes<HTMLImageElement> {
 	alt?: string;
 	round?: boolean;
 	size?: string | number;
+	initSize?: string | number;
 	lazyload?: boolean;
 	fallback?: ReactNode;
 	fit?: any;

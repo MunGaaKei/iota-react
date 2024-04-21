@@ -91,6 +91,10 @@ h6 {
 label {
 	cursor: pointer;
 }
+pre,
+code {
+	font-family: inherit;
+}
 ::selection {
 	background-color: #ffd832a3;
 	color: #212121;
