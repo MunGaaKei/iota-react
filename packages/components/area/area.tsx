@@ -19,6 +19,9 @@ const Area = forwardRef<Scrollbars, IArea>((props, ref): JSX.Element => {
 				} as CSSProperties
 			}
 			className={classNames("i-area", className)}
+			renderView={(viewProps) => (
+				<div className='i-area-scroller' {...viewProps} />
+			)}
 			{...restProps}
 		>
 			{children}

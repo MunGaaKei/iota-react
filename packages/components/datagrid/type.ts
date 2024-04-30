@@ -7,7 +7,7 @@ type TSort = {
 	sortType: string;
 };
 
-export type IColumn = {
+export interface IColumn {
 	id: string;
 	title?: ReactNode;
 	sorter?: boolean;
@@ -18,7 +18,7 @@ export type IColumn = {
 	fixed?: "left" | "right";
 	render?: (value?: any, data?: IData, index?: number) => ReactNode;
 	renderHeader?: (column?: IColumn, index?: number) => ReactNode;
-};
+}
 
 export interface IDatagrid {
 	data: IData[];
@@ -39,21 +39,34 @@ export interface IDatagrid {
 		data?: IData,
 		column?: IColumn,
 		row?: number,
-		col?: number
+		col?: number,
+		e?: MouseEvent
+	) => void;
+	onCellDoubleClick?: (
+		data?: IData,
+		column?: IColumn,
+		row?: number,
+		col?: number,
+		e?: MouseEvent
 	) => void;
 	onHeaderClick?: (column?: IColumn, e?: MouseEvent) => void;
 	onSort?: (sortBy: string, sortType: string) => void;
 	onScroll?: (e: MouseEvent) => void;
+	onResize?: (column?: IColumn, width?: number) => void;
 }
 
 export interface IRow
-	extends Pick<IDatagrid, "onCellClick" | "onRowClick" | "onHeaderClick"> {
+	extends Pick<
+		IDatagrid,
+		"onCellClick" | "onCellDoubleClick" | "onRowClick" | "onHeaderClick"
+	> {
 	data: IData;
 	columns: IColumn[];
 	row: number;
 }
 
-export interface ICell extends Pick<IDatagrid, "onCellClick"> {
+export interface ICell
+	extends Pick<IDatagrid, "onCellClick" | "onCellDoubleClick"> {
 	column: IColumn;
 	data: IData;
 	row: number;

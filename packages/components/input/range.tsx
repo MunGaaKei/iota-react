@@ -96,12 +96,12 @@ const Range = (props: IInputRange) => {
 			range[i] = result !== "" ? getFormatNumber(result) : result;
 
 			state.value = range;
-			onChange?.(range);
+			onChange?.(range, e);
 		}
 	);
 
 	const handleOperate = useMemoizedFn(
-		(e: MouseEvent, param: number, i: number) => {
+		(e: MouseEvent<Element>, param: number, i: number) => {
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -112,7 +112,7 @@ const Range = (props: IInputRange) => {
 			range[i] = getFormatNumber(result);
 
 			state.value = range;
-			onChange?.(range);
+			onChange?.(range, e);
 		}
 	);
 

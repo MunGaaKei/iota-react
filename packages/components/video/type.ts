@@ -12,6 +12,7 @@ export interface IVideo extends HTMLAttributes<HTMLVideoElement> {
 	useOriginControls?: boolean;
 	timeProgressProps?: IProgress;
 	volumeProgressProps?: IProgress;
+	onFullScreenChange?: (fullscreen: boolean) => void;
 }
 
 export interface RefVideo {

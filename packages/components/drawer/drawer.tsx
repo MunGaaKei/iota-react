@@ -15,6 +15,7 @@ export default function Drawer(props: IDrawer) {
 		hideCloseButton,
 		className,
 		children,
+		onVisibleChange,
 		onClose,
 		...restProps
 	} = props;
@@ -30,6 +31,7 @@ export default function Drawer(props: IDrawer) {
 		if (!toggable.current) return;
 
 		setShow(true);
+		onVisibleChange?.(true);
 		toggable.current = false;
 		setTimeout(() => {
 			setActive(true);
@@ -44,6 +46,7 @@ export default function Drawer(props: IDrawer) {
 		setActive(false);
 		setTimeout(() => {
 			setShow(false);
+			onVisibleChange?.(false);
 			toggable.current = true;
 			onClose?.();
 		}, 240);

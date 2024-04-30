@@ -7,7 +7,7 @@ const Description = (props: IDescription): JSX.Element => {
 	const {
 		data,
 		colon,
-		columns = 3,
+		columns = 1,
 		gap = ".5em",
 		align,
 		labelWidth,

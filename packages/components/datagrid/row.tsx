@@ -5,7 +5,8 @@ import Sorter from "./sorter";
 import { IHeader, IRow } from "./type";
 
 export default function Row(props: IRow) {
-	const { row, data, columns, onRowClick, onCellClick } = props;
+	const { row, data, columns, onRowClick, onCellClick, onCellDoubleClick } =
+		props;
 
 	return (
 		<div className='i-datagrid-row' onClick={() => onRowClick?.(data, row)}>
@@ -17,6 +18,7 @@ export default function Row(props: IRow) {
 					row={row}
 					data={data}
 					onCellClick={onCellClick}
+					onCellDoubleClick={onCellDoubleClick}
 				/>
 			))}
 		</div>
@@ -47,11 +49,9 @@ export function Header(props: IHeader) {
 				} = column;
 				const style = getCellStyle({
 					justify,
-					fixed,
 					row: 0,
 					col,
 					colSpan,
-					isHeader: true,
 				});
 
 				const order = sortBy === id ? sortType : "";
@@ -62,6 +62,7 @@ export function Header(props: IHeader) {
 						data-col={id}
 						className={classNames("i-datagrid-cell", {
 							"i-datagrid-has-sorter": sorter,
+							"i-datagrid-cell-fixed": fixed,
 						})}
 						style={{ ...style, insetBlockStart: 0 }}
 						onClick={(e) => onHeaderClick?.(column, e)}

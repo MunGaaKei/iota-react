@@ -29,10 +29,10 @@ export interface IPreview {
 	backdropClosable?: boolean;
 	className?: string;
 	style?: CSSProperties;
-	renderImage?: (file?: TPreviewItem) => ReactNode;
-	renderFile?: (file?: TPreviewItem) => ReactNode;
+	renderImage?: (file: TPreviewItem) => ReactNode;
+	renderFile?: (file: TPreviewItem) => ReactNode;
 	onClose?: () => void;
-	onChange?: (after?: number, before?: number) => void;
+	onChange?: (after: number, before?: number) => void;
 	onZoom?: () => void;
-	onRotate?: (deg?: number) => void;
+	onRotate?: (deg: number) => void;
 }

@@ -32,6 +32,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		message,
 		clear,
 		hideVisible,
+		border = true,
 		onChange,
 		onEnter,
 		style,
@@ -119,6 +120,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 			<div
 				className={classNames("i-input-item", {
 					[`i-input-${sts}`]: sts !== "normal",
+					"i-input-borderless": !border,
 				})}
 			>
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}

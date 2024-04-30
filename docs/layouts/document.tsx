@@ -32,7 +32,7 @@ export default function Document(): JSX.Element {
 
 	return (
 		<Area>
-			<Area.Item name='header'>
+			<Area.Item name='header' className='gap-8'>
 				<h2 className='mr-auto'>
 					<Link to='/'>R</Link>
 				</h2>

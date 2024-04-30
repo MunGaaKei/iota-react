@@ -19,9 +19,8 @@
 	transition: var(--transition);
 	font-weight: 500;
 	border-radius: var(--radius);
-	cursor: pointer;
 	&:hover {
-		background: var(--background-opacity-1);
+		background-color: var(--background-opacity-1);
 	}
 }
 .i-collapse-toggle {

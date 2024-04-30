@@ -15,7 +15,7 @@ export default function Api(props) {
 						<Flex align='baseline' gap={20}>
 							<h5
 								className={classNames({
-									blue: event,
+									green: event,
 								})}
 							>
 								{name}

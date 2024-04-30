@@ -1,58 +1,22 @@
-import { Description, Text } from "@p";
-import { mock } from "mockjs";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PData, PDescription } from "./components/props/description";
 
 export default function Page() {
-	const { list } = mock({
-		"list|10": [
-			{
-				label: "@cname",
-				value: "@county(true)",
-			},
-		],
-	});
-
-	const stat = [
-		{
-			label: <span className='color-5'>未完成</span>,
-			value: <Text.Number to={5415} count={0} thousand=',' size={32} />,
-		},
-		{
-			label: <span className='color-5'>进行中</span>,
-			value: (
-				<Text.Number
-					to={52}
-					count={0}
-					thousand=','
-					size={32}
-					className='blue'
-				/>
-			),
-		},
-		{
-			label: <span className='color-5'>已完成</span>,
-			value: (
-				<Text.Number
-					to={233}
-					count={0}
-					thousand=','
-					size={32}
-					className='green'
-				/>
-			),
-		},
-	];
-
 	return (
 		<>
-			<Description data={list} />
-			<Description
-				data={stat}
-				columns={3}
-				vertical
-				equally
-				align='center'
-				className='mt-40'
-			/>
+			<h2 className='mb-40'>Description</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-20 blue'>Description</h4>
+			<Api apis={PDescription} />
+
+			<h4 id='i-data' className='mt-40 mb-20 blue'>
+				IData
+			</h4>
+			<Api apis={PData} />
 		</>
 	);
 }

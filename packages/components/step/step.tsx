@@ -8,7 +8,7 @@ const Step = (props: IStep): JSX.Element => {
 	const {
 		active = 0,
 		vertical,
-		icon,
+		renderIcon,
 		divider,
 		style,
 		className,
@@ -28,7 +28,7 @@ const Step = (props: IStep): JSX.Element => {
 			nodes.push({
 				...el,
 				props: {
-					icon,
+					renderIcon,
 					divider,
 					onClick,
 					...elProps,

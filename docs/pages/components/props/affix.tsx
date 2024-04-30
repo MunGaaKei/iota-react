@@ -6,8 +6,8 @@ export const DBasic = {
 		<Affix
 			bottom={20}
 			right={20}
-			offset={100}
-			getContainer={() => document.querySelector(".i-area")}
+			offset={1}
+			getContainer={() => document.querySelector(".i-area-scroller")}
 		>
 			<Affix.ToTop className='bg-grey' />
 
@@ -19,8 +19,8 @@ export const DBasic = {
 	code: `<Affix
     bottom={20}
     right={20}
-    offset={100}
-    getContainer={() => document.querySelector(".i-area")}
+    offset={1}
+	getContainer={() => document.querySelector(".i-area-scroller")}
 >
     <Affix.ToTop className='bg-grey' />
 

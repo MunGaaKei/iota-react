@@ -32,7 +32,7 @@ export default function Popup(props: IPopup) {
 		align,
 		fitSize,
 		watchResize,
-		clickoutside = true,
+		clickOutside = true,
 		disabled,
 		style,
 		className,
@@ -56,7 +56,7 @@ export default function Popup(props: IPopup) {
 	});
 
 	useClickAway((e: Event) => {
-		if (!clickoutside) return;
+		if (!clickOutside) return;
 
 		const tar = e.target as HTMLElement;
 		const isContain = triggerRef.current?.contains(tar);

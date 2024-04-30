@@ -1,24 +1,23 @@
 import { MinusRound, PlusRound } from "@ricons/material";
-import { useMemoizedFn, useReactive } from "ahooks";
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { Children, useMemo } from "react";
 import Helpericon from "../utils/helpericon";
 import "./index.css";
 import Item from "./item";
-import { Props, TKey } from "./type";
+import { ICollapse, ICollapseItem, TKey } from "./type";
 
-const toggleIcon = (isActive: boolean) => {
-	return isActive ? <MinusRound /> : <PlusRound />;
-};
-
-const Collapse = (props: Props): JSX.Element => {
+const Collapse = (props: ICollapse): JSX.Element => {
 	const {
 		active,
+		items,
 		multiple,
 		border,
+		headerClickable,
 		className,
 		children,
-		icon = toggleIcon,
+		renderToggle = (active: boolean) =>
+			active ? <MinusRound /> : <PlusRound />,
 		onCollapse,
 		...restProps
 	} = props;
@@ -27,29 +26,46 @@ const Collapse = (props: Props): JSX.Element => {
 		active,
 	});
 
-	const items = useMemo(
-		() =>
-			Children.map(children, (node, i) => {
-				const { key, props: nodeProps } = node as {
-					key?: TKey;
-					props?: any;
-				};
-				const { title, children, content, disabled } = nodeProps;
+	const collapses = useMemo(() => {
+		if (!items) {
+			if (!children) return [];
 
-				return {
-					key: key || i,
-					title,
-					content: children || content,
-					disabled,
-				};
-			}) || [],
-		[children]
-	);
+			return (
+				Children.map(children, (node, i) => {
+					const { key, props: nodeProps } = node as {
+						key?: TKey;
+						props?: any;
+					};
+					const { title, children, content, disabled, ...restProps } =
+						nodeProps;
 
-	const handleItemClick = useMemoizedFn((key: TKey) => {
+					return {
+						...restProps,
+						key: key || i,
+						title,
+						content: children || content,
+						disabled,
+					};
+				}) || []
+			);
+		}
+
+		return items;
+	}, [children]);
+
+	const handleHeaderClick = (item: ICollapseItem) => {
+		if (!headerClickable) return;
+
+		handleToggle(item);
+	};
+
+	const handleToggle = (item: ICollapseItem) => {
+		const { key, disabled } = item;
+		if (disabled) return;
+
 		if (!multiple) {
 			state.active = state.active === key ? undefined : key;
-			onCollapse?.(key, state.active !== undefined);
+			onCollapse?.(key as TKey, state.active !== undefined);
 			return;
 		}
 
@@ -60,10 +76,10 @@ const Collapse = (props: Props): JSX.Element => {
 		if (i > -1) {
 			state.active.splice(i, 1);
 		} else {
-			state.active.push(key);
+			key !== undefined && state.active.push(key);
 		}
-		onCollapse?.(key, i < 0);
-	});
+		onCollapse?.(key as TKey, i < 0);
+	};
 
 	return (
 		<div
@@ -76,8 +92,15 @@ const Collapse = (props: Props): JSX.Element => {
 			)}
 			{...restProps}
 		>
-			{items.map((item) => {
-				const { key, title, content, disabled } = item;
+			{collapses.map((item) => {
+				const {
+					key,
+					title,
+					content,
+					disabled,
+					className,
+					...restProps
+				} = item;
 				const isActive = multiple
 					? ((state.active as TKey[]) || []).includes(key)
 					: state.active === key;
@@ -85,21 +108,23 @@ const Collapse = (props: Props): JSX.Element => {
 				return (
 					<div
 						key={key}
-						className={classNames("i-collapse-item", {
+						className={classNames("i-collapse-item", className, {
 							"i-collapse-active": isActive,
 							"i-collapse-disabled": disabled,
 						})}
+						{...restProps}
 					>
 						<div
 							className='i-collapse-header'
-							onClick={() => handleItemClick(key)}
+							onClick={() => handleHeaderClick(item)}
 						>
 							{title}
 
 							<Helpericon
 								active
 								className='i-collapse-toggle'
-								icon={icon(isActive)}
+								icon={renderToggle(isActive)}
+								onClick={() => handleToggle(item)}
 							/>
 						</div>
 

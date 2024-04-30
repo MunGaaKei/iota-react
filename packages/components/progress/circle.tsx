@@ -14,7 +14,7 @@ export default function Circle(
 					cy={height / 2}
 					r={height / 2 - size / 2}
 					fill='none'
-					stroke='var(--background-opacity-1)'
+					stroke='var(--background-opacity-2)'
 					strokeWidth={size}
 				/>
 				<circle

@@ -41,9 +41,11 @@ function Modal(props: IModal) {
 		height,
 		customized,
 		fixed,
+		shadow = true,
 		children,
 		style,
 		className,
+		onToggle,
 		onClose,
 		...restProps
 	} = props;
@@ -59,6 +61,7 @@ function Modal(props: IModal) {
 		toggable.current = false;
 		setTimeout(() => {
 			setActive(true);
+			onToggle?.(true);
 			toggable.current = true;
 		}, 24);
 	}, []);
@@ -80,6 +83,7 @@ function Modal(props: IModal) {
 		setTimeout(() => {
 			setShow(false);
 			toggable.current = true;
+			onToggle?.(false);
 			onClose?.();
 		}, 240);
 	}, [closable]);
@@ -95,7 +99,7 @@ function Modal(props: IModal) {
 		visible ? handleShow() : handleHide();
 	}, [visible]);
 
-	if (!show) return <></>;
+	if (!show) return null;
 
 	return createPortal(
 		<div
@@ -113,6 +117,7 @@ function Modal(props: IModal) {
 			<div
 				className={classNames("i-modal", {
 					bounced,
+					shadow,
 				})}
 				style={{
 					width,

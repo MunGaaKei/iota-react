@@ -13,6 +13,6 @@ export interface IProgress
 	type?: "line" | "circle";
 	className?: string;
 	style?: CSSProperties;
-	cursor?: (v?: number) => ReactNode;
-	onChange?: (v: number) => void;
+	renderCursor?: (value: number) => ReactNode;
+	onChange?: (value: number) => void;
 }

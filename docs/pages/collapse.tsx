@@ -1,28 +1,22 @@
-import { Collapse } from "@p";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PCollapse, PCollapseItem } from "./components/props/collapse";
 
 export default function Page(params) {
 	return (
 		<>
-			<Collapse>
-				<Collapse.Item title={<>窗外的麻雀</>}>
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-					Ducimus doloremque, nulla eos et sapiente consequuntur
-					aliquam ipsam architecto sit? Quia ducimus laboriosam atque
-					distinctio voluptatibus sit et cum iste incidunt.
-				</Collapse.Item>
-				<Collapse.Item title='在电线杆上多嘴' disabled>
-					Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-					Quibusdam dicta quas minima quaerat, minus cupiditate sequi
-					aliquam provident reiciendis odit, aliquid adipisci itaque
-					ullam ab corrupti saepe veritatis nulla pariatur!
-				</Collapse.Item>
-				<Collapse.Item title='夏天的味道'>
-					Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et
-					aspernatur, incidunt, sequi, ab cum quis voluptas dolorem
-					vel dolor unde accusamus qui ratione nesciunt velit optio
-					amet! Temporibus, nesciunt nihil!
-				</Collapse.Item>
-			</Collapse>
+			<h2 className='mb-40'>Collapse</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-20 blue'>Collapse</h4>
+			<Api apis={PCollapse} />
+
+			<h4 id='collapse-item' className='mt-40 mb-20 blue'>
+				<span className='opacity-5'>Collapse.</span>Item
+			</h4>
+			<Api apis={PCollapseItem} />
 		</>
 	);
 }

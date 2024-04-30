@@ -24,7 +24,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 		striped,
 		header = true,
 		resizable,
-		cellPadding = ".5em .5em",
+		cellPadding = ".5em",
 		empty = <Empty />,
 		loading,
 		height = "unset",
@@ -36,6 +36,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 		onHeaderClick,
 		onSort,
 		onScroll,
+		onResize,
 	} = props;
 
 	const container = useRef<HTMLDivElement>(null);
@@ -93,6 +94,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 			const [...ws] = state.widths;
 			ws[i] = w;
 			state.widths = ws;
+			onResize?.(columns[i], w);
 		},
 		[resizable]
 	);
@@ -161,7 +163,7 @@ const Datagrid = (props: IDatagrid): JSX.Element => {
 			autoHeight
 			autoHeightMax={height}
 			style={scrollBarStyle}
-			className={classNames(className, {
+			className={classNames("i-datagrid-container", className, {
 				"i-datagrid-bordered": border,
 				"i-datagrid-striped": striped,
 			})}

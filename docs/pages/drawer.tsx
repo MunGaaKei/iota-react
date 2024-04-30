@@ -1,21 +1,17 @@
-import { Button, Drawer } from "@p";
-import { useState } from "react";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PDrawer } from "./components/props/drawer";
 
 export default function Page() {
-	const [visible, setVisible] = useState(false);
-
 	return (
 		<>
-			<Button onClick={() => setVisible(true)}>打开</Button>
-			<Drawer
-				visible={visible}
-				header={<h4>标题</h4>}
-				onClose={() => setVisible(false)}
-			>
-				<div className='pd-12' style={{ width: 240 }}>
-					✌️✌️
-				</div>
-			</Drawer>
+			<h2 className='mb-40'>Drawer</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-20 blue'>Description</h4>
+			<Api apis={PDrawer} />
 		</>
 	);
 }

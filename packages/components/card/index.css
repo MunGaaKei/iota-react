@@ -2,7 +2,7 @@
 	--card-padding: 0.625em;
 	display: flex;
 	flex-direction: column;
-	background: var(--background-opacity);
+	background: var(--background-opacity-2);
 	backdrop-filter: var(--blur);
 	border-radius: var(--radius);
 }
@@ -23,6 +23,7 @@
 }
 
 .i-card-footer {
+	margin-top: auto;
 	display: flex;
 	align-items: center;
 	padding: var(--card-padding);

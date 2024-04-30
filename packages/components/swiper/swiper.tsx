@@ -32,6 +32,7 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 		next = <Icon icon={<KeyboardArrowRightRound />} size='2em' />,
 		duration = 600,
 		interval = 3000,
+		arrow = true,
 		draggable,
 		dragOffset = 40,
 		gap = 0,
@@ -283,12 +284,22 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 					})}
 				</div>
 
-				<a className='i-swiper-arrow i-swiper-prev' onClick={swipePrev}>
-					{prev}
-				</a>
-				<a className='i-swiper-arrow i-swiper-next' onClick={swipeNext}>
-					{next}
-				</a>
+				{arrow && (
+					<>
+						<a
+							className='i-swiper-arrow i-swiper-prev'
+							onClick={swipePrev}
+						>
+							{prev}
+						</a>
+						<a
+							className='i-swiper-arrow i-swiper-next'
+							onClick={swipeNext}
+						>
+							{next}
+						</a>
+					</>
+				)}
 			</div>
 			{indicator && (
 				<div className='i-swiper-indicators'>

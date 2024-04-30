@@ -18,11 +18,11 @@ export default function Page() {
 			<Demo source={DType} />
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
-			<h4 className='mb-12'>Checkbox</h4>
+			<h4 className='mb-12 blue'>Checkbox</h4>
 			<Api apis={PCheckbox} />
 
-			<h4 className='mt-80 mb-20'>
-				<span className='color-5'>Checkbox.</span>Item
+			<h4 className='mt-80 mb-20 blue'>
+				<span className='opacity-5'>Checkbox.</span>Item
 			</h4>
 			<Api apis={PCheckboxItem} />
 		</>

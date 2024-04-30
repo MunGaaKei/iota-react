@@ -24,12 +24,13 @@ export default function Toggle(props: IButtonToggle) {
 
 	const toggle = useCallback(() => {
 		const hasAfter = after !== undefined;
+		const nextActive = !state.active;
 
 		Object.assign(state, {
-			active: !state.active,
+			active: nextActive,
 			done: !hasAfter,
 		});
-		onToggle?.(state.active);
+		onToggle?.(nextActive);
 
 		hasAfter &&
 			setTimeout(() => {

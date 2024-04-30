@@ -20,10 +20,14 @@ export const DBasic = {
 							Header
 						</Area.Item>
 						<Area.Item name={layout}>
-							<Area.Item name='sider' className='pd-8 bg-8'>
-								Sider
+							<Area.Item name='sider' className='pd-8 bg-blue-0'>
+								<div style={{ height: "200%" }}>Sider</div>
 							</Area.Item>
-							<Area.Item className='pd-8 bg-9'>Content</Area.Item>
+							<Area.Item className='pd-8 bg-green-0'>
+								<div style={{ width: "200%", height: "200%" }}>
+									Content
+								</div>
+							</Area.Item>
 						</Area.Item>
 					</Area>
 				</div>

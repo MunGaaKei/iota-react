@@ -12,10 +12,11 @@ export interface IPagination
 	simple?: boolean;
 	jumper?: boolean;
 	renderPage?: (i: number) => ReactNode;
-	onChange?: (page?: number) => Promise<void> | void;
+	renderEllipsis?: () => ReactNode;
+	onChange?: (page: number) => Promise<void> | void;
 }
 
-export interface IPageItem
-	extends Pick<IPagination, "page" | "children" | "onChange"> {
+export interface IPageItem extends Pick<IPagination, "children" | "onChange"> {
 	active?: boolean;
+	page: number;
 }

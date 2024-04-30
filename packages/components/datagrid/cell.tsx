@@ -3,12 +3,10 @@ import { ICell, IColumn } from "./type";
 
 export function getCellStyle({
 	justify,
-	fixed,
 	col,
 	row,
 	colSpan = 1,
 	rowSpan = 1,
-	isHeader,
 }: Pick<IColumn, "justify" | "fixed"> & {
 	col: number;
 	row: number;
@@ -24,19 +22,13 @@ export function getCellStyle({
 		insetInline: `var(--datagrid-cell-inset-${col})`,
 	};
 
-	if (fixed) style["zIndex"] = isHeader ? 3 : 2;
-
 	return style;
 }
 
 export function Cell(props: ICell) {
-	const { column, row, col, data, onCellClick } = props;
+	const { column, row, col, data, onCellClick, onCellDoubleClick } = props;
 	const { id, fixed, justify, rowSpan, render } = column;
 	const style = getCellStyle({ justify, fixed, col, row, rowSpan });
-
-	const handleCellClick = () => {
-		onCellClick?.(data, column, row, col);
-	};
 
 	return (
 		<div
@@ -45,9 +37,14 @@ export function Cell(props: ICell) {
 			})}
 			data-col={id}
 			style={style}
-			onClick={handleCellClick}
+			onClick={(e) => onCellClick?.(data, column, row, col, e)}
+			onDoubleClick={(e) =>
+				onCellDoubleClick?.(data, column, row, col, e)
+			}
 		>
-			{render?.(data[id], data, col) || data[id]}
+			{render?.(data[id], data, col) ?? (
+				<div className='i-datagrid-cell-content'>{data[id]}</div>
+			)}
 		</div>
 	);
 }

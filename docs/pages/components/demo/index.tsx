@@ -1,5 +1,11 @@
 import { Button, Flex, Icon, Message } from "@p";
-import { CopyAllTwotone } from "@ricons/material";
+import {
+	CopyAllTwotone,
+	UnfoldLessRound,
+	UnfoldMoreRound,
+} from "@ricons/material";
+import classNames from "classnames";
+import { useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
 import CodeView from "../code";
 import "./index.css";
@@ -7,6 +13,7 @@ import "./index.css";
 export default function Demo(props) {
 	const { source, className, inline } = props;
 	const { demo, code, lang } = source;
+	const [collapsed, setCollapsed] = useState<any>(false);
 
 	const handleCopy = async () => {
 		await navigator.clipboard.writeText(code);
@@ -25,20 +32,45 @@ export default function Demo(props) {
 			<div className='demo-component'>
 				{typeof demo === "function" ? demo() : demo}
 			</div>
-			<div className='demo-code'>
+			<div
+				className={classNames("demo-code", {
+					"demo-code-collapsed": collapsed,
+				})}
+			>
 				<div className='demo-code-actions'>
-					<Button secondary square size='small' onClick={handleCopy}>
+					<Button.Toggle
+						secondary
+						square
+						flat
+						size='small'
+						active={collapsed}
+						after={<Icon icon={<UnfoldMoreRound />} />}
+						onToggle={setCollapsed}
+					>
+						<Icon icon={<UnfoldLessRound />} />
+					</Button.Toggle>
+					<Button
+						secondary
+						square
+						flat
+						size='small'
+						onClick={handleCopy}
+					>
 						<Icon icon={<CopyAllTwotone />} />
 					</Button>
 				</div>
-				<Scrollbars
-					autoHide
-					autoHeight
-					autoHeightMax={400}
-					className='flex-1'
-				>
-					<CodeView lang={lang}>{code}</CodeView>
-				</Scrollbars>
+				{collapsed ? (
+					<></>
+				) : (
+					<Scrollbars
+						autoHide
+						autoHeight
+						autoHeightMax={400}
+						className='flex-1'
+					>
+						<CodeView lang={lang}>{code}</CodeView>
+					</Scrollbars>
+				)}
 			</div>
 		</Flex>
 	);

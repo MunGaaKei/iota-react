@@ -6,6 +6,6 @@ export interface ITag extends HTMLAttributes<HTMLSpanElement> {
 	outline?: boolean;
 	round?: boolean;
 	size?: "small" | "normal" | "large" | "extreme";
-	onClick?: (e?: MouseEvent) => void;
-	onClose?: (e?: MouseEvent) => void;
+	onClick?: (e: MouseEvent) => void;
+	onClose?: (e: MouseEvent) => void;
 }

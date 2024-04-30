@@ -1,6 +1,6 @@
-import { useIntersectionObserver, useResizeObserver } from "@p/js/hooks";
+import { useIntersectionObserver } from "@p/js/hooks";
 import { MoreHorizRound } from "@ricons/material";
-import { useReactive } from "ahooks";
+import { useReactive, useSize } from "ahooks";
 import classNames from "classnames";
 import {
 	CSSProperties,
@@ -32,15 +32,22 @@ type TState = {
 const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const {
 		active,
+		items,
+		type = "default",
 		prepend,
 		append,
 		children,
 		className,
 		vertical,
 		toggable,
-		maxCache = 13,
 		bar = true,
-		barStyle = {},
+		hideMore,
+		barClass,
+		renderMore = () => (
+			<Button flat square size='small'>
+				<Icon icon={<MoreHorizRound />} />
+			</Button>
+		),
 		onTabChange,
 		...rest
 	} = props;
@@ -50,32 +57,40 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const navsRef = useRef<HTMLDivElement>(null);
 	const state = useReactive<TState>({
 		active,
-		barStyle,
+		barStyle: {},
 		cache: [],
 		overflow: false,
 		more: [],
 	});
-	const { observe: IOobserve, unobserve: IOunobserve } =
-		useIntersectionObserver();
-	const { observe: ROobserve, unobserve: ROunobserve } = useResizeObserver();
+	const { observe, unobserve } = useIntersectionObserver();
+	const size = useSize(navsRef);
 
 	const tabs: ITabItem[] = useMemo(() => {
-		if (!children) return [];
+		if (!items) {
+			if (!children) return [];
 
-		return Children.map(children, (node, i) => {
-			const { key, props: nodeProps } = node as {
-				key?: TTabKey;
-				props?: any;
-			};
-			const { title, children, content, keepalive } = nodeProps;
+			return Children.map(children, (node, i) => {
+				const { key, props: nodeProps } = node as {
+					key?: TTabKey;
+					props?: any;
+				};
+				const { title, children, content, keepalive } = nodeProps;
 
-			return {
-				key: key || String(i),
-				title,
-				content: children || content,
-				keepalive,
-			};
-		}) as ITabItem[];
+				return {
+					key: key || String(i),
+					title,
+					content: children || content,
+					keepalive,
+				};
+			}) as ITabItem[];
+		}
+
+		items.map((item, i) => {
+			if (item.key !== undefined) return;
+			item.key = i;
+		});
+
+		return items;
 	}, [children]);
 
 	const open = useCallback((key: TTabKey) => {
@@ -99,27 +114,25 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		});
 	};
 
-	const watchOverflow = useCallback(() => {
-		if (!navRefs.current || !navsRef.current) return;
+	useEffect(() => {
+		if (!size || hideMore) return;
+		const { scrollHeight, scrollWidth } = navsRef.current as HTMLElement;
+		const { width, height } = size;
 
-		const { scrollHeight, scrollWidth, offsetWidth, offsetHeight } =
-			navsRef.current as HTMLElement;
-
-		state.overflow =
-			scrollHeight > offsetHeight || scrollWidth > offsetWidth;
+		state.overflow = scrollHeight > height || scrollWidth > width;
 
 		if (!state.overflow) return;
 
-		navRefs.current?.map((nav, i) => {
-			IOobserve(nav, (tar: HTMLElement, visible: boolean) => {
+		navRefs.current.map((nav, i) => {
+			observe(nav, (tar: HTMLElement, visible: boolean) => {
 				tabs[i].intersecting = visible;
 				state.more = tabs.filter((tab) => !tab.intersecting);
 			});
 		});
-	}, [navRefs.current]);
+	}, [size, hideMore]);
 
 	useEffect(() => {
-		if (!bar) return;
+		if (!bar || state.active === undefined) return;
 
 		const index = tabs.findIndex((tab) => tab.key === state.active);
 		const nav = navRefs.current[index];
@@ -129,46 +142,43 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		if (tabs[index].keepalive && state.active) {
 			const i = state.cache.findIndex((k) => k === state.active);
 			i < 0 && state.cache.unshift(state.active);
-
-			if (state.cache.length > maxCache) {
-				state.cache.length = maxCache;
-			}
 		}
 
 		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
+		const isLine = type === "line";
 
 		state.barStyle = {
-			height: offsetHeight,
-			width: offsetWidth,
+			height: !vertical && isLine ? ".25em" : offsetHeight,
+			width: vertical && isLine ? ".25em" : offsetWidth,
 			transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
-			...barStyle,
 		};
 	}, [state.active, bar]);
 
 	useEffect(() => {
-		if (!active) return;
+		if (active === undefined) return;
 
 		open(active);
 	}, [active]);
 
 	useEffect(() => {
-		watchOverflow();
-		navsRef.current && ROobserve(navsRef.current, watchOverflow);
-
 		return () => {
-			navRefs.current?.map(IOunobserve);
-			ROunobserve(navsRef.current as HTMLElement);
+			navRefs.current?.map(unobserve);
 		};
 	}, [tabs]);
 
 	useImperativeHandle(ref, () => ({
 		open,
 		close,
+		navs: navsRef,
 	}));
 
 	return (
 		<div
-			className={classNames("i-tabs", { flex: vertical }, className)}
+			className={classNames(
+				"i-tabs",
+				{ flex: vertical, [`i-tabs-${type}`]: type !== "default" },
+				className
+			)}
 			{...rest}
 		>
 			<div
@@ -206,19 +216,18 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 					{bar && (
 						<span
 							ref={barRef}
-							className='i-tab-navs-bar'
+							className={classNames("i-tab-navs-bar", barClass)}
 							style={state.barStyle}
 						/>
 					)}
 				</div>
 
-				{state.overflow && state.more.length > 0 && (
+				{!hideMore && state.overflow && state.more.length > 0 && (
 					<Popup
 						arrow={false}
 						position={vertical ? "right" : "bottom"}
 						align='end'
-						trigger='click'
-						watchResize
+						touchable
 						content={
 							<List className='pd-4'>
 								{state.more.map((tab, i) => {
@@ -241,9 +250,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 							</List>
 						}
 					>
-						<Button flat square size='small'>
-							<Icon icon={<MoreHorizRound />} />
-						</Button>
+						{renderMore(state.more)}
 					</Popup>
 				)}
 
@@ -251,10 +258,12 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 			</div>
 
 			<div className='i-tab-contents'>
-				{tabs.map((tab) => {
-					const { key, content } = tab;
+				{tabs.map((tab, i) => {
+					const { key = i, content } = tab;
 					const isActive = state.active === key;
-					const show = isActive || (key && state.cache.includes(key));
+					const show =
+						isActive ||
+						(key !== undefined && state.cache.includes(key));
 
 					return (
 						show && (

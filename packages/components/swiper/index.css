@@ -20,7 +20,6 @@
 
 .i-swiper-list {
 	display: flex;
-	align-items: center;
 }
 .i-swiper-fade {
 	> .i-swiper-item {
@@ -61,6 +60,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
 	transition: var(--transition);
 }
 

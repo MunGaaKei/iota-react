@@ -1,6 +1,6 @@
 import pain from "@d/assets/pain.jpg";
 import sasuke from "@d/assets/sasuke.jpg";
-import { Button, Card, Flex, Icon, Image, Text } from "@p";
+import { Button, Card, Flex, Icon, Image, Swiper, Text } from "@p";
 import {
 	CloseRound,
 	FavoriteRound,
@@ -23,6 +23,7 @@ export const DBasic = {
 				</Card.Header>
 				SHIDORI
 			</Card>
+
 			<Card>
 				<Card.Header>
 					<Flex gap={8} align='center'>
@@ -56,9 +57,24 @@ export const DBasic = {
 					<Button className='bg-red-0'>地爆天星</Button>
 				</Card.Footer>
 			</Card>
+
+			<Card>
+				<Card.Banner>
+					<Swiper arrow={false} draggable indicator>
+						<Swiper.Item>
+							<Image className='bg-yellow' size={250} />
+						</Swiper.Item>
+						<Swiper.Item>
+							<Image className='bg-green' size={250} />
+						</Swiper.Item>
+					</Swiper>
+				</Card.Banner>
+				<Card.Footer>Swiper Images</Card.Footer>
+			</Card>
 		</Flex>
 	),
 	code: `<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
+
     <Card>
         <Card.Banner>
             <Image src={sasuke} />
@@ -71,6 +87,7 @@ export const DBasic = {
         </Card.Header>
         SHIDORI
     </Card>
+
     <Card>
         <Card.Header>
             <Flex gap={8} align='center'>
@@ -104,6 +121,22 @@ export const DBasic = {
             <Button className='bg-red-0'>地爆天星</Button>
         </Card.Footer>
     </Card>
+
+	
+	<Card>
+		<Card.Banner>
+			<Swiper arrow={false} draggable indicator>
+				<Swiper.Item>
+					<Image className='bg-yellow' size={250} />
+				</Swiper.Item>
+				<Swiper.Item>
+					<Image className='bg-green' size={250} />
+				</Swiper.Item>
+			</Swiper>
+		</Card.Banner>
+		<Card.Footer>Swiper Images</Card.Footer>
+	</Card>
+	
 </Flex>`,
 	lang: "xml",
 };

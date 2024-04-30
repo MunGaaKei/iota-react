@@ -20,7 +20,7 @@ export default function useModal() {
 		);
 	};
 
-	const handleUpdate = (props?: IModal) => {
+	const handleUpdate = (props: IModal) => {
 		if (!ref.current) return;
 
 		const { update } = ref.current;

@@ -17,7 +17,7 @@ export interface ISelect
 	filter?: boolean | (() => boolean);
 	filterPlaceholder?: string;
 	empty?: ReactNode;
-	onSelect?: (v?: any, option?: TOption) => void;
+	onSelect?: (v: any, option?: TOption) => void;
 	onChange?: (v: any) => void;
 }
 
@@ -26,7 +26,7 @@ export interface ISelectOptions
 		ISelect,
 		"multiple" | "empty" | "filter" | "filterPlaceholder" | "onSelect"
 	> {
-	value?: any;
+	value: any;
 	options: TOption[];
 	onFilter?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

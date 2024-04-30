@@ -41,19 +41,21 @@ export default function button(): JSX.Element {
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
 
-			<h4 id='button' className='mb-20'>
+			<h4 id='button' className='mb-20 blue'>
 				Button
 			</h4>
 			<Api apis={PButton} className='mb-80' />
 
 			<h4 id='button-toggle' className='mb-20'>
 				<Flex gap={12}>
-					<span>
-						<span className='color-5'>Button.</span>Toggle
+					<span className='blue'>
+						<span className='opacity-5'>Button.</span>Toggle
 					</span>
 
-					<span className='yellow'>extends</span>
-					<a href='#button'>Button</a>
+					<span className='color-5'>extends</span>
+					<a href='#button' className='blue'>
+						Button
+					</a>
 				</Flex>
 			</h4>
 			<Api apis={PButtonToggle} className='mb-80' />

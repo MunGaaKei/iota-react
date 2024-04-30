@@ -1,105 +1,22 @@
-import { Button, Datagrid, Flex, Tag } from "@p";
-import { IColumn } from "@p/components/datagrid/type";
-import { mock } from "mockjs";
-import { useState } from "react";
-
-const columns = [
-	{
-		id: "id",
-	},
-	{
-		id: "name",
-		fixed: "left",
-	},
-	{
-		id: "email",
-	},
-	{
-		id: "phone",
-		title: "手机",
-	},
-	{
-		id: "gender",
-		title: "性别",
-		justify: "center",
-		sorter: true,
-		render: (value: number) => {
-			return value > 0 ? "男" : "女";
-		},
-	},
-	{
-		id: "birth",
-		title: "生日",
-		sorter: (a, b) =>
-			new Date(b.birth).getTime() - new Date(a.birth).getTime(),
-	},
-	{
-		id: "address",
-		title: "地址",
-		width: "1fr",
-	},
-	{
-		id: "active",
-		justify: "center",
-		render: (value: boolean) => {
-			return value ? (
-				<Tag className='bg-blue'>是</Tag>
-			) : (
-				<Tag className='bg-black-0'>否</Tag>
-			);
-		},
-	},
-	{
-		id: "none",
-		renderHeader: (column) => {
-			return "自定义渲染头部";
-		},
-	},
-	{
-		id: "action",
-		fixed: "right",
-		justify: "center",
-		render: () => (
-			<Button className='bg-grey' size='small'>
-				操作
-			</Button>
-		),
-	},
-] as IColumn[];
-
-const { list } = mock({
-	"list|50": [
-		{
-			"id|+1": 1,
-			name: "@cname",
-			email: "@email",
-			phone: /^1[385][1-9]\d{8}/,
-			"gender|0-1": 0,
-			birth: "@date",
-			// "tags|0-2": ["@ctitle(2)"],
-			address: "@county(true)",
-			active: "@boolean",
-		},
-	],
-});
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PColumn, PDatagrid } from "./components/props/datagrid";
 
 export default function Page() {
-	const [loading, setLoading] = useState(false);
-
 	return (
 		<>
-			<Datagrid
-				data={list}
-				columns={columns}
-				loading={loading}
-				resizable
-				border
-				height={400}
-			/>
+			<h2 className='mb-40'>Datagrid</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
 
-			<Flex className='mt-20' gap={8}>
-				<Button onClick={() => setLoading(!loading)}>加载</Button>
-			</Flex>
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-20 blue'>Datagrid</h4>
+			<Api apis={PDatagrid} />
+
+			<h4 id='i-column' className='mt-40 mb-20 blue'>
+				IColumn
+			</h4>
+			<Api apis={PColumn} />
 		</>
 	);
 }

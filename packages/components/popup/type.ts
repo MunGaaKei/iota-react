@@ -16,7 +16,7 @@ export interface IPopup {
 	touchable?: boolean;
 	fitSize?: boolean;
 	watchResize?: boolean;
-	clickoutside?: boolean;
+	clickOutside?: boolean;
 	disabled?: boolean;
 	style?: CSSProperties;
 	children?: ReactNode;

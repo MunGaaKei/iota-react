@@ -21,7 +21,7 @@ const Progress = (props: IProgress): JSX.Element => {
 		label,
 		labelInline,
 		className,
-		cursor,
+		renderCursor,
 		onChange,
 	} = props;
 
@@ -106,7 +106,7 @@ const Progress = (props: IProgress): JSX.Element => {
 					barClass={barClass}
 					dragging={state.dragging}
 					value={state.value}
-					cursor={cursor}
+					renderCursor={renderCursor}
 					onMouseDown={handleMouseDown}
 				/>
 			) : (

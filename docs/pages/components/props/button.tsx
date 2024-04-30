@@ -66,7 +66,13 @@ export const DToggle = {
 			>
 				<Icon icon={<LightModeTwotone />} />
 			</Button.Toggle>
-			<Button.Toggle after='Active' activeClass='bg-blue'>
+			<Button.Toggle
+				after='Active'
+				activeClass='bg-blue'
+				onToggle={(v) => {
+					console.log(v);
+				}}
+			>
 				Deactive
 			</Button.Toggle>
 		</Flex>

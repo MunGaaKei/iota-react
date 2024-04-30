@@ -35,6 +35,7 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 			barClass: "bg-1",
 		},
 		className,
+		onFullScreenChange,
 		...restProps
 	} = props;
 	const state = useReactive({
@@ -117,6 +118,7 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 		if (!tar) return;
 
 		state.isFullscreen ? exitFullScreen() : fullScreen(tar);
+		onFullScreenChange?.(!state.isFullscreen);
 	});
 
 	const handleUpdateTime = useMemoizedFn((t) => {

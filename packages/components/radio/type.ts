@@ -4,7 +4,7 @@ import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 export interface IRadioItem
 	extends Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
 	type?: "default" | "button";
-	onChange?: (value?: any, e?: ChangeEvent) => void;
+	onChange?: (value: any, e: ChangeEvent) => void;
 }
 
 export interface IRadio extends IRadioItem {

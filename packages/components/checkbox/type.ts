@@ -10,9 +10,9 @@ export interface ICheckbox
 	optionInline?: boolean;
 	labelInline?: boolean;
 	onChange?: (
-		value?: any[],
-		option?: TOption,
-		e?: ChangeEvent<HTMLInputElement>
+		value: any[],
+		option: TOption,
+		e: ChangeEvent<HTMLInputElement>
 	) => void;
 }
 
@@ -23,5 +23,5 @@ export interface ICheckboxItem
 	label?: ReactNode;
 	value?: boolean;
 	partof?: boolean;
-	onChange?: (value?: boolean, e?: ChangeEvent<HTMLInputElement>) => void;
+	onChange?: (value: boolean, e: ChangeEvent<HTMLInputElement>) => void;
 }

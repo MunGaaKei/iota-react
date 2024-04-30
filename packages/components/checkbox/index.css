@@ -107,7 +107,7 @@
 		box-shadow: 0 0 0 2px var(--color-8);
 		border-radius: 1em;
 		transition: var(--transition);
-		background: var(--color-main-reverse);
+		background: var(--color-9);
 	}
 	&:active {
 		&:after {
@@ -129,7 +129,7 @@
 	&.i-checkbox-switch {
 		background: var(--color-main);
 		&:after {
-			box-shadow: 0 0 0 3px var(--color-main-2);
+			box-shadow: 0 0 0 3px var(--color-main);
 			transform: translate(1.25em, -50%);
 		}
 	}

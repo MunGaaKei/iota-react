@@ -10,6 +10,8 @@ export interface IModal extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	height?: string | number;
 	customized?: boolean;
 	fixed?: boolean;
+	shadow?: boolean;
+	onToggle?: (visible: boolean) => void;
 	onClose?: () => void;
 }
 
@@ -19,5 +21,5 @@ export interface IModalContent
 }
 
 export interface RefHookModal {
-	update: (props?: IModal) => void;
+	update: (props: IModal) => void;
 }

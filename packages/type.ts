@@ -33,8 +33,9 @@ export interface BaseInput extends TValidate {
 	value?: any;
 	labelInline?: boolean;
 	clear?: boolean;
+	border?: boolean;
 	onChange?: (
-		value?: any,
+		value: any,
 		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => void;
 	onEnter?: () => void;

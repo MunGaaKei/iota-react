@@ -13,16 +13,16 @@ export interface IUpload
 	mode?: "default" | "card";
 	droppable?: boolean;
 	cardSize?: string;
-	shouldUpload?: (file?: IFile) => boolean;
+	shouldUpload?: (file: IFile) => boolean;
 	uploader?: (file: IFile) => Promise<IFile>;
 	renderItem?: (file: IFile, i: number) => ReactNode;
 	onFilesChange?: (
-		files?: IFile[],
-		changed?: IFile[],
+		files: IFile[],
+		changed: IFile[],
 		e?: ChangeEvent<HTMLInputElement>
 	) => void;
-	onRemove?: (file?: IFile) => void;
-	onUpload?: (file?: IFile) => void;
+	onRemove?: (file: IFile) => void;
+	onUpload?: (file: IFile) => void;
 }
 
 export interface IFile extends File {

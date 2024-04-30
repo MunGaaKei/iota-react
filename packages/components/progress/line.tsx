@@ -4,12 +4,13 @@ import { IProgress } from "./type";
 
 const Line = forwardRef<
 	HTMLDivElement,
-	Pick<IProgress, "value" | "size" | "barClass" | "cursor"> & {
+	Pick<IProgress, "value" | "size" | "barClass" | "renderCursor"> & {
 		dragging: boolean;
 		onMouseDown: (e: MouseEvent) => void;
 	}
 >((props, ref) => {
-	const { value, size, barClass, dragging, cursor, onMouseDown } = props;
+	const { value, size, barClass, dragging, renderCursor, onMouseDown } =
+		props;
 
 	return (
 		<div
@@ -24,7 +25,9 @@ const Line = forwardRef<
 				})}
 				style={{ width: `${value}%` }}
 			>
-				{cursor && <a className='i-progress-btn'>{cursor(value)}</a>}
+				{renderCursor && (
+					<a className='i-progress-btn'>{renderCursor(value ?? 0)}</a>
+				)}
 			</div>
 		</div>
 	);

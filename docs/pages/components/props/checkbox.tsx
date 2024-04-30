@@ -143,7 +143,7 @@ export const PCheckbox = [
 				<a href='/docs/form#TOption' className='blue'>
 					TOption
 				</a>
-				, e?: ChangeEvent&lt;HTMLInputElement&gt; ) =&gt; void
+				, e: ChangeEvent&lt;HTMLInputElement&gt; ) =&gt; void
 			</>,
 		],
 		event: true,
@@ -194,7 +194,7 @@ export const PCheckboxItem = [
 	{
 		name: "onChange",
 		desc: "值发生改变时触发",
-		type: ["(value: boolean, e?: ChangeEvent<HTMLInputElement>) => void"],
+		type: ["(value: boolean, e: ChangeEvent<HTMLInputElement>) => void"],
 		event: true,
 	},
 ];

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 export interface IMessage {
 	id?: string;
@@ -20,5 +20,5 @@ export interface IMessageItem {
 	content?: ReactNode;
 	top?: number;
 	className?: string;
-	onClick?: () => void;
+	onClick?: (e: MouseEvent<Element>) => void;
 }

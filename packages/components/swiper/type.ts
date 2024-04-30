@@ -20,10 +20,11 @@ export interface ISwiper extends BaseElement {
 	vertical?: boolean;
 	prev?: ReactNode;
 	next?: ReactNode;
+	arrow?: boolean;
 	renderIndicator?: (i: number) => ReactNode;
 	onInitial?: () => void;
-	onBeforeSwipe?: (before?: number) => void;
-	onAfterSwipe?: (after?: number) => void;
+	onBeforeSwipe?: (before: number) => void;
+	onAfterSwipe?: (after: number) => void;
 }
 
 export interface ISwiperItem

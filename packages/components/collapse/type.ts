@@ -1,24 +1,23 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 
 export type TKey = string | number;
 
-export interface ICollapse {
+export interface ICollapse extends HTMLAttributes<HTMLDivElement> {
+	active?: TKey | TKey[];
+	items?: ICollapseItem[];
+	multiple?: boolean;
+	border?: boolean;
+	headerClickable?: boolean;
+	renderToggle?: (active: boolean) => ReactNode;
+	onCollapse?: (key: TKey, active: boolean) => void;
+}
+
+export interface ICollapseItem {
 	key?: TKey;
-	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
 	disabled?: boolean;
-}
-
-export interface ICollapseItem extends ICollapse {
-	disabled?: boolean;
 	children?: ReactNode;
-}
-
-export interface Props extends HTMLAttributes<HTMLDivElement> {
-	active?: TKey | TKey[];
-	multiple?: boolean;
-	border?: boolean;
-	icon?: (active?: boolean) => ReactNode;
-	onCollapse?: (key?: TKey, active?: boolean) => void;
+	className?: string;
+	style?: CSSProperties;
 }

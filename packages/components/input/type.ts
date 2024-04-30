@@ -4,6 +4,7 @@ import {
 	ChangeEvent,
 	ForwardRefExoticComponent,
 	InputHTMLAttributes,
+	MouseEvent,
 	ReactNode,
 	RefAttributes,
 	TextareaHTMLAttributes,
@@ -64,8 +65,8 @@ export interface IInputRange
 	thousand?: string;
 	decimal?: number;
 	onChange?: (
-		value?: (number | string | undefined)[],
-		e?: ChangeEvent<HTMLInputElement>
+		value: (number | string | undefined)[],
+		e?: ChangeEvent<HTMLInputElement> | MouseEvent<Element>
 	) => void;
 }
 

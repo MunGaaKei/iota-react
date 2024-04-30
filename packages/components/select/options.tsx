@@ -99,5 +99,5 @@ export const displayValue = (config) => {
 		});
 	}
 
-	return options.find((opt) => opt.value === value)?.label;
+	return options.find((opt: TOption) => opt.value === value)?.label;
 };

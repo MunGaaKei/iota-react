@@ -1,11 +1,11 @@
 import {
 	KeyboardArrowLeftRound,
 	KeyboardArrowRightRound,
+	MoreHorizRound,
 } from "@ricons/material";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import Icon from "../icon";
-import Ellipsis from "./ellipsis";
 import "./index.css";
 import Page from "./page";
 import { IPagination } from "./type";
@@ -21,6 +21,9 @@ const Pagination = (props: IPagination): JSX.Element => {
 		simple,
 		jumper,
 		className,
+		renderEllipsis = () => (
+			<Icon icon={<MoreHorizRound />} className='color-7' />
+		),
 		renderPage = (i) => i,
 		onChange,
 		...restProps
@@ -73,7 +76,7 @@ const Pagination = (props: IPagination): JSX.Element => {
 				</Page>
 			)}
 
-			{start > 2 && <Ellipsis />}
+			{start > 2 && renderEllipsis()}
 
 			{loop.map((p) => {
 				return (
@@ -88,7 +91,7 @@ const Pagination = (props: IPagination): JSX.Element => {
 				);
 			})}
 
-			{end < totalPage - 1 && <Ellipsis />}
+			{end < totalPage - 1 && renderEllipsis()}
 
 			{end < totalPage && (
 				<Page page={totalPage} onChange={handlePageChange}>

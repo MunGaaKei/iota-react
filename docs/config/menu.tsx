@@ -37,7 +37,6 @@ import {
 	UnfoldMoreRound,
 	ViewCarouselTwotone,
 	ViewDayTwotone,
-	ViewQuiltOutlined,
 	ViewSidebarTwotone,
 	WebAssetTwotone,
 	WysiwygTwotone,
@@ -81,12 +80,12 @@ export default [
 				as: Link,
 				icon: <Icon icon={<PushPinTwotone />} />,
 			},
-			{
-				title: "Area",
-				href: "/docs/area",
-				as: Link,
-				icon: <Icon icon={<ViewQuiltOutlined />} />,
-			},
+			// {
+			// 	title: "Area",
+			// 	href: "/docs/area",
+			// 	as: Link,
+			// 	icon: <Icon icon={<ViewQuiltOutlined />} />,
+			// },
 			{
 				title: "Badge",
 				href: "/docs/badge",

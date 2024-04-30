@@ -1,3 +1,6 @@
+.i-datagrid-container {
+	border-radius: var(--radius);
+}
 .i-datagrid-loading {
 	overflow: hidden !important;
 	user-select: none;
@@ -19,7 +22,6 @@
 	display: grid;
 	contain: content;
 	content-visibility: auto;
-	white-space: nowrap;
 	width: fit-content;
 	grid-template-columns: var(--grid-template-columns);
 	grid-template-rows: var(--grid-template-rows);
@@ -40,6 +42,7 @@
 
 .i-datagrid-striped {
 	.i-datagrid-row {
+		--datagrid-border-color: var(--color-8);
 		&:nth-child(odd) {
 			--datagrid-cell-background: var(--color-9);
 		}
@@ -47,11 +50,18 @@
 }
 
 .i-datagrid .i-datagrid-row {
-	--datagrid-cell-background: var(--background-1);
+	--datagrid-cell-background: var(--background);
 
 	display: contents;
 	&:hover {
+		--datagrid-border-color: var(--color-8);
 		--datagrid-cell-background: var(--color-main-0);
+		.i-datagrid-cell {
+			z-index: 1;
+		}
+		[class*=" i-datagrid-cell-fixed"] {
+			z-index: 3;
+		}
 	}
 }
 
@@ -73,15 +83,28 @@
 		border-bottom-right-radius: var(--radius);
 	}
 }
+[class*=" i-datagrid-cell-fixed"] {
+	z-index: 2;
+}
+.i-datagrid-cell-content {
+	min-width: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
 .i-datagrid-header {
 	.i-datagrid-cell {
-		--datagrid-cell-background: var(--color-9);
-		z-index: 2;
+		--datagrid-cell-background: var(--background-opacity-2);
+		z-index: 3;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		line-height: 1;
 		user-select: none;
+		backdrop-filter: var(--blur);
+	}
+	[class*=" i-datagrid-cell-fixed"] {
+		z-index: 4;
 	}
 }
 
@@ -92,7 +115,7 @@
 	transition: 0.12s;
 	cursor: ew-resize;
 	&:hover {
-		background: var(--color-5);
+		background-color: var(--color-5);
 	}
 }
 

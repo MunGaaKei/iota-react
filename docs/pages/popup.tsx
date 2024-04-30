@@ -41,11 +41,15 @@ export default function Page() {
 
 			<Popup
 				content={<div style={{ width: 120, height: 120 }}></div>}
-				className='bg-brown-0'
+				className='bg-brown'
 				position='left'
 				touchable
 			>
 				<Button className='mx-auto'>Popup</Button>
+			</Popup>
+
+			<Popup content={<div className='pd-12'>随意的内容</div>}>
+				<Button className='mt-40'>hover me</Button>
 			</Popup>
 		</Flex>
 	);

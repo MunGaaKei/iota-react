@@ -5,7 +5,7 @@ import { IStepItem } from "./type";
 
 const STATUS = ["finished", "active", "pending"];
 
-function renderIcon(i: number, status: string) {
+function defaultRenderIcon(i: number, status: string) {
 	return (
 		<span className='i-step-item-index'>
 			{status === "finished" ? (
@@ -21,7 +21,7 @@ function Item(props: IStepItem) {
 	const {
 		index = 0,
 		active = 0,
-		icon = renderIcon,
+		renderIcon = defaultRenderIcon,
 		title,
 		vertical,
 		divider = <Divider />,
@@ -49,7 +49,7 @@ function Item(props: IStepItem) {
 			{vertical ? (
 				<>
 					<div className='i-step-item-left'>
-						{icon?.(index, status)}
+						{renderIcon?.(index, status)}
 						{divider}
 					</div>
 					<div className='i-step-item-right'>
@@ -64,7 +64,7 @@ function Item(props: IStepItem) {
 			) : (
 				<>
 					<div className='i-step-item-title'>
-						{icon?.(index, status)}
+						{renderIcon?.(index, status)}
 
 						<span>{title}</span>
 
