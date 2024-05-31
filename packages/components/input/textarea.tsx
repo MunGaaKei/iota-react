@@ -6,6 +6,7 @@ import {
 	forwardRef,
 	useCallback,
 	useEffect,
+	useRef,
 } from "react";
 import "../../css/input.css";
 import InputContainer from "./container";
@@ -16,14 +17,18 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 	const {
 		label,
 		name,
-		value = "",
+		value = props.initValue ?? "",
+		initValue,
 		labelInline,
-		className = "",
+		className,
 		status = "normal",
 		message,
+		autoSize,
+		border,
+		style,
 		onChange,
 		onEnter,
-		...rest
+		...restProps
 	} = props;
 
 	const state = useReactive({
@@ -31,6 +36,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		status,
 		message,
 	});
+	const refTextarea = useRef<HTMLDivElement>(null);
 
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,6 +46,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 				message,
 				value: v,
 			});
+
+			const ta = refTextarea.current?.firstChild as HTMLElement;
+			if (autoSize && ta) {
+				ta.style.height = "inherit";
+				ta.style.height = `${ta.scrollHeight}px`;
+			}
 
 			onChange?.(v, e);
 		},
@@ -57,6 +69,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		});
 	}, [status, message]);
 
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
+
 	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
@@ -65,7 +81,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		className: "i-input i-textarea",
 		onChange: handleChange,
 		onKeyDown: handleKeydown,
-		...rest,
+		...restProps,
 	};
 
 	return (
@@ -73,10 +89,13 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 			label={label}
 			labelInline={labelInline}
 			className={className}
+			style={style}
 		>
 			<div
+				ref={refTextarea}
 				className={classNames("i-input-item", {
 					[`i-input-${sts}`]: sts !== "normal",
+					"i-input-borderless": !border,
 				})}
 			>
 				<textarea {...inputProps} />

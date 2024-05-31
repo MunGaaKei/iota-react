@@ -8,60 +8,84 @@ export const DBasic = {
 		return (
 			<>
 				<Button onClick={() => setVisible(true)}>打开</Button>
-				<Drawer visible={visible} onVisibleChange={setVisible}>
-					<div className='pd-12'>
-						<Button>11</Button>
+				<Drawer
+					visible={visible}
+					header={<h5>止战之殇</h5>}
+					footer={<Button className='bg-red mx-auto'>播放</Button>}
+					onVisibleChange={setVisible}
+				>
+					<div className='px-12'>
+						恶夜燃烛光 天破息战乱 殇歌传千里 家乡平饥荒
 					</div>
 				</Drawer>
 			</>
 		);
 	},
-	code: ``,
+	code: `const [visible, setVisible] = useState(false);
+
+return (
+	<>
+		<Button onClick={() => setVisible(true)}>打开</Button>
+		<Drawer
+			visible={visible}
+			header={<h5>止战之殇</h5>}
+			footer={<Button className='bg-red mx-auto'>播放</Button>}
+			onVisibleChange={setVisible}
+		>
+			<div className='px-12'>
+				恶夜燃烛光 天破息战乱 殇歌传千里 家乡平饥荒
+			</div>
+		</Drawer>
+	</>
+);`,
 	lang: "javascript",
 };
 
 export const PDrawer = [
 	{
-		name: "items",
-		desc: "子项，也可以通过 Collapse.Item 传入。items 优先级更高",
-		type: [
-			<a className='blue' href='/docs/collapse#collapse-item'>
-				ICollapseItem[]
-			</a>,
-		],
-	},
-	{
-		name: "active",
-		desc: "激活项，multiple 值是 true 的时候可为数组",
-		type: ["string", "number", "(string | number)[]"],
-	},
-	{
-		name: "multiple",
-		desc: "是否可以同时展开多个",
+		name: "visible",
+		desc: "是否显示",
 		type: ["boolean"],
 		def: "false",
 	},
 	{
-		name: "border",
-		desc: "边框",
+		name: "position",
+		desc: "打开位置",
+		type: ["'top'", "'left'", "'bottom'", "'right'"],
+		def: "'left'",
+	},
+	{
+		name: "header",
+		desc: "头部内容",
+		type: ["ReactNode"],
+	},
+	{
+		name: "footer",
+		desc: "底部内容",
+		type: ["ReactNode"],
+	},
+	{
+		name: "hideCloseButton",
+		desc: "隐藏关闭按钮",
 		type: ["boolean"],
 		def: "false",
 	},
 	{
-		name: "headerClickable",
-		desc: "点击 header 也可以展开",
+		name: "backdropClosable",
+		desc: "可以通过点击背景层关闭",
 		type: ["boolean"],
-		def: "false",
+		def: "true",
 	},
 	{
-		name: "renderToggle",
-		desc: "渲染展开按钮图标",
-		type: ["(active?: boolean) => ReactNode"],
+		name: "onVisibleChange",
+		desc: "打开关闭时触发",
+		type: ["(visible: boolean) => void"],
+		event: true,
 	},
 	{
-		name: "onCollapse",
-		desc: "卡片边框",
-		type: ["(key: string | number, active: boolean) => void"],
+		name: "onClose",
+		desc: "关闭时触发",
+		type: ["() => void"],
 		event: true,
 	},
 ];

@@ -2,13 +2,7 @@ import { clamp, formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import {
-	ChangeEvent,
-	FocusEvent,
-	forwardRef,
-	useCallback,
-	useEffect,
-} from "react";
+import { ChangeEvent, forwardRef, useCallback, useEffect } from "react";
 import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
@@ -19,19 +13,22 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 	const {
 		label,
 		name,
-		value = "",
+		value = props.initValue ?? "",
+		initValue,
 		labelInline,
 		step = 1,
 		min = -Infinity,
 		max = Infinity,
 		thousand,
-		decimal,
+		precision,
 		type,
 		className,
 		status = "normal",
 		append,
+		border,
 		prepend,
 		message,
+		style,
 		onChange,
 		onEnter,
 		onInput,
@@ -51,8 +48,8 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 	);
 
 	const getFormatNumber = useCallback(
-		(v: number) => formatNumber(v, { decimal, thousand }),
-		[decimal, thousand]
+		(v: number) => formatNumber(v, { precision, thousand }),
+		[precision, thousand]
 	);
 
 	const formatInputValue = useCallback(
@@ -75,7 +72,7 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 			value: v,
 		});
 
-		onChange?.(v, e);
+		onChange?.(+v, e);
 	});
 
 	const handleOperate = useMemoizedFn((param: number) => {
@@ -83,20 +80,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		const result = getRangeNumber(+value + param);
 
 		state.value = getFormatNumber(result);
-
-		onChange?.(result);
-	});
-
-	const handleBlur = useMemoizedFn((e: FocusEvent<HTMLInputElement>) => {
-		onBlur?.(e);
-
-		const { value } = e.target;
-		if (value === "") return;
-
-		const v = +formatInputValue(value);
-		const result = isNaN(v) ? "" : getRangeNumber(v);
-
-		state.value = result ? getFormatNumber(result) : result;
 
 		onChange?.(result);
 	});
@@ -119,7 +102,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		value: v,
 		className: "i-input i-input-number",
 		onChange: handleChange,
-		onBlur: handleBlur,
 		...rest,
 	};
 
@@ -128,10 +110,12 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 			label={label}
 			labelInline={labelInline}
 			className={className}
+			style={style}
 		>
 			<div
 				className={classNames("i-input-item", {
 					[`i-input-${sts}`]: sts !== "normal",
+					"i-input-borderless": !border,
 				})}
 			>
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}

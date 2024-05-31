@@ -80,7 +80,7 @@ export const DBasic = {
 		] as IColumn[];
 
 		const { list } = mock({
-			"list|50": [
+			"list|20": [
 				{
 					"id|+1": 1,
 					name: "@cname",
@@ -126,7 +126,7 @@ export const DBasic = {
 }, ...[]];
 
 const { list } = mock({
-    "list|50": [
+    "list|20": [
         {
             "id|+1": 1,
             name: "@cname",

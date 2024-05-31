@@ -1,56 +1,21 @@
-import { Button, Flex, Icon, List, Popup, Tag } from "@p";
-import { KeyboardCommandKeyRound } from "@ricons/material";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, DVariant, PPopup } from "./components/props/popup";
 
 export default function Page() {
 	return (
-		<Flex gap={12} direction='column'>
-			<Popup
-				content={
-					<div className='pd-8'>
-						<>
-							<List.Item type='option'>
-								<span>复制</span>
-								<Tag size='small' className='bg-blue-0'>
-									<Icon
-										icon={<KeyboardCommandKeyRound />}
-										size='1.125em'
-									/>
-									<span>C</span>
-								</Tag>
-							</List.Item>
-							<List.Item type='option'>
-								<span>粘贴</span>
-								<Tag size='small' className='bg-blue-0'>
-									<Icon
-										icon={<KeyboardCommandKeyRound />}
-										size='1.125em'
-									/>
-									<span>V</span>
-								</Tag>
-							</List.Item>
-						</>
-					</div>
-				}
-				trigger='contextmenu'
-			>
-				<div
-					style={{ width: 200, height: 200 }}
-					className='bg-grey'
-				></div>
-			</Popup>
+		<>
+			<h2 className='mb-40'>Popup</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
 
-			<Popup
-				content={<div style={{ width: 120, height: 120 }}></div>}
-				className='bg-brown'
-				position='left'
-				touchable
-			>
-				<Button className='mx-auto'>Popup</Button>
-			</Popup>
+			<h3 className='mb-12 mt-80'>其它类型</h3>
+			<Demo source={DVariant} defaultCollapse />
 
-			<Popup content={<div className='pd-12'>随意的内容</div>}>
-				<Button className='mt-40'>hover me</Button>
-			</Popup>
-		</Flex>
+			<h3 id='#api' className='mt-80 mb-20'>
+				Api 参考
+			</h3>
+			<Api apis={PPopup} />
+		</>
 	);
 }

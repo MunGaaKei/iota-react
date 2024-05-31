@@ -2,7 +2,7 @@ import { CalendarMonthTwotone } from "@ricons/material";
 import { useReactive } from "ahooks";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Icon from "../icon";
 import Input from "../input";
 import Popup from "../popup";
@@ -23,7 +23,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		weeks,
 		format = "YYYY-MM-DD",
 		renderDate,
-		renderWeek,
 		renderMonth,
 		renderYear,
 		popupProps,
@@ -66,9 +65,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		onChange?.(v);
 	};
 
-	const handleBlur = (e) => {
-		onBlur?.(e);
-
+	const handleSetDate = () => {
 		if (!state.value) return;
 
 		const date = dayjs(state.value as string, FORMATTYPES, true);
@@ -80,6 +77,16 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 
 		handleChange("");
 	};
+
+	const handleBlur = (e) => {
+		onBlur?.(e);
+
+		handleSetDate();
+	};
+
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
 
 	const { value: val, message: msg, status: sts } = state;
 
@@ -94,7 +101,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 					value={dayJsValue}
 					weeks={weeks}
 					renderDate={renderDate}
-					renderWeek={renderWeek}
 					renderMonth={renderMonth}
 					renderYear={renderYear}
 					disabledDate={disabledDate}
@@ -118,6 +124,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 				}
 				onChange={handleChange}
 				onBlur={handleBlur}
+				onEnter={handleSetDate}
 				{...restProps}
 			/>
 		</Popup>

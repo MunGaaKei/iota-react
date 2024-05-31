@@ -2,7 +2,7 @@ import { formatOption } from "@p/js/utils";
 import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import "../../css/input.css";
 import "./index.css";
 import RadioItem from "./item";
@@ -45,6 +45,10 @@ function Radio(props: IRadio) {
 		state.value = value;
 		onChange?.(value, e);
 	});
+
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
 
 	return (
 		<div

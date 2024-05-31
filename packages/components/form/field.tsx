@@ -27,8 +27,7 @@ export default function Field(props: IField) {
 		(v) => {
 			if (!name) return;
 
-			form.data[name] = v;
-			state.value = v;
+			form.set(name, v);
 		},
 		[name]
 	);
@@ -55,7 +54,10 @@ export default function Field(props: IField) {
 	useEffect(() => {
 		if (!name) return;
 
-		PubSub.subscribe(`${id}:set:${name}`, (evt, v) => (state.value = v));
+		PubSub.subscribe(`${id}:set:${name}`, (evt, v) => {
+			state.value = v;
+			state.update += 1;
+		});
 		PubSub.subscribe(`${id}:invalid:${name}`, (evt, v) => {
 			Object.assign(state, v);
 			state.update += 1;

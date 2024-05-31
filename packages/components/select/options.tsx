@@ -1,6 +1,7 @@
 import { Icon, List, Tag } from "@p";
 import { TOption } from "@p/type";
-import { SearchRound } from "@ricons/material";
+import { CheckRound, SearchRound } from "@ricons/material";
+import classNames from "classnames";
 import Empty from "../utils/empty";
 import { ISelectOptions } from "./type";
 
@@ -17,7 +18,11 @@ export const Options = (props: ISelectOptions) => {
 	} = props;
 
 	return (
-		<div className='i-select-options'>
+		<div
+			className={classNames("i-select-options", {
+				"i-select-options-multiple": multiple,
+			})}
+		>
 			{filter && multiple && (
 				<div className='i-select-filter'>
 					<Icon
@@ -50,6 +55,13 @@ export const Options = (props: ISelectOptions) => {
 						onClick={() => onSelect?.(value, option)}
 						disabled={disabled}
 					>
+						{multiple && (
+							<Icon
+								icon={<CheckRound />}
+								className='i-select-option-check'
+								size='1em'
+							/>
+						)}
 						{label}
 					</List.Item>
 				);

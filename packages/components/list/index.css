@@ -17,6 +17,6 @@
 	user-select: none;
 	white-space: nowrap;
 	&:hover {
-		background: var(--background-1);
+		background-color: var(--background-opacity-1);
 	}
 }

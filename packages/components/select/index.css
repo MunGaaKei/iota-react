@@ -32,15 +32,30 @@
 	border-radius: inherit;
 
 	.i-list-item {
-		color: var(--color-4);
+		justify-content: unset;
+		align-items: center;
+		color: var(--color-5);
 		&.i-list-item-active {
 			color: var(--color-main);
 			background: var(--color-main-0);
+			.i-select-option-check {
+				opacity: 1;
+			}
 		}
 		&.disabled {
 			pointer-events: none;
 		}
 	}
+}
+.i-select-options-multiple {
+	.i-list-item {
+		&.i-list-item-active {
+			background: transparent;
+		}
+	}
+}
+.i-select-option-check {
+	opacity: 0;
 }
 
 .i-select-filter {

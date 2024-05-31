@@ -44,7 +44,6 @@ const Panel = (props: IBaseDates) => {
 		unitYear,
 		unitMonth,
 		renderDate,
-		renderWeek,
 		renderMonth = (m: ReactNode) => m,
 		renderYear = (y: ReactNode) => y,
 		disabledDate,
@@ -112,6 +111,11 @@ const Panel = (props: IBaseDates) => {
 
 		state.years = years;
 	}, [state.selectable]);
+
+	useEffect(() => {
+		state.today = value;
+		state.month = value || dayjs();
+	}, [value]);
 
 	return (
 		<div className='i-datepicker'>
@@ -202,7 +206,6 @@ const Panel = (props: IBaseDates) => {
 				disabledDate={disabledDate}
 				onDateClick={handleChangeDate}
 				renderDate={renderDate}
-				renderWeek={renderWeek}
 			/>
 		</div>
 	);

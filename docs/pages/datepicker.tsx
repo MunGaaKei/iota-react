@@ -1,19 +1,16 @@
-import { Datepicker } from "@p";
-import { useReactive } from "ahooks";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PDatepicker } from "./components/props/datepicker";
 
 export default function Page() {
-	const state = useReactive({
-		date: undefined,
-	});
-
 	return (
 		<>
-			<Datepicker
-				value={state.date}
-				onChange={(v: any) => (state.date = v)}
-				style={{ width: 240 }}
-				placeholder='请选择日期'
-			/>
+			<h2 className='mb-40'>Datepicker</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PDatepicker} />
 		</>
 	);
 }

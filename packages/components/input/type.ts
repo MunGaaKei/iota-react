@@ -23,7 +23,10 @@ export interface IInputContainer {
 
 export interface IInput
 	extends BaseInput,
-		Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange"> {
+		Omit<
+			InputHTMLAttributes<HTMLInputElement>,
+			"value" | "defaultValue" | "onChange"
+		> {
 	prepend?: ReactNode;
 	append?: ReactNode;
 	hideVisible?: boolean;
@@ -33,12 +36,17 @@ export interface ITextarea
 	extends BaseInput,
 		Omit<
 			TextareaHTMLAttributes<HTMLTextAreaElement>,
-			"value" | "onChange"
-		> {}
+			"value" | "defaultValue" | "onChange"
+		> {
+	autoSize?: boolean;
+}
 
 export interface IInputNumber
 	extends BaseInput,
-		Omit<InputHTMLAttributes<HTMLInputElement>, "onChange"> {
+		Omit<
+			InputHTMLAttributes<HTMLInputElement>,
+			"onChange" | "defaultValue"
+		> {
 	value?: string | number;
 	prepend?: ReactNode;
 	append?: ReactNode;
@@ -46,14 +54,14 @@ export interface IInputNumber
 	min?: number;
 	max?: number;
 	thousand?: string;
-	decimal?: number;
+	precision?: number;
 }
 
 export interface IInputRange
 	extends Omit<BaseInput, "value" | "onChange">,
 		Omit<
 			InputHTMLAttributes<HTMLInputElement>,
-			"value" | "placeholder" | "onChange"
+			"value" | "defaultValue" | "placeholder" | "onChange"
 		> {
 	value?: (number | string | undefined)[];
 	placeholder?: string[];
@@ -63,7 +71,7 @@ export interface IInputRange
 	append?: ReactNode;
 	step?: number;
 	thousand?: string;
-	decimal?: number;
+	precision?: number;
 	onChange?: (
 		value: (number | string | undefined)[],
 		e?: ChangeEvent<HTMLInputElement> | MouseEvent<Element>

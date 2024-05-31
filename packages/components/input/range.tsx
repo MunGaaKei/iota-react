@@ -2,13 +2,7 @@ import { clamp, formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound, SyncAltRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import {
-	ChangeEvent,
-	FocusEvent,
-	MouseEvent,
-	useCallback,
-	useEffect,
-} from "react";
+import { ChangeEvent, MouseEvent, useCallback, useEffect } from "react";
 import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
@@ -19,7 +13,8 @@ const Range = (props: IInputRange) => {
 	const {
 		label,
 		name,
-		value,
+		value = props.initValue ?? "",
+		initValue,
 		labelInline,
 		min = -Infinity,
 		max = Infinity,
@@ -31,11 +26,13 @@ const Range = (props: IInputRange) => {
 		prepend,
 		step = 1,
 		thousand,
-		decimal,
+		precision,
 		placeholder,
+		border,
 		onChange,
 		onBlur,
-		...rest
+		style,
+		...restProps
 	} = props;
 
 	const state = useReactive({
@@ -50,8 +47,8 @@ const Range = (props: IInputRange) => {
 	);
 
 	const getFormatNumber = useCallback(
-		(v: number) => formatNumber(v, { decimal, thousand }),
-		[decimal, thousand]
+		(v: number) => formatNumber(v, { precision, thousand }),
+		[precision, thousand]
 	);
 
 	const formatInputValue = useCallback(
@@ -70,7 +67,7 @@ const Range = (props: IInputRange) => {
 			const v = formatInputValue(value.replace(/[^\d\.-]/g, ""));
 
 			const range = Array.isArray(state.value) ? state.value : [];
-			range[i] = v;
+			range[i] = +v;
 
 			Object.assign(state, {
 				status,
@@ -78,24 +75,6 @@ const Range = (props: IInputRange) => {
 				value: range,
 			});
 
-			onChange?.(range, e);
-		}
-	);
-
-	const handleBlur = useMemoizedFn(
-		(e: FocusEvent<HTMLInputElement>, i: number) => {
-			onBlur?.(e);
-
-			const { value } = e.target;
-			if (value === "") return;
-
-			const v = +formatInputValue(value);
-			const result = isNaN(v) ? "" : getRangeNumber(v);
-			const range = Array.isArray(state.value) ? state.value : [];
-
-			range[i] = result !== "" ? getFormatNumber(result) : result;
-
-			state.value = range;
 			onChange?.(range, e);
 		}
 	);
@@ -125,6 +104,7 @@ const Range = (props: IInputRange) => {
 		range[1] = v;
 
 		state.value = range;
+		onChange?.(range);
 	});
 
 	useEffect(() => {
@@ -142,7 +122,7 @@ const Range = (props: IInputRange) => {
 	const inputProps = {
 		name,
 		className: "i-input i-input-number",
-		...rest,
+		...restProps,
 	};
 
 	return (
@@ -150,10 +130,12 @@ const Range = (props: IInputRange) => {
 			label={label}
 			labelInline={labelInline}
 			className={className}
+			style={style}
 		>
 			<div
 				className={classNames("i-input-item", {
 					[`i-input-${sts}`]: sts !== "normal",
+					"i-input-borderless": !border,
 				})}
 			>
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}
@@ -169,7 +151,6 @@ const Range = (props: IInputRange) => {
 					placeholder={placeholder?.[0]}
 					{...inputProps}
 					onChange={(e) => handleChange(e, 0)}
-					onBlur={(e) => handleBlur(e, 0)}
 				/>
 
 				<Helpericon
@@ -194,7 +175,6 @@ const Range = (props: IInputRange) => {
 					placeholder={placeholder?.[1]}
 					{...inputProps}
 					onChange={(e) => handleChange(e, 1)}
-					onBlur={(e) => handleBlur(e, 1)}
 				/>
 
 				<Helpericon

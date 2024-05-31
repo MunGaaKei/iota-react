@@ -4,11 +4,11 @@ import Context from "./context";
 import Field from "./field";
 import "./index.css";
 import { IForm } from "./type";
-import useForm, { IFormHandler } from "./useForm";
+import useForm, { IFormInstance } from "./useForm";
 
 const Form = (props: IForm): JSX.Element => {
 	const {
-		form = {} as IFormHandler,
+		form = {} as IFormInstance,
 		rules = {},
 		initialValues = {},
 		style,

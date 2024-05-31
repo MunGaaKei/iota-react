@@ -1,14 +1,14 @@
 import { HTMLAttributes, ReactNode } from "react";
-import { IFormHandler } from "./useForm";
+import { IFormInstance } from "./useForm";
 
-export type Tvalidator = (value: any, form?: IFormHandler) => string | boolean;
+export type TValidator = (value: any, form: IFormInstance) => string | boolean;
 
 export interface IForm extends HTMLAttributes<HTMLFormElement> {
-	form?: IFormHandler;
+	form?: IFormInstance;
 	rules?: {
-		[key: string]: Tvalidator;
+		[key: string]: TValidator;
 	};
-	initialValues?: any;
+	initialValues?: Record<string, any>;
 	width?: string | number;
 }
 

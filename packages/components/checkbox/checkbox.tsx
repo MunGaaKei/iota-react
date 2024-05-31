@@ -2,7 +2,7 @@ import { formatOption } from "@p/js/utils";
 import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { ReactNode, useMemo } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import "../../css/input.css";
 import "./index.css";
 import CheckboxItem from "./item";
@@ -13,7 +13,7 @@ function Checkbox(props: ICheckbox) {
 		label,
 		name,
 		options = [],
-		value = [],
+		value = "",
 		type = "default",
 		optionInline = true,
 		labelInline,
@@ -55,6 +55,10 @@ function Checkbox(props: ICheckbox) {
 		state.value = group;
 		onChange?.(group, opt, e);
 	});
+
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
 
 	return (
 		<div

@@ -14,7 +14,6 @@ const Dates = (
 		month,
 		weeks = ["一", "二", "三", "四", "五", "六", "日"],
 		renderDate = (date: Dayjs) => date.date(),
-		renderWeek = (w: ReactNode) => w,
 		disabledDate,
 		onDateClick,
 	} = props;
@@ -64,7 +63,7 @@ const Dates = (
 			<div className='i-datepicker-weeks'>
 				{weeks.map((week: ReactNode, i: number) => (
 					<span key={i} className='i-datepicker-week'>
-						{renderWeek(week)}
+						{week}
 					</span>
 				))}
 			</div>

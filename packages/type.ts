@@ -31,6 +31,7 @@ export type TValidate = {
 export interface BaseInput extends TValidate {
 	label?: ReactNode;
 	value?: any;
+	initValue?: any;
 	labelInline?: boolean;
 	clear?: boolean;
 	border?: boolean;

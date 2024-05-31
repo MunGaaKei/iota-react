@@ -10,7 +10,6 @@ export default function Page() {
 			<Demo source={DBasic} />
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
-			<h4 className='mb-20 blue'>Description</h4>
 			<Api apis={PDrawer} />
 		</>
 	);

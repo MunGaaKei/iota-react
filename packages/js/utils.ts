@@ -234,13 +234,13 @@ export function animate(
 export function formatNumber(
 	value: number,
 	options: {
-		decimal?: number;
+		precision?: number;
 		thousand?: string;
 	} = {}
 ) {
-	const { decimal, thousand } = options;
+	const { precision, thousand } = options;
 
-	const result = value.toFixed(decimal);
+	const result = value.toFixed(precision);
 
 	if (!thousand) return result;
 

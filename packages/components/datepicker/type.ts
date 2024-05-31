@@ -15,11 +15,9 @@ export interface IBaseDates {
 	value?: any;
 	format?: string;
 	weeks?: ReactNode[];
-	range?: string[];
 	unitYear?: ReactNode;
 	unitMonth?: ReactNode;
 	renderDate?: (date: Dayjs) => ReactNode;
-	renderWeek?: (week: ReactNode) => ReactNode;
 	renderMonth?: (month: number) => ReactNode;
 	renderYear?: (year: number) => ReactNode;
 	onDateClick?: (date: Dayjs) => void;

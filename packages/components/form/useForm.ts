@@ -1,11 +1,11 @@
 import { uid } from "radash";
 import { useRef } from "react";
-import { Tvalidator } from "./type";
+import { TValidator } from "./type";
 
-export class IFormHandler {
+export class IFormInstance {
 	readonly id?: string;
 	data: { [key: string]: any } = {};
-	rules?: { [key: string]: Tvalidator } = {};
+	rules?: { [key: string]: TValidator } = {};
 
 	constructor() {
 		this.id = uid(8);
@@ -36,8 +36,8 @@ export class IFormHandler {
 		if (!this.data) return;
 
 		Object.keys(this.data).map((name) => {
+			PubSub.publish(`${this.id}:set:${name}`, undefined);
 			this.data[name] = undefined;
-			PubSub.publish(`${this.id}:set:${name}`, "");
 		});
 	}
 
@@ -88,11 +88,11 @@ export class IFormHandler {
 	}
 }
 
-export default function useForm(form?: IFormHandler) {
-	const formRef = useRef<IFormHandler>();
+export default function useForm(form?: IFormInstance) {
+	const formRef = useRef<IFormInstance>();
 
 	if (!formRef.current) {
-		formRef.current = form ?? new IFormHandler();
+		formRef.current = form ?? new IFormInstance();
 	}
 
 	return formRef.current;

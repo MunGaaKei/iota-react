@@ -1,5 +1,6 @@
 import { Button, Flex, Icon, Message } from "@p";
 import {
+	CodeRound,
 	CopyAllTwotone,
 	UnfoldLessRound,
 	UnfoldMoreRound,
@@ -10,10 +11,17 @@ import Scrollbars from "react-custom-scrollbars-2";
 import CodeView from "../code";
 import "./index.css";
 
-export default function Demo(props) {
-	const { source, className, inline } = props;
+interface IDemo {
+	source: any;
+	defaultCollapse?: boolean;
+	className?: string;
+	inline?: boolean;
+}
+
+export default function Demo(props: IDemo) {
+	const { source, defaultCollapse = false, className, inline } = props;
 	const { demo, code, lang } = source;
-	const [collapsed, setCollapsed] = useState<any>(false);
+	const [collapsed, setCollapsed] = useState<boolean>(defaultCollapse);
 
 	const handleCopy = async () => {
 		await navigator.clipboard.writeText(code);
@@ -38,6 +46,13 @@ export default function Demo(props) {
 				})}
 			>
 				<div className='demo-code-actions'>
+					{collapsed && (
+						<Icon
+							icon={<CodeRound />}
+							className='color-5 mr-auto ml-4'
+							size='20px'
+						/>
+					)}
 					<Button.Toggle
 						secondary
 						square
@@ -65,7 +80,7 @@ export default function Demo(props) {
 					<Scrollbars
 						autoHide
 						autoHeight
-						autoHeightMax={400}
+						autoHeightMax={500}
 						className='flex-1'
 					>
 						<CodeView lang={lang}>{code}</CodeView>

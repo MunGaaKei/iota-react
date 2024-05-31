@@ -4,19 +4,13 @@ import Item from "./item";
 import { IDropdown } from "./type";
 
 const Dropdown = (props: IDropdown): JSX.Element => {
-	const {
-		trigger = "click",
-		position = "bottom",
-		width,
-		content,
-		children,
-		...restProps
-	} = props;
+	const { width, content, children, ...restProps } = props;
 
 	return (
 		<Popup
-			trigger={trigger}
-			position={position}
+			trigger='click'
+			position='bottom'
+			touchable
 			content={
 				<List
 					className='i-dropdown-content'

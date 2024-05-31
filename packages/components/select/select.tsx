@@ -10,6 +10,7 @@ import {
 	MouseEvent,
 	forwardRef,
 	useCallback,
+	useEffect,
 	useMemo,
 	useState,
 } from "react";
@@ -120,6 +121,10 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		state.filterValue = e.target.value;
 	};
+
+	useEffect(() => {
+		state.value = value;
+	}, [value]);
 
 	const { value: val, message: msg, status: sts } = state;
 	const hasValue = multiple ? (val as any[]).length > 0 : !!val;

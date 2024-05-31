@@ -1,78 +1,32 @@
-import { Button, Dropdown, Icon, Tag } from "@p";
-import {
-	KeyboardArrowDownRound,
-	KeyboardCommandKeyRound,
-	MoreHorizRound,
-} from "@ricons/material";
-import { useState } from "react";
+import { Flex } from "@p";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PDropdown, PDropdownItem } from "./components/props/dropdown";
 
 export default function Page() {
-	const [visible, setVisible] = useState(false);
-
-	const SubMenu = (
-		<>
-			<Dropdown.Item type='option'>
-				<span>剪切</span>
-				<Tag size='small' className='bg-yellow-0'>
-					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
-					<span>X</span>
-				</Tag>
-			</Dropdown.Item>
-			<Dropdown.Item type='option'>
-				<span>删除</span>
-				<Tag size='small' className='bg-red-0'>
-					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
-					<span>D</span>
-				</Tag>
-			</Dropdown.Item>
-		</>
-	);
-
-	const Dropmenu = (
-		<>
-			<Dropdown.Item type='option'>
-				<span>复制</span>
-				<Tag size='small' className='bg-blue-0'>
-					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
-					<span>C</span>
-				</Tag>
-			</Dropdown.Item>
-			<Dropdown.Item type='option' disabled>
-				<span>粘贴</span>
-				<Tag size='small' className='bg-blue-0'>
-					<Icon icon={<KeyboardCommandKeyRound />} size='1.125em' />
-					<span>V</span>
-				</Tag>
-			</Dropdown.Item>
-			<Dropdown.Item type='option' more={SubMenu}>
-				<span>更多</span>
-				<Icon icon={<MoreHorizRound />} size='1.125em' />
-			</Dropdown.Item>
-			<Button
-				className='bg-grey mt-12'
-				size='small'
-				onClick={() => setVisible(false)}
-			>
-				取消
-			</Button>
-		</>
-	);
-
 	return (
 		<>
-			<Dropdown
-				visible={visible}
-				content={Dropmenu}
-				trigger='hover'
-				width={160}
-				onVisibleChange={setVisible}
-				touchable
-			>
-				<Button>
-					下拉菜单
-					<Icon icon={<KeyboardArrowDownRound />} size='1.25em' />
-				</Button>
-			</Dropdown>
+			<h2 className='mb-40'>Dropdown</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='mb-12'>
+				<Flex gap={12}>
+					<span className='blue'>Dropdown</span>
+
+					<span className='color-5'>extends</span>
+					<a href='/docs/popup#api' className='blue'>
+						Popup
+					</a>
+				</Flex>
+			</h4>
+			<Api apis={PDropdown} />
+
+			<h4 className='mt-40 mb-20 blue'>
+				<span className='opacity-5'>Dropdown.</span>Item
+			</h4>
+			<Api apis={PDropdownItem} />
 		</>
 	);
 }

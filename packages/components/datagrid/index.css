@@ -86,6 +86,12 @@
 [class*=" i-datagrid-cell-fixed"] {
 	z-index: 2;
 }
+.i-datagrid-cell-fixed-right {
+	box-shadow: -2px 0 4px var(--color-9);
+}
+.i-datagrid-cell-fixed-left {
+	box-shadow: 2px 0 4px var(--color-9);
+}
 .i-datagrid-cell-content {
 	min-width: 0;
 	white-space: nowrap;
