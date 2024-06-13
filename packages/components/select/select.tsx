@@ -38,6 +38,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		status = "normal",
 		hideClear,
 		maxDisplay,
+		border,
 		filter,
 		filterPlaceholder = "...",
 		onSelect,
@@ -161,6 +162,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 				<div
 					className={classNames("i-input-item", {
 						[`i-input-${sts}`]: sts !== "normal",
+						"i-input-borderless": !border,
 					})}
 					onClick={() => setActive(true)}
 				>

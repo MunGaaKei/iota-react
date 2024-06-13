@@ -96,6 +96,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 			trigger='click'
 			position='bottom'
 			arrow={false}
+			align='start'
 			content={
 				<Panel
 					value={dayJsValue}
