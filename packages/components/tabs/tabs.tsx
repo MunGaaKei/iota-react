@@ -15,7 +15,6 @@ import {
 } from "react";
 import Button from "../button";
 import Icon from "../icon";
-import List from "../list";
 import Popup from "../popup";
 import "./index.css";
 import TabItem from "./item";
@@ -24,7 +23,7 @@ import { CompositionTabs, ITabItem, ITabs, RefTabs, TTabKey } from "./type";
 type TState = {
 	active?: TTabKey;
 	barStyle: CSSProperties;
-	cache: TTabKey[];
+	cachedTabs: TTabKey[];
 	overflow: boolean;
 	more: ITabItem[];
 };
@@ -32,7 +31,7 @@ type TState = {
 const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const {
 		active,
-		items,
+		tabs: items,
 		type = "default",
 		prepend,
 		append,
@@ -58,7 +57,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const state = useReactive<TState>({
 		active,
 		barStyle: {},
-		cache: [],
+		cachedTabs: [],
 		overflow: false,
 		more: [],
 	});
@@ -74,13 +73,13 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 					key?: TTabKey;
 					props?: any;
 				};
-				const { title, children, content, keepalive } = nodeProps;
+				const { title, children, content, keepDOM } = nodeProps;
 
 				return {
 					key: key || String(i),
 					title,
 					content: children || content,
-					keepalive,
+					keepDOM,
 				};
 			}) as ITabItem[];
 		}
@@ -99,6 +98,11 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 
 			onTabChange?.(undefined, key);
 			state.active = undefined;
+
+			state.barStyle = {
+				height: 0,
+				width: 0,
+			};
 			return;
 		}
 
@@ -107,6 +111,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, []);
 
 	const handleMouseWheel = (e: WheelEvent) => {
+		e.stopPropagation();
 		if (vertical) return;
 
 		navsRef.current?.scrollBy({
@@ -132,16 +137,18 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, [size, hideMore]);
 
 	useEffect(() => {
-		if (!bar || state.active === undefined) return;
+		if (!bar || state.active === undefined) {
+			return;
+		}
 
 		const index = tabs.findIndex((tab) => tab.key === state.active);
 		const nav = navRefs.current[index];
 
 		if (!nav) return;
 
-		if (tabs[index].keepalive && state.active) {
-			const i = state.cache.findIndex((k) => k === state.active);
-			i < 0 && state.cache.unshift(state.active);
+		if (tabs[index].keepDOM && state.active) {
+			const i = state.cachedTabs.findIndex((k) => k === state.active);
+			i < 0 && state.cachedTabs.unshift(state.active);
 		}
 
 		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
@@ -155,7 +162,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, [state.active, bar]);
 
 	useEffect(() => {
-		if (active === undefined) return;
+		if (active === undefined || state.active === active) return;
 
 		open(active);
 	}, [active]);
@@ -191,7 +198,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 				<div
 					ref={navsRef}
 					className='i-tab-navs'
-					onWheel={handleMouseWheel}
+					onWheelCapture={handleMouseWheel}
 				>
 					{tabs.map((tab, i) => {
 						const { title, key = i } = tab;
@@ -228,15 +235,15 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 						position={vertical ? "right" : "bottom"}
 						align='end'
 						touchable
+						hideDelay={500}
 						content={
-							<List className='pd-4'>
+							<div className='i-tabs-morelist pd-4'>
 								{state.more.map((tab, i) => {
 									const { key = i, title } = tab;
 
 									return (
-										<List.Item
+										<a
 											key={key}
-											type='option'
 											className={classNames("i-tab-nav", {
 												"i-tab-active":
 													state.active === key,
@@ -244,10 +251,10 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 											onClick={() => open(key)}
 										>
 											{title}
-										</List.Item>
+										</a>
 									);
 								})}
-							</List>
+							</div>
 						}
 					>
 						{renderMore(state.more)}
@@ -263,7 +270,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 					const isActive = state.active === key;
 					const show =
 						isActive ||
-						(key !== undefined && state.cache.includes(key));
+						(key !== undefined && state.cachedTabs.includes(key));
 
 					return (
 						show && (

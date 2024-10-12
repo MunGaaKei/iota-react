@@ -2,12 +2,12 @@ import {
 	KeyboardArrowLeftRound,
 	KeyboardArrowRightRound,
 } from "@ricons/material";
-import { useMemoizedFn, useReactive } from "ahooks";
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import dayjs, { Dayjs } from "dayjs";
+import { throttle } from "radash";
 import { ReactNode, useCallback, useEffect, useRef } from "react";
 import Icon from "../icon";
-import InfiniteScroll from "../infinitescroll";
 import Helpericon from "../utils/helpericon";
 import Dates from "./dates";
 import { IBaseDates } from "./type";
@@ -82,34 +82,20 @@ const Panel = (props: IBaseDates) => {
 		state.selectable = false;
 	};
 
-	const getMoreYears = useMemoizedFn((isNext) => {
-		const range = 4;
-		let time = range;
-		const years: number[] = [];
+	const getMoreYears = throttle({ interval: 100 }, (e) => {
+		const isUp = e.deltaY < 0;
 
-		if (isNext) {
-			const year = state.years.at(-1) || state.month.year();
-			while (time--) {
-				years.push(year + range - time);
-			}
-			state.years.push(...years);
-		} else {
-			const year = state.years.at(0) || state.month.year();
-			while (time--) {
-				years.unshift(year - range + time);
-			}
-			state.years.unshift(...years);
-		}
+		state.years = state.years.map((y) => (y += isUp ? -1 : 1));
 	});
 
 	useEffect(() => {
 		if (!state.selectable) return;
 
 		state.selectedYear = state.month;
+		const y = state.selectedYear.year();
+		const years = Array.from({ length: 7 }).map((_, i) => y - 3 + i);
 
-		const years: number[] = [state.selectedYear.year()];
-
-		state.years = years;
+		state.years = [...years];
 	}, [state.selectable]);
 
 	useEffect(() => {
@@ -155,32 +141,27 @@ const Panel = (props: IBaseDates) => {
 					onClick={() => (state.selectable = false)}
 				/>
 
-				{state.selectable && (
-					<InfiniteScroll
-						ref={$years}
-						hasNext
-						hasPrev
-						initialOffset={1}
-						className='i-datepicker-years'
-						onLoadMore={getMoreYears}
-					>
-						{state.years.map((y) => (
-							<a
-								key={y}
-								className={classNames("i-datepicker-year", {
-									"i-datepicker-active":
-										y === state.selectedYear.year(),
-								})}
-								onClick={() =>
-									(state.selectedYear =
-										state.selectedYear.year(y))
-								}
-							>
-								{renderYear(y)}
-							</a>
-						))}
-					</InfiniteScroll>
-				)}
+				<div
+					ref={$years}
+					className='i-datepicker-years'
+					onWheel={getMoreYears}
+				>
+					{state.years.map((y) => (
+						<a
+							key={y}
+							className={classNames("i-datepicker-year", {
+								"i-datepicker-active":
+									y === state.selectedYear.year(),
+							})}
+							onClick={() =>
+								(state.selectedYear =
+									state.selectedYear.year(y))
+							}
+						>
+							{renderYear(y)}
+						</a>
+					))}
+				</div>
 
 				<div className='i-datepicker-months'>
 					{MONTHS.map((m) => {

@@ -1,31 +1,64 @@
 import classNames from "classnames";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Button from "../button";
 import Helpericon from "../utils/helpericon";
 import "./index.css";
 import { IModal, IModalContent } from "./type";
 import useModal from "./useModal";
 
 function DefaultContent(props: IModalContent) {
-	const { title, hideCloseButton, children, onHide } = props;
+	const {
+		title,
+		footer,
+		hideCloseButton,
+		footerLeft,
+		okButtonProps = {
+			children: "确定",
+			onClick: props.onOk,
+		},
+		cancelButtonProps = {
+			secondary: true,
+			children: "关闭",
+			onClick: props.onClose,
+		},
+		children,
+		onClose,
+	} = props;
+	const showHeader = title || !hideCloseButton;
+
+	const renderFooter = useMemo(() => {
+		if (footer || footer === null) return footer;
+
+		const propsOk = Object.assign({}, okButtonProps);
+		const propsCancel = Object.assign({}, cancelButtonProps);
+
+		return (
+			<>
+				{footerLeft}
+				<Button {...propsOk} />
+				<Button {...propsCancel} />
+			</>
+		);
+	}, [footer, okButtonProps, cancelButtonProps]);
 
 	return (
 		<>
-			{
+			{showHeader && (
 				<header className='i-modal-header'>
-					{title}
+					{title && <b>{title}</b>}
 
 					<Helpericon
 						active={!hideCloseButton}
 						className='i-modal-close'
-						onClick={onHide}
+						onClick={onClose}
 					/>
 				</header>
-			}
+			)}
 
 			<div className='i-modal-content'>{children}</div>
 
-			{<footer className='i-modal-footer'></footer>}
+			<footer className='i-modal-footer'>{renderFooter}</footer>
 		</>
 	);
 }
@@ -34,7 +67,11 @@ function Modal(props: IModal) {
 	const {
 		visible,
 		title,
+		footer,
+		okButtonProps,
+		cancelButtonProps,
 		closable = true,
+		hideBackdrop,
 		backdropClosable = true,
 		hideCloseButton,
 		width,
@@ -45,8 +82,10 @@ function Modal(props: IModal) {
 		children,
 		style,
 		className,
-		onToggle,
+		footerLeft,
+		onVisibleChange,
 		onClose,
+		onOk,
 		...restProps
 	} = props;
 	const [show, setShow] = useState(visible);
@@ -61,7 +100,7 @@ function Modal(props: IModal) {
 		toggable.current = false;
 		setTimeout(() => {
 			setActive(true);
-			onToggle?.(true);
+			onVisibleChange?.(true);
 			toggable.current = true;
 		}, 24);
 	}, []);
@@ -83,7 +122,7 @@ function Modal(props: IModal) {
 		setTimeout(() => {
 			setShow(false);
 			toggable.current = true;
-			onToggle?.(false);
+			onVisibleChange?.(false);
 			onClose?.();
 		}, 240);
 	}, [closable]);
@@ -104,8 +143,10 @@ function Modal(props: IModal) {
 	return createPortal(
 		<div
 			className={classNames(
-				"i-backdrop-modal",
+				"i-modal-container",
 				{
+					"i-modal-backdrop": !hideBackdrop,
+					"i-modal-customized": customized,
 					"i-modal-active": active,
 					fixed,
 				},
@@ -126,16 +167,20 @@ function Modal(props: IModal) {
 				onClick={(e) => e.stopPropagation()}
 				{...restProps}
 			>
-				{customized ? (
-					children
-				) : (
+				{customized && children}
+
+				{!customized && (
 					<DefaultContent
 						title={title}
 						hideCloseButton={hideCloseButton}
-						onHide={handleHide}
-					>
-						{children}
-					</DefaultContent>
+						footer={footer}
+						okButtonProps={okButtonProps}
+						cancelButtonProps={cancelButtonProps}
+						children={children}
+						footerLeft={footerLeft}
+						onOk={onOk}
+						onClose={handleHide}
+					/>
 				)}
 			</div>
 		</div>,

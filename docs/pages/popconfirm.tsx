@@ -1,45 +1,28 @@
-import { Button, Flex, Icon, Input, Popconfirm } from "@p";
-import { WarningRound } from "@ricons/material";
-import { useState } from "react";
+import { Flex } from "@p";
+import { Link } from "react-router-dom";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PPopconfirm } from "./components/props/popconfirm";
 
 export default function Page() {
-	const [value, setValue] = useState("");
 	return (
-		<Flex gap={12} direction='column' align='start'>
-			<Popconfirm
-				content={
-					<Flex gap={12}>
-						<Icon
-							icon={<WarningRound />}
-							className='error'
-							size='2em'
-						/>
-						<div>
-							<h5>警告</h5>
-							<p className='my-8 color-5'>描述</p>
-							<Input
-								value={value}
-								onChange={setValue}
-								autoFocus
-							/>
-						</div>
-					</Flex>
-				}
-				onOk={async () => {
-					return new Promise((res, rej) => {
-						setTimeout(() => {
-							console.log(value);
+		<>
+			<h2 className='mb-40'>Popconfirm</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
 
-							res();
-						}, 2000);
-					});
-				}}
-				okProps={{ className: "bg-error" }}
-			>
-				<Button>Popconfirm</Button>
-			</Popconfirm>
+			<h3 className='mt-80 mb-12'>Api 参考</h3>
+			<h4 className='mb-12'>
+				<Flex gap={12}>
+					<span className='blue'>Popconfirm</span>
 
-			<Button className='bg-blue mt-40'>撒打发士大夫</Button>
-		</Flex>
+					<span className='color-5'>extends</span>
+					<Link to='/docs/popup#api' className='blue'>
+						Popup
+					</Link>
+				</Flex>
+			</h4>
+			<Api apis={PPopconfirm} />
+		</>
 	);
 }

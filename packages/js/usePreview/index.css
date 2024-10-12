@@ -1,14 +1,22 @@
 .i-preview {
+	padding: 0;
 	.i-modal {
 		position: static;
 		background: transparent;
 		overflow: unset;
 		transform: none;
+		pointer-events: none;
 	}
 }
 
 .i-preview-content {
 	transition: var(--transition);
+	box-shadow: var(--shadow);
+	pointer-events: all;
+	.i-image {
+		max-height: 100%;
+		max-width: 100%;
+	}
 }
 
 .i-preview-controls {
@@ -23,6 +31,7 @@
 	background: var(--background-opacity);
 	border-radius: var(--radius);
 	font-size: 0.9em;
+	pointer-events: all;
 }
 
 .i-preview-unknown {

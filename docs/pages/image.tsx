@@ -1,37 +1,21 @@
-import { Badge, Button, Flex, Image } from "@p";
-import { useState } from "react";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PImage } from "./components/props/image";
 
 export default function Page() {
-	const [src, setSrc] = useState("https://via.placeholder.com/150");
-	const [i, setI] = useState(1);
-
 	return (
 		<>
-			<Flex gap={12}>
-				<Image src={src} lazyload />
-				<Image src='https://via.placeholder.com/200'>
-					<h3>你好</h3>
-				</Image>
-				<Image size={40} className='bg-yellow' round>
-					😊
-				</Image>
-				<Badge content={5} round contentClass='bg-red'>
-					<Image size={40} className='bg-yellow' round>
-						😊
-					</Image>
-				</Badge>
-				<Image src='404'></Image>
-			</Flex>
-			<Flex gap={12} className='my-12'>
-				<Button
-					onClick={() => {
-						setI((n) => n + 1);
-						setSrc("https://via.placeholder.com/" + i * 20);
-					}}
-				>
-					修改src
-				</Button>
-			</Flex>
+			<h2 className='mb-40'>Image</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			{/* <h3 className='mt-80 mb-20'>
+				<span className='color-5'>Image.</span>List
+			</h3>
+			<Demo source={DImageList} /> */}
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PImage} />
 		</>
 	);
 }

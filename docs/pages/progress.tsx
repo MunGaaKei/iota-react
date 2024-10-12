@@ -1,30 +1,19 @@
-import { Button, Progress } from "@p";
-import { DiscordRound } from "@ricons/material";
-import { useState } from "react";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, DCircle, PProgress } from "./components/props/progress";
 
 export default function Page() {
-	const [value, setValue] = useState(0);
-
 	return (
 		<>
-			<Progress
-				className='mb-12'
-				label={`${value.toFixed(0)}%`}
-				value={value}
-				onChange={setValue}
-				cursor={() => <DiscordRound className='white' />}
-			/>
-			<Progress
-				className='mb-12'
-				height={120}
-				type='circle'
-				value={value}
-				onChange={setValue}
-			/>
-			<Button onClick={() => setValue((v) => v + 10)}>plus</Button>
-			<Button className='ml-12' onClick={() => setValue((v) => v - 10)}>
-				minus
-			</Button>
+			<h2 className='mb-40'>Progress</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mb-12 mt-80'>环形</h3>
+			<Demo source={DCircle} />
+
+			<h3 className='mt-80 mb-12'>Api 参考</h3>
+			<Api apis={PProgress} />
 		</>
 	);
 }

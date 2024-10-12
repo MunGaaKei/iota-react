@@ -23,6 +23,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 		className,
 		status = "normal",
 		message,
+		tip,
 		autoSize,
 		border,
 		style,
@@ -33,23 +34,18 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 
 	const state = useReactive({
 		value,
-		status,
-		message,
 	});
 	const refTextarea = useRef<HTMLDivElement>(null);
 
 	const handleChange = useCallback(
 		(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 			const v = e.target.value;
-			Object.assign(state, {
-				status,
-				message,
-				value: v,
-			});
+
+			state.value = v;
 
 			const ta = refTextarea.current?.firstChild as HTMLElement;
 			if (autoSize && ta) {
-				ta.style.height = "inherit";
+				// ta.style.height = "inherit";
 				ta.style.height = `${ta.scrollHeight}px`;
 			}
 
@@ -63,21 +59,13 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 	});
 
 	useEffect(() => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-	}, [status, message]);
-
-	useEffect(() => {
 		state.value = value;
 	}, [value]);
 
-	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
 		name,
-		value: v,
+		value: state.value,
 		className: "i-input i-textarea",
 		onChange: handleChange,
 		onKeyDown: handleKeydown,
@@ -90,17 +78,17 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {
 			labelInline={labelInline}
 			className={className}
 			style={style}
+			tip={message ?? tip}
+			status={status}
 		>
 			<div
 				ref={refTextarea}
 				className={classNames("i-input-item", {
-					[`i-input-${sts}`]: sts !== "normal",
+					[`i-input-${status}`]: status !== "normal",
 					"i-input-borderless": !border,
 				})}
 			>
 				<textarea {...inputProps} />
-
-				{msg && <span className='i-input-message'>{msg}</span>}
 			</div>
 		</InputContainer>
 	);

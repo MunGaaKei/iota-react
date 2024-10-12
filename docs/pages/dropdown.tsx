@@ -1,4 +1,5 @@
 import { Flex } from "@p";
+import { Link } from "react-router-dom";
 import Api from "./components/api";
 import Demo from "./components/demo";
 import { DBasic, PDropdown, PDropdownItem } from "./components/props/dropdown";
@@ -16,9 +17,9 @@ export default function Page() {
 					<span className='blue'>Dropdown</span>
 
 					<span className='color-5'>extends</span>
-					<a href='/docs/popup#api' className='blue'>
+					<Link to='/docs/popup#api' className='blue'>
 						Popup
-					</a>
+					</Link>
 				</Flex>
 			</h4>
 			<Api apis={PDropdown} />

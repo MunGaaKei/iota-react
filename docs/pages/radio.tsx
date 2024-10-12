@@ -1,17 +1,19 @@
-import { Radio } from "@p";
-import { useState } from "react";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, DType, PRadio } from "./components/props/radio";
 
 export default function Page() {
-	const [value, setValue] = useState("双城");
-
 	return (
 		<>
-			<Radio
-				type='button'
-				value={value}
-				options={["双城", "破军", "龙战于野"]}
-				onChange={setValue}
-			/>
+			<h2 className='mb-40'>Radio</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-12'>更多类型</h3>
+			<Demo source={DType} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PRadio} />
 		</>
 	);
 }

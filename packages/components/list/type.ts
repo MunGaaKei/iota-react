@@ -1,12 +1,20 @@
-import { HTMLAttributes } from "react";
+import { ListProps } from "rc-virtual-list";
+import { HTMLAttributes, ReactNode } from "react";
 
 export interface IList extends HTMLAttributes<HTMLUListElement> {
-	virtual?: {};
+	label?: ReactNode | ((i: number) => ReactNode);
+	type?: "option" | "default";
 }
 
-export interface IListItem extends HTMLAttributes<HTMLLIElement> {
+export interface IListItem
+	extends HTMLAttributes<HTMLLIElement>,
+		Pick<IList, "type"> {
 	active?: boolean;
-	type?: "option" | "default";
 	align?: string;
 	disabled?: boolean;
+	label?: ReactNode;
+}
+
+export interface IVirtual extends Omit<ListProps<any>, "children"> {
+	renderItem: (item: any, i: number) => ReactNode;
 }

@@ -1,5 +1,4 @@
 import { formatOption } from "@p/js/utils";
-import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { useEffect, useMemo } from "react";
@@ -20,28 +19,18 @@ function Radio(props: IRadio) {
 		optionInline = true,
 		labelInline,
 		disabled,
+		required,
 		className,
 		onChange,
 	} = props;
 
-	const state = useReactive<{
-		value: any;
-		status?: TStatus;
-		message?: string;
-	}>({
+	const state = useReactive({
 		value,
-		status,
-		message,
 	});
 
 	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
 	const handleChange = useMemoizedFn((value, e) => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-
 		state.value = value;
 		onChange?.(value, e);
 	});
@@ -55,7 +44,7 @@ function Radio(props: IRadio) {
 			className={classNames(
 				"i-radio i-input-label",
 				{
-					[`i-radio-${state.status}`]: state.status !== "normal",
+					[`i-radio-${status}`]: status !== "normal",
 					"i-input-inline": labelInline,
 				},
 				className
@@ -63,11 +52,10 @@ function Radio(props: IRadio) {
 		>
 			{label && (
 				<span className='i-input-label-text'>
+					{required && <span className='error'>*</span>}
 					{label}
 
-					{state.message && (
-						<p className='i-radio-message'>*{state.message}</p>
-					)}
+					{message && <p className='i-radio-message'>{message}</p>}
 				</span>
 			)}
 

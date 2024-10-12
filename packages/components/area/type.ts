@@ -7,8 +7,7 @@ import { ScrollbarProps } from "react-custom-scrollbars-2";
 import Item from "./item";
 
 export interface IArea extends ScrollbarProps {
-	layout?: "naruto" | "sasuke" | "goku";
-	contentWidth?: string;
+	layout?: "ltcb" | "tlrb";
 }
 
 export interface IAreaItem extends HTMLAttributes<HTMLElement> {

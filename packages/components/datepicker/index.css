@@ -88,10 +88,9 @@
 	z-index: 1;
 	padding: 8px;
 	gap: 0.5em;
-	background: var(--background-opacity);
+	background: var(--background);
 	backdrop-filter: var(--blur);
 	display: flex;
-	align-items: center;
 	pointer-events: none;
 	opacity: 0;
 	transition: var(--transition);
@@ -101,32 +100,33 @@
 	}
 }
 .i-datepicker-years {
-	width: 32%;
-	padding: 0 0.5em;
+	width: 5em;
 	overflow-x: hidden;
 	display: flex;
 	flex-direction: column;
 	max-height: 100%;
 	gap: 0.25em;
 }
-.i-datepicker-years-content {
-	display: flex;
-	flex-direction: column;
-}
 .i-datepicker-months {
+	margin-top: 1.5em;
 	flex: 1;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 0.25em;
 }
+.i-datepicker-year {
+	flex: 1;
+}
 .i-datepicker-year,
 .i-datepicker-month {
-	padding: 0.25em 0.5em;
+	display: flex;
+	padding: 2px;
 	user-select: none;
 	border-radius: var(--radius);
-	text-align: center;
+	justify-content: center;
+	align-items: center;
 	&:hover {
-		background: var(--color-main-0);
+		background-color: var(--background-opacity-2);
 	}
 	&.i-datepicker-active {
 		background: var(--color-main);
@@ -137,6 +137,6 @@
 
 .i-datepicker-close {
 	position: absolute;
-	right: 0.5em;
-	top: 0.5em;
+	right: 0;
+	top: 0;
 }

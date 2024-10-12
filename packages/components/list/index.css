@@ -12,11 +12,14 @@
 
 .i-list-option {
 	position: relative;
-	justify-content: space-between;
 	cursor: pointer;
 	user-select: none;
 	white-space: nowrap;
 	&:hover {
 		background-color: var(--background-opacity-1);
 	}
+}
+
+.i-list-item-label {
+	align-self: flex-start;
 }

@@ -8,6 +8,7 @@ const Item = forwardRef<HTMLLIElement, IListItem>((props, ref) => {
 		type,
 		align,
 		disabled,
+		label,
 		style,
 		className,
 		children,
@@ -25,6 +26,9 @@ const Item = forwardRef<HTMLLIElement, IListItem>((props, ref) => {
 			style={{ alignItems: align, ...style }}
 			{...restProps}
 		>
+			{label !== undefined && (
+				<span className='i-list-item-label'>{label}</span>
+			)}
 			{children}
 		</li>
 	);

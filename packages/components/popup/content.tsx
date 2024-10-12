@@ -5,7 +5,8 @@ import { IPopupContent } from "./type";
 
 const Content = forwardRef<HTMLDivElement, IPopupContent>((props, ref) => {
 	const {
-		getContainer = () => document.body,
+		getContainer = (trigger) => trigger?.offsetParent ?? document.body,
+		trigger,
 		arrow,
 		arrowProps = {},
 		className,
@@ -66,7 +67,7 @@ const Content = forwardRef<HTMLDivElement, IPopupContent>((props, ref) => {
 		</div>
 	);
 
-	return createPortal(content, getContainer());
+	return createPortal(content, getContainer(trigger));
 });
 
 export default Content;

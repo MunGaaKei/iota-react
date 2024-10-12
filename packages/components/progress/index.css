@@ -16,22 +16,23 @@
 	transition: var(--transition);
 }
 
-.i-progress-btn {
+.i-progress-cursor {
 	position: absolute;
 	right: 0;
 	top: 50%;
 	display: flex;
 	min-height: 120%;
 	min-width: 1em;
-	background: inherit;
 	transform: translate(50%, -50%) scale(0);
 	transition: var(--transition);
 	border-radius: inherit;
 	box-shadow: var(--shadow);
+	user-select: none;
+	overflow: hidden;
 }
 
-.i-progress:hover .i-progress-btn,
-.no-transition > .i-progress-btn {
+.i-progress:hover .i-progress-cursor,
+.no-transition > .i-progress-cursor {
 	transform: translate(50%, -50%) scale(1);
 }
 

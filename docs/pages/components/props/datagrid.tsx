@@ -2,6 +2,7 @@ import { Button, Datagrid, Icon, Tag } from "@p";
 import { IColumn } from "@p/components/datagrid/type";
 import { FemaleRound, MaleRound, PhoneAndroidRound } from "@ricons/material";
 import { mock } from "mockjs";
+import { useMemo } from "react";
 
 export const DBasic = {
 	demo: () => {
@@ -79,20 +80,24 @@ export const DBasic = {
 			},
 		] as IColumn[];
 
-		const { list } = mock({
-			"list|20": [
-				{
-					"id|+1": 1,
-					name: "@cname",
-					email: "@email",
-					phone: /^1[385][1-9]\d{8}/,
-					"gender|0-1": 0,
-					birth: "@date",
-					address: "@county(true)",
-					active: "@boolean",
-				},
-			],
-		});
+		const { list } = useMemo(
+			() =>
+				mock({
+					"list|20": [
+						{
+							"id|+1": 1,
+							name: "@cname",
+							email: "@email",
+							phone: /^1[385][1-9]\d{8}/,
+							"gender|0-1": 0,
+							birth: "@date",
+							address: "@county(true)",
+							active: "@boolean",
+						},
+					],
+				}),
+			[]
+		);
 
 		return (
 			<Datagrid

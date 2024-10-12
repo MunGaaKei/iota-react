@@ -13,7 +13,7 @@ const Progress = (props: IProgress): JSX.Element => {
 		value = 0,
 		size = 8,
 		height = 40,
-		digits = 0,
+		precision = 0,
 		style,
 		draggable = true,
 		type = "line",
@@ -34,12 +34,12 @@ const Progress = (props: IProgress): JSX.Element => {
 	});
 
 	const toFixedValue = useMemo(() => {
-		let value = +state.value.toFixed(digits);
+		let value = +state.value.toFixed(precision);
 		value = Math.min(100, value);
 		value = Math.max(0, value);
 
 		return value;
-	}, [state.value, digits]);
+	}, [state.value, precision]);
 
 	const handleMouseDown = useMemoizedFn((e: MouseEvent) => {
 		if (!ref.current || !draggable) return;
@@ -99,7 +99,7 @@ const Progress = (props: IProgress): JSX.Element => {
 		>
 			{label && <span className='i-input-label-text'>{label}</span>}
 
-			{type === "line" ? (
+			{type === "line" && (
 				<Line
 					ref={ref}
 					size={size}
@@ -109,7 +109,9 @@ const Progress = (props: IProgress): JSX.Element => {
 					renderCursor={renderCursor}
 					onMouseDown={handleMouseDown}
 				/>
-			) : (
+			)}
+
+			{type === "circle" && (
 				<Circle value={state.value} height={height} size={size} />
 			)}
 		</div>

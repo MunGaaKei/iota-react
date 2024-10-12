@@ -1,26 +1,27 @@
 .i-area {
-	position: absolute !important;
+	position: absolute;
 	inset: 0;
-	--content-width: 1200px;
-	--header-height: unset;
+	display: grid;
 }
 
-.i-area-goku {
-	margin: auto;
-	display: flex;
-	width: var(--content-width);
-	max-width: 100%;
+.i-area-ltcb {
+	grid-template-areas:
+		"sider header right"
+		"sider content right"
+		"sider footer right";
+	grid-template-columns: auto 1fr auto;
+	grid-template-rows: auto 1fr auto;
 }
 
-.i-area-content {
-	position: relative;
-	flex: 1;
-	overflow: auto;
+.i-area-tlrb {
+	grid-template-areas:
+		"header header header"
+		"sider content right"
+		"footer footer footer";
 }
 
 .i-area-header,
 .i-area-footer {
-	margin: auto;
 	padding: 8px;
 	z-index: 1;
 	display: flex;
@@ -31,17 +32,4 @@
 	&:empty {
 		display: none;
 	}
-}
-.i-area-header {
-	position: sticky;
-	top: 0;
-	z-index: 50;
-	height: var(--header-height);
-}
-.i-area-sider {
-	position: sticky;
-	top: var(--header-height);
-	overflow: auto;
-	flex-shrink: 0;
-	height: calc(var(--container-height) - var(--header-height));
 }

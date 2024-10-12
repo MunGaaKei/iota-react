@@ -23,7 +23,9 @@ export default function Api(props) {
 
 							{required && <span className='red'>⁕</span>}
 
-							{def && <code className='bg-pink-0'>{def}</code>}
+							{def !== undefined && (
+								<code className='bg-pink-0'>{def}</code>
+							)}
 
 							<Flex gap={4}>
 								{type.map((t: ReactNode, i: number) => {

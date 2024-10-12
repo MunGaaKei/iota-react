@@ -40,7 +40,9 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		maxDisplay,
 		border,
 		filter,
+		tip,
 		filterPlaceholder = "...",
+		popupProps,
 		onSelect,
 		onChange,
 		...restProps
@@ -50,8 +52,6 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		inputValue: "",
 		filterValue: "",
 		value,
-		status,
-		message,
 		loading: false,
 	});
 
@@ -72,12 +72,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 	}, [formattedOptions, filter, state.filterValue]);
 
 	const changeValue = (v: any) => {
-		Object.assign(state, {
-			value: v,
-			status,
-			message,
-		});
-
+		state.value = v;
 		onChange?.(v);
 	};
 
@@ -127,9 +122,11 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 		state.value = value;
 	}, [value]);
 
-	const { value: val, message: msg, status: sts } = state;
-	const hasValue = multiple ? (val as any[]).length > 0 : !!val;
+	const hasValue = multiple
+		? (state.value as any[]).length > 0
+		: !!state.value;
 	const clearable = !hideClear && active && hasValue;
+	const text = message ?? tip;
 
 	return (
 		<label
@@ -141,16 +138,17 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 			{label && <span className='i-input-label-text'>{label}</span>}
 
 			<Popup
-				visible={active}
-				trigger='none'
 				position='bottom'
 				arrow={false}
 				fitSize
+				{...popupProps}
+				visible={active}
+				trigger='none'
 				onVisibleChange={handleVisibleChange}
 				content={
 					<Options
 						options={filterOptions}
-						value={val}
+						value={state.value}
 						multiple={multiple}
 						filter={!!filter}
 						filterPlaceholder={filterPlaceholder}
@@ -161,14 +159,20 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 			>
 				<div
 					className={classNames("i-input-item", {
-						[`i-input-${sts}`]: sts !== "normal",
+						[`i-input-${status}`]: status !== "normal",
 						"i-input-borderless": !border,
+						"i-input-focus": active,
 					})}
 					onClick={() => setActive(true)}
 				>
 					{prepend}
 
-					<input ref={ref} type='hidden' value={val} {...restProps} />
+					<input
+						ref={ref}
+						type='hidden'
+						value={state.value}
+						{...restProps}
+					/>
 
 					{multiple ? (
 						hasValue ? (
@@ -179,7 +183,7 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 							>
 								{displayValue({
 									options: formattedOptions,
-									value: val,
+									value: state.value,
 									multiple,
 									maxDisplay,
 									onSelect: handleSelect,
@@ -196,15 +200,13 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 
 					{!multiple && (
 						<input
-							value={active ? state.filterValue : val}
+							value={active ? state.filterValue : state.value}
 							className='i-input i-select'
-							placeholder={val || placeholder}
+							placeholder={state.value || placeholder}
 							onChange={handleInputChange}
 							readOnly={!filter}
 						/>
 					)}
-
-					{msg && <span className='i-input-message'>{msg}</span>}
 
 					<Helpericon
 						active
@@ -215,6 +217,8 @@ const Select = forwardRef<HTMLInputElement, ISelect>((props, ref) => {
 					{append}
 				</div>
 			</Popup>
+
+			{text && <span className='i-input-message'>{text}</span>}
 		</label>
 	);
 });

@@ -1,8 +1,10 @@
+import { InfoOutlined } from "@ricons/material";
 import { useReactive } from "ahooks";
 import { MouseEvent } from "react";
 import Button from "../button";
 import { IButton } from "../button/type";
 import Flex from "../flex";
+import Icon from "../icon";
 import Popup from "../popup";
 import "./index.css";
 import { IPopconfirm } from "./type";
@@ -20,15 +22,17 @@ const Popconfirm = (props: IPopconfirm): JSX.Element => {
 	const {
 		trigger = "click",
 		visible,
+		icon = <Icon icon={<InfoOutlined />} className='error' />,
 		content,
-		okProps,
-		cancelProps,
+		okButtonProps,
+		cancelButtonProps,
 		children,
 		align = "end",
 		position = "top",
 		offset = 12,
+		extra,
 		onOk,
-		onCancel,
+		onClose,
 		...restProps
 	} = props;
 
@@ -37,11 +41,11 @@ const Popconfirm = (props: IPopconfirm): JSX.Element => {
 		visible,
 	});
 
-	const ok: IButton = okProps
-		? Object.assign({}, defaultOk, okProps)
+	const ok: IButton = okButtonProps
+		? Object.assign({}, defaultOk, okButtonProps)
 		: defaultOk;
-	const cancel: IButton = cancelProps
-		? Object.assign({}, defaultCancel, cancelProps)
+	const cancel: IButton = cancelButtonProps
+		? Object.assign({}, defaultCancel, cancelButtonProps)
 		: defaultCancel;
 
 	const handleVisibleChange = (v: boolean) => {
@@ -59,19 +63,27 @@ const Popconfirm = (props: IPopconfirm): JSX.Element => {
 
 	const handleCancel = async (e: MouseEvent<HTMLElement>) => {
 		cancel.onClick?.(e);
-		await onCancel?.();
+		await onClose?.();
 		state.visible = false;
 	};
 
 	const popconfirmContent = (
 		<div className='i-popconfirm'>
-			{content}
+			<Flex gap={12}>
+				{icon}
+				<div className='i-popconfirm-content'>{content}</div>
+			</Flex>
 
-			<Flex gap={12} justify='flex-end' className='mt-8'>
-				{cancelProps !== null && (
+			<Flex
+				gap={12}
+				justify='flex-end'
+				className='mt-8 i-popconfirm-footer'
+			>
+				{cancelButtonProps !== null && (
 					<Button {...cancel} onClick={handleCancel} />
 				)}
-				{okProps !== null && (
+				{extra}
+				{okButtonProps !== null && (
 					<Button
 						loading={state.loading}
 						{...ok}

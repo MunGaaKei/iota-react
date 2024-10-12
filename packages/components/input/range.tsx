@@ -22,11 +22,13 @@ const Range = (props: IInputRange) => {
 		className,
 		status = "normal",
 		message,
+		tip,
 		append,
 		prepend,
 		step = 1,
 		thousand,
 		precision,
+		hideControl,
 		placeholder,
 		border,
 		onChange,
@@ -37,8 +39,6 @@ const Range = (props: IInputRange) => {
 
 	const state = useReactive({
 		value,
-		status,
-		message,
 	});
 
 	const getRangeNumber = useCallback(
@@ -69,12 +69,7 @@ const Range = (props: IInputRange) => {
 			const range = Array.isArray(state.value) ? state.value : [];
 			range[i] = +v;
 
-			Object.assign(state, {
-				status,
-				message,
-				value: range,
-			});
-
+			state.value = range;
 			onChange?.(range, e);
 		}
 	);
@@ -108,17 +103,9 @@ const Range = (props: IInputRange) => {
 	});
 
 	useEffect(() => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-	}, [status, message]);
-
-	useEffect(() => {
 		state.value = value;
 	}, [value]);
 
-	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		name,
 		className: "i-input i-input-number",
@@ -131,59 +118,67 @@ const Range = (props: IInputRange) => {
 			labelInline={labelInline}
 			className={className}
 			style={style}
+			tip={message ?? tip}
+			status={status}
 		>
 			<div
 				className={classNames("i-input-item", {
-					[`i-input-${sts}`]: sts !== "normal",
+					[`i-input-${status}`]: status !== "normal",
 					"i-input-borderless": !border,
 				})}
 			>
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}
 
-				<Helpericon
-					active
-					icon={<MinusRound />}
-					onClick={(e) => handleOperate(e, -step, 0)}
-				/>
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<MinusRound />}
+						onClick={(e) => handleOperate(e, -step, 0)}
+					/>
+				)}
 
 				<input
-					value={v?.[0] || ""}
+					value={state.value?.[0] || ""}
 					placeholder={placeholder?.[0]}
 					{...inputProps}
 					onChange={(e) => handleChange(e, 0)}
 				/>
 
-				<Helpericon
-					active
-					icon={<PlusRound />}
-					onClick={(e) => handleOperate(e, step, 0)}
-				/>
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<PlusRound />}
+						onClick={(e) => handleOperate(e, step, 0)}
+					/>
+				)}
 				<Helpericon
 					active
 					icon={<SyncAltRound />}
 					style={{ margin: 0 }}
 					onClick={handleSwitch}
 				/>
-				<Helpericon
-					active
-					icon={<MinusRound />}
-					onClick={(e) => handleOperate(e, -step, 1)}
-				/>
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<MinusRound />}
+						onClick={(e) => handleOperate(e, -step, 1)}
+					/>
+				)}
 
 				<input
-					value={v?.[1] || ""}
+					value={state.value?.[1] || ""}
 					placeholder={placeholder?.[1]}
 					{...inputProps}
 					onChange={(e) => handleChange(e, 1)}
 				/>
 
-				<Helpericon
-					active
-					icon={<PlusRound />}
-					onClick={(e) => handleOperate(e, step, 1)}
-				/>
-
-				{msg && <span className='i-input-message'>{msg}</span>}
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<PlusRound />}
+						onClick={(e) => handleOperate(e, step, 1)}
+					/>
+				)}
 
 				{append && <div className='i-input-append'>{append}</div>}
 			</div>

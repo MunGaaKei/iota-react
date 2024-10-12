@@ -1,3 +1,4 @@
+import { IModal } from "@p/components/modal/type";
 import { CSSProperties, ReactNode } from "react";
 
 export type TPreviewItem = {
@@ -26,13 +27,13 @@ export interface IPreview {
 	initial?: number;
 	controls?: boolean;
 	loop?: boolean;
-	backdropClosable?: boolean;
 	className?: string;
 	style?: CSSProperties;
+	modalProps?: IModal;
 	renderImage?: (file: TPreviewItem) => ReactNode;
 	renderFile?: (file: TPreviewItem) => ReactNode;
 	onClose?: () => void;
 	onChange?: (after: number, before?: number) => void;
-	onZoom?: () => void;
+	onZoom?: (scale: number) => void;
 	onRotate?: (deg: number) => void;
 }

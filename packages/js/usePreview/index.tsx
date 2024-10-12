@@ -10,7 +10,7 @@ export default function usePreview() {
 	const ref = useRef<RefHookModal>(null);
 
 	const preview = (config: IPreview) => {
-		const { items, backdropClosable, onClose, ...restProps } = config;
+		const { items, modalProps, onClose, ...restProps } = config;
 
 		const handleClose = () => {
 			onClose?.();
@@ -23,6 +23,8 @@ export default function usePreview() {
 				visible
 				className='i-preview'
 				customized
+				shadow={false}
+				{...modalProps}
 				children={
 					<Content
 						{...restProps}
@@ -33,7 +35,6 @@ export default function usePreview() {
 					/>
 				}
 				fixed
-				backdropClosable={backdropClosable}
 				onClose={handleClose}
 			/>
 		);

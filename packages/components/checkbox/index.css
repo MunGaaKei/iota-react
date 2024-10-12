@@ -140,13 +140,18 @@
 }
 .i-checkbox-button {
 	& + .i-checkbox-text {
-		padding: 0 0.628em;
-		line-height: 2;
-		font-size: 0.94em;
+		padding: 0 1em;
+		line-height: 1.8;
+		font-size: 0.9em;
 		display: flex;
 		align-items: center;
 		white-space: nowrap;
-		background-color: var(--color-main-0);
+		border-radius: 2em;
+		border: 1px solid var(--color-9);
+	}
+	&:hover + .i-checkbox-text {
+		background-color: var(--color-9);
+		border-color: var(--color-8);
 	}
 	&:checked + .i-checkbox-text {
 		background-color: var(--color-main);

@@ -58,11 +58,15 @@
 	border-radius: var(--radius);
 	background: var(--background-opacity);
 	transition: var(--transition);
-	.i-helpericon {
+	.i-upload-delete {
 		margin: 0 0 0 auto;
 	}
 	&:hover {
 		background: var(--background-opacity-1);
+		.i-upload-delete {
+			color: var(--error);
+			background: var(--background-opacity);
+		}
 	}
 }
 
@@ -78,13 +82,6 @@
 	border-radius: var(--radius);
 	overflow: hidden;
 	background: var(--background-opacity-1);
-	.i-helpericon {
-		opacity: 0;
-		margin: 0;
-		position: absolute;
-		right: 4px;
-		top: 4px;
-	}
 	.i-image,
 	video {
 		width: 100%;
@@ -99,8 +96,17 @@
 		font-size: 0.8em;
 		padding-inline: 4px;
 	}
+	.i-upload-delete {
+		opacity: 0;
+		margin: 0;
+		position: absolute;
+		right: 4px;
+		top: 4px;
+		background-color: var(--error);
+		color: #fff;
+	}
 	&:hover {
-		.i-helpericon {
+		.i-upload-delete {
 			opacity: 1;
 		}
 	}

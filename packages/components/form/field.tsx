@@ -13,11 +13,11 @@ import Context from "./context";
 import { IField } from "./type";
 
 export default function Field(props: IField) {
-	const { name, children } = props;
+	const { name, required, children } = props;
 	const state = useReactive({
 		value: undefined,
 		status: "normal",
-		message: "",
+		message: undefined,
 		update: 0,
 	});
 	const form = useContext(Context);
@@ -43,9 +43,14 @@ export default function Field(props: IField) {
 				value,
 				status,
 				message,
+				required,
 				onChange: (...args) => {
 					handleChange(args[0]);
 					onChange?.(...args);
+					Object.assign(state, {
+						status: "normal",
+						message: undefined,
+					});
 				},
 			} as any);
 		});

@@ -68,6 +68,11 @@
 		}
 	}
 }
+.i-tabs-morelist {
+	.i-tab-active {
+		background: var(--color-main-0);
+	}
+}
 .i-tab-closable {
 	.i-tab-nav {
 		padding-right: 0;

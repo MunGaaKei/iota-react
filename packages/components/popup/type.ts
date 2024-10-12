@@ -18,10 +18,11 @@ export interface IPopup {
 	watchResize?: boolean;
 	clickOutside?: boolean;
 	disabled?: boolean;
+	referToWindow?: boolean;
 	style?: CSSProperties;
 	children?: ReactNode;
 	className?: string;
-	getContainer?: () => HTMLElement;
+	getContainer?: (trigger?: HTMLElement) => HTMLElement;
 	onVisibleChange?: (visible: boolean) => void;
 }
 
@@ -30,5 +31,6 @@ export interface IPopupContent
 		IPopup,
 		"getContainer" | "arrow" | "className" | "style" | "children"
 	> {
+	trigger?: HTMLElement;
 	arrowProps?: Record<string, any>;
 }

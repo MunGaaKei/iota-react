@@ -31,9 +31,11 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		className,
 		status = "normal",
 		message,
+		tip,
 		clear,
 		hideVisible,
 		border,
+		required,
 		onChange,
 		onEnter,
 		style,
@@ -42,8 +44,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 
 	const state = useReactive({
 		value,
-		status,
-		message,
 		type,
 		visible: false,
 	});
@@ -51,12 +51,7 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 	const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		const v = e.target.value;
 
-		Object.assign(state, {
-			status,
-			message,
-			value: v,
-		});
-
+		state.value = v;
 		onChange?.(v, e);
 	}, []);
 
@@ -86,30 +81,22 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 	}, [state.visible]);
 
 	useEffect(() => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-	}, [status, message]);
-
-	useEffect(() => {
 		state.value = value;
 	}, [value]);
 
-	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
 		type: state.type,
 		name,
-		value: v,
+		value: state.value,
 		className: classNames("i-input", `i-input-${type}`),
 		onChange: handleChange,
 		onKeyDown: handleKeydown,
 		...restProps,
 	};
 
-	const clearable = clear && v;
-	const showHelper = type === "password" && !!v;
+	const clearable = clear && state.value;
+	const showHelper = type === "password" && !!state.value;
 
 	return (
 		<InputContainer
@@ -117,10 +104,13 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 			labelInline={labelInline}
 			className={className}
 			style={style}
+			tip={message ?? tip}
+			status={status}
+			required={required}
 		>
 			<div
 				className={classNames("i-input-item", {
-					[`i-input-${sts}`]: sts !== "normal",
+					[`i-input-${status}`]: status !== "normal",
 					"i-input-borderless": !border,
 				})}
 			>
@@ -133,8 +123,6 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 					icon={HelperIcon}
 					onClick={handleHelperClick}
 				/>
-
-				{msg && <span className='i-input-message'>{msg}</span>}
 
 				{append && <div className='i-input-append'>{append}</div>}
 			</div>

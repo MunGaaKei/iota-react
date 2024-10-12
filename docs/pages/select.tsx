@@ -1,29 +1,19 @@
-import { Select } from "@p";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, DMultiple, PSelect } from "./components/props/select";
 
 export default function Page() {
 	return (
 		<>
-			<Select
-				multiple
-				placeholder='placeholder'
-				filter
-				options={Array.from({ length: 50 }).map(
-					(n, i) => `option ${i}`
-				)}
-				style={{ width: 340 }}
-			/>
+			<h2 className='mb-40'>Select</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
 
-			<br />
+			<h3 className='mt-80 mb-12'>多选</h3>
+			<Demo source={DMultiple} />
 
-			<Select
-				placeholder='placeholder'
-				filter
-				options={Array.from({ length: 50 }).map(
-					(n, i) => `option ${i}`
-				)}
-				className='mt-20'
-				style={{ width: 340 }}
-			/>
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PSelect} />
 		</>
 	);
 }

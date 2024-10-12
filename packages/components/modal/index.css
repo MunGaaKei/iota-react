@@ -1,17 +1,26 @@
-.i-backdrop-modal {
+.i-modal-container {
 	position: absolute;
 	inset: 0;
 	z-index: 100;
-	pointer-events: none;
-	background: var(--color-backdrop);
-	backdrop-filter: blur(8px);
+	padding: 12px;
 	transition: var(--transition);
 	opacity: 0;
+	pointer-events: none;
 	display: flex;
+	overflow: hidden;
 	&.i-modal-active {
 		opacity: 1;
+	}
+}
+.i-modal-backdrop {
+	background: var(--color-backdrop);
+	backdrop-filter: blur(8px);
+	&.i-modal-active {
 		pointer-events: unset;
 	}
+}
+.i-modal-customized {
+	overflow: unset;
 }
 
 .i-modal {
@@ -40,14 +49,18 @@
 .i-modal-footer {
 	display: flex;
 	align-items: center;
-	padding: 0.5em;
-	gap: 0.5em;
+	padding: 12px;
+	gap: 12px;
 	&:empty {
 		display: none;
 	}
 }
+.i-modal-footer {
+	justify-content: center;
+}
 
 .i-modal-content {
+	flex: 1;
 	max-height: 100%;
 	overflow-x: hidden;
 }

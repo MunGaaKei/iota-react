@@ -1,3 +1,4 @@
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { uid } from "radash";
 import {
@@ -6,38 +7,51 @@ import {
 	isValidElement,
 	useEffect,
 	useRef,
-	useState,
 } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import type { IMessage, IMessageItem } from "./type";
+import type { IMessage, IMessageItem, THeights, TMessageQueue } from "./type";
+
+const AlignMap = {
+	left: "flex-start",
+	center: "center",
+	right: "flex-end",
+};
 
 const GlobalConfig = {
-	fromStart: true,
 	align: "center",
 	offset: "12px",
 	gap: 12,
 	max: 0,
 };
 
-const ItemConfig = {
+const ItemDefaultConfig = {
 	duration: 3000,
 	closable: true,
 	active: false,
 };
 
 const container = createContainer();
-const queue: IMessage[] = [];
-const heights: number[] = [];
 const handler = {
 	callout(item: IMessage) {},
 	close() {},
 };
 
+const queue: TMessageQueue = {
+	left: [],
+	center: [],
+	right: [],
+};
+const heights: THeights = {
+	left: [],
+	center: [],
+	right: [],
+};
+
 createRoot(container).render(<Messages />);
 
 const MessageItem = forwardRef<HTMLDivElement, IMessageItem>(function (
-	{ active, content, top, className, onClick },
+	{ active, content, top, className, style, onClick },
 	ref
 ) {
 	return (
@@ -47,6 +61,7 @@ const MessageItem = forwardRef<HTMLDivElement, IMessageItem>(function (
 				"i-message-active": active,
 			})}
 			style={{
+				...style,
 				top,
 			}}
 			onClick={onClick}
@@ -57,70 +72,99 @@ const MessageItem = forwardRef<HTMLDivElement, IMessageItem>(function (
 });
 
 function Messages() {
-	const [items, setItems] = useState<IMessage[]>(queue);
-	const [tops, setTops] = useState<number[]>([]);
 	const ref = useRef<HTMLDivElement>(null);
-	let offsetTop = 0;
+	const state = useReactive<{
+		tops: THeights;
+		items: TMessageQueue;
+	}>({
+		items: {
+			left: [],
+			center: [],
+			right: [],
+		},
+		tops: {
+			left: [],
+			center: [],
+			right: [],
+		},
+	});
+	const offsetTop = {
+		left: 0,
+		center: 0,
+		right: 0,
+	};
 
 	useEffect(() => {
 		Object.assign(handler, {
 			callout: function (item: IMessage) {
-				const size = queue.push(item);
-				setItems([...queue]);
+				const { align = "center", unshift, onShow } = item;
+				const size = queue[align][unshift ? "unshift" : "push"](item);
+				state.items[align] = [...queue[align]];
 
 				setTimeout(() => {
 					const h = ref.current?.offsetHeight || 0;
-					queue[size - 1].active = true;
-					setItems([...queue]);
-					heights.push(h);
-					setTops([...heights]);
+
+					queue[align][unshift ? 0 : size - 1].active = true;
+					state.items[align] = [...queue[align]];
+					heights[align][unshift ? "unshift" : "push"](h);
+					state.tops[align] = [...heights[align]];
+					onShow?.();
 				}, 0);
 
-				!!item.duration &&
+				item.duration !== 0 &&
 					setTimeout(this.close.bind(item), item.duration);
 			},
 			close: function () {
 				const item = this as IMessage;
-				const index = queue.findIndex((i) => i.id === item.id);
+				const { align = "center", onHide } = item;
+				const index = queue[align].findIndex((i) => i.id === item.id);
 				if (index < 0) return;
 
-				queue[index].active = false;
-				setItems([...queue]);
+				queue[align][index].active = false;
+				state.items[align] = [...queue[align]];
 
 				item.timer = setTimeout(() => {
-					const index = queue.findIndex((i) => i.id === item.id);
+					const index = queue[align].findIndex(
+						(i) => i.id === item.id
+					);
 
-					queue.splice(index, 1);
-					heights.splice(index, 1);
-					setTops([...heights]);
-					setItems([...queue]);
+					queue[align].splice(index, 1);
+					heights[align].splice(index, 1);
+					state.tops[align] = [...heights[align]];
+					state.items[align] = [...queue[align]];
 					item.timer && clearTimeout(item.timer);
+					onHide?.();
 				}, 240);
 			},
 		});
 	}, []);
 
+	const renderItems = (item, i) => {
+		if (!item) return <></>;
+
+		const { id, active, content, align = "center", className } = item;
+		offsetTop[align] += state.tops[align][i - 1] || 0;
+		const top = GlobalConfig.gap * i + offsetTop[align];
+
+		return (
+			<MessageItem
+				key={id}
+				ref={ref}
+				active={active}
+				content={content}
+				top={top}
+				className={className}
+				style={{ alignSelf: AlignMap[align] }}
+				onClick={handler.close.bind(item)}
+			/>
+		);
+	};
+
 	return (
-		<div className='i-messages' style={{ alignItems: GlobalConfig.align }}>
-			{items.map((item, i) => {
-				if (!item) return <></>;
-
-				const { id, active, content, className } = item;
-				offsetTop += tops[i - 1] || 0;
-				const top = GlobalConfig.gap * i + offsetTop;
-
-				return (
-					<MessageItem
-						key={id}
-						ref={ref}
-						active={active}
-						content={content}
-						top={top}
-						className={className}
-						onClick={handler.close.bind(item)}
-					/>
-				);
-			})}
+		<div className='i-messages'>
+			{state.items.left.map(renderItems)}
+			{state.items.center.map(renderItems)}
+			{state.items.right.map(renderItems)}
 		</div>
 	);
 }
@@ -137,16 +181,18 @@ export default function message(config: IMessage | ReactNode) {
 		config = { content: config as ReactNode };
 	}
 
-	Object.assign(config as IMessage, ItemConfig, {
-		id: uid(7),
-	});
+	config = Object.assign(
+		{ id: uid(7) },
+		ItemDefaultConfig,
+		config as IMessage
+	);
 
 	handler.callout(config as IMessage);
 
 	return handler.close.bind(config);
 }
 
-function createContainer() {
+function createContainer(direction?: string) {
 	const container = document.createElement("div");
 	container.dataset.id = "messages";
 	document.body.append(container);

@@ -18,8 +18,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 	const {
 		name,
 		value,
-		status,
-		message,
 		weeks,
 		format = "YYYY-MM-DD",
 		renderDate,
@@ -35,8 +33,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 
 	const state = useReactive({
 		value,
-		status,
-		message,
 	});
 
 	const [active, setActive] = useState<boolean>(false);
@@ -56,12 +52,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 	};
 
 	const handleChange = (v) => {
-		Object.assign(state, {
-			value: v,
-			status,
-			message,
-		});
-
+		state.value = v;
 		onChange?.(v);
 	};
 
@@ -88,8 +79,6 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 		state.value = value;
 	}, [value]);
 
-	const { value: val, message: msg, status: sts } = state;
-
 	return (
 		<Popup
 			visible={active}
@@ -113,9 +102,7 @@ const Datepicker = (props: IDatePicker): JSX.Element => {
 			onVisibleChange={setActive}
 		>
 			<Input
-				value={val}
-				message={msg}
-				status={sts}
+				value={state.value}
 				prepend={
 					<Icon
 						icon={<CalendarMonthTwotone />}

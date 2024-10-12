@@ -1,8 +1,7 @@
 import { formatOption } from "@p/js/utils";
-import { TStatus } from "@p/type";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
-import { ReactNode, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import "../../css/input.css";
 import "./index.css";
 import CheckboxItem from "./item";
@@ -20,6 +19,7 @@ function Checkbox(props: ICheckbox) {
 		disabled,
 		status = "normal",
 		message,
+		required,
 		className,
 		onChange,
 		...restProps
@@ -27,22 +27,13 @@ function Checkbox(props: ICheckbox) {
 
 	const state = useReactive<{
 		value: any;
-		status?: TStatus;
-		message?: ReactNode;
 	}>({
 		value,
-		status,
-		message,
 	});
 
 	const formattedOptions = useMemo(() => formatOption(options), [options]);
 
 	const handleChange = useMemoizedFn((checked, opt, e) => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-
 		const group = [...state.value];
 		const i = group.findIndex((item) => item === opt.value);
 
@@ -65,7 +56,7 @@ function Checkbox(props: ICheckbox) {
 			className={classNames(
 				"i-checkbox i-input-label",
 				{
-					[`i-checkbox-${state.status}`]: state.status !== "normal",
+					[`i-checkbox-${status}`]: status !== "normal",
 					"i-input-inline": labelInline,
 				},
 
@@ -75,17 +66,17 @@ function Checkbox(props: ICheckbox) {
 		>
 			{label && (
 				<span className='i-input-label-text'>
+					{required && <span className='error'>*</span>}
 					{label}
 
-					{state.message && (
-						<p className='i-checkbox-message'>*{state.message}</p>
-					)}
+					{message && <p className='i-checkbox-message'>{message}</p>}
 				</span>
 			)}
 
 			<div
 				className={classNames("i-checkbox-options", {
 					"i-options-block": !optionInline,
+					"i-checkbox-options-button": type === "button",
 				})}
 			>
 				{formattedOptions.map((option) => {

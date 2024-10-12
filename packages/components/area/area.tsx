@@ -1,33 +1,19 @@
 import classNames from "classnames";
-import { CSSProperties, forwardRef } from "react";
-import Scrollbars from "react-custom-scrollbars-2";
 import "./area.css";
 import Item from "./item";
-import { CompositionArea, IArea } from "./type";
 
-const Area = forwardRef<Scrollbars, IArea>((props, ref): JSX.Element => {
-	const { contentWidth, style, className, children, ...restProps } = props;
+function Area<IArea>(props) {
+	const { layout = "ltcb", style, className, children } = props;
 
 	return (
-		<Scrollbars
-			ref={ref}
-			autoHide
-			style={
-				{
-					["--content-width"]: contentWidth,
-					...style,
-				} as CSSProperties
-			}
-			className={classNames("i-area", className)}
-			renderView={(viewProps) => (
-				<div className='i-area-scroller' {...viewProps} />
-			)}
-			{...restProps}
+		<div
+			style={style}
+			className={classNames(`i-area i-area-${layout}`, className)}
 		>
 			{children}
-		</Scrollbars>
+		</div>
 	);
-}) as CompositionArea;
+}
 
 Area.Item = Item;
 

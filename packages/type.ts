@@ -35,6 +35,7 @@ export interface BaseInput extends TValidate {
 	labelInline?: boolean;
 	clear?: boolean;
 	border?: boolean;
+	tip?: ReactNode;
 	onChange?: (
 		value: any,
 		e?: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

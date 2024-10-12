@@ -14,14 +14,14 @@ export interface ITabItem {
 	props?: any;
 	title?: ReactNode;
 	content?: ReactNode;
-	keepalive?: boolean;
+	keepDOM?: boolean;
 	intersecting?: boolean;
 	children?: ReactNode;
 }
 
 export interface ITabs extends HTMLAttributes<HTMLDivElement> {
 	active?: TTabKey;
-	items?: ITabItem[];
+	tabs?: ITabItem[];
 	type?: "default" | "line";
 	prepend?: ReactNode;
 	append?: ReactNode;

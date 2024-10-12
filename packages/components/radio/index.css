@@ -41,7 +41,11 @@
 	align-self: baseline;
 }
 .i-radio-options-button {
-	--gap: 4px;
+	flex: none;
+	--gap: 2px;
+	padding: 2px;
+	border: 1px solid var(--color-8);
+	border-radius: var(--radius);
 	gap: var(--gap);
 }
 
@@ -91,9 +95,10 @@
 	& + .i-radio-text {
 		margin-left: 0;
 		padding: 0 0.628em;
-		line-height: 2;
+		line-height: 1.8;
 		font-size: 0.94em;
 		white-space: nowrap;
+		border-radius: calc(var(--radius) - 1px);
 		&:hover {
 			background: var(--color-main-0);
 		}
@@ -101,6 +106,7 @@
 	&:checked + .i-radio-text {
 		background: var(--color-main);
 		color: var(--color-main-reverse);
+		box-shadow: 0 0 2px var(--dim);
 	}
 }
 

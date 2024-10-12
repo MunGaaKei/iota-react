@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export const DBasic = {
 	demo: () => {
-		const [value, setValue] = useState<any>(["Cat"]);
+		const [value, setValue] = useState(["Cat"]);
 
 		return (
 			<div>
@@ -44,16 +44,20 @@ export const DType = {
 					labelInline
 					onChange={setType}
 				/>
-				<Checkbox.Item partof className='mr-12'>
+				<Checkbox.Item partof className='mr-12 mt-12'>
 					partof
 				</Checkbox.Item>
-				<Checkbox.Item type={type} className='mt-12'>
+				<Checkbox
+					type={type}
+					options={["Cat", "Dog", "Kuma"]}
+					className='mt-12'
+				>
 					{type}
-				</Checkbox.Item>
+				</Checkbox>
 			</>
 		);
 	},
-	code: `const [type, setType] = useState<any>("default");
+	code: `const [type, setType] = useState("default");
 
 return (
     <>
@@ -69,9 +73,13 @@ return (
             partof
         </Checkbox.Item>
 
-        <Checkbox.Item type={type} className='mt-12'>
-            {type}
-        </Checkbox.Item>
+        <Checkbox
+			type={type}
+			options={["Cat", "Dog", "Kuma"]}
+			className='mt-12'
+		>
+			{type}
+		</Checkbox>
     </>
 );`,
 	lang: "javascript",

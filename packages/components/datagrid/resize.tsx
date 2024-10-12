@@ -41,5 +41,11 @@ export default function Resize(props) {
 	useMouseMove(handleMouseMove);
 	useMouseUp(handleMouseUp);
 
-	return <i className='i-datagrid-resizor' onMouseDown={handleMouseDown} />;
+	return (
+		<i
+			className='i-datagrid-resizor'
+			onMouseDown={handleMouseDown}
+			onClick={(e) => e.stopPropagation()}
+		/>
+	);
 }

@@ -28,6 +28,8 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		border,
 		prepend,
 		message,
+		tip,
+		hideControl,
 		style,
 		onChange,
 		onEnter,
@@ -38,8 +40,6 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 
 	const state = useReactive({
 		value,
-		status,
-		message,
 	});
 
 	const getRangeNumber = useCallback(
@@ -66,12 +66,7 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 		const { value } = e.target;
 		const v = formatInputValue(value.replace(/[^\d\.-]/g, ""));
 
-		Object.assign(state, {
-			status,
-			message,
-			value: v,
-		});
-
+		state.value = v;
 		onChange?.(+v, e);
 	});
 
@@ -85,21 +80,13 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 	});
 
 	useEffect(() => {
-		Object.assign(state, {
-			status,
-			message,
-		});
-	}, [status, message]);
-
-	useEffect(() => {
 		state.value = value;
 	}, [value]);
 
-	const { status: sts, message: msg, value: v } = state;
 	const inputProps = {
 		ref,
 		name,
-		value: v,
+		value: state.value,
 		className: "i-input i-input-number",
 		onChange: handleChange,
 		...rest,
@@ -111,30 +98,34 @@ const Number = forwardRef<HTMLInputElement, IInputNumber>((props, ref) => {
 			labelInline={labelInline}
 			className={className}
 			style={style}
+			tip={message ?? tip}
+			status={status}
 		>
 			<div
 				className={classNames("i-input-item", {
-					[`i-input-${sts}`]: sts !== "normal",
+					[`i-input-${status}`]: status !== "normal",
 					"i-input-borderless": !border,
 				})}
 			>
 				{prepend && <div className='i-input-prepend'>{prepend}</div>}
 
-				<Helpericon
-					active
-					icon={<MinusRound />}
-					onClick={() => handleOperate(-step)}
-				/>
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<MinusRound />}
+						onClick={() => handleOperate(-step)}
+					/>
+				)}
 
 				<input {...inputProps} />
 
-				<Helpericon
-					active
-					icon={<PlusRound />}
-					onClick={() => handleOperate(step)}
-				/>
-
-				{msg && <span className='i-input-message'>{msg}</span>}
+				{!hideControl && (
+					<Helpericon
+						active
+						icon={<PlusRound />}
+						onClick={() => handleOperate(step)}
+					/>
+				)}
 
 				{append && <div className='i-input-append'>{append}</div>}
 			</div>

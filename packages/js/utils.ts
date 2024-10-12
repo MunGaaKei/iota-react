@@ -26,13 +26,7 @@ export function getPosition(
 		arrowPos: string;
 	}
 ] {
-	const {
-		refWindow = true,
-		gap = 0,
-		offset = 0,
-		position = "top",
-		align,
-	} = options;
+	const { refWindow, gap = 0, offset = 0, position = "top", align } = options;
 
 	if (!$source || !$popup)
 		return [

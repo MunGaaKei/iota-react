@@ -26,7 +26,9 @@ const Line = forwardRef<
 				style={{ width: `${value}%` }}
 			>
 				{renderCursor && (
-					<a className='i-progress-btn'>{renderCursor(value ?? 0)}</a>
+					<a className='i-progress-cursor'>
+						{renderCursor(value ?? 0)}
+					</a>
 				)}
 			</div>
 		</div>

@@ -5,9 +5,9 @@ export interface IStep {
 	vertical?: boolean;
 	style?: CSSProperties;
 	className?: string;
-	divider?: ReactNode;
+	line?: ReactNode;
 	children?: ReactNode;
-	renderIcon?: (i: number, status?: string) => ReactNode;
+	renderIcon?: (i: number, status: string) => ReactNode;
 	onClick?: (i: number) => void;
 }
 

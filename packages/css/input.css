@@ -1,12 +1,24 @@
 .i-input-label {
-	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
+	align-content: flex-start;
 	gap: 0.5em;
 	width: 100%;
-	&.i-input-inline {
-		flex-wrap: nowrap;
+	&:has(.i-input-success) {
+		--color: var(--green);
+	}
+	&:has(.i-input-warning) {
+		--color: var(--yellow);
+	}
+	&:has(.i-input-error) {
+		--color: var(--error);
+	}
+}
+.i-input-inline {
+	.i-input-item,
+	.i-radio-options {
+		flex: 1 1 auto;
 	}
 }
 
@@ -29,29 +41,23 @@
 		align-self: stretch;
 	}
 	&:hover,
-	&:focus-within {
+	&:focus-within,
+	&.i-input-focus {
 		border-color: var(--color-8);
 	}
 	&.i-input-success {
 		border-color: var(--green-0);
-		--color: var(--green);
 	}
 	&.i-input-warning {
 		border-color: var(--yellow-0);
-		--color: var(--yellow);
 	}
 	&.i-input-error {
 		border-color: var(--error-0);
-		--color: var(--error);
 	}
 }
 .i-input-borderless {
 	border-color: transparent;
 	background: var(--background-opacity-2);
-	&:hover,
-	&:focus-within {
-		background-color: var(--background-opacity-1);
-	}
 }
 
 .i-input {
@@ -78,19 +84,12 @@
 }
 
 .i-input-message {
-	position: absolute;
+	flex: 1 1 100%;
 	z-index: 1;
-	padding: 0.25em 0.5em;
 	font-size: 0.8em;
-	bottom: 0;
-	right: 6%;
-	transform: translate(0, 50%);
-	background: var(--background-opacity);
 	color: var(--color);
-	backdrop-filter: blur(4px);
 	border-radius: var(--radius);
 	pointer-events: none;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
 .i-textarea {

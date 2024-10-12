@@ -1,25 +1,19 @@
-import Pain from "@d/assets/pain.jpg";
-import Sasuke from "@d/assets/sasuke.jpg";
-import videoDemo from "@d/assets/video.mp4";
-import { Button, usePreview } from "@p";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import { DBasic, PPreiview, PPreviewItem } from "./components/props/preview";
 
 export default function Page() {
-	const preview = usePreview();
-	const handlePreview = () =>
-		preview({
-			items: [
-				{
-					src: Sasuke,
-				},
-				Pain,
-				videoDemo,
-				"https://www.pwithe.com/Public/Upload/download/20170211/589ebf8e5bb13.pdf",
-			],
-		});
-
 	return (
 		<>
-			<Button onClick={handlePreview}>预览</Button>
+			<h2 className='mb-40'>Preview</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<Api apis={PPreiview} />
+
+			<h4 className='mt-40 mb-20 blue'>IPreviewItem</h4>
+			<Api apis={PPreviewItem} />
 		</>
 	);
 }

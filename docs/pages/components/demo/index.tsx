@@ -19,7 +19,7 @@ interface IDemo {
 }
 
 export default function Demo(props: IDemo) {
-	const { source, defaultCollapse = false, className, inline } = props;
+	const { source, defaultCollapse = true, className, inline } = props;
 	const { demo, code, lang } = source;
 	const [collapsed, setCollapsed] = useState<boolean>(defaultCollapse);
 
@@ -49,7 +49,7 @@ export default function Demo(props: IDemo) {
 					{collapsed && (
 						<Icon
 							icon={<CodeRound />}
-							className='color-5 mr-auto ml-4'
+							className='color-5 mr-auto ml-4 opacity-2'
 							size='20px'
 						/>
 					)}

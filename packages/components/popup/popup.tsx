@@ -22,7 +22,7 @@ export default function Popup(props: IPopup) {
 		content,
 		trigger = "hover",
 		gap = 12,
-		offset = 0,
+		offset = 8,
 		fixed,
 		position = "top",
 		showDelay = 16,
@@ -34,6 +34,7 @@ export default function Popup(props: IPopup) {
 		watchResize,
 		clickOutside = true,
 		disabled,
+		referToWindow,
 		style,
 		className,
 		getContainer,
@@ -68,10 +69,11 @@ export default function Popup(props: IPopup) {
 
 	const handleShow = () => {
 		if (disabled) return;
-		if (state.show) {
-			if (trigger !== "hover" || (trigger === "hover" && !touchable)) {
-				return;
-			}
+		if (
+			state.show &&
+			(trigger !== "hover" || (trigger === "hover" && !touchable))
+		) {
+			return;
 		}
 
 		state.show = true;
@@ -86,6 +88,7 @@ export default function Popup(props: IPopup) {
 					gap,
 					offset,
 					align,
+					refWindow: referToWindow,
 				}
 			);
 
@@ -212,6 +215,7 @@ export default function Popup(props: IPopup) {
 				gap,
 				offset,
 				align,
+				refWindow: referToWindow,
 			}
 		);
 
@@ -280,6 +284,7 @@ export default function Popup(props: IPopup) {
 					arrowProps={state.arrowProps}
 					className={className}
 					{...contentTouch}
+					trigger={triggerRef.current as HTMLElement}
 					getContainer={getContainer}
 				>
 					{content}

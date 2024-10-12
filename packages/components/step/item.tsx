@@ -24,7 +24,7 @@ function Item(props: IStepItem) {
 		renderIcon = defaultRenderIcon,
 		title,
 		vertical,
-		divider = <Divider />,
+		line = <Divider />,
 		style,
 		className,
 		children,
@@ -50,7 +50,7 @@ function Item(props: IStepItem) {
 				<>
 					<div className='i-step-item-left'>
 						{renderIcon?.(index, status)}
-						{divider}
+						{line}
 					</div>
 					<div className='i-step-item-right'>
 						<div className='i-step-item-title'>{title}</div>
@@ -68,7 +68,7 @@ function Item(props: IStepItem) {
 
 						<span>{title}</span>
 
-						{divider}
+						{line}
 					</div>
 					{children && (
 						<div className='i-step-item-content'>{children}</div>

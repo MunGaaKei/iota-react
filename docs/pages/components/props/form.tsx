@@ -15,8 +15,16 @@ export const DBasic = {
 		const { Field, useForm } = Form;
 		const form = useForm();
 		const rules = {
-			name: (value) => (value ? false : "姓名必填"),
-			password: (value) => (value === "123" ? false : "密码应该为123"),
+			name: true,
+			password: {
+				validator: (v) => v === "123",
+				message: "密码错误",
+			},
+			age: {
+				validator: (v) => v > 17,
+				message: "不能小于17岁",
+			},
+			gender: true,
 		};
 
 		const handleSubmit = () => {
@@ -43,18 +51,20 @@ export const DBasic = {
 
 		return (
 			<Form form={form} rules={rules} width={420} className='gap-12'>
-				<Field name='name'>
-					<Input labelInline required label='名字' />
+				<Field name='name' required>
+					<Input labelInline label='名字' />
 				</Field>
-				<Field name='password'>
+				<Field name='password' required>
 					<Input
 						type='password'
 						label='密码'
-						required
+						tip='3位数字'
 						append={
 							<Button
 								className='bg-blue'
-								onClick={() => form.validate("password")}
+								onClick={() => {
+									form.validate("password");
+								}}
 							>
 								校验
 							</Button>
@@ -69,7 +79,7 @@ export const DBasic = {
 						<Input.Range label='体重范围' min={0} />
 					</Field>
 				</Flex>
-				<Field name='gender'>
+				<Field name='gender' required>
 					<Radio
 						label='性别'
 						options={["男", "女", "无"]}
@@ -79,7 +89,7 @@ export const DBasic = {
 				<Field name='birth'>
 					<Datepicker label='生日' labelInline />
 				</Field>
-				<Field name='hobit'>
+				<Field name='interest'>
 					<Checkbox
 						label='兴趣'
 						options={["足球", "篮球", "棒球", "排球", "橄榄球"]}
@@ -107,7 +117,7 @@ export const DBasic = {
 					/>
 				</Field>
 				<Field name='desc'>
-					<Input.Textarea label='说明' rows={2} autoSize />
+					<Input.Textarea label='说明' rows={3} autoSize />
 				</Field>
 
 				<Flex className='gap-12'>
@@ -128,8 +138,16 @@ export const DBasic = {
 	code: `const { Field, useForm } = Form;
 const form = useForm();
 const rules = {
-	name: (value) => (value ? false : "姓名必填"),
-	password: (value) => (value === "123" ? false : "密码应该为123"),
+	name: true,
+	password: {
+		validator: (v) => v === "123",
+		message: "密码错误",
+	},
+	age: {
+		validator: (v) => v > 17,
+		message: "不能小于17岁",
+	},
+	gender: true,
 };
 
 const handleSubmit = () => {
@@ -156,18 +174,20 @@ const handleValidate = async () => {
 
 return (
 	<Form form={form} rules={rules} width={420} className='gap-12'>
-		<Field name='name'>
-			<Input labelInline required label='名字' />
+		<Field name='name' required>
+			<Input labelInline label='名字' />
 		</Field>
-		<Field name='password'>
+		<Field name='password' required>
 			<Input
 				type='password'
 				label='密码'
-				required
+				tip='3位数字'
 				append={
 					<Button
 						className='bg-blue'
-						onClick={() => form.validate("password")}
+						onClick={() => {
+							form.validate("password");
+						}}
 					>
 						校验
 					</Button>
@@ -182,7 +202,7 @@ return (
 				<Input.Range label='体重范围' min={0} />
 			</Field>
 		</Flex>
-		<Field name='gender'>
+		<Field name='gender' required>
 			<Radio
 				label='性别'
 				options={["男", "女", "无"]}
@@ -192,7 +212,7 @@ return (
 		<Field name='birth'>
 			<Datepicker label='生日' labelInline />
 		</Field>
-		<Field name='hobit'>
+		<Field name='interest'>
 			<Checkbox
 				label='兴趣'
 				options={["足球", "篮球", "棒球", "排球", "橄榄球"]}

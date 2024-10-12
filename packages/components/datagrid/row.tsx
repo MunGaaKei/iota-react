@@ -67,7 +67,11 @@ export function Header(props: IHeader) {
 						style={{ ...style, insetBlockStart: 0 }}
 						onClick={(e) => onHeaderClick?.(column, e)}
 					>
-						{renderHeader?.(column, col) || title || id}
+						{renderHeader?.(column, col) ?? (
+							<div className='i-datagrid-cell-content'>
+								{title || id}
+							</div>
+						)}
 
 						{sorter && <Sorter type={order} />}
 

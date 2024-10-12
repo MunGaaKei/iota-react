@@ -4,7 +4,6 @@ import { ListAltRound } from "@ricons/material";
 import { title } from "radash";
 import Icon from "../icon";
 import Image from "../image";
-import Popup from "../popup";
 import Helpericon from "../utils/helpericon";
 import { IUploadItem } from "./type";
 
@@ -18,6 +17,7 @@ export default function RenderFile(props: IUploadItem) {
 	const CloseBtn = (
 		<Helpericon
 			active
+			className='i-upload-delete'
 			onClick={(e) => {
 				e.stopPropagation();
 				e.preventDefault();
@@ -50,16 +50,15 @@ export default function RenderFile(props: IUploadItem) {
 			}
 
 			return (
-				<Popup content={<div className='pd-8'>{name}</div>} offset={8}>
-					<div
-						className='i-upload-item-card'
-						onClick={() => onPreview?.(index)}
-					>
-						{node}
+				<div
+					title={name}
+					className='i-upload-item-card'
+					onClick={() => onPreview?.(index)}
+				>
+					{node}
 
-						{CloseBtn}
-					</div>
-				</Popup>
+					{CloseBtn}
+				</div>
 			);
 		default:
 			return (

@@ -5,7 +5,7 @@ export interface IProgress
 	extends Omit<BaseInput, "value" | "hideClear" | "onChange"> {
 	name?: string;
 	value?: number;
-	digits?: number;
+	precision?: number;
 	height?: number;
 	size?: number;
 	barClass?: string;

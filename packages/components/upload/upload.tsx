@@ -36,6 +36,8 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 		mode = "default",
 		cardSize = "4em",
 		disabled,
+		limit = props.multiple ? Infinity : 1,
+		multiple,
 		renderItem = renderFile,
 		shouldUpload = () => true,
 		uploader,
@@ -103,8 +105,10 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 			!same && changed.push(f);
 		});
 
+		const after = [...before, ...changed];
+
 		Object.assign(state, {
-			files: [...before, ...changed],
+			files: multiple ? after.slice(0, limit) : [after.at(-1)],
 			status,
 			message,
 		});
@@ -181,6 +185,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 				ref={inputRef}
 				type='file'
 				className='i-input-file-hidden'
+				multiple={multiple}
 				onChange={handleChange}
 			/>
 
@@ -212,7 +217,7 @@ const Upload = forwardRef<RefUpload, IUpload>((props, ref): JSX.Element => {
 
 				{msg && <span className='i-upload-message'>{msg}</span>}
 
-				{trigger}
+				{currentFiles.length < limit && trigger}
 			</div>
 		</InputContainer>
 	);

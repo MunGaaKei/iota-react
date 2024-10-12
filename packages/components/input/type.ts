@@ -1,4 +1,4 @@
-import { BaseInput } from "@p/type";
+import { BaseInput, TStatus } from "@p/type";
 import {
 	CSSProperties,
 	ChangeEvent,
@@ -19,6 +19,9 @@ export interface IInputContainer {
 	labelInline?: boolean;
 	children?: ReactNode;
 	style?: CSSProperties;
+	tip?: ReactNode;
+	status: TStatus;
+	required?: boolean;
 }
 
 export interface IInput
@@ -55,6 +58,7 @@ export interface IInputNumber
 	max?: number;
 	thousand?: string;
 	precision?: number;
+	hideControl?: boolean;
 }
 
 export interface IInputRange
@@ -72,6 +76,7 @@ export interface IInputRange
 	step?: number;
 	thousand?: string;
 	precision?: number;
+	hideControl?: boolean;
 	onChange?: (
 		value: (number | string | undefined)[],
 		e?: ChangeEvent<HTMLInputElement> | MouseEvent<Element>

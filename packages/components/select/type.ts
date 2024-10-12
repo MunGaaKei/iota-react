@@ -1,5 +1,6 @@
 import { BaseInput, TOption, TOptions } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import { IPopup } from "../popup/type";
 
 export interface ISelect
 	extends Omit<
@@ -17,6 +18,7 @@ export interface ISelect
 	filter?: boolean | (() => boolean);
 	filterPlaceholder?: string;
 	empty?: ReactNode;
+	popupProps?: IPopup;
 	onSelect?: (v: any, option?: TOption) => void;
 	onChange?: (v: any) => void;
 }

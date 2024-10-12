@@ -1,4 +1,5 @@
 import { Input } from "@p";
+import { PInputCommon, PValidateCommon } from "./common";
 
 export const DBasic = {
 	demo: () => {
@@ -62,17 +63,7 @@ export const PInput = [
 		desc: "初始值",
 		type: ["string"],
 	},
-	{
-		name: "label",
-		desc: "标签",
-		type: ["ReactNode"],
-	},
-	{
-		name: "labelInline",
-		desc: "标签与输入框同一行",
-		type: ["boolean"],
-		def: "false",
-	},
+	...PInputCommon,
 	{
 		name: "clear",
 		desc: "显示清除按钮",
@@ -85,23 +76,7 @@ export const PInput = [
 		type: ["boolean"],
 		def: "true",
 	},
-	{
-		name: "disabled",
-		desc: "禁用状态",
-		type: ["boolean"],
-		def: "false",
-	},
-	{
-		name: "status",
-		desc: "控件状态",
-		type: ["normal", "warning", "error", "success"],
-		def: "'normal'",
-	},
-	{
-		name: "message",
-		desc: "控件显示信息",
-		type: ["ReactNode"],
-	},
+	...PValidateCommon,
 	{
 		name: "append",
 		desc: "在输入框后面加入节点",

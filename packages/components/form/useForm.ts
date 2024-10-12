@@ -1,11 +1,11 @@
 import { uid } from "radash";
 import { useRef } from "react";
-import { TValidator } from "./type";
+import { IForm, TRule } from "./type";
 
 export class IFormInstance {
 	readonly id?: string;
 	data: { [key: string]: any } = {};
-	rules?: { [key: string]: TValidator } = {};
+	rules?: Pick<IForm, "rules"> = {};
 
 	constructor() {
 		this.id = uid(8);
@@ -46,19 +46,35 @@ export class IFormInstance {
 		if (!rules) return data;
 
 		if (field) {
-			const invalidFn = rules[field];
-			const invalidMessage = invalidFn?.(data[field], this);
+			const o = rules[field];
+			const rule: TRule = {
+				validator: (v) =>
+					Array.isArray(v)
+						? v.length > 0
+						: ![undefined, null, ""].includes(v),
+				message: undefined,
+			};
 
-			if (invalidMessage) {
+			if (typeof o === "function") {
+				rule.validator = o;
+			} else if (o === true) {
+				rule.message = "required";
+			} else {
+				Object.assign(rule, o);
+			}
+
+			const isValid = rule.validator?.(data[field], this);
+
+			if (!isValid) {
 				PubSub.publish(`${id}:invalid:${field}`, {
-					message: invalidMessage,
+					message: rule.message,
 					status: "error",
 				});
 				return false;
 			}
 
 			PubSub.publish(`${id}:invalid:${name}`, {
-				message: "",
+				message: null,
 				status: "normal",
 			});
 			return true;
@@ -67,18 +83,33 @@ export class IFormInstance {
 		let isAllValid = true;
 
 		Object.keys(data).map((name) => {
-			const invalidFn = rules[name];
-			const invalidMessage = invalidFn?.(data[name], this);
+			const o = rules[name];
+			if (o === undefined) return;
 
-			if (invalidMessage) {
+			const rule: TRule = {
+				validator: (v) => (Array.isArray(v) ? v.length > 0 : !!v),
+				message: undefined,
+			};
+
+			if (typeof o === "function") {
+				rule.validator = o;
+			} else if (o === true) {
+				rule.message = "required";
+			} else {
+				Object.assign(rule, o);
+			}
+
+			const isValid = rule.validator?.(data[name], this);
+
+			if (!isValid) {
 				PubSub.publish(`${id}:invalid:${name}`, {
-					message: invalidMessage,
+					message: rule.message,
 					status: "error",
 				});
 				isAllValid = false;
 			} else {
 				PubSub.publish(`${id}:invalid:${name}`, {
-					message: "",
+					message: null,
 					status: "normal",
 				});
 			}
