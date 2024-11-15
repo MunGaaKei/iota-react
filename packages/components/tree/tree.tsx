@@ -1,13 +1,22 @@
 import { useMemoizedFn, useReactive } from "ahooks";
-import { useEffect } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useMemo } from "react";
 import "./index.css";
 import TreeList from "./list";
-import { ITree, ITreeItem } from "./type";
+import { ITree, ITreeItem, RefTree } from "./type";
 
-function Tree(props: ITree) {
+const defaultNodeProps = {
+	key: "key",
+	title: "title",
+	children: "children",
+};
+
+const Tree = forwardRef<RefTree, ITree>((props, ref) => {
 	const {
+		data = [],
 		selected,
 		checked = [],
+		disabledRelated,
+		nodeProps,
 		onItemSelect,
 		onItemCheck,
 		...restProps
@@ -17,6 +26,23 @@ function Tree(props: ITree) {
 		checked,
 		partofs: {} as Record<string, boolean>,
 	});
+	const oNodeProps = Object.assign({}, defaultNodeProps, nodeProps);
+
+	const dataMaps = useMemo(() => {
+		if (!props.checkable && !props.selectable) return [];
+
+		const flatFn = (nodes) => {
+			return nodes.flatMap((o) => {
+				const children = o[oNodeProps.children];
+				if (children?.length > 0) {
+					return [o, ...flatFn(children)];
+				}
+				return [o];
+			});
+		};
+
+		return flatFn(data);
+	}, [data, props.selectable, props.checkable]);
 
 	const isChecked = (key?: string) => state.checked.includes(key || "");
 
@@ -25,6 +51,8 @@ function Tree(props: ITree) {
 			const { key = "", parent, children } = item;
 			const shouldChanged = { [key]: checked };
 			const partofs = { [key]: false };
+
+			if (disabledRelated) return [shouldChanged];
 
 			if (checked) {
 				if (parent && direction !== "leaf") {
@@ -112,16 +140,28 @@ function Tree(props: ITree) {
 		state.selected = selected;
 	}, [selected]);
 
+	useImperativeHandle(ref, () => {
+		return {
+			getChecked: () => [state.checked, []],
+			getSelected: () => [state.selected],
+			getPartofs: () => {
+				return dataMaps;
+			},
+		};
+	});
+
 	return (
 		<TreeList
+			data={data}
 			selected={state.selected}
 			checked={state.checked}
 			partofs={state.partofs}
+			nodeProps={oNodeProps}
 			onItemCheck={handleCheck}
 			onItemSelect={handleSelect}
 			{...restProps}
 		/>
 	);
-}
+});
 
 export default Tree;

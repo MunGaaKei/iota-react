@@ -29,7 +29,7 @@
 	user-select: none;
 	border-radius: var(--radius);
 	overflow: hidden;
-	opacity: 0.4;
+	color: var(--color-6);
 	&.i-tree-item-round {
 		border-radius: 100px;
 	}
@@ -37,7 +37,6 @@
 	&:hover {
 		background: var(--color-main-0);
 		color: var(--color-main);
-		opacity: 1;
 	}
 }
 

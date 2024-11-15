@@ -2,30 +2,31 @@ import { useIntersectionObserver } from "@p/js/hooks";
 import { MoreHorizRound } from "@ricons/material";
 import { useReactive, useSize } from "ahooks";
 import classNames from "classnames";
+import { pick } from "radash";
 import {
 	CSSProperties,
 	Children,
-	WheelEvent,
 	forwardRef,
-	useCallback,
 	useEffect,
 	useImperativeHandle,
-	useMemo,
 	useRef,
 } from "react";
 import Button from "../button";
 import Icon from "../icon";
 import Popup from "../popup";
+import Helpericon from "../utils/helpericon";
 import "./index.css";
 import TabItem from "./item";
 import { CompositionTabs, ITabItem, ITabs, RefTabs, TTabKey } from "./type";
 
 type TState = {
 	active?: TTabKey;
+	prevActive?: TTabKey;
 	barStyle: CSSProperties;
 	cachedTabs: TTabKey[];
 	overflow: boolean;
 	more: ITabItem[];
+	tabs: ITabItem[];
 };
 
 const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
@@ -56,43 +57,84 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	const navsRef = useRef<HTMLDivElement>(null);
 	const state = useReactive<TState>({
 		active,
+		prevActive: undefined,
 		barStyle: {},
 		cachedTabs: [],
 		overflow: false,
 		more: [],
+		tabs: [],
 	});
 	const { observe, unobserve } = useIntersectionObserver();
 	const size = useSize(navsRef);
 
-	const tabs: ITabItem[] = useMemo(() => {
+	useEffect(() => {
 		if (!items) {
-			if (!children) return [];
+			if (!children) {
+				state.tabs = [];
+				return;
+			}
 
-			return Children.map(children, (node, i) => {
+			state.tabs = Children.map(children, (node, i) => {
 				const { key, props: nodeProps } = node as {
 					key?: TTabKey;
 					props?: any;
 				};
 				const { title, children, content, keepDOM } = nodeProps;
+				const cloned = children
+					? pick(children, ["props", "type", "$$typeof", "ref"])
+					: content;
 
 				return {
 					key: key || String(i),
 					title,
-					content: children || content,
+					content: cloned,
 					keepDOM,
 				};
 			}) as ITabItem[];
+
+			return;
 		}
 
-		items.map((item, i) => {
-			if (item.key !== undefined) return;
-			item.key = i;
+		state.tabs = items.map((item, i) => {
+			if (["string", "number"].includes(typeof item)) {
+				return { key: item, title: item };
+			}
+			if (item.key === undefined) {
+				item.key = i;
+			}
+			return item;
 		});
+	}, [children, items]);
 
-		return items;
-	}, [children]);
+	const add = (tab: ITabItem) => {
+		const { key } = tab;
+		const i = state.tabs.findIndex((t) => t.key === key);
 
-	const open = useCallback((key: TTabKey) => {
+		if (i > -1) {
+			open(state.tabs[i].key ?? i);
+			return;
+		}
+
+		const l = state.tabs.length;
+		const tkey = tab.key ?? l;
+		state.tabs.push({ ...tab, key: tkey });
+		open(tkey);
+	};
+
+	const close = (key: TTabKey) => {
+		const i = state.tabs.findIndex((t) => t.key === key);
+
+		if (i < 0) return;
+
+		state.tabs.splice(i, 1);
+
+		if (state.active !== key) return;
+
+		const next = state.tabs[i] || state.tabs[i - 1];
+		open(state.prevActive ?? next?.key ?? "");
+	};
+
+	const open = (key: TTabKey) => {
 		if (key === state.active) {
 			if (!toggable) return;
 
@@ -106,12 +148,15 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 			return;
 		}
 
+		state.prevActive = state.active;
 		onTabChange?.(key, state.active);
 		state.active = key;
-	}, []);
+	};
 
-	const handleMouseWheel = (e: WheelEvent) => {
+	const handleMouseWheel = (e) => {
 		e.stopPropagation();
+		e.preventDefault();
+
 		if (vertical) return;
 
 		navsRef.current?.scrollBy({
@@ -129,36 +174,41 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		if (!state.overflow) return;
 
 		navRefs.current.map((nav, i) => {
+			if (!nav) return;
 			observe(nav, (tar: HTMLElement, visible: boolean) => {
-				tabs[i].intersecting = visible;
-				state.more = tabs.filter((tab) => !tab.intersecting);
+				if (!state.tabs[i]) return;
+				state.tabs[i].intersecting = visible;
+				state.more = state.tabs.filter((tab) => !tab.intersecting);
 			});
 		});
-	}, [size, hideMore]);
+	}, [size, hideMore, state.tabs.length]);
 
 	useEffect(() => {
-		if (!bar || state.active === undefined) {
+		if (!bar || type === "pane" || state.active === undefined) {
 			return;
 		}
 
-		const index = tabs.findIndex((tab) => tab.key === state.active);
-		const nav = navRefs.current[index];
+		const index = state.tabs.findIndex((tab) => tab.key === state.active);
 
-		if (!nav) return;
+		setTimeout(() => {
+			const nav = navRefs.current[index];
 
-		if (tabs[index].keepDOM && state.active) {
-			const i = state.cachedTabs.findIndex((k) => k === state.active);
-			i < 0 && state.cachedTabs.unshift(state.active);
-		}
+			if (!nav) return;
 
-		const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
-		const isLine = type === "line";
+			if (state.tabs[index].keepDOM && state.active) {
+				const i = state.cachedTabs.findIndex((k) => k === state.active);
+				i < 0 && state.cachedTabs.unshift(state.active);
+			}
 
-		state.barStyle = {
-			height: !vertical && isLine ? ".25em" : offsetHeight,
-			width: vertical && isLine ? ".25em" : offsetWidth,
-			transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
-		};
+			const { offsetHeight, offsetLeft, offsetTop, offsetWidth } = nav;
+			const isLine = type === "line";
+
+			state.barStyle = {
+				height: !vertical && isLine ? ".25em" : offsetHeight,
+				width: vertical && isLine ? ".25em" : offsetWidth,
+				transform: `translate(${offsetLeft}px, ${offsetTop}px)`,
+			};
+		}, 16);
 	}, [state.active, bar]);
 
 	useEffect(() => {
@@ -168,14 +218,28 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 	}, [active]);
 
 	useEffect(() => {
+		if (hideMore) return;
 		return () => {
 			navRefs.current?.map(unobserve);
 		};
-	}, [tabs]);
+	}, [state.tabs.length]);
+
+	useEffect(() => {
+		if (!navsRef.current || vertical) return;
+		navsRef.current.addEventListener("wheel", handleMouseWheel, {
+			passive: false,
+		});
+
+		return () => {
+			if (!navsRef.current) return;
+			navsRef.current.removeEventListener("wheel", handleMouseWheel);
+		};
+	}, [navsRef.current]);
 
 	useImperativeHandle(ref, () => ({
 		open,
 		close,
+		add,
 		navs: navsRef,
 	}));
 
@@ -190,18 +254,14 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 		>
 			<div
 				className={classNames("i-tab-navs-container", {
-					"flex-column": vertical,
+					"i-tab-navs-vertical": vertical,
 				})}
 			>
 				{prepend}
 
-				<div
-					ref={navsRef}
-					className='i-tab-navs'
-					onWheelCapture={handleMouseWheel}
-				>
-					{tabs.map((tab, i) => {
-						const { title, key = i } = tab;
+				<div ref={navsRef} className='i-tab-navs'>
+					{state.tabs.map((tab, i) => {
+						const { title, key = i, closable } = tab;
 
 						return (
 							<a
@@ -216,6 +276,18 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 								onClick={() => open(key)}
 							>
 								{title}
+
+								{closable && (
+									<Helpericon
+										as='i'
+										active
+										className='i-tab-nav-close'
+										onClick={(e) => {
+											e.stopPropagation();
+											close(key);
+										}}
+									/>
+								)}
 							</a>
 						);
 					})}
@@ -240,13 +312,13 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 							<div className='i-tabs-morelist pd-4'>
 								{state.more.map((tab, i) => {
 									const { key = i, title } = tab;
+									const isActive = state.active === key;
 
 									return (
 										<a
 											key={key}
 											className={classNames("i-tab-nav", {
-												"i-tab-active":
-													state.active === key,
+												"i-tab-active": isActive,
 											})}
 											onClick={() => open(key)}
 										>
@@ -265,7 +337,7 @@ const Tabs = forwardRef<RefTabs, ITabs>((props, ref) => {
 			</div>
 
 			<div className='i-tab-contents'>
-				{tabs.map((tab, i) => {
+				{state.tabs.map((tab, i) => {
 					const { key = i, content } = tab;
 					const isActive = state.active === key;
 					const show =

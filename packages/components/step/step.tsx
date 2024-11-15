@@ -9,7 +9,7 @@ const Step = (props: IStep): JSX.Element => {
 		active = 0,
 		vertical,
 		renderIcon,
-		divider,
+		line,
 		style,
 		className,
 		children,
@@ -29,7 +29,7 @@ const Step = (props: IStep): JSX.Element => {
 				...el,
 				props: {
 					renderIcon,
-					divider,
+					line,
 					onClick,
 					...elProps,
 					vertical,

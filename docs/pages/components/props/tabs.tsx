@@ -1,4 +1,8 @@
-import { Image, Tabs } from "@p";
+import { Button, Icon, Image, Tabs } from "@p";
+import { RefTabs } from "@p/components/tabs/type";
+import { AutoAwesomeMosaicTwotone } from "@ricons/material";
+import { draw, uid } from "radash";
+import { useRef } from "react";
 
 export const DBasic = {
 	demo: () => {
@@ -10,7 +14,10 @@ export const DBasic = {
 					</Tabs.Item>
 				))}
 				<Tabs.Item title='keepDOM' keepDOM>
-					<Image src='https://via.placeholder.com/150' />
+					<Image
+						src='https://via.placeholder.com/150'
+						initSize={40}
+					/>
 				</Tabs.Item>
 			</Tabs>
 		);
@@ -22,10 +29,79 @@ export const DBasic = {
         </Tabs.Item>
     ))}
     <Tabs.Item title='keepDOM' keepDOM>
-        <Image src='https://via.placeholder.com/150' />
+        <Image
+			src='https://via.placeholder.com/150'
+			initSize={40}
+		/>
     </Tabs.Item>
 </Tabs>`,
 	lang: "xml",
+};
+
+export const DDynamic = {
+	demo: () => {
+		const tabs = ["标签页", "你好"];
+		const tabRef = useRef<RefTabs>(null);
+
+		const handleCreate = () => {
+			const key = uid(4);
+			const emoji = ["✌️", "🫠", "👻", "💀", "🐶", "🐤", "🐞", "🐧"];
+
+			tabRef.current?.add({
+				key,
+				title: `${draw(emoji)} ${key}`,
+				closable: true,
+			});
+		};
+
+		return (
+			<>
+				<Button className='bg-blue mb-12' onClick={handleCreate}>
+					新增
+				</Button>
+
+				<Tabs
+					ref={tabRef}
+					tabs={tabs}
+					active='标签页'
+					type='pane'
+					prepend={<Icon icon={<AutoAwesomeMosaicTwotone />} />}
+					style={{ maxHeight: 120 }}
+				/>
+			</>
+		);
+	},
+	code: `const tabs = ["标签页", "你好"];
+const tabRef = useRef<RefTabs>(null);
+
+const handleCreate = () => {
+	const key = uid(4);
+	const emoji = ["✌️", "🫠", "👻", "💀", "🐶", "🐤", "🐞", "🐧"];
+
+	tabRef.current?.add({
+		key,
+		title: \`\${draw(emoji)} \${key}\`,
+		closable: true,
+	});
+};
+
+return (
+	<>
+		<Button className='bg-blue mb-12' onClick={handleCreate}>
+			新增
+		</Button>
+
+		<Tabs
+			ref={tabRef}
+			tabs={tabs}
+			active='标签页'
+			type='pane'
+			prepend={<Icon icon={<AutoAwesomeMosaicTwotone />} />}
+			style={{ maxHeight: 120 }}
+		/>
+	</>
+);`,
+	lang: "javascript",
 };
 
 export const PTabs = [
@@ -46,7 +122,7 @@ export const PTabs = [
 	{
 		name: "type",
 		desc: "样式类型",
-		type: ["'default'", "'line'"],
+		type: ["'default'", "'line'", "'pane'"],
 		def: '"default"',
 	},
 	{
@@ -119,6 +195,12 @@ export const PTabItem = [
 		name: "title",
 		desc: "标签页标题",
 		type: ["ReactNode"],
+	},
+	{
+		name: "closable",
+		desc: "标签页可关闭",
+		type: ["boolean"],
+		def: "false",
 	},
 	{
 		name: "content",

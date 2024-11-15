@@ -9,11 +9,13 @@ export interface IImage extends HTMLAttributes<HTMLImageElement> {
 	lazyload?: boolean;
 	fallback?: ReactNode;
 	fit?: any;
+	usePreview?: boolean;
 }
 
-export interface IImageList {
-	items: string[];
+export interface IImageList extends Omit<IImage, "src" | "alt"> {
+	items: string[] | IImage[];
 	gap?: number | string;
-	round?: boolean;
-	lazyload?: boolean;
+	columns?: number | string;
+	wrap?: any;
+	direction?: any;
 }

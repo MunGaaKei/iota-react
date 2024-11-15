@@ -22,7 +22,7 @@ export default function Number(props: ITextNumber) {
 
 		if (!thousand) return z;
 
-		return formatNumber(n, { decimal, thousand });
+		return formatNumber(n, { precision: decimal, thousand });
 	}, [n, thousand]);
 
 	useEffect(() => {

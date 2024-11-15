@@ -1,21 +1,61 @@
-import { Text } from "@p";
+import { Flex } from "@p";
+import Api from "./components/api";
+import Demo from "./components/demo";
+import {
+	DBasic,
+	DNumber,
+	DTime,
+	PText,
+	PTextNumber,
+	PTextTime,
+} from "./components/props/text";
 
 export default function Page() {
 	return (
 		<>
-			<Text weight={600} gradient={["left", "yellow", "crimson"]}>
-				GRADIENT TEXT
-			</Text>
-			<br />
-			{/* <Text>
-				sdjflkj slkdfjlksdjf lksdjf lksdjf l;sadjfl;sdka f
-				<span className='mark'>123321</span>
-			</Text> */}
-			<Text.Number count={0} to={10000} size={40} weight='600' />
-			<br />
-			<Text.Number count={152323000.24444} decimal={4} />
-			<br />
-			<Text.Time time={500} />
+			<h2 className='mb-40'>Text</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-40 mb-20'>Text.Number</h3>
+			<Demo source={DNumber} />
+
+			<h3 className='mt-40 mb-20'>Text.Time</h3>
+			<Demo source={DTime} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 id='text' className='blue mb-12'>
+				Text
+			</h4>
+			<Api apis={PText} />
+
+			<h4 id='text-number' className='mb-20 mt-40'>
+				<Flex gap={12}>
+					<span className='blue'>
+						<span className='opacity-5'>Text.</span>Number
+					</span>
+
+					<span className='color-5'>extends</span>
+					<a href='#text' className='link mx-2'>
+						Text
+					</a>
+				</Flex>
+			</h4>
+			<Api apis={PTextNumber} />
+
+			<h4 id='text-number' className='mb-20 mt-40'>
+				<Flex gap={12}>
+					<span className='blue'>
+						<span className='opacity-5'>Text.</span>Time
+					</span>
+
+					<span className='color-5'>extends</span>
+					<a href='#text' className='link mx-2'>
+						Text
+					</a>
+				</Flex>
+			</h4>
+			<Api apis={PTextTime} />
 		</>
 	);
 }

@@ -33,7 +33,7 @@ export default function Document(): JSX.Element {
 		<Area>
 			<Area.Item name='sider' style={{ width: 240 }}>
 				<Tree
-					items={menu}
+					data={menu}
 					selected={`/docs/${name}`}
 					keyProp='href'
 					className='pd-8'

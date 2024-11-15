@@ -1,93 +1,30 @@
-import { Flex, Tag, Tree } from "@p";
-import { useState } from "react";
+import Api from "./components/api";
+import CodeView from "./components/code";
+import Demo from "./components/demo";
+import { DBasic, PRefTree, PTree, PTreeItem } from "./components/props/tree";
 
 export default function Page() {
-	const [selected, setSelected] = useState("");
-	const [checked, setChecked] = useState<string[]>([]);
-
 	return (
 		<>
-			<p>selected: {selected}</p>
-			<div className='mb-12'>
-				<Flex gap={2} wrap>
-					<span>checked:</span>
-					{checked.map((k) => (
-						<Tag key={k}>{k}</Tag>
-					))}
-				</Flex>
-			</div>
-			<Tree
-				keyProp='title'
-				items={[
-					{
-						title: "A",
-						children: [
-							{
-								title: "A-0",
-							},
-							{
-								title: "A-1",
-								expanded: true,
-								children: [
-									{
-										title: "A-1-0",
-									},
-									{
-										title: "A-1-1",
-									},
-									{
-										title: "A-1-2",
-										expanded: true,
-										children: [
-											{
-												title: "A-1-2-0",
-											},
-											{
-												title: "A-1-2-1",
-											},
-										],
-									},
-								],
-							},
-						],
-						expanded: true,
-					},
-					{
-						title: "B",
-						children: [
-							{
-								title: "B-0",
-								children: [
-									{
-										title: "B-0-0",
-									},
-									{
-										title: "B-0-1",
-									},
-								],
-							},
-							{
-								title: "B-1",
-							},
-							{
-								title: "B-2",
-							},
-						],
-						expanded: true,
-					},
-				]}
-				checkable
-				selectable
-				renderExtra={(item) => (
-					<Tag className='bg-pink-0' size='small' dot>
-						fail
-					</Tag>
-				)}
-				onItemSelect={setSelected}
-				onItemCheck={(item, checked, list) => {
-					setChecked(list);
-				}}
-			/>
+			<h2 className='mb-40'>Tree</h2>
+			<h3 className='mb-12'>示例</h3>
+			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-20'>Api 参考</h3>
+			<h4 className='blue mb-12'>Tree</h4>
+			<Api apis={PTree} />
+
+			<h4 id='tree-item' className='mt-40 mb-20'>
+				<span className='blue'>
+					<span className='opacity-5'>Tree.</span>Item
+				</span>
+			</h4>
+			<Api apis={PTreeItem} />
+
+			<h4 id='ref-tree' className='mt-40 mb-12 blue'>
+				RefTree
+			</h4>
+			<CodeView lang='typescript'>{PRefTree}</CodeView>
 		</>
 	);
 }

@@ -26,6 +26,12 @@
 	display: flex;
 	border-radius: var(--radius);
 	scroll-behavior: smooth;
+	gap: 4px;
+	align-items: center;
+}
+.i-tab-navs-vertical {
+	align-items: flex-end;
+	flex-direction: column;
 }
 .i-tab-navs {
 	flex: 1;
@@ -41,6 +47,68 @@
 .i-tab-navs::-webkit-scrollbar {
 	display: none;
 }
+.i-tabs-pane {
+	.i-tab-navs-container {
+		position: relative;
+		&:before {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			border-top: 1px solid var(--color-8);
+			content: "";
+			z-index: 1;
+		}
+	}
+	.i-tab-navs {
+		gap: 4px;
+		.i-tab-nav {
+			border-radius: var(--radius) var(--radius) 0 0;
+			border: 1px solid transparent;
+			&:hover {
+				border-color: var(--color-8);
+				border-bottom-color: var(--background);
+			}
+		}
+		.i-tab-active {
+			z-index: 2;
+			background: transparent;
+			border-color: var(--color-7);
+			border-bottom: 1px solid var(--background);
+			&:hover {
+				background-color: transparent;
+			}
+		}
+	}
+	.i-tab-navs-vertical {
+		&:before {
+			left: unset;
+			top: 0;
+			width: unset;
+			height: 100%;
+			border-top: none;
+			border-right: 1px solid var(--color-8);
+		}
+		.i-tab-navs {
+			.i-tab-nav {
+				border-radius: var(--radius) 0 0 var(--radius);
+				border: 1px solid transparent;
+				&:hover {
+					border-color: var(--color-8);
+					border-right-color: var(--background);
+				}
+			}
+			.i-tab-active {
+				border-color: var(--color-7);
+				border-right: 1px solid var(--background);
+				&:hover {
+					background-color: transparent;
+				}
+			}
+		}
+	}
+}
 .i-tab-nav {
 	--color: var(--color-7);
 	position: relative;
@@ -51,6 +119,7 @@
 	padding: 0.4em 0.5em;
 	user-select: none;
 	flex-shrink: 0;
+	gap: 0.25em;
 	color: var(--color);
 	border-radius: var(--radius);
 	&:hover {
@@ -59,16 +128,11 @@
 	&.i-tab-active {
 		--color: var(--color-main);
 	}
-	&:hover,
-	&.i-tab-active {
-		> .i-tab-nav-close {
-			margin-left: 0.25em;
-			width: 1.6em;
-			opacity: 1;
-		}
-	}
 }
 .i-tabs-morelist {
+	.i-tab-nav {
+		white-space: nowrap;
+	}
 	.i-tab-active {
 		background: var(--color-main-0);
 	}
@@ -84,19 +148,11 @@
 	}
 }
 .i-tab-nav-close {
-	--color: red;
-	align-self: stretch;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 0;
-	margin-left: 0.8em;
-	width: 0;
-	border-radius: 0 var(--radius) 0 0;
-	transition: var(--transition);
+	margin: 0;
+	font-size: 0.7em;
+	padding: 0;
 	&:hover {
-		background: var(--error-1);
-		color: var(--white);
+		color: var(--error);
 	}
 }
 .i-tab-navs-bar {

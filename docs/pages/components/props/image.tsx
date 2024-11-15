@@ -1,20 +1,17 @@
+import dimensions from "@d/assets/dimensions.jpg";
+import fantasy from "@d/assets/fantasy.jpg";
+import jay from "@d/assets/jay.jpg";
+import yehuimei from "@d/assets/yehuimei.jpg";
 import { Image } from "@p";
 
 export const DBasic = {
-	demo: <Image src='https://via.placeholder.com/60' size={60} />,
+	demo: <Image src={jay} size={80} />,
 	code: `<Icon icon={<DownhillSkiingRound />} size='5em' rotate={-45} />`,
 	lang: "xml",
 };
 
 export const DImageList = {
-	demo: (
-		<Image.List
-			items={[
-				"https://via.placeholder.com/60",
-				"https://via.placeholder.com/60/aaa",
-			]}
-		/>
-	),
+	demo: <Image.List items={[jay, fantasy, dimensions, yehuimei]} />,
 	code: `<Icon icon={<DownhillSkiingRound />} size='5em' rotate={-45} />`,
 	lang: "xml",
 };
@@ -51,7 +48,6 @@ export const PImage = [
 		name: "fallback",
 		desc: "图片加载失败时显示",
 		type: ["ReactNode"],
-		def: "<Icon icon={<HideImageTwotone />} size='2em' className='color-5' />",
 	},
 	{
 		name: "fit",

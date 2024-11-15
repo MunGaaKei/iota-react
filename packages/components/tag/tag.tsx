@@ -25,7 +25,7 @@ const Tag = (props: ITag): JSX.Element => {
 					"i-tag-outline": outline,
 					"i-tag-clickable": onClick,
 					[`i-tag-${size}`]: size !== "normal",
-					rounded: round,
+					round,
 				},
 				className
 			)}

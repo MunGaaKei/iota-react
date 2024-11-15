@@ -31,25 +31,35 @@ export interface ITreeItem {
 	disabled?: boolean;
 	checked?: boolean;
 	parent?: ITreeItem;
+	[key: string]: any;
 }
 
-export interface PropsTreeItem extends Omit<ITree, "items"> {
+export interface PropsTreeItem extends Omit<ITree, "data" | "nodeProps"> {
 	index?: number;
 	item: ITreeItem;
+	nodeProps: {
+		key: string;
+		title: string;
+		children: string;
+	};
 }
 
 export interface ITree {
-	items: ITreeItem[];
+	data: ITreeItem[];
 	parent?: ITreeItem;
 	depth?: number;
-	keyProp?: string;
+	nodeProps?: {
+		key?: string;
+		title?: string;
+		children?: string;
+	};
 	selectable?: boolean;
 	selected?: string;
 	checkable?: boolean;
 	checked?: string[];
+	disabledRelated?: boolean;
 	partofs?: Record<string, boolean>;
 	round?: boolean;
-	ripple?: boolean;
 	style?: CSSProperties;
 	className?: string;
 	renderExtra?: (item: ITreeItem) => ReactNode;
@@ -60,4 +70,10 @@ export interface ITree {
 		checked: boolean,
 		checkedKeys: string[]
 	) => void;
+}
+
+export interface RefTree {
+	getChecked: () => [string[], ITreeItem[]];
+	getSelected: () => [string?, ITreeItem?];
+	getPartofs: () => any;
 }

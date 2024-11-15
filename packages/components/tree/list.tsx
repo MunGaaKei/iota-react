@@ -2,23 +2,33 @@ import classNames from "classnames";
 import { TreeItem } from "./item";
 import { ITree } from "./type";
 
-function TreeList(props: ITree) {
+interface ITreeList extends Omit<ITree, "nodeProps"> {
+	nodeProps: {
+		key: string;
+		title: string;
+		children: string;
+	};
+}
+
+function TreeList(props: ITreeList) {
 	const {
-		items = [],
+		data = [],
 		depth = 0,
 		round,
 		style,
 		className,
 		parent,
+		nodeProps,
 		...restProps
 	} = props;
 
-	const contents = items.map((item, i) => {
-		const { key, type, title } = item;
+	const contents = data.map((item, i) => {
+		const { type } = item;
+		const title = item[nodeProps.title];
 		const itemKey =
-			key ||
-			(props.keyProp && item[props.keyProp]) ||
+			item[nodeProps.key] ||
 			(parent?.key !== undefined ? `${parent.key}-${i}` : `${i}`);
+
 		item.key = itemKey;
 		item.parent = parent;
 
@@ -30,12 +40,21 @@ function TreeList(props: ITree) {
 			);
 		}
 
+		if (type && type !== "item") {
+			return (
+				<div key={i} className={`i-tree-type-${type}`}>
+					{title}
+				</div>
+			);
+		}
+
 		return (
 			<TreeItem
 				key={itemKey}
 				index={i}
 				item={item}
 				depth={depth}
+				nodeProps={nodeProps}
 				{...restProps}
 			/>
 		);

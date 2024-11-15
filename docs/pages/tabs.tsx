@@ -1,6 +1,6 @@
 import Api from "./components/api";
 import Demo from "./components/demo";
-import { DBasic, PTabItem, PTabs } from "./components/props/tabs";
+import { DBasic, DDynamic, PTabItem, PTabs } from "./components/props/tabs";
 
 export default function Page() {
 	return (
@@ -8,6 +8,9 @@ export default function Page() {
 			<h2 className='mb-40'>Tabs</h2>
 			<h3 className='mb-12'>示例</h3>
 			<Demo source={DBasic} />
+
+			<h3 className='mt-80 mb-12'>动态增删</h3>
+			<Demo source={DDynamic} />
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
 			<h4 className='blue mb-20'>Tabs</h4>

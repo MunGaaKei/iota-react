@@ -1,6 +1,6 @@
 import Api from "./components/api";
 import Demo from "./components/demo";
-import { DBasic, PImage } from "./components/props/image";
+import { DBasic, DImageList, PImage } from "./components/props/image";
 
 export default function Page() {
 	return (
@@ -9,10 +9,10 @@ export default function Page() {
 			<h3 className='mb-12'>示例</h3>
 			<Demo source={DBasic} />
 
-			{/* <h3 className='mt-80 mb-20'>
+			<h3 className='mt-80 mb-20'>
 				<span className='color-5'>Image.</span>List
 			</h3>
-			<Demo source={DImageList} /> */}
+			<Demo source={DImageList} />
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
 			<Api apis={PImage} />

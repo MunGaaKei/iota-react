@@ -1,5 +1,7 @@
 export const DBasic = {
-	demo: ``,
+	demo: () => {
+		return <></>;
+	},
 	code: ``,
 	lang: "xml",
 };

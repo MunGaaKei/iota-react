@@ -38,6 +38,7 @@ export const TreeItem = (props: PropsTreeItem) => {
 		checked = [],
 		partofs = {},
 		checkable,
+		nodeProps,
 		renderExtra,
 		onItemClick,
 		onItemSelect,
@@ -45,16 +46,8 @@ export const TreeItem = (props: PropsTreeItem) => {
 		...restProps
 	} = props;
 
-	const {
-		as,
-		key = "",
-		href,
-		icon,
-		title,
-		children,
-		expanded,
-		disabled,
-	} = item;
+	const { as, key = "", href, icon, title, expanded, disabled } = item;
+	const children = item[nodeProps.children];
 
 	const [expand, setExpand] = useState(expanded);
 
@@ -127,13 +120,14 @@ export const TreeItem = (props: PropsTreeItem) => {
 			{children?.length && (
 				<div className='i-tree-item-content'>
 					<TreeList
-						items={children}
+						data={children}
 						depth={depth + 1}
 						selected={selected}
 						checkable={checkable}
 						parent={item}
 						partofs={partofs}
 						checked={checked}
+						nodeProps={nodeProps}
 						renderExtra={renderExtra}
 						onItemClick={onItemClick}
 						onItemSelect={onItemSelect}

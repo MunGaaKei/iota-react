@@ -1,5 +1,4 @@
 import Icon from "@p/components/icon";
-import Image from "@p/components/image";
 import Video from "@p/components/video";
 import { FeedOutlined } from "@ricons/material";
 import { TFileType, TPreviewItem } from "./type";
@@ -9,7 +8,7 @@ export default function renderFile(props: TPreviewItem) {
 
 	switch (type) {
 		case TFileType.IMAGE:
-			return <Image {...props} lazyload />;
+			return <img src={props.src} />;
 		case TFileType.VIDEO:
 			return <Video {...props} />;
 		default:

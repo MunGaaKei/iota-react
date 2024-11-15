@@ -28,7 +28,7 @@ export interface ITextNumber extends IText {
 }
 
 export interface ITextTime extends IText {
-	time?: number;
+	seconds?: number;
 	zero?: boolean;
 	units?: string[];
 }

@@ -6,16 +6,27 @@
 		overflow: unset;
 		transform: none;
 		pointer-events: none;
+		width: 100%;
+		height: 100%;
 	}
 }
 
+.i-preview-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
 .i-preview-content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
 	transition: var(--transition);
-	box-shadow: var(--shadow);
-	pointer-events: all;
-	.i-image {
-		max-height: 100%;
-		max-width: 100%;
+	pointer-events: none;
+	* {
+		pointer-events: all;
 	}
 }
 

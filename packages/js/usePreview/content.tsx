@@ -1,5 +1,6 @@
 import { Button, Icon } from "@p";
 import {
+	AspectRatioRound,
 	CloseRound,
 	FileDownloadOutlined,
 	KeyboardArrowLeftRound,
@@ -61,6 +62,8 @@ export default function Content(props: IPreview) {
 		};
 	}, [state.current, items]);
 
+	const isImage = file.type === TFileType.IMAGE;
+
 	const handleSwitch = (next: number) => {
 		const l = files.length;
 		const { current: before } = state;
@@ -86,19 +89,10 @@ export default function Content(props: IPreview) {
 		state.rotate += deg;
 
 		onRotate?.(state.rotate);
-
-		const sr = box.current?.getBoundingClientRect();
-		const pr = box.current?.offsetParent?.getBoundingClientRect();
-		if (!sr || !pr) return;
-		const { width: sw, height: sh } = sr;
-		const { width: pw, height: ph } = pr;
-		const exceed = sw > ph || sh > pw;
-
-		state.scale = exceed ? Math.min(ph / sw, pw / sh) : 1;
 	};
 
 	const handleMouseWheel = throttle({ interval: 60 }, (e) => {
-		if (file.type !== TFileType.IMAGE) return;
+		if (!isImage) return;
 		let after = state.scale + (e.deltaY < 0 ? 0.05 : -0.05);
 		if (after > 2) after = 2;
 		if (after < 0.25) after = 0.25;
@@ -125,9 +119,19 @@ export default function Content(props: IPreview) {
 				<Button square flat onClick={onClose}>
 					<Icon icon={<CloseRound />} />
 				</Button>
-				<span className='px-8'>
-					{state.current + 1} / {files.length}
-				</span>
+				{files.length > 1 && (
+					<span className='px-8'>
+						{state.current + 1} / {files.length}
+					</span>
+				)}
+				{state.scale !== 1 && (
+					<Button flat onClick={() => (state.scale = 1)}>
+						<Icon icon={<AspectRatioRound />} />
+						<span className='mt-4'>
+							{(state.scale * 100).toFixed(0)}%
+						</span>
+					</Button>
+				)}
 				<Button square flat href={file.src} target='_blank'>
 					<Icon icon={<OpenInNewRound />} />
 				</Button>

@@ -13,6 +13,7 @@ export interface ISwiper extends BaseElement {
 	interval?: number;
 	draggable?: boolean;
 	dragOffset?: number;
+	reverse?: boolean;
 	autoplay?: boolean;
 	pauseOnHover?: boolean;
 	indicator?: boolean;
@@ -22,7 +23,6 @@ export interface ISwiper extends BaseElement {
 	next?: ReactNode;
 	arrow?: boolean;
 	renderIndicator?: (i: number) => ReactNode;
-	onInitial?: () => void;
 	onBeforeSwipe?: (before: number) => void;
 	onAfterSwipe?: (after: number) => void;
 }
@@ -42,6 +42,6 @@ export interface RefSwiper {
 }
 
 export interface CompositionSwiper
-	extends ForwardRefExoticComponent<ISwiper & RefAttributes<HTMLDivElement>> {
+	extends ForwardRefExoticComponent<ISwiper & RefAttributes<RefSwiper>> {
 	Item: typeof Item;
 }

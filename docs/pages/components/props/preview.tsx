@@ -1,5 +1,5 @@
-import Pain from "@d/assets/pain.jpg";
-import sasuke from "@d/assets/sasuke.jpg";
+import fantasy from "@d/assets/fantasy.jpg";
+import github from "@d/assets/github.jpg";
 import videoDemo from "@d/assets/video.mp4";
 import { Button, usePreview } from "@p";
 import { Link } from "react-router-dom";
@@ -11,9 +11,9 @@ export const DBasic = {
 			preview({
 				items: [
 					{
-						src: sasuke,
+						src: github,
 					},
-					Pain,
+					fantasy,
 					videoDemo,
 					"https://www.pwithe.com/Public/Upload/download/20170211/589ebf8e5bb13.pdf",
 				],
@@ -26,9 +26,9 @@ const handlePreview = () =>
 	preview({
 		items: [
 			{
-				src: sasuke,
+				src: "/assets/jay.jpg",
 			},
-			"/assets/pain.jpg",
+			"/assets/fantasy.jpg",
 			"/assets/video.mp4",
 			"https://www.pwithe.com/Public/Upload/download/20170211/589ebf8e5bb13.pdf",
 		],
@@ -45,7 +45,7 @@ export const PPreiview = [
 		type: [
 			"string[]",
 			<a className='blue' href='#i-preview-item'>
-				IPreviewItem
+				IPreviewItem[]
 			</a>,
 		],
 		required: true,

@@ -1,4 +1,6 @@
 import { useIntersectionObserver } from "@p/js/hooks";
+import usePreview from "@p/js/usePreview";
+import { TFileType } from "@p/js/usePreview/type";
 import { HideImageTwotone } from "@ricons/material";
 import { useReactive } from "ahooks";
 import classNames from "classnames";
@@ -23,9 +25,11 @@ const Image = (props: IImage): JSX.Element => {
 		style,
 		className,
 		children,
+		usePreview: previewable = true,
 		onLoad,
 		onError,
-		...rest
+		onClick,
+		...restProps
 	} = props;
 
 	const state = useReactive<{ status?: string }>({
@@ -35,6 +39,7 @@ const Image = (props: IImage): JSX.Element => {
 	const wh = fit ? "100%" : undefined;
 
 	const { observe, unobserve } = useIntersectionObserver();
+	const preview = usePreview();
 
 	const handleError = (err) => {
 		onError?.(err);
@@ -44,6 +49,21 @@ const Image = (props: IImage): JSX.Element => {
 	const handleLoad = (e) => {
 		onLoad?.(e);
 		state.status = undefined;
+	};
+
+	const handleClick = (e) => {
+		onClick?.(e);
+
+		previewable &&
+			src &&
+			preview({
+				items: [
+					{
+						src,
+						type: TFileType.IMAGE,
+					},
+				],
+			});
 	};
 
 	useEffect(() => {
@@ -65,7 +85,7 @@ const Image = (props: IImage): JSX.Element => {
 		};
 	}, [src]);
 
-	rest[lazyload ? "data-src" : "src"] = src;
+	restProps[lazyload ? "data-src" : "src"] = src;
 	const iSize = state.status === "loading" ? initSize : undefined;
 
 	return (
@@ -88,9 +108,10 @@ const Image = (props: IImage): JSX.Element => {
 						<img
 							ref={ref}
 							style={{ objectFit: fit, width: wh, height: wh }}
-							{...rest}
+							{...restProps}
 							onLoad={handleLoad}
 							onError={handleError}
+							onClick={handleClick}
 						/>
 					)}
 

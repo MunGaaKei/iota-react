@@ -23,7 +23,8 @@ export default function Demo(props: IDemo) {
 	const { demo, code, lang } = source;
 	const [collapsed, setCollapsed] = useState<boolean>(defaultCollapse);
 
-	const handleCopy = async () => {
+	const handleCopy = async (e) => {
+		e.stopPropagation();
 		await navigator.clipboard.writeText(code);
 		Message({
 			content: "复制成功 👌",
@@ -45,7 +46,10 @@ export default function Demo(props: IDemo) {
 					"demo-code-collapsed": collapsed,
 				})}
 			>
-				<div className='demo-code-actions'>
+				<div
+					className='demo-code-actions'
+					onClick={() => setCollapsed(false)}
+				>
 					{collapsed && (
 						<Icon
 							icon={<CodeRound />}
@@ -61,6 +65,7 @@ export default function Demo(props: IDemo) {
 						active={collapsed}
 						after={<Icon icon={<UnfoldMoreRound />} />}
 						onToggle={setCollapsed}
+						onClick={(e) => e.stopPropagation()}
 					>
 						<Icon icon={<UnfoldLessRound />} />
 					</Button.Toggle>

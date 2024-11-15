@@ -11,6 +11,7 @@ import {
 	MouseEvent,
 	forwardRef,
 	useCallback,
+	useEffect,
 	useImperativeHandle,
 	useMemo,
 	useRef,
@@ -32,7 +33,10 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 		next = <Icon icon={<KeyboardArrowRightRound />} size='2em' />,
 		duration = 600,
 		interval = 3000,
+		autoplay,
+		pauseOnHover,
 		arrow = true,
+		reverse,
 		draggable,
 		dragOffset = 40,
 		gap = 0,
@@ -44,10 +48,10 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 		renderIndicator,
 		onBeforeSwipe,
 		onAfterSwipe,
-		onInitial,
 	} = props;
 
-	const $list = useRef<HTMLDivElement>(null);
+	const listRef = useRef<HTMLDivElement>(null);
+	const timerRef = useRef<any>(null);
 	const transition = `all ${duration / 1000}s`;
 	const state = useReactive({
 		current: initial,
@@ -114,6 +118,11 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 		});
 	}, [loop, indicator]);
 
+	const clearTimer = () => {
+		clearTimeout(timerRef.current);
+		timerRef.current = null;
+	};
+
 	const swipeTo = useCallback(
 		(i: number) => {
 			if (!state.swipable || i === state.current) return;
@@ -122,14 +131,20 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 
 			let reset = false;
 			let next = i;
+			const lastDisplay = size - display;
 
 			if (loop) {
-				if (i >= size - display || i < 0) {
+				if (i > lastDisplay) {
 					reset = true;
-					next = (i + size) % size;
+					i = size;
+					next = 0;
+				} else if (i < 0) {
+					reset = true;
+					i = -display;
+					next = lastDisplay;
 				}
 			} else {
-				next = clamp(next, 0, size - display);
+				next = clamp(next, 0, lastDisplay);
 				i = next;
 			}
 
@@ -146,6 +161,9 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 			state.current = i;
 
 			if (!reset) {
+				if (autoplay) {
+					timerRef.current = setTimeout(swipeNext, interval);
+				}
 				setTimeout(() => {
 					onAfterSwipe?.(next);
 				}, duration + 12);
@@ -156,17 +174,24 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 				state.transition = "none";
 				state.current = next;
 				onAfterSwipe?.(next);
+				if (autoplay) {
+					timerRef.current = setTimeout(swipeNext, interval);
+				}
 				setTimeout(() => {
 					state.transition = transition;
-				}, 16);
-			}, duration + 12);
+				}, 60);
+			}, duration + 20);
 		},
-		[duration]
+		[duration, autoplay]
 	);
 
-	const swipeNext = () => swipeTo(state.current + scroll);
+	const swipeNext = () => {
+		swipeTo(reverse ? state.current - scroll : state.current + scroll);
+	};
 
-	const swipePrev = () => swipeTo(state.current - scroll);
+	const swipePrev = () => {
+		swipeTo(reverse ? state.current + scroll : state.current - scroll);
+	};
 
 	const handleMouseDown = useCallback(
 		(e: MouseEvent) => {
@@ -184,29 +209,29 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 
 	const handleMouseMove = useCallback(
 		(e: any) => {
-			if (!state.dragging || !$list.current) return;
+			if (!state.dragging || !listRef.current) return;
 			e.preventDefault();
 
 			const dragEnd = vertical ? e.clientY : e.clientX;
 			const offset =
 				((dragEnd - state.dragStart) * 61.8) /
-					$list.current[vertical ? "offsetHeight" : "offsetWidth"] +
+					listRef.current[vertical ? "offsetHeight" : "offsetWidth"] +
 				offsetPercent;
 
-			$list.current.style.transform = `translate3d(${
+			listRef.current.style.transform = `translate3d(${
 				vertical ? `0, ${offset}%` : `${offset}%, 0`
 			}, 0)`;
 		},
-		[vertical, $list.current, offsetPercent]
+		[vertical, listRef.current, offsetPercent]
 	);
 
 	const handleMouseUp = useCallback(
 		(e: any) => {
-			if (!state.dragging || !$list.current) return;
+			if (!state.dragging || !listRef.current) return;
 
 			const dragEnd = vertical ? e.clientY : e.clientX;
 			const part =
-				$list.current[vertical ? "offsetHeight" : "offsetWidth"] /
+				listRef.current[vertical ? "offsetHeight" : "offsetWidth"] /
 				total;
 			const offset = (dragEnd - state.dragStart) * 0.618;
 			const absOffset = Math.abs(offset);
@@ -221,15 +246,26 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 				swipeTo(to);
 			}
 
-			$list.current.style.transform = position || "";
+			listRef.current.style.transform = position || "";
 
 			Object.assign(state, {
 				dragging: false,
 				transition,
 			});
 		},
-		[vertical, $list.current, offsetPercent]
+		[vertical, listRef.current, offsetPercent]
 	);
+
+	const handleMouseOver = () => {
+		if (!pauseOnHover) return;
+		clearTimer();
+	};
+
+	const handleMouseLeave = () => {
+		if (!pauseOnHover) return;
+		clearTimer();
+		timerRef.current = setTimeout(swipeNext, interval);
+	};
 
 	useMouseMove(handleMouseMove);
 	useMouseUp(handleMouseUp);
@@ -239,6 +275,16 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 		swipeNext,
 		swipePrev,
 	}));
+
+	useEffect(() => {
+		if (!autoplay) return;
+		timerRef.current = setTimeout(swipeNext, interval);
+
+		return () => {
+			clearTimeout(timerRef.current);
+			timerRef.current = null;
+		};
+	}, [autoplay, interval]);
 
 	return (
 		<div
@@ -252,9 +298,14 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 				className
 			)}
 		>
-			<div className='i-swiper-track' style={trackStyle}>
+			<div
+				className='i-swiper-track'
+				style={trackStyle}
+				onMouseOver={handleMouseOver}
+				onMouseLeave={handleMouseLeave}
+			>
 				<div
-					ref={$list}
+					ref={listRef}
 					className={classNames("i-swiper-list", {
 						"i-swiper-fade": type === "fade",
 					})}
@@ -303,21 +354,24 @@ const Swiper = forwardRef<RefSwiper, ISwiper>((props, ref): JSX.Element => {
 			</div>
 			{indicator && (
 				<div className='i-swiper-indicators'>
-					{indicatorsLoop.map((whatever, i) => (
-						<a
-							key={i}
-							className={classNames("i-swiper-indicator", {
-								"i-indicator-active":
-									i ===
-									Math[loop ? "floor" : "ceil"](
-										((state.current + size) % size) / scroll
-									),
-							})}
-							onClick={() => swipeTo(i * scroll)}
-						>
-							{renderIndicator?.(i)}
-						</a>
-					))}
+					{indicatorsLoop.map((whatever, i) => {
+						return (
+							<a
+								key={i}
+								className={classNames("i-swiper-indicator", {
+									"i-indicator-active":
+										i ===
+										Math[loop ? "floor" : "ceil"](
+											((state.current + size) % size) /
+												scroll
+										),
+								})}
+								onClick={() => swipeTo(i * scroll)}
+							>
+								{renderIndicator?.(i)}
+							</a>
+						);
+					})}
 				</div>
 			)}
 		</div>
