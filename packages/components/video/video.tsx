@@ -8,7 +8,7 @@ import {
 	VolumeDownRound,
 	VolumeOffRound,
 } from "@ricons/material";
-import { useMemoizedFn, useReactive } from "ahooks";
+import { useReactive } from "ahooks";
 import classNames from "classnames";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import Button from "../button";
@@ -21,7 +21,7 @@ import { IVideo, RefVideo } from "./type";
 const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 	const {
 		style,
-		controls = true,
+		hideControls,
 		autoplay,
 		muted,
 		volume = 50,
@@ -49,51 +49,51 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 	});
 	const $v = useRef<HTMLVideoElement>(null);
 
-	const timeUpdateListener = useMemoizedFn((e) => {
+	const timeUpdateListener = (e) => {
 		const tar = e.target;
 		if (tar.paused) return;
 
 		Object.assign(state, {
 			current: tar.currentTime,
 		});
-	});
+	};
 
-	const playChangeListener = useMemoizedFn((e) => {
+	const playChangeListener = (e) => {
 		state.playing = !e.target.paused;
-	});
+	};
 
-	const fsChangeListener = useMemoizedFn((e) => {
+	const fsChangeListener = (e) => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 
 		state.isFullscreen = document.fullscreenElement === tar;
-	});
+	};
 
-	const volumeChangeListener = useMemoizedFn((e) => {
+	const volumeChangeListener = (e) => {
 		const tar = e.target;
 		Object.assign(state, {
 			volume: tar.volume * 100,
 			muted: tar.volume === 0,
 		});
-	});
+	};
 
-	const handlePlay = useMemoizedFn(() => {
+	const handlePlay = () => {
 		const v = $v.current;
 		if (!v) return;
 
 		v.paused ? v.play() : v.pause();
-	});
+	};
 
-	const handleReady = useMemoizedFn((e) => {
+	const handleReady = (e) => {
 		const tar = e.target;
 		Object.assign(state, {
 			duration: tar.duration,
 			current: tar.currentTime,
 		});
 		tar.volume = state.volume / 100;
-	});
+	};
 
-	const handleMuted = useMemoizedFn(() => {
+	const handleMuted = () => {
 		const v = $v.current;
 		if (!v) return;
 
@@ -103,37 +103,37 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 			return;
 		}
 		v.volume = state.volumeCache === 0 ? 0.5 : state.volumeCache;
-	});
+	};
 
-	const handleStop = useMemoizedFn(() => {
+	const handleStop = () => {
 		const v = $v.current;
 		if (!v) return;
 
 		v.currentTime = 0;
 		v.pause();
-	});
+	};
 
-	const handleFullscreen = useMemoizedFn((fs?: boolean) => {
+	const handleFullscreen = (fs?: boolean) => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 
 		state.isFullscreen ? exitFullScreen() : fullScreen(tar);
 		onFullScreenChange?.(!state.isFullscreen);
-	});
+	};
 
-	const handleUpdateTime = useMemoizedFn((t) => {
+	const handleUpdateTime = (t) => {
 		const v = $v.current;
 		if (!v) return;
 
 		v.currentTime = (state.duration * t) / 100;
-	});
+	};
 
-	const handleUpdateVolume = useMemoizedFn((t) => {
+	const handleUpdateVolume = (t) => {
 		const v = $v.current;
 		if (!v) return;
 
 		v.volume = t / 100;
-	});
+	};
 
 	useImperativeHandle(ref, () => ({
 		play: () => {
@@ -186,7 +186,7 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 				controls={useOriginControls}
 			/>
 
-			{controls && !useOriginControls && (
+			{!hideControls && !useOriginControls && (
 				<div
 					className='i-video-controls'
 					onClick={(e) => e.stopPropagation()}
@@ -211,8 +211,8 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 							<Icon icon={<StopRound />} />
 						</Button>
 						<span className='i-video-times'>
-							<Text.Time time={state.current} /> /
-							<Text.Time time={state.duration} />
+							<Text.Time seconds={state.current} /> /
+							<Text.Time seconds={state.duration} />
 						</span>
 						<Progress
 							className='mr-8'

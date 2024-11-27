@@ -13,6 +13,7 @@ const Flex = (props: IFlex): JSX.Element => {
 		gap,
 		columns,
 		className,
+		style,
 		...restProps
 	} = props;
 
@@ -26,6 +27,7 @@ const Flex = (props: IFlex): JSX.Element => {
 
 	return (
 		<Component
+			{...restProps}
 			style={{
 				alignItems: align,
 				justifyContent: justify,
@@ -33,11 +35,11 @@ const Flex = (props: IFlex): JSX.Element => {
 				flexDirection: direction,
 				flexWrap: wrap === true ? "wrap" : wrap,
 				gridTemplateColumns: gridColumns as any,
+				...style,
 			}}
 			className={classNames(className, {
 				[columns ? "grid" : "flex"]: true,
 			})}
-			{...restProps}
 		/>
 	);
 };

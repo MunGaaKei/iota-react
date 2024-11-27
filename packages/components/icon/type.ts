@@ -1,7 +1,9 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
-export interface IIcon extends HTMLAttributes<HTMLElement> {
+export interface IIcon {
 	icon: ReactNode;
 	size?: string;
 	rotate?: number;
+	style?: CSSProperties;
+	className?: string;
 }

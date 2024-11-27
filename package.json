@@ -1,41 +1,42 @@
 {
 	"name": "iota-react",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
-		"make": "node templates/index.js"
+		"make": "node templates/index.js",
+		"package": ""
 	},
 	"dependencies": {
 		"@ricons/material": "^0.12.0",
-		"@types/react-syntax-highlighter": "^15.5.11",
-		"ahooks": "^3.7.8",
-		"dayjs": "^1.11.10",
-		"pubsub-js": "^1.9.4",
-		"rc-virtual-list": "^3.11.3",
-		"react": "^18.2.0",
+		"ahooks": "^3.8.1",
+		"dayjs": "^1.11.13",
+		"pubsub-js": "^1.9.5",
+		"rc-virtual-list": "^3.15.0",
+		"react": "^18.3.1",
 		"react-custom-scrollbars-2": "^4.5.0",
-		"react-dom": "^18.2.0",
-		"react-router-dom": "^6.9.0",
-		"react-syntax-highlighter": "^15.5.0"
+		"react-dom": "^18.3.1",
+		"react-router-dom": "^6.28.0",
+		"react-syntax-highlighter": "^15.6.1"
 	},
 	"devDependencies": {
 		"@types/mockjs": "^1.0.10",
-		"@types/node": "^18.15.3",
+		"@types/node": "^22.9.0",
 		"@types/pubsub-js": "^1.8.5",
-		"@types/react": "^18.0.28",
-		"@types/react-dom": "^18.0.11",
-		"@vitejs/plugin-react": "^4.1.0",
-		"classnames": "^2.3.2",
+		"@types/react": "18.2.52",
+		"@types/react-dom": "^18.3.1",
+		"@types/react-syntax-highlighter": "^15.5.11",
+		"@vitejs/plugin-react": "^4.3.3",
+		"classnames": "^2.5.1",
 		"mockjs": "^1.1.0",
 		"path": "^0.12.7",
 		"radash": "^12.1.0",
-		"sass": "^1.59.3",
-		"typescript": "^5.4.5",
-		"vite": "^5.0.0",
-		"vite-plugin-dynamic-import": "^1.2.7"
+		"sass": "^1.18.0",
+		"typescript": "^5.6.3",
+		"vite": "^5.4.11",
+		"vite-plugin-dynamic-import": "^1.6.0"
 	}
 }

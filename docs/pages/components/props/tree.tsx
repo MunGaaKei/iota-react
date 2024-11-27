@@ -22,14 +22,14 @@ export const DBasic = {
 					<Flex gap={2} wrap>
 						<span>checked:</span>
 						{checked.map((k) => (
-							<Tag key={k}>{k}</Tag>
+							<Tag key={k} className='bg-pink'>
+								{k}
+							</Tag>
 						))}
 					</Flex>
-					<Flex gap={4} className='mt-8'>
-						<Button className='bg-grey' onClick={getPartofs}>
-							获取半选状态节点
-						</Button>
-					</Flex>
+					<Button className='bg-brown mt-8' onClick={getPartofs}>
+						获取半选状态节点
+					</Button>
 				</div>
 				<Tree
 					ref={treeRef}
@@ -119,7 +119,120 @@ export const DBasic = {
 			</>
 		);
 	},
-	code: ``,
+	code: `const [selected, setSelected] = useState("");
+const [checked, setChecked] = useState<string[]>([]);
+const treeRef = useRef<RefTree>(null);
+
+const getPartofs = () => {
+	const res = treeRef.current?.getPartofs();
+	console.log(res);
+};
+
+return (
+	<>
+		<p>
+			selected: <span className='blue'>{selected}</span>
+		</p>
+		<div className='my-4'>
+			<Flex gap={2} wrap>
+				<span>checked:</span>
+				{checked.map((k) => (
+					<Tag key={k} className='bg-pink'>
+						{k}
+					</Tag>
+				))}
+			</Flex>
+			<Button className='bg-brown mt-8' onClick={getPartofs}>
+				获取半选状态节点
+			</Button>
+		</div>
+		<Tree
+			ref={treeRef}
+			nodeProps={{
+				key: "title",
+			}}
+			data={[
+				{
+					title: "A",
+					children: [
+						{
+							title: "A-0",
+							status: "done",
+						},
+						{
+							title: "A-1",
+							children: [
+								{
+									title: "A-1-0",
+									status: "todo",
+								},
+								{
+									title: "A-1-1",
+									status: "done",
+								},
+								{
+									title: "A-1-2",
+									status: "todo",
+									children: [
+										{
+											title: "A-1-2-0",
+										},
+										{
+											title: "A-1-2-1",
+										},
+									],
+								},
+							],
+						},
+					],
+					expanded: true,
+				},
+				{
+					title: "B",
+					children: [
+						{
+							title: "B-0",
+							children: [
+								{
+									title: "B-0-0",
+								},
+								{
+									title: "B-0-1",
+								},
+							],
+						},
+						{
+							title: "B-1",
+						},
+						{
+							title: "B-2",
+						},
+					],
+				},
+			]}
+			checkable
+			selectable
+			renderExtra={(item) => {
+				if (!item.status) return "";
+
+				const done = item.status === "done";
+				return (
+					<Tag
+						className={done ? "bg-success-0" : "bg-error-0"}
+						size='small'
+						dot
+					>
+						{item.status}
+					</Tag>
+				);
+			}}
+			onItemSelect={setSelected}
+			onItemCheck={(item, checked, list) => {
+				setChecked(list);
+			}}
+		/>
+	</>
+);`,
 	lang: "javascript",
 };
 
@@ -266,4 +379,12 @@ export const PTreeItem = [
 	},
 ];
 
-export const PRefTree = ``;
+export const PRefTree = `interface RefTree {
+
+	getChecked: () => [string[], ITreeItem[]];
+
+	getSelected: () => [string?, ITreeItem?];
+
+	getPartofs: () => [string[], ITreeItem[]];
+
+}`;

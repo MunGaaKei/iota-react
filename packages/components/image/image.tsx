@@ -25,7 +25,7 @@ const Image = (props: IImage): JSX.Element => {
 		style,
 		className,
 		children,
-		usePreview: previewable = true,
+		usePreview: previewable,
 		onLoad,
 		onError,
 		onClick,

@@ -1,4 +1,4 @@
-@import "./var.scss";
-@import "./reset.scss";
-@import "./helper.scss";
-@import "./color.scss";
+@use "./var.scss" as *;
+@use "./reset.scss" as *;
+@use "./helper.scss" as *;
+@use "./color.scss" as *;

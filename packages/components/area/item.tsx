@@ -10,6 +10,9 @@ function Item(props: IAreaItem) {
 			className={classNames(`i-area-${name}`, className)}
 			style={{ gridArea: name, ...style }}
 			autoHide
+			renderView={(props) => (
+				<div {...props} className='i-area-scrollview' />
+			)}
 		>
 			{children}
 		</Scrollbars>

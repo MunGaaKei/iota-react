@@ -1,6 +1,6 @@
 import { Button, Icon, Image, Tabs } from "@p";
 import { RefTabs } from "@p/components/tabs/type";
-import { AutoAwesomeMosaicTwotone } from "@ricons/material";
+import { WindowTwotone } from "@ricons/material";
 import { draw, uid } from "radash";
 import { useRef } from "react";
 
@@ -65,7 +65,7 @@ export const DDynamic = {
 					tabs={tabs}
 					active='标签页'
 					type='pane'
-					prepend={<Icon icon={<AutoAwesomeMosaicTwotone />} />}
+					prepend={<Icon icon={<WindowTwotone />} />}
 					style={{ maxHeight: 120 }}
 				/>
 			</>
@@ -96,7 +96,7 @@ return (
 			tabs={tabs}
 			active='标签页'
 			type='pane'
-			prepend={<Icon icon={<AutoAwesomeMosaicTwotone />} />}
+			prepend={<Icon icon={<WindowTwotone />} />}
 			style={{ maxHeight: 120 }}
 		/>
 	</>

@@ -15,8 +15,8 @@ const List = (props: IList): JSX.Element => {
 					typeof label === "function" ? label(i) : label;
 
 				return cloneElement(node, {
-					...node.props,
 					label: renderLabel,
+					...node.props,
 					type,
 				});
 			})}

@@ -20,7 +20,7 @@ export interface IInputContainer {
 	children?: ReactNode;
 	style?: CSSProperties;
 	tip?: ReactNode;
-	status: TStatus;
+	status?: TStatus;
 	required?: boolean;
 }
 

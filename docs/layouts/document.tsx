@@ -35,7 +35,9 @@ export default function Document(): JSX.Element {
 				<Tree
 					data={menu}
 					selected={`/docs/${name}`}
-					keyProp='href'
+					nodeProps={{
+						key: "href",
+					}}
 					className='pd-8'
 				/>
 			</Area.Item>

@@ -3,6 +3,7 @@ import fantasy from "@d/assets/fantasy.jpg";
 import jay from "@d/assets/jay.jpg";
 import yehuimei from "@d/assets/yehuimei.jpg";
 import { Image } from "@p";
+import { Link } from "react-router-dom";
 
 export const DBasic = {
 	demo: <Image src={jay} size={80} />,
@@ -53,5 +54,24 @@ export const PImage = [
 		name: "fit",
 		desc: "图片CSS Object-fit",
 		type: ["string"],
+	},
+	{
+		name: "usePreview",
+		desc: "开启图片预览功能",
+		type: ["boolean"],
+		def: "false",
+	},
+];
+
+export const PImageList = [
+	{
+		name: "items",
+		desc: "图片路径",
+		type: [
+			"string[]",
+			<Link className='link' to='#image'>
+				IImage[]
+			</Link>,
+		],
 	},
 ];

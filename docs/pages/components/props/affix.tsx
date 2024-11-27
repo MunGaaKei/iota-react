@@ -7,7 +7,9 @@ export const DBasic = {
 			bottom={20}
 			right={20}
 			offset={1}
-			getContainer={() => document.querySelector(".i-area-scroller")}
+			getContainer={() =>
+				document.querySelector(".i-area-content > .i-area-scrollview")
+			}
 		>
 			<Affix.ToTop className='bg-grey' />
 
@@ -20,7 +22,9 @@ export const DBasic = {
     bottom={20}
     right={20}
     offset={1}
-	getContainer={() => document.querySelector(".i-area-scroller")}
+    getContainer={() =>
+		document.querySelector(".i-area-content > .i-area-scrollview")
+	}
 >
     <Affix.ToTop className='bg-grey' />
 

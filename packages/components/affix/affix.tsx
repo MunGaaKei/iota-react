@@ -26,7 +26,7 @@ const Affix = (props: IAffix): JSX.Element => {
 		getContainer = () => document.body,
 	} = props;
 
-	const [hidden, setHidden] = useState(false);
+	const [hidden, setHidden] = useState<boolean>(false);
 
 	const hijackChildren = useMemo(
 		() =>
@@ -59,8 +59,12 @@ const Affix = (props: IAffix): JSX.Element => {
 		const container = getContainer();
 		if (!offset || !container) return;
 
+		console.log(container);
+
 		const listener = debounce({ delay: 160 }, () => {
 			const top = container.scrollTop;
+			console.log(top);
+
 			setHidden(top < offset);
 		});
 		listener();

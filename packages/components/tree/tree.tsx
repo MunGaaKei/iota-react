@@ -1,5 +1,5 @@
 import { useMemoizedFn, useReactive } from "ahooks";
-import { forwardRef, useEffect, useImperativeHandle, useMemo } from "react";
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 import "./index.css";
 import TreeList from "./list";
 import { ITree, ITreeItem, RefTree } from "./type";
@@ -25,24 +25,9 @@ const Tree = forwardRef<RefTree, ITree>((props, ref) => {
 		selected,
 		checked,
 		partofs: {} as Record<string, boolean>,
+		nodeMaps: new Map(),
 	});
 	const oNodeProps = Object.assign({}, defaultNodeProps, nodeProps);
-
-	const dataMaps = useMemo(() => {
-		if (!props.checkable && !props.selectable) return [];
-
-		const flatFn = (nodes) => {
-			return nodes.flatMap((o) => {
-				const children = o[oNodeProps.children];
-				if (children?.length > 0) {
-					return [o, ...flatFn(children)];
-				}
-				return [o];
-			});
-		};
-
-		return flatFn(data);
-	}, [data, props.selectable, props.checkable]);
 
 	const isChecked = (key?: string) => state.checked.includes(key || "");
 
@@ -140,12 +125,49 @@ const Tree = forwardRef<RefTree, ITree>((props, ref) => {
 		state.selected = selected;
 	}, [selected]);
 
+	useEffect(() => {
+		state.nodeMaps.clear();
+
+		const { key, children } = oNodeProps;
+		const recursive = (nodes) => {
+			nodes.map((o) => {
+				state.nodeMaps.set(o[key], o);
+
+				o[children]?.length > 0 && recursive(o[children]);
+			});
+		};
+
+		recursive(data);
+	}, [data]);
+
 	useImperativeHandle(ref, () => {
 		return {
-			getChecked: () => [state.checked, []],
-			getSelected: () => [state.selected],
+			getChecked: () => {
+				const items: ITreeItem[] = [];
+				state.checked.map((k) => {
+					const item = state.nodeMaps.get(k);
+					items.push(item);
+				});
+				return [state.checked, items];
+			},
+			getSelected: () => {
+				const item = state.nodeMaps.get(state.selected);
+				return [state.selected, item];
+			},
 			getPartofs: () => {
-				return dataMaps;
+				const items: ITreeItem[] = [];
+				const keys = Object.keys(state.partofs).filter((k) => {
+					const indeterminate = state.partofs[k];
+
+					if (indeterminate) {
+						const item = state.nodeMaps.get(k);
+						items.push(item);
+					}
+
+					return indeterminate;
+				});
+
+				return [keys, items];
 			},
 		};
 	});

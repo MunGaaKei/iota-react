@@ -1,5 +1,5 @@
-import pain from "@d/assets/pain.jpg";
-import sasuke from "@d/assets/sasuke.jpg";
+import fantasy from "@d/assets/fantasy.jpg";
+import yehuimei from "@d/assets/yehuimei.jpg";
 import { Button, Card, Flex, Icon, Image, Swiper, Text } from "@p";
 import {
 	CloseRound,
@@ -13,15 +13,15 @@ export const DBasic = {
 		<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
 			<Card>
 				<Card.Banner>
-					<Image src={sasuke} />
+					<Image src={yehuimei} />
 				</Card.Banner>
 				<Card.Header className='items-center'>
-					<h4>UCHIHA SASUKE</h4>
+					<h4>YEHUIMEI</h4>
 					<Button size='small' square flat className='ml-auto'>
 						<Icon icon={<MoreVertRound />} />
 					</Button>
 				</Card.Header>
-				SHIDORI
+				叶惠美
 			</Card>
 
 			<Card>
@@ -31,7 +31,7 @@ export const DBasic = {
 							<Image className='bg-black' size={32} round />
 						</a>
 						<div>
-							<h4>PAIN</h4>
+							<h4>范特西</h4>
 							<Text className='color-6' size={12}>
 								DAWN
 							</Text>
@@ -52,9 +52,9 @@ export const DBasic = {
 						<Icon icon={<CloseRound />} />
 					</Button>
 				</Card.Header>
-				<Image src={pain} />
+				<Image src={fantasy} />
 				<Card.Footer>
-					<Button className='bg-red-0'>地爆天星</Button>
+					<Button className='bg-red-0'>范特西</Button>
 				</Card.Footer>
 			</Card>
 
@@ -77,15 +77,15 @@ export const DBasic = {
 
     <Card>
         <Card.Banner>
-            <Image src={sasuke} />
+            <Image src={yehuimei} />
         </Card.Banner>
         <Card.Header className='items-center'>
-            <h4>UCHIHA SASUKE</h4>
+            <h4>YEHUIMEI</h4>
             <Button size='small' square flat className='ml-auto'>
                 <Icon icon={<MoreVertRound />} />
             </Button>
         </Card.Header>
-        SHIDORI
+        叶惠美
     </Card>
 
     <Card>
@@ -95,7 +95,7 @@ export const DBasic = {
                     <Image className='bg-black' size={32} round />
                 </a>
                 <div>
-                    <h4>PAIN</h4>
+                    <h4>fantasy</h4>
                     <Text className='color-6' size={12}>
                         DAWN
                     </Text>
@@ -116,9 +116,9 @@ export const DBasic = {
                 <Icon icon={<CloseRound />} />
             </Button>
         </Card.Header>
-        <Image src={pain} />
+        <Image src={fantasy} />
         <Card.Footer>
-            <Button className='bg-red-0'>地爆天星</Button>
+            <Button className='bg-red-0'>范特西</Button>
         </Card.Footer>
     </Card>
 

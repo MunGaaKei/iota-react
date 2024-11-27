@@ -5,6 +5,7 @@ import {
 	atomOneDark,
 	atomOneLight,
 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import "./index.css";
 
 // https://www.npmjs.com/package/react-syntax-highlighter
 
@@ -17,6 +18,7 @@ export default function CodeView(props) {
 			language={lang}
 			style={global.theme === "theme-dark" ? atomOneDark : atomOneLight}
 			children={children}
+			className='demo-codes'
 		/>
 	);
 }

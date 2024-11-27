@@ -10,7 +10,7 @@ import { IUploadItem } from "./type";
 export default function RenderFile(props: IUploadItem) {
 	const { mode, index, file, onRemove, onPreview } = props;
 
-	if (!file) return <></>;
+	if (!file) return "";
 	const { name, size, url, src } = file;
 	const type = getFileType(name, file.type);
 
@@ -32,7 +32,14 @@ export default function RenderFile(props: IUploadItem) {
 
 			switch (type) {
 				case TFileType.IMAGE:
-					node = <Image lazyload src={url || src} fit='cover' />;
+					node = (
+						<Image
+							lazyload
+							src={url || src}
+							fit='cover'
+							usePreview={false}
+						/>
+					);
 					break;
 				case TFileType.VIDEO:
 					node = <video src={url || src} preload='none' />;

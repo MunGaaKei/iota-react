@@ -6,8 +6,8 @@ import { useState } from "react";
 export const DBasic = {
 	demo: () => {
 		return (
-			<Flex>
-				<List label={(i) => i}>
+			<Flex justify='space-evenly'>
+				<List label={(i) => i + 1}>
 					<List.Item>鐘聲響起歸家的信號</List.Item>
 					<List.Item>在他生命裡 彷彿帶點唏噓</List.Item>
 					<List.Item>黑色肌膚給他的意義</List.Item>
@@ -20,8 +20,8 @@ export const DBasic = {
 			</Flex>
 		);
 	},
-	code: `<Flex>
-	<List label={(i) => i}>
+	code: `<Flex justify='space-evenly'>
+	<List label={(i) => i + 1}>
 		<List.Item>鐘聲響起歸家的信號</List.Item>
 		<List.Item>在他生命裡 彷彿帶點唏噓</List.Item>
 		<List.Item>黑色肌膚給他的意義</List.Item>

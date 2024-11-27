@@ -1,4 +1,5 @@
 import "@d/assets/common.css";
+import "@p/css/index.scss";
 import useRipple from "@p/js/useRipple";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -14,7 +15,7 @@ const App = () => {
 	return (
 		<React.StrictMode>
 			<GlobalContext.Provider value={global}>
-				<RouterProvider router={Router}></RouterProvider>
+				<RouterProvider router={Router} />
 			</GlobalContext.Provider>
 		</React.StrictMode>
 	);

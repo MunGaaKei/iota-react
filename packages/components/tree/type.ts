@@ -75,5 +75,5 @@ export interface ITree {
 export interface RefTree {
 	getChecked: () => [string[], ITreeItem[]];
 	getSelected: () => [string?, ITreeItem?];
-	getPartofs: () => any;
+	getPartofs: () => [string[], ITreeItem[]];
 }

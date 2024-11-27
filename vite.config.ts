@@ -12,4 +12,11 @@ export default defineConfig({
 			"@d": resolve(__dirname, "./docs"),
 		},
 	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				api: "modern-compiler",
+			},
+		},
+	},
 });

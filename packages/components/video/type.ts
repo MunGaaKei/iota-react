@@ -3,7 +3,7 @@ import { IProgress } from "../progress/type";
 
 export interface IVideo extends HTMLAttributes<HTMLVideoElement> {
 	src?: string;
-	controls?: boolean;
+	hideControls?: boolean;
 	autoplay?: boolean;
 	muted?: boolean;
 	volume?: number;

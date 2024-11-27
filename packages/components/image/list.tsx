@@ -47,7 +47,7 @@ export default function List(props: IImageList) {
 			});
 	};
 
-	if (!files.length) return <></>;
+	if (!files.length) return "";
 
 	return (
 		<Flex
@@ -58,8 +58,6 @@ export default function List(props: IImageList) {
 			direction={direction}
 		>
 			{files.map((img, i) => {
-				console.log(img);
-
 				return (
 					<Image
 						key={i}

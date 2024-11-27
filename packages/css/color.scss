@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:string";
+@use "sass:list";
+
 $colors: (
 	"white-0": white,
 	"white-1": whitesmoke,
@@ -85,7 +89,7 @@ $colors: (
 		color: var(--color-main-reverse);
 	}
 	@for $i from 1 to 10 {
-		--color-#{$i}: #{lighten(#000, (10.5% * $i))};
+		--color-#{$i}: #{color.adjust(#000, $lightness: (10.5% * $i))};
 		.color-#{$i} {
 			--color: var(--color-#{$i});
 			color: var(--color);
@@ -103,10 +107,10 @@ $colors: (
 	}
 
 	@each $name, $value in $colors {
-		$number: str-slice($name, -1);
-		$enhanced: str-index(("012"), $number);
+		$number: string.slice($name, -1);
+		$enhanced: string.index(("012"), $number);
 		$lightColors: ("white", "grey", "yellow", "aqua");
-		$isLightColor: index($lightColors, $name);
+		$isLightColor: list.index($lightColors, $name);
 
 		--#{$name}: #{$value};
 
@@ -124,8 +128,8 @@ $colors: (
 			}
 
 			@if $number == "0" {
-				$sourceColor: str-slice($name, 0, -3);
-				$hoverColor: str-slice($name, 0, -3);
+				$sourceColor: string.slice($name, 0, -3);
+				$hoverColor: string.slice($name, 0, -3);
 				--color: var(--#{$sourceColor});
 				&:hover {
 					--background-hover: var(--#{$hoverColor});
@@ -148,8 +152,8 @@ $colors: (
 	}
 
 	@each $name, $value in $colors {
-		$number: str-slice($name, -1);
-		$enhanced: str-index(("012"), $number);
+		$number: string.slice($name, -1);
+		$enhanced: string.index(("012"), $number);
 
 		.#{$name} {
 			--color: var(--#{$name});
@@ -193,7 +197,7 @@ $colors: (
 	color: var(--color);
 
 	@for $i from 1 to 10 {
-		--color-#{$i}: #{darken(#fff, (8.5% * $i))};
+		--color-#{$i}: #{color.adjust(#fff, $lightness: (-8.5% * $i))};
 		.color-#{$i} {
 			@if ($i < 5) {
 				color: var(--black);

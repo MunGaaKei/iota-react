@@ -18,6 +18,7 @@ import {
 	DownhillSkiingRound,
 	FormatListNumberedRound,
 	FunctionsRound,
+	Grid4X4Twotone,
 	GridOnRound,
 	ImageTwotone,
 	LabelTwotone,
@@ -139,6 +140,12 @@ export default [
 						style={{ marginInline: ".15em" }}
 					/>
 				),
+			},
+			{
+				title: "Flex",
+				href: "/docs/flex",
+				as: Link,
+				icon: <Icon icon={<Grid4X4Twotone />} />,
 			},
 			{
 				title: "Form",
