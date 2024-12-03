@@ -38,7 +38,7 @@ import useRipple from "./js/useRipple";
 
 import { IAffix } from "./components/affix/type";
 import { IBadge } from "./components/badge/type";
-import { IButton, IButtonToggle } from "./components/button/type";
+import { IButton, IButtonGroup, IButtonToggle } from "./components/button/type";
 import { ICard } from "./components/card/type";
 import { ICheckbox, ICheckboxItem } from "./components/checkbox/type";
 import { ICollapse, ICollapseItem } from "./components/collapse/type";
@@ -121,6 +121,7 @@ export type {
 	IAffix,
 	IBadge,
 	IButton,
+	IButtonGroup,
 	IButtonToggle,
 	ICard,
 	ICheckbox,

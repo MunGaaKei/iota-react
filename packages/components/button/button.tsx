@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { MouseEvent, createElement, forwardRef } from "react";
 import Loading from "../loading";
+import Group from "./group";
 import "./index.css";
 import Toggle from "./toggle";
 import { CompositionButton, IButton } from "./type";
@@ -98,5 +99,6 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 }) as CompositionButton;
 
 Button.Toggle = Toggle;
+Button.Group = Group;
 
 export default Button;

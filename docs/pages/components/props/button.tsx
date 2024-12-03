@@ -1,6 +1,7 @@
-import { Button, Flex, Icon } from "@p";
+import { Button, Dropdown, Flex, Icon } from "@p";
 import {
 	AllInclusiveRound,
+	KeyboardArrowDownRound,
 	LightModeTwotone,
 	NightlightTwotone,
 } from "@ricons/material";
@@ -87,6 +88,44 @@ export const DToggle = {
 	Deactive
 </Button.Toggle>`,
 	lang: "xml",
+};
+
+export const DGroup = {
+	demo: () => {
+		return (
+			<Flex gap={4}>
+				<Button.Group>
+					<Button>按钮</Button>
+					<Button className='bg-blue'>蓝色</Button>
+					<Button className='bg-yellow'>黄色</Button>
+				</Button.Group>
+				<Button.Group>
+					<Button className='bg-grey'>你好</Button>
+					<Dropdown content={<>HELLO</>} align='end'>
+						<Button className='bg-grey px-0'>
+							<Icon icon={<KeyboardArrowDownRound />} />
+						</Button>
+					</Dropdown>
+				</Button.Group>
+			</Flex>
+		);
+	},
+	code: `<Flex gap={4}>
+	<Button.Group>
+		<Button>按钮</Button>
+		<Button className='bg-blue'>蓝色</Button>
+		<Button className='bg-yellow'>黄色</Button>
+	</Button.Group>
+	<Button.Group>
+		<Button className='bg-grey'>你好</Button>
+		<Dropdown content={<>HELLO</>} align='end'>
+			<Button className='bg-grey px-0'>
+				<Icon icon={<KeyboardArrowDownRound />} />
+			</Button>
+		</Dropdown>
+	</Button.Group>
+</Flex>`,
+	lang: "html",
 };
 
 export const PButton = [
@@ -195,5 +234,19 @@ export const PButtonToggle = [
 		desc: "状态切换时触发",
 		type: ["(active: boolean) => void"],
 		event: true,
+	},
+];
+
+export const PButtonGroup = [
+	{
+		name: "children",
+		desc: "按钮组",
+		type: ["ReactNode"],
+	},
+	{
+		name: "vertical",
+		desc: "垂直方向显示",
+		type: ["boolean"],
+		def: "false",
 	},
 ];

@@ -1,13 +1,14 @@
-import { Button, Flex, Icon, Popup } from "@p";
-import { LinkRound } from "@ricons/material";
+import { Flex } from "@p";
 import { Link } from "react-router-dom";
 import Api from "./components/api";
 import Demo from "./components/demo";
 import {
 	DBasic,
 	DColor,
+	DGroup,
 	DToggle,
 	PButton,
+	PButtonGroup,
 	PButtonToggle,
 } from "./components/props/button";
 
@@ -27,24 +28,22 @@ export default function button(): JSX.Element {
 			</p>
 			<Demo source={DColor} />
 
-			<Flex className='mt-80 mb-20' gap={8}>
-				<h3>
-					<span className='color-5'>Button.</span>Toggle
-				</h3>
-				<Popup content='Api' className='bg-black pd-8'>
-					<Button flat square size='small' href='#button-toggle'>
-						<Icon icon={<LinkRound />} />
-					</Button>
-				</Popup>
-			</Flex>
+			<h3 className='mt-80 mb-20'>
+				<span className='color-5'>Button.</span>Toggle
+			</h3>
 			<Demo source={DToggle} inline />
+
+			<h3 className='mt-80 mb-20'>
+				<span className='color-5'>Button.</span>Group
+			</h3>
+			<Demo source={DGroup} />
 
 			<h3 className='mt-80 mb-20'>Api 参考</h3>
 
 			<h4 id='button' className='mb-20 blue'>
 				Button
 			</h4>
-			<Api apis={PButton} className='mb-80' />
+			<Api apis={PButton} className='mb-40' />
 
 			<h4 id='button-toggle' className='mb-20'>
 				<Flex gap={12}>
@@ -58,7 +57,16 @@ export default function button(): JSX.Element {
 					</a>
 				</Flex>
 			</h4>
-			<Api apis={PButtonToggle} className='mb-80' />
+			<Api apis={PButtonToggle} className='mb-40' />
+
+			<h4 id='button-group' className='mb-20'>
+				<Flex gap={12}>
+					<span className='blue'>
+						<span className='opacity-5'>Button.</span>Group
+					</span>
+				</Flex>
+			</h4>
+			<Api apis={PButtonGroup} className='mb-80' />
 		</>
 	);
 }

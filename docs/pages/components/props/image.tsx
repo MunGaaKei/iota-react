@@ -7,13 +7,15 @@ import { Link } from "react-router-dom";
 
 export const DBasic = {
 	demo: <Image src={jay} size={80} />,
-	code: `<Icon icon={<DownhillSkiingRound />} size='5em' rotate={-45} />`,
+	code: `<Image src="jay.jpg" size={80} />`,
 	lang: "xml",
 };
 
 export const DImageList = {
-	demo: <Image.List items={[jay, fantasy, dimensions, yehuimei]} />,
-	code: `<Icon icon={<DownhillSkiingRound />} size='5em' rotate={-45} />`,
+	demo: (
+		<Image.List items={[jay, fantasy, dimensions, yehuimei]} usePreview />
+	),
+	code: `<Image.List items={['jay.jpg', 'fantasy.jpg', 'dimensions.jpg', 'yehuimei.jpg']} usePreview />`,
 	lang: "xml",
 };
 

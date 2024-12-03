@@ -1,11 +1,13 @@
 import {
 	AnchorHTMLAttributes,
 	ButtonHTMLAttributes,
+	CSSProperties,
 	ForwardRefExoticComponent,
 	ReactNode,
 	RefAttributes,
 } from "react";
 import { LinkProps } from "react-router-dom";
+import Group from "./group";
 import Toggle from "./toggle";
 
 interface BaseButtonProps {
@@ -42,7 +44,15 @@ export interface IButtonToggle extends IButton {
 	onToggle?: (active: boolean) => void;
 }
 
+export interface IButtonGroup {
+	children?: ReactNode;
+	vertical?: boolean;
+	className?: string;
+	style?: CSSProperties;
+}
+
 export interface CompositionButton
 	extends ForwardRefExoticComponent<IButton & RefAttributes<HTMLElement>> {
 	Toggle: typeof Toggle;
+	Group: typeof Group;
 }

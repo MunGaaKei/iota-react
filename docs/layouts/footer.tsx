@@ -1,8 +1,21 @@
+import { Text } from "@p";
+
 export default function Footer() {
 	return (
 		<footer className='mt-80 bg-9 pd-20 round-0'>
-			<h4 className='mb-8'>IOTA React</h4>
-			<p className='color-5'>Designed & Created By Iann</p>
+			<Text
+				gradient={[
+					"30deg",
+					"var(--color-1)",
+					"var(--color-2)",
+					"var(--color-6)",
+				]}
+				as='h3'
+				style={{ fontFamily: "jaini", display: "inline-block" }}
+			>
+				IOTA REACT
+			</Text>
+			<p className='color-5'>Designed & Codes By Iann</p>
 		</footer>
 	);
 }

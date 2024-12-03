@@ -13,7 +13,7 @@ export default function List(props: IImageList) {
 		columns,
 		wrap,
 		direction,
-		usePreview: previewable = true,
+		usePreview: previewable,
 		onClick,
 		...restProps
 	} = props;

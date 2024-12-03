@@ -5,7 +5,6 @@ import {
 	ArrowDropDownCircleTwotone,
 	ArtTrackSharp,
 	AssignmentOutlined,
-	BubbleChartTwotone,
 	BuildCircleTwotone,
 	CalendarMonthTwotone,
 	ChatBubbleOutlineRound,
@@ -17,7 +16,6 @@ import {
 	DataUsageRound,
 	DownhillSkiingRound,
 	FormatListNumberedRound,
-	FunctionsRound,
 	Grid4X4Twotone,
 	GridOnRound,
 	ImageTwotone,
@@ -301,16 +299,16 @@ export default [
 			},
 		],
 	},
-	{
-		title: "Hooks",
-		icon: <Icon icon={<FunctionsRound />} />,
-		children: [
-			{
-				title: "useRipple",
-				href: "/docs/ripple",
-				as: Link,
-				icon: <Icon icon={<BubbleChartTwotone />} />,
-			},
-		],
-	},
+	// {
+	// 	title: "Hooks",
+	// 	icon: <Icon icon={<FunctionsRound />} />,
+	// 	children: [
+	// 		{
+	// 			title: "useRipple",
+	// 			href: "/docs/ripple",
+	// 			as: Link,
+	// 			icon: <Icon icon={<BubbleChartTwotone />} />,
+	// 		},
+	// 	],
+	// },
 ];
