@@ -1,4 +1,3 @@
-import typescript from "@rollup/plugin-typescript";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
@@ -34,12 +33,6 @@ export default defineConfig({
 					"react-dom": "react-dom",
 				},
 			},
-			plugins: [
-				typescript({
-					tslib: resolve("typescript"),
-					outDir: resolve(__dirname, "./lib"),
-				}),
-			],
 		},
 	},
 });
