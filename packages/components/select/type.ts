@@ -1,4 +1,4 @@
-import { BaseInput, TOption, TOptions } from "@p/type";
+import { BaseInput, TOption, TOptions } from "@p/types/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 import { IPopup } from "../popup/type";
 

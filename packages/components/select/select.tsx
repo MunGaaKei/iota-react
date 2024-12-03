@@ -1,6 +1,6 @@
 import { Popup } from "@p";
 import { formatOption } from "@p/js/utils";
-import { TOption } from "@p/type";
+import { TOption } from "@p/types/type";
 import { UnfoldMoreRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";

@@ -1,6 +1,6 @@
-import { BaseElement } from "@p/type";
+import { CSSProperties, ReactNode } from "react";
 
-export interface IFlex extends BaseElement {
+export interface IFlex {
 	as?: keyof JSX.IntrinsicElements;
 	align?: string;
 	justify?: string;
@@ -8,4 +8,7 @@ export interface IFlex extends BaseElement {
 	direction?: any;
 	wrap?: any;
 	columns?: string | number;
+	style?: CSSProperties;
+	className?: string;
+	children?: ReactNode;
 }

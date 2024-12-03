@@ -1,5 +1,5 @@
 import { Icon, List, Tag } from "@p";
-import { TOption } from "@p/type";
+import { TOption } from "@p/types/type";
 import { CheckRound, SearchRound } from "@ricons/material";
 import classNames from "classnames";
 import Empty from "../utils/empty";

@@ -1,4 +1,4 @@
-import type { TOption, TValidate } from "@p/type";
+import type { TOption, TValidate } from "@p/types/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface ICheckbox

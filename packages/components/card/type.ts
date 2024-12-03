@@ -1,6 +1,9 @@
-import { BaseElement } from "@p/type";
+import { CSSProperties, ReactNode } from "react";
 
-export interface ICard extends BaseElement {
+export interface ICard {
 	shadow?: boolean;
 	border?: boolean;
+	style?: CSSProperties;
+	className?: string;
+	children?: ReactNode;
 }
