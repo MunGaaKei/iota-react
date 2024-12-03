@@ -1,3 +1,4 @@
+import typescript from "@rollup/plugin-typescript";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 import { defineConfig } from "vite";
@@ -17,6 +18,28 @@ export default defineConfig({
 			scss: {
 				api: "modern-compiler",
 			},
+		},
+	},
+	build: {
+		lib: {
+			entry: resolve(__dirname, "./packages/index.ts"),
+			name: "iota-react",
+			fileName: (name) => `index.${name}.js`,
+		},
+		rollupOptions: {
+			external: ["react", "react-dom"],
+			output: {
+				globals: {
+					react: "React",
+					"react-dom": "react-dom",
+				},
+			},
+			plugins: [
+				typescript({
+					tslib: resolve("typescript"),
+					outDir: resolve(__dirname, "./lib"),
+				}),
+			],
 		},
 	},
 });

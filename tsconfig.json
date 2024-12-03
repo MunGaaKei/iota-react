@@ -24,6 +24,8 @@
 		},
 		"noImplicitAny": false
 	},
-	"include": ["docs", "packages"],
+	"include": ["docs", "packages", "./index.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
+	// "declareation": true,
+	// "typeRoots": ["./lib/index.d.ts", "node_module/@types"]
 }
