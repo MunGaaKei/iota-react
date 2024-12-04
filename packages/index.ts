@@ -1,3 +1,5 @@
+import "./css/index.scss";
+
 import Affix from "./components/affix";
 import Area from "./components/area";
 import Badge from "./components/badge";

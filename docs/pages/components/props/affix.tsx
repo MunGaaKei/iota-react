@@ -13,7 +13,7 @@ export const DBasic = {
 		>
 			<Affix.ToTop className='bg-grey' />
 
-			<Button square className='bg-grey'>
+			<Button square className='bg-yellow'>
 				<Icon icon={<AddShoppingCartRound />} />
 			</Button>
 		</Affix>
@@ -26,9 +26,9 @@ export const DBasic = {
 		document.querySelector(".i-area-content > .i-area-scrollview")
 	}
 >
-    <Affix.ToTop className='bg-grey' />
+    <Affix.ToTop className='bg-grey'/>
 
-    <Button square className='bg-grey'>
+    <Button square className='bg-yellow'>
         <Icon icon={<AddShoppingCartRound />} />
     </Button>
 </Affix>`,

@@ -1,5 +1,4 @@
 import "@d/assets/common.css";
-import "@p/css/index.scss";
 import useRipple from "@p/js/useRipple";
 import React from "react";
 import ReactDOM from "react-dom/client";

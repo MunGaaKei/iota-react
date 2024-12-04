@@ -6,26 +6,22 @@
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"allowJs": false,
 		"skipLibCheck": true,
-		"esModuleInterop": false,
 		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": false,
 		"module": "ESNext",
 		"moduleResolution": "Node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true,
 		"jsx": "react-jsx",
 		"types": ["node"],
 		"paths": {
 			"@d/*": ["./docs/*"],
 			"@p": ["./packages"],
 			"@p/*": ["./packages/*"]
-		},
-		"noImplicitAny": false
+		}
 	},
 	"include": ["docs", "packages", "./index.ts"],
+	"exclude": ["node_modules"],
 	"references": [{ "path": "./tsconfig.node.json" }]
-	// "declareation": true,
-	// "typeRoots": ["./lib/index.d.ts", "node_module/@types"]
 }
