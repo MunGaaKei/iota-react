@@ -1,4 +1,3 @@
-import { Popup } from "@p";
 import { formatOption } from "@p/js/utils";
 import { TOption } from "@p/types/type";
 import { UnfoldMoreRound } from "@ricons/material";
@@ -15,6 +14,7 @@ import {
 	useState,
 } from "react";
 import "../../css/input.css";
+import Popup from "../popup";
 import Helpericon from "../utils/helpericon";
 import "./index.css";
 import { Options, displayValue } from "./options";

@@ -12,7 +12,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitAny": false,
 		"module": "ESNext",
-		"moduleResolution": "Node",
+		"moduleResolution": "node",
 		"jsx": "react-jsx",
 		"types": ["node"],
 		"paths": {
@@ -22,6 +22,6 @@
 		}
 	},
 	"include": ["docs", "packages", "./index.ts"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules", "lib", "dist"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

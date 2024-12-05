@@ -4,8 +4,7 @@ import { createPortal } from "react-dom";
 import Button from "../button";
 import Helpericon from "../utils/helpericon";
 import "./index.css";
-import { IModal, IModalContent } from "./type";
-import useModal from "./useModal";
+import { CompositionModal, IModal, IModalContent } from "./type";
 
 function DefaultContent(props: IModalContent) {
 	const {
@@ -188,6 +187,4 @@ function Modal(props: IModal) {
 	);
 }
 
-Modal.useModal = useModal;
-
-export default Modal;
+export default Modal as CompositionModal;

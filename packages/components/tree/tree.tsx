@@ -1,7 +1,7 @@
 import { useMemoizedFn, useReactive } from "ahooks";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import "./index.css";
-import TreeList from "./list";
+import { TreeList } from "./item";
 import { ITree, ITreeItem, RefTree } from "./type";
 
 const defaultNodeProps = {

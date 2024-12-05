@@ -5,7 +5,7 @@ import Helpericon from "../utils/helpericon";
 import "./index.css";
 import { IDrawer } from "./type";
 
-export default function Drawer(props: IDrawer) {
+function Drawer(props: IDrawer) {
 	const {
 		visible,
 		position = "left",
@@ -88,3 +88,5 @@ export default function Drawer(props: IDrawer) {
 		document.body
 	);
 }
+
+export default Drawer;

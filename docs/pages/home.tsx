@@ -33,7 +33,7 @@ export default function Home() {
 						REACT
 					</Text>
 				</h1>
-				<p className='my-12'>{version}</p>
+				<p className='my-12'>v {version}</p>
 				<Button
 					as={Link}
 					href='/docs/install'

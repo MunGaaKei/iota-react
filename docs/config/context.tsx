@@ -18,7 +18,7 @@ export const useGlobalValues = () => {
 
 	useEffect(() => {
 		const cls = document.body.classList;
-		const cns = Array.from(cls.values());
+		const cns = Array.from(cls);
 		const pre = cns.find((n) => n.startsWith("theme-"));
 
 		if (pre) {

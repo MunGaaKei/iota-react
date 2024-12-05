@@ -1,4 +1,5 @@
-import { Button, Icon } from "@p";
+import Button from "@p/components/button";
+import Icon from "@p/components/icon";
 import {
 	AspectRatioRound,
 	CloseRound,

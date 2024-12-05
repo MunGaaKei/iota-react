@@ -4,39 +4,38 @@ import typescript from "@rollup/plugin-typescript";
 import external from "rollup-plugin-peer-deps-external";
 import scss from "rollup-plugin-scss";
 
-export default {
-	input: "./packages/index.ts",
-	output: [
-		{
-			name: "iota-react",
-			dir: "lib",
-			format: "esm",
-			exports: "named",
-			sourcemap: true,
-			globals: {
-				react: "React",
+export default [
+	{
+		input: "./packages/index.ts",
+		output: [
+			{
+				name: "iota-react",
+				dir: "lib",
+				format: "esm",
+				exports: "named",
+				sourcemap: true,
 			},
-		},
-	],
-	external: ["react", "react-dom", "react/jsx-runtime", /node_modules/],
-	plugins: [
-		typescript({
-			// compilerOptions: {
-			// 	lib: ["ESNext", "dom"],
-			// 	target: "es6",
-			// 	declaration: true,
-			// 	declarationDir: "./lib",
-			// },
-			tsconfig: "./tsconfig.json",
-			// include: ["./packages"],
-		}),
-		terser(),
-		resolve(),
-		external(),
-		scss({
-			fileName: "css/index.css",
-			sourceMap: true,
-			outputStyle: "compressed",
-		}),
-	],
-};
+		],
+		external: ["react", "react-dom", "react/jsx-runtime", /node_modules/],
+		plugins: [
+			terser(),
+			resolve(),
+			external(),
+			scss({
+				fileName: "css/index.css",
+				sourceMap: true,
+				outputStyle: "compressed",
+			}),
+		],
+	},
+	{
+		input: "./packages/index.ts",
+		output: [{ file: "./lib/index.d.ts", format: "es" }],
+		plugin: [
+			typescript({
+				declaration: true,
+				declarationDir: "./lib",
+			}),
+		],
+	},
+];

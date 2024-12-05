@@ -1,12 +1,9 @@
 import classNames from "classnames";
 import { useMemo } from "react";
-import Highlight from "./highlight";
 import "./index.css";
-import Number from "./number";
-import Time from "./time";
-import { IText } from "./type";
+import { CompositionText, IText } from "./type";
 
-const Text = (props: IText): JSX.Element => {
+const Text = (props: IText) => {
 	const {
 		as: Tag = "span",
 		size,
@@ -45,8 +42,4 @@ const Text = (props: IText): JSX.Element => {
 	);
 };
 
-Text.Highlight = Highlight;
-Text.Number = Number;
-Text.Time = Time;
-
-export default Text;
+export default Text as CompositionText;

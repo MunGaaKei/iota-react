@@ -1,7 +1,9 @@
-import { Icon, List, Tag } from "@p";
 import { TOption } from "@p/types/type";
 import { CheckRound, SearchRound } from "@ricons/material";
 import classNames from "classnames";
+import Icon from "../icon";
+import List from "../list";
+import Tag from "../tag";
 import Empty from "../utils/empty";
 import { ISelectOptions } from "./type";
 

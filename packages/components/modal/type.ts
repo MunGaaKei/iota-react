@@ -1,5 +1,6 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { FC, HTMLAttributes, ReactNode } from "react";
 import { IButton } from "../button/type";
+import useModal from "./useModal";
 
 export interface IModal extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	visible?: boolean;
@@ -20,6 +21,10 @@ export interface IModal extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
 	onVisibleChange?: (visible: boolean) => void;
 	onOk?: () => void;
 	onClose?: () => void;
+}
+
+export interface CompositionModal extends FC<IModal> {
+	useModal: typeof useModal;
 }
 
 export interface IModalContent

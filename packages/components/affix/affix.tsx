@@ -69,8 +69,6 @@ const Affix = (props: IAffix): JSX.Element => {
 		});
 		listener();
 
-		container.addEventListener("scroll", listener);
-
 		return () => {
 			container.removeEventListener("scroll", listener);
 		};

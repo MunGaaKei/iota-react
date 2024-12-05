@@ -1,7 +1,8 @@
 import menu from "@d/config/menu";
-import { Area, Loading, Tree } from "@p";
+import { Loading, Tree } from "@p";
 import { Suspense, lazy, memo } from "react";
 import { useParams } from "react-router-dom";
+import Area from "../../packages/components/area";
 import Footer from "./footer";
 import "./global.css";
 import Sider from "./sider";

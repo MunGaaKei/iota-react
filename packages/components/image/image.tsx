@@ -8,10 +8,9 @@ import { useEffect, useRef } from "react";
 import Icon from "../icon";
 import Loading from "../loading";
 import "./index.css";
-import List from "./list";
-import { IImage } from "./type";
+import { CompositionImage, IImage } from "./type";
 
-const Image = (props: IImage): JSX.Element => {
+const Image = (props: IImage) => {
 	const {
 		src,
 		round,
@@ -124,6 +123,4 @@ const Image = (props: IImage): JSX.Element => {
 	);
 };
 
-Image.List = List;
-
-export default Image;
+export default Image as CompositionImage;

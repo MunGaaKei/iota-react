@@ -1,9 +1,4 @@
-import {
-	CSSProperties,
-	ForwardRefExoticComponent,
-	ReactNode,
-	RefAttributes,
-} from "react";
+import { CSSProperties, FC, ReactNode } from "react";
 import Number from "./number";
 import Time from "./time";
 
@@ -33,8 +28,7 @@ export interface ITextTime extends IText {
 	units?: string[];
 }
 
-export interface CompositionSwiper
-	extends ForwardRefExoticComponent<IText & RefAttributes<HTMLElement>> {
+export interface CompositionText extends FC<IText> {
 	Number: typeof Number;
 	Time: typeof Time;
 }

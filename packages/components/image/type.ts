@@ -1,4 +1,5 @@
-import { HTMLAttributes, ReactNode } from "react";
+import { FC, HTMLAttributes, ReactNode } from "react";
+import List from "./list";
 
 export interface IImage extends HTMLAttributes<HTMLImageElement> {
 	src?: string;
@@ -18,4 +19,8 @@ export interface IImageList extends Omit<IImage, "src" | "alt"> {
 	columns?: number | string;
 	wrap?: any;
 	direction?: any;
+}
+
+export interface CompositionImage extends FC<IImage> {
+	List: typeof List;
 }

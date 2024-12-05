@@ -1,4 +1,5 @@
-import { List, Popup } from "@p";
+import List from "../list";
+import Popup from "../popup";
 import "./index.css";
 import Item from "./item";
 import { IDropdown } from "./type";
