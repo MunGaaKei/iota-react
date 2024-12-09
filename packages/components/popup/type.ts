@@ -1,4 +1,4 @@
-import { TPosition } from "@p/js/type";
+import { TPosition } from "@p/type";
 import { CSSProperties, ReactNode } from "react";
 
 export interface IPopup {
