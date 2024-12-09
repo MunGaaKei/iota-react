@@ -156,6 +156,12 @@
 			box-shadow: var(--shadow);
 		}
 	}
+	.hover-text-shadow {
+		transition: var(--transition);
+		&:hover {
+			text-shadow: var(--shadow);
+		}
+	}
 	.no-transition {
 		transition: none;
 	}

@@ -1,5 +1,4 @@
-import { Button, Flex, Icon, Popup } from "@p";
-import { LinkRound } from "@ricons/material";
+import { Flex } from "@p";
 import Api from "./components/api";
 import Demo from "./components/demo";
 import {
@@ -21,11 +20,6 @@ export default function Page() {
 				<h3>
 					<span className='color-5'>List.</span>Virtual
 				</h3>
-				<Popup content='Api' className='bg-black pd-8'>
-					<Button flat square size='small' href='#list-virtual'>
-						<Icon icon={<LinkRound />} />
-					</Button>
-				</Popup>
 			</Flex>
 			<p className='mb-12'>
 				虚拟列表，基于

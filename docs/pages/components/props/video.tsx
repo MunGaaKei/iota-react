@@ -6,7 +6,7 @@ export const DBasic = {
 	demo: () => {
 		return <Video src={demo} />;
 	},
-	code: ``,
+	code: `<Video src='your-video-src.mp4' />`,
 	lang: "xml",
 };
 

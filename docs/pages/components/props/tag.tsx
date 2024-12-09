@@ -14,7 +14,15 @@ export const DBasic = {
 			</Flex>
 		);
 	},
-	code: ``,
+	code: `<Flex gap={12}>
+	<Button>
+		<span>tag</span>
+		<Tag>tag</Tag>
+	</Button>
+	<Tag dot dotClass='bg-red'>
+		tag
+	</Tag>
+</Flex>`,
 	lang: "xml",
 };
 

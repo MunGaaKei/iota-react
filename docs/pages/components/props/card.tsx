@@ -10,18 +10,21 @@ import {
 
 export const DBasic = {
 	demo: (
-		<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
+		<Flex
+			columns='repeat(auto-fill, minmax(180px, 1fr))'
+			gap='20px'
+			align='start'
+		>
 			<Card>
 				<Card.Banner>
 					<Image src={yehuimei} />
 				</Card.Banner>
 				<Card.Header className='items-center'>
-					<h4>YEHUIMEI</h4>
+					<h4>叶惠美</h4>
 					<Button size='small' square flat className='ml-auto'>
 						<Icon icon={<MoreVertRound />} />
 					</Button>
 				</Card.Header>
-				叶惠美
 			</Card>
 
 			<Card>
@@ -73,19 +76,21 @@ export const DBasic = {
 			</Card>
 		</Flex>
 	),
-	code: `<Flex columns='repeat(auto-fill, minmax(180px, 1fr))' gap='20px'>
-
+	code: `<Flex 
+	columns='repeat(auto-fill, minmax(180px, 1fr))'
+	gap='20px'
+	align='start'
+>
     <Card>
         <Card.Banner>
             <Image src={yehuimei} />
         </Card.Banner>
         <Card.Header className='items-center'>
-            <h4>YEHUIMEI</h4>
+            <h4>叶惠美</h4>
             <Button size='small' square flat className='ml-auto'>
                 <Icon icon={<MoreVertRound />} />
             </Button>
         </Card.Header>
-        叶惠美
     </Card>
 
     <Card>

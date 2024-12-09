@@ -5,6 +5,7 @@ import {
 	ArrowDropDownCircleTwotone,
 	ArtTrackSharp,
 	AssignmentOutlined,
+	BlurOnFilled,
 	BuildCircleTwotone,
 	CalendarMonthTwotone,
 	ChatBubbleOutlineRound,
@@ -220,6 +221,12 @@ export default [
 				icon: <Icon icon={<FormatListNumberedRound />} />,
 			},
 			{
+				title: "Loading",
+				href: "/docs/loading",
+				as: Link,
+				icon: <Icon icon={<BlurOnFilled />} />,
+			},
+			{
 				title: "Message",
 				href: "/docs/message",
 				as: Link,
@@ -299,16 +306,4 @@ export default [
 			},
 		],
 	},
-	// {
-	// 	title: "Hooks",
-	// 	icon: <Icon icon={<FunctionsRound />} />,
-	// 	children: [
-	// 		{
-	// 			title: "useRipple",
-	// 			href: "/docs/ripple",
-	// 			as: Link,
-	// 			icon: <Icon icon={<BubbleChartTwotone />} />,
-	// 		},
-	// 	],
-	// },
 ];

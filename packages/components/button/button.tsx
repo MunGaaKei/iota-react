@@ -1,5 +1,6 @@
+import useRipple from "@p/js/useRipple";
 import classnames from "classnames";
-import { MouseEvent, createElement, forwardRef } from "react";
+import { MouseEvent, createElement, forwardRef, useEffect } from "react";
 import Loading from "../loading";
 import "./index.css";
 import { CompositionButton, IButton } from "./type";
@@ -71,6 +72,10 @@ const Button = forwardRef<HTMLElement, IButton>((props, ref) => {
 		["data-ripple"]: ripple,
 		onClick: handleClick,
 	};
+
+	useEffect(() => {
+		ripple && useRipple();
+	}, [ripple]);
 
 	if (typeof As === "string") {
 		return createElement(

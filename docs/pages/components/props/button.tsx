@@ -78,15 +78,23 @@ export const DToggle = {
 			</Button.Toggle>
 		</Flex>
 	),
-	code: `<Button.Toggle
-	secondary
-	after={<Icon icon={<NightlightTwotone />} />}
->
-	<Icon icon={<LightModeTwotone />} />
-</Button.Toggle>
-<Button.Toggle after='Active' activeClass='bg-blue'>
-	Deactive
-</Button.Toggle>`,
+	code: `<Flex gap={12} direction='column' align='flex-start'>
+	<Button.Toggle
+		secondary
+		after={<Icon icon={<NightlightTwotone />} />}
+	>
+		<Icon icon={<LightModeTwotone />} />
+	</Button.Toggle>
+	<Button.Toggle
+		after='Active'
+		activeClass='bg-blue'
+		onToggle={(v) => {
+			console.log(v);
+		}}
+	>
+		Deactive
+	</Button.Toggle>
+</Flex>`,
 	lang: "xml",
 };
 

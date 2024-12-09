@@ -288,12 +288,6 @@ export const PTree = [
 		def: "false",
 	},
 	{
-		name: "ripple",
-		desc: "点击波纹效果",
-		type: ["boolean"],
-		def: "false",
-	},
-	{
 		name: "renderExtra",
 		desc: "渲染额外内容",
 		type: ["(item: ITreeItem) => ReactNode"],

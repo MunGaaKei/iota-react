@@ -3,15 +3,15 @@ import "./index.css";
 import { ILoading } from "./type";
 
 const Loading = (props: ILoading): JSX.Element => {
-	const { icon, text, size, style = {}, className, ...rest } = props;
+	const { icon, text, size, style, className, ...restProps } = props;
 
 	return (
 		<div
 			className={classNames("i-loading-container", className)}
 			style={{ fontSize: size, ...style }}
-			{...rest}
+			{...restProps}
 		>
-			{icon || (
+			{icon ?? (
 				<svg
 					width='24'
 					height='24'

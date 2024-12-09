@@ -35,7 +35,6 @@ import Tree from "./components/tree";
 import Upload from "./components/upload";
 import Video from "./components/video";
 import usePreview from "./js/usePreview";
-import useRipple from "./js/useRipple";
 
 export {
 	Affix,
@@ -73,5 +72,4 @@ export {
 	Upload,
 	Video,
 	usePreview,
-	useRipple,
 };

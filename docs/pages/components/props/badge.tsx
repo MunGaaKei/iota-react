@@ -22,7 +22,15 @@ export const DBasic = {
 					content={count}
 					contentClass='bg-error'
 				>
-					<Button className='bg-yellow'>Dot Like</Button>
+					<Button
+						className='bg-yellow'
+						onClick={() => {
+							if (count === 0) return;
+							setCount((v) => v - 1);
+						}}
+					>
+						Dot Like
+					</Button>
 				</Badge>
 				<Button className='bg-error-0' onClick={() => setCount(0)}>
 					Clear
@@ -49,7 +57,15 @@ return (
             content={count}
             contentClass='bg-error'
         >
-            <Button className='bg-yellow'>Dot Like</Button>
+            <Button
+				className='bg-yellow'
+				onClick={() => {
+					if (count === 0 ) return
+					setCount((v) => v - 1);
+				}}
+			>
+				Dot Like
+			</Button>
         </Badge>
         <Button className='bg-error-0' onClick={() => setCount(0)}>
             Clear

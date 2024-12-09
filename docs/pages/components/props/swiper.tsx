@@ -85,7 +85,7 @@ return (
         </Flex>
     </>
 );`,
-	lang: "xml",
+	lang: "javascript",
 };
 
 export const DVertical = {

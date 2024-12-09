@@ -1,13 +1,10 @@
 import "./ripple.css";
 
-const state = {
-	enable: false,
-	timeout: 500,
-};
+const TIMEOUT = 500;
 
 const useRipple = () => {
-	if (state.enable) return;
-	state.enable = true;
+	if (document.documentElement.dataset["useripple"]) return;
+	document.documentElement.dataset["useripple"] = "enable";
 
 	document.addEventListener("mousedown", listener);
 };
@@ -31,7 +28,7 @@ function triggerRipple(target: HTMLElement, e: MouseEvent) {
         top: ${e.pageY - rect.top}px;
         width: ${size}px;
         height: ${size}px;
-        transition: all ${state.timeout / 1000}s;
+        transition: all ${TIMEOUT / 1000}s;
     `;
 	target.insertAdjacentElement("afterbegin", $box);
 	target.offsetHeight;
@@ -39,7 +36,7 @@ function triggerRipple(target: HTMLElement, e: MouseEvent) {
 
 	setTimeout(() => {
 		$box.remove();
-	}, state.timeout);
+	}, TIMEOUT);
 }
 
 function createRipple() {

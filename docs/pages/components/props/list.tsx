@@ -110,7 +110,7 @@ return (
 		}}
 	/>
 );`,
-	lang: "xml",
+	lang: "javascript",
 };
 
 export const PList = [
