@@ -1,7 +1,0 @@
-{
-	"include": ["packages"],
-	"exclude": ["node_modules", "docs", "lib", "dist"],
-	"compilerOptions": {
-		"baseUrl": "./"
-	}
-}
