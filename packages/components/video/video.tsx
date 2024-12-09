@@ -62,7 +62,7 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 		state.playing = !e.target.paused;
 	};
 
-	const fsChangeListener = (e) => {
+	const fsChangeListener = () => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 
@@ -113,7 +113,7 @@ const Video = forwardRef<RefVideo, IVideo>((props, ref): JSX.Element => {
 		v.pause();
 	};
 
-	const handleFullscreen = (fs?: boolean) => {
+	const handleFullscreen = () => {
 		const tar = $v.current?.parentElement;
 		if (!tar) return;
 

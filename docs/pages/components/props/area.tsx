@@ -1,4 +1,5 @@
-import { Area, Tabs } from "@p";
+import { Tabs } from "@p";
+import Area from "@p/components/area";
 import { useState } from "react";
 
 export const DBasic = {

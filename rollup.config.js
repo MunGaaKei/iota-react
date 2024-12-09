@@ -11,31 +11,41 @@ export default [
 			{
 				name: "iota-react",
 				dir: "lib",
-				format: "esm",
+				format: "es",
 				exports: "named",
 				sourcemap: true,
+				globals: {
+					react: "React",
+				},
 			},
 		],
-		external: ["react", "react-dom", "react/jsx-runtime", /node_modules/],
+		external: [
+			"react",
+			"react-dom",
+			"react/jsx-runtime",
+			"radash",
+			"dayjs",
+			"pubsub-js",
+			"ahooks",
+			/node_modules/,
+		],
 		plugins: [
-			terser(),
-			resolve(),
+			resolve({
+				extensions: [".ts", ".tsx", ".scss", ".js"],
+			}),
+			typescript({}),
 			external(),
 			scss({
 				fileName: "css/index.css",
 				sourceMap: true,
 				outputStyle: "compressed",
 			}),
+			terser(),
 		],
 	},
-	{
-		input: "./packages/index.ts",
-		output: [{ file: "./lib/index.d.ts", format: "es" }],
-		plugin: [
-			typescript({
-				declaration: true,
-				declarationDir: "./lib",
-			}),
-		],
-	},
+	// {
+	// 	input: "./packages/index.ts",
+	// 	output: [{ file: "./lib/index.d.ts", format: "es" }],
+	// 	plugin: [dts()],
+	// },
 ];
