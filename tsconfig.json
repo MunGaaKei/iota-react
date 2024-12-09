@@ -2,7 +2,7 @@
 	"include": ["docs", "packages"],
 	"exclude": ["node_modules", "lib", "dist"],
 	"compilerOptions": {
-		"baseUrl": ".",
+		"baseUrl": "./",
 		"target": "ESNext",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"skipLibCheck": true,
