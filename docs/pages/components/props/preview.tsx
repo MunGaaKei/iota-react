@@ -1,5 +1,5 @@
 import fantasy from "@d/assets/fantasy.jpg";
-import github from "@d/assets/github.jpg";
+import jay from "@d/assets/jay.jpg";
 import videoDemo from "@d/assets/video.mp4";
 import { Button, usePreview } from "@p";
 import { Link } from "react-router-dom";
@@ -11,7 +11,7 @@ export const DBasic = {
 			preview({
 				items: [
 					{
-						src: github,
+						src: jay,
 					},
 					fantasy,
 					videoDemo,
