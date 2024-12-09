@@ -1,15 +1,14 @@
 {
+	"include": ["docs", "packages"],
+	"exclude": ["node_modules", "lib", "dist"],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "ESNext",
-		"useDefineForClassFields": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
-		"allowJs": false,
 		"skipLibCheck": true,
-		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true,
 		"strict": true,
-		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
 		"noImplicitAny": false,
 		"module": "ESNext",
 		"moduleResolution": "node",
@@ -19,14 +18,7 @@
 			"@d/*": ["./docs/*"],
 			"@p": ["./packages"],
 			"@p/*": ["./packages/*"]
-		},
-		"plugins": [
-			{
-				"name": "@rollup/plugin-typescript"
-			}
-		]
-	},
-	"include": ["docs", "packages"],
-	"exclude": ["node_modules", "lib", "dist", "*.js"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+		}
+	}
+	// "references": [{ "path": "./tsconfig.node.json" }]
 }

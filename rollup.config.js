@@ -33,7 +33,11 @@ export default [
 			resolve({
 				extensions: [".ts", ".tsx", ".scss", ".js"],
 			}),
-			typescript({}),
+			typescript({
+				declaration: true,
+				declarationDir: "lib",
+				emitDeclarationOnly: true,
+			}),
 			external(),
 			scss({
 				fileName: "css/index.css",
@@ -41,19 +45,6 @@ export default [
 				outputStyle: "compressed",
 			}),
 			terser(),
-		],
-	},
-	{
-		input: "./packages/types.ts",
-		output: [{ file: "./lib/index.d.ts", format: "es" }],
-		plugin: [
-			typescript({
-				compilerOptions: {
-					rootDir: "./",
-					declaration: true,
-					declarationDir: "lib",
-				},
-			}),
 		],
 	},
 ];
