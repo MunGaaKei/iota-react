@@ -1,3 +1,4 @@
+import "@p/css/input.css";
 import { VisibilityOffRound, VisibilityRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
@@ -9,13 +10,8 @@ import {
 	useEffect,
 	useMemo,
 } from "react";
-import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
-import "./index.css";
-import Number from "./number";
-import Range from "./range";
-import Textarea from "./textarea";
 import type { CompositionInput, IInput } from "./type";
 
 const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
@@ -129,9 +125,5 @@ const Input = forwardRef<HTMLInputElement, IInput>((props, ref) => {
 		</InputContainer>
 	);
 }) as CompositionInput;
-
-Input.Textarea = Textarea;
-Input.Number = Number;
-Input.Range = Range;
 
 export default Input;

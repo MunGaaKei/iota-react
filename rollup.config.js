@@ -1,6 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import dts from "rollup-plugin-dts";
 import external from "rollup-plugin-peer-deps-external";
 import scss from "rollup-plugin-scss";
 
@@ -33,9 +34,7 @@ export default [
 			resolve({
 				extensions: [".ts", ".tsx", ".scss", ".js"],
 			}),
-			typescript({
-				extensions: "./tsconfig.types.json",
-			}),
+			typescript(),
 			external(),
 			scss({
 				fileName: "css/index.css",
@@ -44,5 +43,10 @@ export default [
 			}),
 			terser(),
 		],
+	},
+	{
+		input: "./packages/types.ts",
+		output: [{ file: "lib/index.d.ts", format: "es" }],
+		plugins: [dts(), scss()],
 	},
 ];

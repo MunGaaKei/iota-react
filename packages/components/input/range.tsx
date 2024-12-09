@@ -1,12 +1,11 @@
+import "@p/css/input.css";
 import { clamp, formatNumber } from "@p/js/utils";
 import { MinusRound, PlusRound, SyncAltRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import { ChangeEvent, MouseEvent, useCallback, useEffect } from "react";
-import "../../css/input.css";
 import Helpericon from "../utils/helpericon";
 import InputContainer from "./container";
-import "./index.css";
 import type { IInputRange } from "./type";
 
 const Range = (props: IInputRange) => {

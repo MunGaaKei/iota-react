@@ -1,3 +1,4 @@
+import "@p/css/input.css";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";
 import {
@@ -8,9 +9,7 @@ import {
 	useEffect,
 	useRef,
 } from "react";
-import "../../css/input.css";
 import InputContainer from "./container";
-import "./index.css";
 import type { ITextarea } from "./type";
 
 const Textarea = forwardRef<HTMLTextAreaElement, ITextarea>((props, ref) => {

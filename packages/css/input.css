@@ -124,3 +124,9 @@
 		flex: 1 1 100%;
 	}
 }
+
+.i-input-number {
+	text-align: center;
+	padding: var(--padding);
+	padding-inline: 0;
+}

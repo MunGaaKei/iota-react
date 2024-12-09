@@ -36,6 +36,7 @@
 		"radash": "^12.1.0",
 		"react-syntax-highlighter": "^15.6.1",
 		"rollup": "^4.28.0",
+		"rollup-plugin-dts": "^6.1.1",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-scss": "^4.0.0",
 		"sass": "^1.18.0",
