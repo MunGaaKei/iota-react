@@ -1,5 +1,5 @@
 import { formatOption } from "@p/js/utils";
-import { TOption } from "@p/types";
+import { TOption } from "@p/type";
 import { UnfoldMoreRound } from "@ricons/material";
 import { useMemoizedFn, useReactive } from "ahooks";
 import classNames from "classnames";

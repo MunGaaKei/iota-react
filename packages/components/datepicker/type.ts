@@ -1,4 +1,4 @@
-import { BaseInput } from "@p/types";
+import { BaseInput } from "@p/type";
 import { Dayjs } from "dayjs";
 import { ReactNode } from "react";
 import { IInput } from "../input/type";

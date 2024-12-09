@@ -9,6 +9,7 @@
 		"resolveJsonModule": true,
 		"strict": true,
 		"noEmit": true,
+		"allowSyntheticDefaultImports": true,
 		"noImplicitAny": false,
 		"module": "ESNext",
 		"moduleResolution": "node",

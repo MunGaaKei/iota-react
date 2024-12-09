@@ -1,4 +1,4 @@
-import { BaseInput } from "@p/types";
+import { BaseInput } from "@p/type";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface IUpload

@@ -1,5 +1,5 @@
 import { TFileType } from "@p/js/usePreview/type";
-import { TOption, TOptions, TRelativeOptions } from "@p/types";
+import { TOption, TOptions, TRelativeOptions } from "@p/type";
 import { MouseEvent, ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
 

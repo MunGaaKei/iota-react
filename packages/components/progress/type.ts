@@ -1,4 +1,4 @@
-import { BaseInput } from "@p/types";
+import { BaseInput } from "@p/type";
 import { CSSProperties, ReactNode } from "react";
 
 export interface IProgress
