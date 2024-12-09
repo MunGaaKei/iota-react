@@ -41,3 +41,5 @@ export type { IText, ITextNumber, ITextTime } from "./components/text/type";
 export type { ITree, ITreeItem, RefTree } from "./components/tree/type";
 export type { IUpload, IUploadItem } from "./components/upload/type";
 export type { IVideo } from "./components/video/type";
+
+export type { IPreview, TPreviewItem } from "./js/usePreview/type";

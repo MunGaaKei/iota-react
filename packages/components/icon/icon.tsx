@@ -3,7 +3,7 @@ import { cloneElement, forwardRef, isValidElement } from "react";
 import "./index.css";
 import { IIcon } from "./type";
 
-const Icon = forwardRef((props: IIcon, ref) => {
+const Icon = forwardRef<HTMLElement, IIcon>((props, ref) => {
 	const {
 		icon,
 		size = "1.425em",

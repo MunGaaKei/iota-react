@@ -12,7 +12,7 @@ import {
 import Context from "./context";
 import { IField } from "./type";
 
-export default function Field(props: IField) {
+function Field(props: IField) {
 	const { name, required, children } = props;
 	const state = useReactive({
 		value: undefined,
@@ -82,3 +82,5 @@ export default function Field(props: IField) {
 
 	return hijackChildren;
 }
+
+export default Field;

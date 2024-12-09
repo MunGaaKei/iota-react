@@ -34,13 +34,7 @@ export default [
 				extensions: [".ts", ".tsx", ".scss", ".js"],
 			}),
 			typescript({
-				include: ["packages/types.ts"],
-				compilerOptions: {
-					declaration: true,
-					declarationDir: "lib",
-					emitDeclarationOnly: true,
-					isolatedModules: false,
-				},
+				extensions: "./tsconfig.types.json",
 			}),
 			external(),
 			scss({
