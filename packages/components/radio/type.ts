@@ -1,4 +1,4 @@
-import { TOption, TStatus } from "@p/types/type";
+import { TOption, TStatus } from "@p/types";
 import { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 
 export interface IRadioItem

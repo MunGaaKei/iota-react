@@ -43,9 +43,17 @@ export default [
 			terser(),
 		],
 	},
-	// {
-	// 	input: "./packages/index.ts",
-	// 	output: [{ file: "./lib/index.d.ts", format: "es" }],
-	// 	plugin: [dts()],
-	// },
+	{
+		input: "./packages/types.ts",
+		output: [{ file: "./lib/index.d.ts", format: "es" }],
+		plugin: [
+			typescript({
+				compilerOptions: {
+					rootDir: "./",
+					declaration: true,
+					declarationDir: "lib",
+				},
+			}),
+		],
+	},
 ];

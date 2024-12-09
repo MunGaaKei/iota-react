@@ -1,4 +1,4 @@
-import { BaseInput, TStatus } from "@p/types/type";
+import { BaseInput, TStatus } from "@p/types";
 import {
 	CSSProperties,
 	ChangeEvent,

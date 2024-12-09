@@ -19,7 +19,12 @@
 			"@d/*": ["./docs/*"],
 			"@p": ["./packages"],
 			"@p/*": ["./packages/*"]
-		}
+		},
+		"plugins": [
+			{
+				"name": "@rollup/plugin-typescript"
+			}
+		]
 	},
 	"include": ["docs", "packages"],
 	"exclude": ["node_modules", "lib", "dist", "*.js"],

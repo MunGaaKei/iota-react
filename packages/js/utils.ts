@@ -1,8 +1,7 @@
 import { TFileType } from "@p/js/usePreview/type";
-import { TOption, TOptions } from "@p/types/type";
+import { TOption, TOptions, TRelativeOptions } from "@p/types";
 import { MouseEvent, ReactNode } from "react";
 import { Root, createRoot } from "react-dom/client";
-import type { TRelativeOptions } from "./type";
 
 type TComputePosition = {
 	containerSize: number;

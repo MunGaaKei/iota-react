@@ -1,4 +1,4 @@
-import { TOption } from "@p/types/type";
+import { TOption } from "@p/types";
 import { CheckRound, SearchRound } from "@ricons/material";
 import classNames from "classnames";
 import Icon from "../icon";

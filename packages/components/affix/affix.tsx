@@ -59,11 +59,8 @@ const Affix = (props: IAffix): JSX.Element => {
 		const container = getContainer();
 		if (!offset || !container) return;
 
-		console.log(container);
-
 		const listener = debounce({ delay: 160 }, () => {
 			const top = container.scrollTop;
-			console.log(top);
 
 			setHidden(top < offset);
 		});
